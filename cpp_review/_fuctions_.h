@@ -7,6 +7,7 @@
 #include "myExceptions.h"
 using namespace std;
 
+// changed
 template <class T>
 int sequentialSearch(T a[], int n, const T &x)
 {   // Search the unordered list a[0:n-1] for x.
