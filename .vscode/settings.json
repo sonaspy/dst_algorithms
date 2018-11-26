@@ -4,6 +4,7 @@
     "iostream": "cpp",
     "sstream": "cpp",
     "queue": "cpp",
-    "utility": "cpp"
+    "utility": "cpp",
+    "algorithm": "cpp"
   }
 }
