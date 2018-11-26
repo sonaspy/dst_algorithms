@@ -113,10 +113,10 @@ void maxHeap<T>::pop()
 }
 
 template <class T>
-void maxHeap<T>::initialize(T *theHeap, int theSize)
-{ // Initialize max heap to element array theHeap[1:theSize].
+void maxHeap<T>::initialize(T *Array, int theSize)
+{ // Initialize max heap to element array Array[1:theSize]. Build Heap.
   delete[] heap;
-  heap = theHeap;
+  heap = Array;
   heapSize = theSize;
   // heapify
   for (int root = heapSize / 2; root >= 1; root--)
