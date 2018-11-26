@@ -9,13 +9,13 @@ using namespace std;
 
 #include <iostream>
 #include "binaryTree.h"
-#include "arrayQueue.h"
+#include "../Queue/arrayQueue.h"
 #include "binaryTreeNode.h"
 #include "myExceptions.h"
 #include "booster.h"
 
 template <class E>
-class linkedBinaryTree : public binaryTree<binaryTreeNode<E>>
+class linkedBinaryTree : public binaryTree<binaryTreeNode<E> >
 {
 public:
   linkedBinaryTree()
@@ -100,14 +100,7 @@ protected:
   }
   static int height(binaryTreeNode<E> *t);
 };
-// the following should work but gives an internal compiler error
-// template <class E> void (*linkedBinaryTree<E>::visit)(binaryTreeNode<E>*);
-// so the explicit declarations that follow are used for our purpose instead
-void (*linkedBinaryTree<int>::visit)(binaryTreeNode<int> *);
-void (*linkedBinaryTree<booster>::visit)(binaryTreeNode<booster> *);
-void (*linkedBinaryTree<pair<int, int>>::visit)(binaryTreeNode<pair<int, int>> *);
-void (*linkedBinaryTree<pair<const int, char>>::visit)(binaryTreeNode<pair<const int, char>> *);
-void (*linkedBinaryTree<pair<const int, int>>::visit)(binaryTreeNode<pair<const int, int>> *);
+
 
 template <class E>
 E *linkedBinaryTree<E>::rootElement() const
@@ -137,7 +130,7 @@ linkedBinaryTree<E>& linkedBinaryTree<E>::removeLeftSubtree()
 { // Remove and return the left subtree.
   // check if empty
   if (treeSize == 0)
-    throw emptyTree();
+    return false;
 
   // detach left subtree and save in leftSubtree
   linkedBinaryTree<E> leftSubtree;
@@ -147,7 +140,7 @@ linkedBinaryTree<E>& linkedBinaryTree<E>::removeLeftSubtree()
   root->leftChild = NULL;
   treeSize -= leftSubtree.treeSize;
 
-  return leftSubTree;
+  return leftSubtree;
 }
 
 template <class E>
@@ -155,7 +148,7 @@ linkedBinaryTree<E> &linkedBinaryTree<E>::removeRightSubtree()
 { // Remove and return the right subtree.
   // check if empty
   if (treeSize == 0)
-    throw emptyTree();
+    return false;
 
   // detach right subtree and save in rightSubtree
   linkedBinaryTree<E> rightSubtree;
@@ -165,7 +158,7 @@ linkedBinaryTree<E> &linkedBinaryTree<E>::removeRightSubtree()
   root->rightChild = NULL;
   treeSize -= rightSubtree.treeSize;
 
-  return rightSubTree;
+  return rightSubtree;
 }
 
 template <class E>
