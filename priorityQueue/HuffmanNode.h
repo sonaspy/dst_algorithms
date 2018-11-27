@@ -1,6 +1,7 @@
 #ifndef huffmanNode_
 #define huffmanNode_
 
+
 template <class T>
 struct huffmanNode
 {
