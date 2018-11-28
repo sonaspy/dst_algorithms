@@ -152,4 +152,20 @@ private:
   string message;
 };
 
+// bad allocate
+
+class failedAllocate
+{
+public:
+  failedAllocate(string theMessage =
+                 "failed to allocate memory.")
+  {
+    message = theMessage;
+  }
+  void outputMessage() { cout << message << endl; }
+
+private:
+  string message;
+};
+
 #endif

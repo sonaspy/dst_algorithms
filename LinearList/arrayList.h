@@ -71,7 +71,7 @@ arrayList<T>::arrayList(const arrayList<T> & theList){
 }
 
 template <typename T>
-arrayList<T>::checkIndex(int theIndex) const{
+void arrayList<T>::checkIndex(int theIndex) const{
   // Verify that theIndex is between 0 and listSize - 1.
    if (theIndex < 0 || theIndex >= listSize)
    {ostringstream s;
@@ -142,6 +142,7 @@ void arrayList<T>::output(ostream &out) const{
 }
 
 // overload operator
+template<class T>
 ostream & operator<<(ostream & os, const arrayList<T> & x){
   x.output(os);
   return os;
