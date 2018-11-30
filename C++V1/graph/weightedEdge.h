@@ -8,8 +8,7 @@
 using namespace std;
 
 template <class T>
-class weightedEdge : public edge<T>
-{
+class weightedEdge : public edge<T>{
 public:
   weightedEdge(){};
   weightedEdge(int theV1, int theV2, T theW)
@@ -41,4 +40,5 @@ ostream &operator<<(ostream &out, const weightedEdge<T> &x)
   x.output(out);
   return out;
 }
+
 #endif
