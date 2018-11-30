@@ -107,20 +107,23 @@ void binarySearchTree<K, E>::erase(const K &theKey){
       // free s anyway.
       delete s;
    }
-
-  binaryTreeNode<pair<const K, E> > *c;
-  if(p->leftChild != NULL)
-  c = p->leftChild;
-  else
-  c = p->rightChild;
-  if(p == root)
-    root = c;
   else{
-    if(p == pp->leftChild)
-      pp->leftChild = c;
+    binaryTreeNode<pair<const K, E> > *c;
+    if(p->leftChild != NULL)
+    c = p->leftChild;
     else
-      pp->rightChild = c;
+    c = p->rightChild;
+    
+    if(p == root)
+      root = c;
+    else{
+      if(p == pp->leftChild)
+        pp->leftChild = c;
+      else
+        pp->rightChild = c;
+      }
   }
+  
   treeSize--;
 }
 
