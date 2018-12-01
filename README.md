@@ -1,20 +1,63 @@
-# Data Structure and Algorithms in C++
+# Data Structure and Algorithms
 
 
-### Developed for use with the reporsitory:
+This reporsitoriy including but not limited to the following content
 
- - This program is free software: you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation, either version n of the License, or
- (at your option) any later version.
+- linkedChain
+- linearList
+- matrix
+- greedy
+- spanning tree
+- dynamic programming
+- divide and rule
+- sorting
+- tournamentTree
+- heap
+- graph
+- balancedTree
+- binaryTree
+- searchTree
+- queue
+- stack
+- hashing
 
- - This program is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
+```
+C++ head file like this one
+===========================
+// abstract class dictionary
+// abstract data type specification for dictionary data structure
+// all methods are pure virtual functions
+// K is key type and E is value type
 
- - You should have received a copy of the GNU General Public License
- along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#ifndef dictionary_
+#define dictionary_
+
+using namespace std;
+
+template <class K, class E>
+class dictionary
+{
+public:
+  virtual ~dictionary() {}
+  virtual bool empty() const = 0;
+  // return true iff dictionary is empty
+  virtual int size() const = 0;
+  // return number of pairs in dictionary
+  virtual pair<const K, E> *find(const K &) const = 0;
+  // return pointer to matching pair
+  virtual void erase(const K &) = 0;
+  // remove matching pair
+  virtual void insert(const pair<const K, E> &) = 0;
+  // insert a (key, value) pair into the dictionary
+};
+
+#endif
+
+
+```
+
+
+
 
 
 @NewGuo,2018
