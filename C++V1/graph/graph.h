@@ -166,7 +166,7 @@ public:
         // visit an adjacent vertex of i
         inDegree[u]++;
     }
-
+    
     // stack vertices with zero in-degree
     arrayStack<int> stack;
     for (int i = 1; i <= n; i++)
