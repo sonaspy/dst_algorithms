@@ -4,7 +4,7 @@
 #include ".._sharerelease.h"
 #include ".._shareutil.h"
 
-#include "ListNode.h"
+#include "Listnode.h"
 
 #include "List_bracket.h"
 
@@ -13,7 +13,7 @@
 #include "List_constructor_by_copying.h"
 #include "List_destructor.h"
 
-#include "list_disordered.h"
+#include "List_disordered.h"
 
 #include "List_find.h"
 #include "List_search.h"
