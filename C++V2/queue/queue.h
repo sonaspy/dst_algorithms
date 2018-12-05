@@ -1,5 +1,4 @@
 #pragma once
-
 #include "../list/List.h"  
 template <typename T> class Queue: public List<T> {  
 public:  
@@ -8,4 +7,3 @@ public:
    T& front() { return first()->data; }  
 };
 
-#include "queue_implementation.h"

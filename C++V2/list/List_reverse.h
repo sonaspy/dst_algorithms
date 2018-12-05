@@ -3,7 +3,7 @@
 
 template <typename T> void List<T>::reverse() {  
    if ( _size < 2 ) return;  
-   ListNodePosi(T) p; ListNodePosi(T) q;
+   Posi(T) p; Posi(T) q;
    for ( p = header, q = p->succ; p != trailer; p = q, q = p->succ )
       p->pred = q;  
    trailer->pred = NULL;  

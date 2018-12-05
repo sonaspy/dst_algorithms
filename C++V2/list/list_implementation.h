@@ -1,8 +1,7 @@
 
 #pragma once
 
-#include ".._sharerelease.h"
-#include ".._shareutil.h"
+
 
 #include "Listnode.h"
 
@@ -25,7 +24,6 @@
 #include "List_traverse.h"
 
 #include "List_sort.h"
-#include "List_insertionSort.h"
 #include "List_selectMax.h"
 #include "List_selectionSort.h"
 #include "List_merge.h"
