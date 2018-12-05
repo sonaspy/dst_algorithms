@@ -13,7 +13,8 @@
     "new": "cpp",
     "stdexcept": "cpp",
     "typeinfo": "cpp",
-    "iterator": "cpp"
+    "iterator": "cpp",
+    "stack": "cpp"
   },
   "python.pythonPath": "/usr/local/opt/python/bin/python3.7",
   "python.linting.pylintEnabled": false,
