@@ -16,7 +16,6 @@ int main(int argc, char const *argv[])
 {
     /* code */
     cout << expression_value();
-    printf("%lf",preExp());
     return 0;
 }
 
@@ -67,17 +66,3 @@ int factor_value(){
     return result;
 }
 
-
-
-double preExp(){
-    char s[20];
-    cin >> s;
-    switch(s[0]){
-        case '+': return preExp()+preExp();
-        case '-': return preExp()-preExp();
-        case '/': return preExp()*preExp();
-        case '*': return preExp()/preExp();
-        default:    return atof(s);
-        break;
-    }
-}
