@@ -1,6 +1,6 @@
 #include "BST.h"
 
-template <typename T>
+template <class T>
 class Splay : public BST<T>
 {
   protected:
@@ -12,7 +12,7 @@ class Splay : public BST<T>
     bool remove(const T &e);
 };
 
-template <typename T>
+template <class T>
     BinNodePosi(T) & Splay<T>::search(const T &e)
 {
     BinNodePosi(T) p = searchIn(_root, e, _hot = NULL);
@@ -20,7 +20,7 @@ template <typename T>
     return _root;
 }
 
-template <typename NodePosi>
+template <class NodePosi>
 inline 
     void
     attachAsLChild(NodePosi p, NodePosi lc)
@@ -29,7 +29,7 @@ inline
     if (lc)
         lc->parent = p;
 }
-template <typename NodePosi>
+template <class NodePosi>
 inline 
     void
     attachAsRChild(NodePosi p, NodePosi rc)
@@ -39,7 +39,7 @@ inline
         rc->parent = p;
 }
 
-template <typename T> 
+template <class T> 
 BinNodePosi(T) Splay<T>::splay(BinNodePosi(T) v)
 { 
     if (!v)
@@ -109,7 +109,7 @@ BinNodePosi(T) Splay<T>::splay(BinNodePosi(T) v)
 
 } 
 
-template <typename T>
+template <class T>
 bool Splay<T>::remove(const T &e)
 { 
     if (!_root || (e != search(e)->data))
@@ -148,7 +148,7 @@ bool Splay<T>::remove(const T &e)
 
 } 
 
-template <typename T>
+template <class T>
 BinNodePosi(T) Splay<T>::insert(const T &e)
 { 
     if (!_root)

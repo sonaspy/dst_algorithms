@@ -2,7 +2,7 @@
 
 
 
-template <typename T> struct Hailstone {  
+template <class T> struct Hailstone {  
    virtual void operator() ( T& e ) {  
       int step = 0;  
       while ( 1 != e ) {  

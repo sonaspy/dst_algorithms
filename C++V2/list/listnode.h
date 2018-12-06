@@ -5,7 +5,7 @@
 typedef int Rank;
 #define Posi(T) ListNode<T>*
 
-template <typename T>
+template <class T>
 struct ListNode
 {
 
@@ -26,7 +26,7 @@ struct ListNode
 
 
 
-template <typename T>
+template <class T>
 Posi(T) ListNode<T>::insertAsPred(T const &e)
 {
     Posi(T) x = new ListNode(e, pred, this);
@@ -36,7 +36,7 @@ Posi(T) ListNode<T>::insertAsPred(T const &e)
 }
 
 
-template <typename T>
+template <class T>
 Posi(T) ListNode<T>::insertAsSucc(T const &e)
 {
     Posi(T) x = new ListNode(e, this, succ);

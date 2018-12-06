@@ -17,7 +17,7 @@
  * �˴�������C++��ƫ�ػ����������������������������Ӧ����
  ******************************************************************************************/
 
-template <typename T> struct Cleaner {
+template <class T> struct Cleaner {
    static void clean ( T x ) {  
 #ifdef _DEBUG
       static int n = 0;
@@ -30,7 +30,7 @@ template <typename T> struct Cleaner {
    }
 };
 
-template <typename T> struct Cleaner<T*> {
+template <class T> struct Cleaner<T*> {
    static void clean ( T* x ) {
       if ( x ) { delete x; }  
 #ifdef _DEBUG
@@ -40,4 +40,4 @@ template <typename T> struct Cleaner<T*> {
    }
 };
 
-template <typename T> void release ( T x ) { Cleaner<T>::clean ( x ); }
+template <class T> void release ( T x ) { Cleaner<T>::clean ( x ); }

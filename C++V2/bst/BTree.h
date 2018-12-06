@@ -1,6 +1,6 @@
 #include "BTNode.h"
 
-template <typename T>
+template <class T>
 class BTree
 {
   protected:
@@ -30,7 +30,7 @@ class BTree
     bool remove(const T &e);
 };
 
-template <typename T>
+template <class T>
 bool BTree<T>::insert(const T &e)
 {
     BTNodePosi(T) v = search(e);
@@ -44,7 +44,7 @@ bool BTree<T>::insert(const T &e)
     return true;
 }
 
-template <typename T>
+template <class T>
 bool BTree<T>::remove(const T &e)
 {
     BTNodePosi(T) v = search(e);
@@ -67,7 +67,7 @@ bool BTree<T>::remove(const T &e)
     return true;
 }
 
-template <typename T>
+template <class T>
 BTNodePosi(T) BTree<T>::search(const T &e)
 {
     BTNodePosi(T) v = _root;
@@ -80,10 +80,10 @@ BTNodePosi(T) BTree<T>::search(const T &e)
         _hot = v;
         v = v->child[r + 1];
     }
-    return NULL;
+    return _hot;
 }
 
-template <typename T>
+template <class T>
 void BTree<T>::solveOverflow(BTNodePosi(T) v)
 {
     if (_order >= v->child.size())
@@ -114,7 +114,7 @@ void BTree<T>::solveOverflow(BTNodePosi(T) v)
 }
 
 
-template <typename T>
+template <class T>
 void BTree<T>::solveUnderflow(BTNodePosi(T) v)
 {
     if ((_order + 1)2 <= v->child.size())

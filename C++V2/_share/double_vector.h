@@ -8,5 +8,5 @@
 
 
 
-template <typename T> void double ( Vector<T> & V )  
+template <class T> void double ( Vector<T> & V )  
 {  V.traverse ( Double<T>() );  }  

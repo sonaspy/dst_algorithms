@@ -1,6 +1,6 @@
 
 
-template <typename K, typename V>
+template <class K, class V>
 struct Entry
 {
     K key;

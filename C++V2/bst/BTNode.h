@@ -2,7 +2,7 @@
 
 #define BTNodePosi(T) BTNode<T>*
 
-template <typename T>
+template <class T>
 struct BTNode
 {
 
@@ -28,7 +28,7 @@ struct BTNode
     }
 };
 
-template <typename T>
+template <class T>
 BinNodePosi(T) BinNode<T>::zig()
 {
     BinNodePosi(T) lChild = lc;
@@ -43,7 +43,7 @@ BinNodePosi(T) BinNode<T>::zig()
     return lChild;
 }
 
-template <typename T>
+template <class T>
 BinNodePosi(T) BinNode<T>::zag()
 {
     BinNodePosi(T) rChild = rc;

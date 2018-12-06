@@ -3,7 +3,7 @@
 typedef enum { UNDISCOVERED, DISCOVERED, VISITED } VStatus;  
 typedef enum { UNDETERMINED, TREE, CROSS, FORWARD, BACKWARD } EType;  
 
-template <typename Tv, typename Te>  
+template <class Tv, class Te>  
 class Graph {  
 private:
    void reset() {  
@@ -18,7 +18,7 @@ private:
    void DFS ( int, int& );  
    void BCC ( int, int&, Stack<int>& );  
    bool TSort ( int, int&, Stack<Tv>
-   template <typename PU> void PFS ( int, PU );  
+   template <class PU> void PFS ( int, PU );  
 public:
  
    int n;  
@@ -50,10 +50,10 @@ public:
    Stack<Tv>
    void prim ( int );  
    void dijkstra ( int );  
-   template <typename PU> void pfs ( int, PU );
+   template <class PU> void pfs ( int, PU );
 };
 
-template <typename Tv, typename Te>
+template <class Tv, class Te>
 void Graph<Tv, Te>::bfs(int s)
 {
    reset();
@@ -66,7 +66,7 @@ void Graph<Tv, Te>::bfs(int s)
 }
 
 
-template <typename Tv, typename Te>
+template <class Tv, class Te>
 void Graph<Tv, Te>::BFS(int v, int &clock)
 {
    Queue<int> Q;
@@ -91,7 +91,7 @@ void Graph<Tv, Te>::BFS(int v, int &clock)
    }
 }
 
-template <typename Tv, typename Te>
+template <class Tv, class Te>
 void Graph<Tv, Te>::dijkstra(int s)
 {
    reset();
@@ -116,7 +116,7 @@ void Graph<Tv, Te>::dijkstra(int s)
    }
 }
 
-template <typename Tv, typename Te>
+template <class Tv, class Te>
 void Graph<Tv, Te>::prim(int s)
 {
    reset();
@@ -141,8 +141,8 @@ void Graph<Tv, Te>::prim(int s)
    }
 }
 
-template <typename Tv, typename Te>
-template <typename PU>
+template <class Tv, class Te>
+template <class PU>
 void Graph<Tv, Te>::pfs(int s, PU prioUpdater)
 {
    reset();
@@ -153,8 +153,8 @@ void Graph<Tv, Te>::pfs(int s, PU prioUpdater)
    while (s != (v = (++v % n)));
 }
 
-template <typename Tv, typename Te>
-template <typename PU>
+template <class Tv, class Te>
+template <class PU>
 void Graph<Tv, Te>::PFS(int s, PU prioUpdater)
 {
    priority(s) = 0;
@@ -178,7 +178,7 @@ void Graph<Tv, Te>::PFS(int s, PU prioUpdater)
    }
 }
 
-template <typename Tv, typename Te>
+template <class Tv, class Te>
 void Graph<Tv, Te>::dfs(int s)
 {
    reset();
@@ -191,7 +191,7 @@ void Graph<Tv, Te>::dfs(int s)
 }
 
 
-template <typename Tv, typename Te>
+template <class Tv, class Te>
 void Graph<Tv, Te>::DFS(int v, int &clock)
 {
    dTime(v) = ++clock;

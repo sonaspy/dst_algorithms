@@ -4,7 +4,7 @@
 
 #include "..\list\list.h"
 
-template <typename T> void checkOrder ( List<T> & L ) {  
+template <class T> void checkOrder ( List<T> & L ) {  
    int unsorted = 0;  
    L.traverse ( CheckOrder<T> ( unsorted, L.first()->data ) );  
    if ( 0 < unsorted )
