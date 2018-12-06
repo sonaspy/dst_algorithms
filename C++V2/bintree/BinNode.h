@@ -1,5 +1,9 @@
 #include "../stack/stack_vector.h"
 #include "../queue/queue.h"
+
+#ifndef BinNode_
+#define BinNode_
+
 #define BinNodePosi(T) BinNode<T> *
 #define stature(p) ((p) ? (p)->height : -1)
 #define IsRoot(x) (!((x).parent))
@@ -253,3 +257,7 @@ void travPost_I ( BinNodePosi(T) x, VST& visit ) {
         x = S.pop(); visit ( x->data );
      }
 }
+
+
+
+#endif

@@ -1,5 +1,8 @@
 #include "BTNode.h"
 
+#ifndef BTree_
+#define BTree_
+
 template <class T>
 class BTree
 {
@@ -209,3 +212,5 @@ void BTree<T>::solveUnderflow(BTNodePosi(T) v)
     solveUnderflow(p);
     return;
 }
+
+#endif

@@ -1,4 +1,5 @@
-
+#ifndef GRAPH_
+#define GRAPH_
 
 typedef enum { UNDISCOVERED, DISCOVERED, VISITED } VStatus;  
 typedef enum { UNDETERMINED, TREE, CROSS, FORWARD, BACKWARD } EType;  
@@ -214,3 +215,5 @@ void Graph<Tv, Te>::DFS(int v, int &clock)
    status(v) = VISITED;
    fTime(v) = ++clock;
 }
+
+#endif

@@ -1,7 +1,9 @@
-
-
-
 #include "BinNode.h"
+
+
+#ifndef BinTree_
+#define BinTree_
+
 template <class T>
 class BinTree
 {
@@ -84,3 +86,4 @@ BinNodePosi(T) BinTree<T>::insertAsLC(BinNodePosi(T) x, T const &e)
      updateHeightAbove(x);
      return x->rc;
 }
+#endif

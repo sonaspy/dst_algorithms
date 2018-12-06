@@ -2,6 +2,9 @@
 
 #define BTNodePosi(T) BTNode<T>*
 
+#ifndef BTNode_
+#define BTNode_
+
 template <class T>
 struct BTNode
 {
@@ -57,3 +60,6 @@ BinNodePosi(T) BinNode<T>::zag()
     this->parent = rChild;
     return rChild;
 }
+
+
+#endif

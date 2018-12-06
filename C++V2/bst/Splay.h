@@ -1,5 +1,8 @@
 #include "BST.h"
 
+#ifndef Splay_
+#define Splay_
+
 template <class T>
 class Splay : public BST<T>
 {
@@ -182,3 +185,5 @@ BinNodePosi(T) Splay<T>::insert(const T &e)
     return _root;         
 
 } 
+
+#endif
