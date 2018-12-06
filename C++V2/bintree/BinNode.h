@@ -206,6 +206,7 @@ void BinNode<T>::travLevel(VST &visit)
             Q.enqueue(x->rc);
     }
 }
+
 template <typename T>
 BinNodePosi(T) BinNode<T>::succ()
 {
@@ -224,6 +225,7 @@ BinNodePosi(T) BinNode<T>::succ()
     }
     return s;
 }
+
 template <typename T, typename VST> 
 void travPost_R ( BinNodePosi(T) x, VST& visit ){
      if ( !x ) return;
