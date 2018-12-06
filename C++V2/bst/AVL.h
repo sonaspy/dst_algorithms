@@ -13,7 +13,7 @@
 #define BalFac(x) (stature((x).lc) - stature((x).rc))
 #define AvlBalanced(x) ((-2 < BalFac(x)) && (BalFac(x) < 2))  
 
-template <typename T>
+template <class T>
 class AVL: public BST<T>
     {
       public:
@@ -21,7 +21,7 @@ class AVL: public BST<T>
         bool remove(const T &e);
 };
 
-template <typename T>
+template <class T>
 BinNodePosi(T) AVL<T>::insert(const T &e){
     BinNodePosi(T) &x = search(e);
     if (x)
@@ -39,7 +39,7 @@ BinNodePosi(T) AVL<T>::insert(const T &e){
     return xx;
 }
 
-template <typename T>
+template <class T>
 bool AVL<T>::remove(const T &e){
     BinNodePosi(T) &x = search(e);
     if (!x)
@@ -54,7 +54,7 @@ bool AVL<T>::remove(const T &e){
     return true;
 }
 
-template <typename T>
+template <class T>
 BinNodePosi(T) BST<T>::connect34(BinNodePosi(T) a, BinNodePosi(T) b,
                                  BinNodePosi(T) c, BinNodePosi(T) T0,
                                  BinNodePosi(T) T1, BinNodePosi(T) T2,
@@ -82,7 +82,7 @@ BinNodePosi(T) BST<T>::connect34(BinNodePosi(T) a, BinNodePosi(T) b,
     return b;
 }
 
-template <typename T>
+template <class T>
 BinNodePosi(T) BST<T>::rotateAt(BinNodePosi(T) v)
 {
     BinNodePosi(T) p = v->parent;

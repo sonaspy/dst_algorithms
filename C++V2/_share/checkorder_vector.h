@@ -4,7 +4,7 @@
 
 #include "..\vector\vector.h"
 
-template <typename T> void checkOrder ( Vector<T> & V ) {  
+template <class T> void checkOrder ( Vector<T> & V ) {  
    int unsorted = 0;  
    V.traverse ( CheckOrder<T> ( unsorted, V[0] ) );  
    if ( 0 < unsorted )

@@ -1,5 +1,4 @@
-
-#include "../stack/stack_list.h"
+#include "../stack/stack_vector.h"
 #include "../queue/queue.h"
 #define BinNodePosi(T) BinNode<T> *
 #define stature(p) ((p) ? (p)->height : -1)
@@ -28,7 +27,7 @@ typedef enum
     RB_BLACK
 } RBColor;
 
-template <typename T>
+template <class T>
 struct BinNode
 {
 
@@ -53,32 +52,32 @@ struct BinNode
     BinNodePosi(T) insertAsLC(T const &);
     BinNodePosi(T) insertAsRC(T const &);
     BinNodePosi(T) succ();
-    template <typename VST>
+    template <class VST>
     void travLevel(VST &);
-    template <typename VST>
+    template <class VST>
     void travPre(VST &);
-    template <typename VST>
+    template <class VST>
     void travIn(VST &);
-    template <typename VST>
+    template <class VST>
     void travPost(VST &);
 
     bool operator<(BinNode const &bn) { return data < bn.data; }
     bool operator==(BinNode const &bn) { return data == bn.data; }
 };
 
-template <typename T>
+template <class T>
 BinNodePosi(T) BinNode<T>::insertAsLC(T const &e)
 {
     return lc = new BinNode(e, this);
 }
 
-template <typename T>
+template <class T>
 BinNodePosi(T) BinNode<T>::insertAsRC(T const &e)
 {
     return rc = new BinNode(e, this);
 }
 
-template <typename T>
+template <class T>
 int BinNode<T>::size()
 {
     int s = 1;
@@ -89,7 +88,7 @@ int BinNode<T>::size()
     return s;
 }
 
-template <typename T, typename VST>
+template <class T, class VST>
 void travPre_R(BinNodePosi(T) x, VST &visit)
 {
     if (!x)
@@ -99,7 +98,7 @@ void travPre_R(BinNodePosi(T) x, VST &visit)
     travPre_R(x->lr, visit);
 }
 
-template <typename T, typename VST>
+template <class T, class VST>
 void travPre_I1(BinNodePosi(T) x, VST &visit)
 {
     Stack<BinNodePosi(T)> S;
@@ -116,7 +115,7 @@ void travPre_I1(BinNodePosi(T) x, VST &visit)
     }
 }
 
-template <typename T, typename VST>
+template <class T, class VST>
 static void visitAlongVine_pre(BinNodePosi(T) x, VST &visit, Stack<BinNodePosi(T)> &S)
 {
     while (x)
@@ -126,7 +125,7 @@ static void visitAlongVine_pre(BinNodePosi(T) x, VST &visit, Stack<BinNodePosi(T
         x = x->lc;
     }
 }
-template <typename T, typename VST>
+template <class T, class VST>
 void travPre_I2(BinNodePosi(T) x, VST &visit)
 {
     Stack<BinNodePosi(T)> S;
@@ -139,7 +138,7 @@ void travPre_I2(BinNodePosi(T) x, VST &visit)
     }
 }
 
-template <typename T, typename VST>
+template <class T, class VST>
 void travIn_R(BinNodePosi(T) x, VST &visit)
 {
     if (!x)
@@ -149,7 +148,7 @@ void travIn_R(BinNodePosi(T) x, VST &visit)
     travIn_R(x->rc, visit);
 }
 
-template <typename T, typename VST>
+template <class T, class VST>
 static void visitAlongVine_in(BinNodePosi(T) x, Stack<BinNodePosi(T)> &S)
 {
     while (x)
@@ -159,7 +158,7 @@ static void visitAlongVine_in(BinNodePosi(T) x, Stack<BinNodePosi(T)> &S)
     }
 }
 
-template <typename T, typename VST>
+template <class T, class VST>
 void travIn_I1(BinNodePosi(T) x, VST &visit)
 {
     Stack<BinNodePosi(T)> S;
@@ -173,7 +172,7 @@ void travIn_I1(BinNodePosi(T) x, VST &visit)
         x = x->rc;
     }
 }
-template <typename T, typename VST>
+template <class T, class VST>
 void travIn_I4(BinNodePosi(T) x, VST &visit)
 {
     while (true)
@@ -191,7 +190,7 @@ void travIn_I4(BinNodePosi(T) x, VST &visit)
         }
 }
 
-template <typename T, typename VST>
+template <class T, class VST>
 void BinNode<T>::travLevel(VST &visit)
 {
     Queue<BinNodePosi(T)> Q;
@@ -207,7 +206,7 @@ void BinNode<T>::travLevel(VST &visit)
     }
 }
 
-template <typename T>
+template <class T>
 BinNodePosi(T) BinNode<T>::succ()
 {
     BinNodePosi(T) s = this;
@@ -226,7 +225,7 @@ BinNodePosi(T) BinNode<T>::succ()
     return s;
 }
 
-template <typename T, typename VST> 
+template <class T, class VST> 
 void travPost_R ( BinNodePosi(T) x, VST& visit ){
      if ( !x ) return;
      travPost_R ( x->lc, visit );
@@ -234,7 +233,7 @@ void travPost_R ( BinNodePosi(T) x, VST& visit ){
      visit ( x->data );
 }
 
-template <typename T>
+template <class T>
 static void gotoHLVFL ( Stack<BinNodePosi(T)>& S ){
     while ( BinNodePosi(T) x = S.top() ) 
           if ( HasLChild ( *x ) ){
@@ -244,7 +243,7 @@ static void gotoHLVFL ( Stack<BinNodePosi(T)>& S ){
             S.push ( x->rc ); 
         S.pop();
 }
-template <typename T, typename VST>
+template <class T, class VST>
 void travPost_I ( BinNodePosi(T) x, VST& visit ) {
     Stack<BinNodePosi(T)> S; 
      if ( x ) S.push ( x );

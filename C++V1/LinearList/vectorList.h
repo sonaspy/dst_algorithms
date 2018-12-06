@@ -41,7 +41,7 @@ class vectorList : public linearList<T>
       int capacity() const {return (int) element->capacity();}
 
       // iterators to start and end of list
-      typedef typename vector<T>::iterator iterator;
+      typedef class vector<T>::iterator iterator;
       iterator begin() {return element->begin();}
       iterator end() {return element->end();}
 
@@ -50,7 +50,7 @@ class vectorList : public linearList<T>
       vector<T>* element;     // vector to hold list elements
 };
 
-template <typename T>
+template <class T>
 vectorList<T>::vectorList(int initialCapacity)
 {// Constructor.
    if (initialCapacity < 1)
@@ -129,7 +129,7 @@ void vectorList<T>::insert(int theIndex, const T& theElement)
            // memory to resize vector
 }
 
-template <typename T>
+template <class T>
 void vectorList<T>::half(){
   // Remove all odd indexed elements.
 
@@ -143,7 +143,7 @@ void vectorList<T>::half(){
    element->erase(element->begin() + newSize, element->end());
 }
 
-template <typename T>
+template <class T>
 void vectorList<T>::Merge(const vectorList<T> &a, const vectorList<T> &b){
   // Make this the result of merging the sorted lists a and b.
    vector<T>::iterator ia = a.element->begin();  // iterator for a

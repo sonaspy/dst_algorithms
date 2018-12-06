@@ -1,6 +1,6 @@
 
 #include "../bintree/BinTree.h"
-template <typename T>
+template <class T>
 class BST : public BinTree<T>
 {
   protected:
@@ -16,14 +16,14 @@ class BST : public BinTree<T>
     virtual bool remove(const T &e);
 };
 
-template <typename T>
+template <class T>
     BinNodePosi(T) & BST<T>::search(const T &e)
 {
     return __seachIn(_root, e, _hot = NULL);
 }
 
 #define EQUAL(e, v) (!(v) || (e) == (v)->data)
-template <typename T>
+template <class T>
     static BinNodePosi(T) & __seachIn(BinNodePosi(T) & v, const T &e, BinNodePosi(T) & hot)
 {
     if (EQUAL(e, v))
@@ -38,7 +38,7 @@ template <typename T>
     }
 }
 
-template <typename T>
+template <class T>
     static BinNodePosi(T) & __seachIn_r(BinNodePosi(T) & v, const T &e, BinNodePosi(T) & hot)
 {
     if (!v || (e == v->data))
@@ -47,7 +47,7 @@ template <typename T>
     return __seachIn_r(((e < v->data) ? v->lc : v->rc), e, hot);
 }
 
-template <typename T>
+template <class T>
 BinNodePosi(T) BST<T>::insert(const T &e)
 {
     BinNodePosi(T) &x = search(e);
@@ -60,7 +60,7 @@ BinNodePosi(T) BST<T>::insert(const T &e)
     return x;
 }
 
-template <typename T>
+template <class T>
 bool BST<T>::remove(const T &e)
 {
     BinNodePosi(T) &x = search(e);
@@ -72,7 +72,7 @@ bool BST<T>::remove(const T &e)
     return true;
 }
 
-template <typename T>
+template <class T>
 static BinNodePosi(T) __removeAt(BinNodePosi(T) & x, BinNodePosi(T) & hot)
 {
     BinNodePosi(T) w = x;

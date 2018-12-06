@@ -1,6 +1,6 @@
 
 #include"graph.h"
-template <typename Tv>
+template <class Tv>
 struct Vertex
 {
     Tv data;
@@ -13,7 +13,7 @@ struct Vertex
                                   dTime(-1), fTime(-1), parent(-1), priority(INT_MAX) {}
 };
 
-template <typename Te>
+template <class Te>
 struct Edge
 {
     Te data;
@@ -22,7 +22,7 @@ struct Edge
     Edge(Te const &d, int w) : data(d), weight(w), type(UNDETERMINED) {}
 };
 
-template <typename Tv, typename Te>
+template <class Tv, class Te>
 class GraphMatrix : public Graph<Tv, Te>
 {
   private:

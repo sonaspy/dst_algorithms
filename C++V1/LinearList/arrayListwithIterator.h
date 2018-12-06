@@ -221,7 +221,7 @@ void arrayList<T>::insert(int theIndex, const T &theElement)
    listSize++;
 }
 
-template <typename T>
+template <class T>
 void arrayList<T>::Merge(const arrayList<T> &a, const arrayList<T> &b)
 {
    // Make this the result of merging the sorted lists a and b.
@@ -249,7 +249,7 @@ void arrayList<T>::Merge(const arrayList<T> &a, const arrayList<T> &b)
    listSize = ct;
 }
 
-template <typename T>
+template <class T>
 void arrayList<T>::half()
 {
    //remove all old indexed elements.
@@ -263,7 +263,7 @@ void arrayList<T>::half()
    listSize = newSize;
 }
 
-template <typename T>
+template <class T>
 void arrayList<T>::leftShift(int theAmount)
 {
    // Left shift by i elements.
@@ -283,7 +283,7 @@ void arrayList<T>::leftShift(int theAmount)
    listSize = newSize;
 }
 
-template <typename T>
+template <class T>
 void arrayList<T>::removeRange(int start, int end)
 {
    if (start < 0 || end > listSize)
@@ -301,7 +301,7 @@ void arrayList<T>::removeRange(int start, int end)
    listSize = newSize;
 }
 
-template <typename T>
+template <class T>
 void arrayList<T>::setElements(int index, const T &theElement)
 {
    // Set element i to theElement.
@@ -310,7 +310,7 @@ void arrayList<T>::setElements(int index, const T &theElement)
    element[theIndex] = theElement;
 }
 
-template <typename T>
+template <class T>
 void arrayList<T>::push_back(const T &theElement)
 {
    // Insert theElement at right end of list.
@@ -325,7 +325,7 @@ void arrayList<T>::push_back(const T &theElement)
    listSize++;
 }
 
-template <typename T>
+template <class T>
 void arrayList<T>::swap2lists(arrayList<T> &theList)
 {
    // Swap the two lists.
@@ -335,7 +335,7 @@ void arrayList<T>::swap2lists(arrayList<T> &theList)
    swap(element, theList.element);
 }
 
-template <typename T>
+template <class T>
 bool arrayList<T>::operator!=(const arrayList<T> &theList) const
 {
    // Return true iff the two lists are not identical.
@@ -351,7 +351,7 @@ bool arrayList<T>::operator!=(const arrayList<T> &theList) const
    return false;
 }
 
-template <typename T>
+template <class T>
 T &arrayList<T>::operator[](int theIndex)
 {
    // Return a reference to position theIndex of the list.
@@ -359,7 +359,7 @@ T &arrayList<T>::operator[](int theIndex)
    return element[theIndex];
 }
 
-template <typename T>
+template <class T>
 void arrayList<T>::trimToSize()
 {
    // Make array length equal to max{listSize, 1}

@@ -1,5 +1,5 @@
 
 
 
-template <typename T> struct Increase  
+template <class T> struct Increase  
    {  virtual void operator() ( T& e ) { e++; }  };  

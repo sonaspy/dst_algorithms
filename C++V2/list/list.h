@@ -4,7 +4,7 @@
 #ifndef List_
 #define List_
 
-template <typename T>
+template <class T>
 class List
 {
   private:
@@ -65,11 +65,11 @@ class List
     void reverse();
 
    void traverse ( void (
-   template <typename VST>  
+   template <class VST>  
    void traverse ( VST& );
 };
 
-template <typename T>
+template <class T>
 T & List<T>::operator[](Rank r) const
 {
     Posi(T) p = first();
@@ -80,7 +80,7 @@ T & List<T>::operator[](Rank r) const
 
 
 
-template <typename T>
+template <class T>
 int List<T>::clear()
 {
     int oldSize = _size;
@@ -89,18 +89,18 @@ int List<T>::clear()
     return oldSize;
 }
 
-template <typename T>
+template <class T>
 List<T>::List(Posi(T) p, int n) { copyNodes(p, n); }
 
-template <typename T>
+template <class T>
 List<T>::List(List<T> const &L) { copyNodes(L.first(), L._size); }
 
-template <typename T>
+template <class T>
 List<T>::List(List<T> const &L, int r, int n) { copyNodes(L[r], n); }
 
 
 
-template <typename T>
+template <class T>
 void List<T>::copyNodes(Posi(T) p, int n)
 {
     init();
@@ -112,7 +112,7 @@ void List<T>::copyNodes(Posi(T) p, int n)
 }
 
 
-template <typename T> int List<T>::deduplicate() {  
+template <class T> int List<T>::deduplicate() {  
    if ( _size < 2 ) return 0;  
    int oldSize = _size;  
    Posi(T) p = header; Rank r = 0;  
@@ -123,7 +123,7 @@ template <typename T> int List<T>::deduplicate() {
    return oldSize - _size;  
 }
 
-template <typename T>
+template <class T>
 List<T>::~List()
 {
     clear();
@@ -131,7 +131,7 @@ List<T>::~List()
     delete trailer;
 }
 
-template <typename T>
+template <class T>
 Posi(T) List<T>::find(T const &e, int n, Posi(T) p) const
 {
     while (0 < n--)
@@ -140,7 +140,7 @@ Posi(T) List<T>::find(T const &e, int n, Posi(T) p) const
     return NULL;
 }
 
-template <typename T>  
+template <class T>  
 void List<T>::insertionSort ( Posii(T) p, int n ) {  
    
    for ( int r = 0; r < n; r++ ) {  
@@ -149,7 +149,7 @@ void List<T>::insertionSort ( Posii(T) p, int n ) {
    }
 }
 
-template <typename T>
+template <class T>
 void List<T>::init()
 {
     header = new ListNode<T>;
@@ -161,28 +161,28 @@ void List<T>::init()
     _size = 0;
 }
 
-template <typename T>
+template <class T>
 Posi(T) List<T>::insertAsFirst(T const &e)
 {
     _size++;
     return header->insertAsSucc(e);
 }
 
-template <typename T>
+template <class T>
 Posi(T) List<T>::insertAsLast(T const &e)
 {
     _size++;
     return trailer->insertAsPred(e);
 }
 
-template <typename T>
+template <class T>
 Posi(T) List<T>::insertA(Posi(T) p, T const &e)
 {
     _size++;
     return p->insertAsSucc(e);
 }
 
-template <typename T>
+template <class T>
 Posi(T) List<T>::insertB(Posi(T) p, T const &e)
 {
     _size++;
@@ -191,7 +191,7 @@ Posi(T) List<T>::insertB(Posi(T) p, T const &e)
 
 
 
-template <typename T>
+template <class T>
 T List<T>::remove(Posi(T) p)
 {
     T e = p->data;
@@ -203,7 +203,7 @@ T List<T>::remove(Posi(T) p)
 }
 
 
-template <typename T> void List<T>::reverse() {  
+template <class T> void List<T>::reverse() {  
    if ( _size < 2 ) return;  
    Posi(T) p; Posi(T) q;
    for ( p = header, q = p->succ; p != trailer; p = q, q = p->succ )
@@ -217,7 +217,7 @@ template <typename T> void List<T>::reverse() {
 
 
 
-template <typename T>  
+template <class T>  
 Posi(T) List<T>::search ( T const& e, int n, Posi(T) p ) const {
  
    
@@ -229,7 +229,7 @@ Posi(T) List<T>::search ( T const& e, int n, Posi(T) p ) const {
 }  
 
 
-template <typename T>  
+template <class T>  
 void List<T>::selectionSort ( Posi(T) p, int n ) {  
    
    Posi(T) prewalk = p->pred; Posi(T) walk = p;
@@ -243,7 +243,7 @@ void List<T>::selectionSort ( Posi(T) p, int n ) {
 }
 
 
-template <typename T>  
+template <class T>  
 Posii(T) List<T>::selectMax ( Posii(T) p, int n ) {
    Posii(T) max = p;  
    for ( Posii(T) cur = p; 1 < n; n-- )  
@@ -253,7 +253,7 @@ Posii(T) List<T>::selectMax ( Posii(T) p, int n ) {
 }
 
 
-template <typename T> void List<T>::sort ( Posii(T) p, int n ) {  
+template <class T> void List<T>::sort ( Posii(T) p, int n ) {  
    switch ( rand() % 3 ) {  
       case 1:  insertionSort ( p, n ); break;  
       case 2:  selectionSort ( p, n ); break;  
@@ -262,15 +262,15 @@ template <typename T> void List<T>::sort ( Posii(T) p, int n ) {
 }
 
 
-template <typename T> void List<T>::traverse ( void ( 
+template <class T> void List<T>::traverse ( void ( 
 {  for ( Posi(T) p = header->succ; p != trailer; p = p->succ ) visit ( p->data );  }
 
-template <typename T> template <typename VST>  
+template <class T> template <class VST>  
 void List<T>::traverse ( VST& visit )  
 {  for ( Posi(T) p = header->succ; p != trailer; p = p->succ ) visit ( p->data );  }
 
 
-template <typename T> 
+template <class T> 
 int List<T>::uniquify() {  
    if ( _size < 2 ) return 0;  
    int oldSize = _size;  

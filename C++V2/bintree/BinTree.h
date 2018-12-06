@@ -2,7 +2,7 @@
 
 
 #include "BinNode.h"
-template <typename T>
+template <class T>
 class BinTree
 {
    protected:
@@ -28,19 +28,19 @@ class BinTree
    BinNodePosi(T) attachAsRC ( BinNodePosi(T) x, BinTree<T>
    int remove ( BinNodePosi(T) x );  
    BinTree<T>
-   template <typename VST>  
+   template <class VST>  
    void travLevel ( VST& visit ) {
           if (_root)
                _root->travLevel(visit); }  
-   template <typename VST>  
+   template <class VST>  
    void travPre ( VST& visit ) {
           if (_root)
                _root->travPre(visit); }  
-   template <typename VST>  
+   template <class VST>  
    void travIn ( VST& visit ) {
           if (_root)
                _root->travIn(visit); }  
-   template <typename VST>  
+   template <class VST>  
    void travPost ( VST& visit ) {
           if (_root)
                _root->travPost(visit); }  
@@ -52,14 +52,14 @@ class BinTree
           return _root && t._root && (_root == t._root); }
 };
 
-template <typename T>
+template <class T>
 int BinTree<T>::updateHeight(BinNodePosi(T) x)
 {
      return x->height = 1 + max(stature(x->lc), stature(x->rc));
 }
 // #define stature(p) ((p) ? (p)->height : -1)
 
-template <typename T>
+template <class T>
 void BinTree<T>::updateHeightAbove(BinNodePosi(T) x)
 {
      while (x)
@@ -68,7 +68,7 @@ void BinTree<T>::updateHeightAbove(BinNodePosi(T) x)
           x = x->parent;
      }
 }
-template <typename T>
+template <class T>
 BinNodePosi(T) BinTree<T>::insertAsRC(BinNodePosi(T) x, T const &e)
 {
      _size++;
@@ -76,7 +76,7 @@ BinNodePosi(T) BinTree<T>::insertAsRC(BinNodePosi(T) x, T const &e)
      updateHeightAbove(x);
      return x->rc;
 }
-template <typename T>
+template <class T>
 BinNodePosi(T) BinTree<T>::insertAsLC(BinNodePosi(T) x, T const &e)
 {
      _size++;

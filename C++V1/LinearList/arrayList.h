@@ -70,7 +70,7 @@ arrayList<T>::arrayList(const arrayList<T> & theList){
    copy(theList.element, theList.element + listSize, element);
 }
 
-template <typename T>
+template <class T>
 void arrayList<T>::checkIndex(int theIndex) const{
   // Verify that theIndex is between 0 and listSize - 1.
    if (theIndex < 0 || theIndex >= listSize)
@@ -80,7 +80,7 @@ void arrayList<T>::checkIndex(int theIndex) const{
    }
 }
 
-template <typename T>
+template <class T>
 T& arrayList<T>::get(int theIndex) const
 {// Return element whose index is theIndex.
  // Throw illegalIndex exception if no such element.
@@ -88,7 +88,7 @@ T& arrayList<T>::get(int theIndex) const
    return element[theIndex];
 }
 
-template <typename T>
+template <class T>
 int arrayList<T>::indexOf(const T& theElement) const
 {// Return index of first occurrence of theElement.
  // Return -1 if theElement not in list.
@@ -104,7 +104,7 @@ int arrayList<T>::indexOf(const T& theElement) const
    else return theIndex;
  }
 
-template <typename T>
+template <class T>
 void arrayList<T>::erase(int theIndex){
   // Delete the element whose index is theIndex.
  // Throw illegalIndex exception if no such element.
@@ -114,7 +114,7 @@ void arrayList<T>::erase(int theIndex){
  element[--listSize].~T();
 }
 
-template <typename T>
+template <class T>
 void arrayList<T>::insert(int theIndex, const T &theElement){
   // Insert theElement so that its index is theIndex.
   if(theIndex < 0 || theIndex > listSize){
@@ -135,7 +135,7 @@ void arrayList<T>::insert(int theIndex, const T &theElement){
   listSize++;
 }
 
-template <typename T>
+template <class T>
 void arrayList<T>::output(ostream &out) const{
   // Put the list into the stream out.
   copy(element, element+listSize, ostream_iterator<T>(cout, " "));
