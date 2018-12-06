@@ -1,6 +1,9 @@
 #include"../bintree/BinNode.h"
 #include"./BST.h"
 
+#ifndef AVL_
+#define AVL_
+
  #define tallerChild(x) ( \
     stature( (x)->lc ) > stature( (x)->rc ) ? (x)->lc : (  \
     stature( (x)->lc ) < stature( (x)->rc ) ? (x)->rc : (  \
@@ -110,3 +113,5 @@ BinNodePosi(T) BST<T>::rotateAt(BinNodePosi(T) v)
         return connect34(g, v, p, g->lc, v->lc, v->rc, p->rc);
     }
 }
+
+#endif

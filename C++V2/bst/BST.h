@@ -1,5 +1,9 @@
 
 #include "../bintree/BinTree.h"
+
+#ifndef BST_
+#define BST_
+
 template <class T>
 class BST : public BinTree<T>
 {
@@ -95,3 +99,6 @@ static BinNodePosi(T) __removeAt(BinNodePosi(T) & x, BinNodePosi(T) & hot)
     release(w);
     return replacer;
 }
+
+
+#endif
