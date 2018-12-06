@@ -40,8 +40,8 @@ bool BTree<T>::insert(const T &e)
     if (v)
         return false;
     Rank r = _hot->key.search(e);
-    _hot->key.insert(r + 1, e);
-    _hot->child.insert(r + 2, NULL);
+    _hot->key.insert(++r, e);
+    _hot->child.insert(++r, NULL);
     _size++;
     solveOverflow(_hot);
     return true;
@@ -64,7 +64,7 @@ bool BTree<T>::remove(const T &e)
         r = 0;
     }
     v->key.remove(r);
-    v->child.remove(r + 1);
+    v->child.remove(++r);
     _size--;
     solveUnderflow(v);
     return true;
