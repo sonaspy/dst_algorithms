@@ -1,5 +1,5 @@
 #pragma once
-#include"../bintree/BinTree.h"
+#include "../bintree/BinTree.h"
 template <typename T>
 class BST : public BinTree<T>
 {
@@ -15,3 +15,83 @@ class BST : public BinTree<T>
     virtual BinNodePosi(T) insert(const T &e);
     virtual bool remove(const T &e);
 };
+
+template <typename T>
+    BinNodePosi(T) & BST<T>::search(const T &e)
+{
+    return __seachIn(_root, e, _hot = NULL);
+}
+
+#define EQUAL(e, v) (!(v) || (e) == (v)->data)
+template <typename T>
+    static BinNodePosi(T) & __seachIn(BinNodePosi(T) & v, const T &e, BinNodePosi(T) & hot)
+{
+    if (EQUAL(e, v))
+        return v;
+    hot = v;
+    while (true)
+    {
+        BinNodePosi(T) &c = (e < hot->data) ? hot->lc : hot->rc;
+        if (EQUAL(e, c))
+            return c;
+        hot = c;
+    }
+}
+
+template <typename T>
+    static BinNodePosi(T) & __seachIn_r(BinNodePosi(T) & v, const T &e, BinNodePosi(T) & hot)
+{
+    if (!v || (e == v->data))
+        return v;
+    hot = v;
+    return __seachIn_r(((e < v->data) ? v->lc : v->rc), e, hot);
+}
+
+template <typename T>
+BinNodePosi(T) BST<T>::insert(const T &e)
+{
+    BinNodePosi(T) &x = search(e);
+    if (!x)
+    {
+        x = new BinNode<T>(e, _hot);
+        _size++;
+        updateHeightAbove(x);
+    }
+    return x;
+}
+
+template <typename T>
+bool BST<T>::remove(const T &e)
+{
+    BinNodePosi(T) &x = search(e);
+    if (!x)
+        return false;
+    __removeAt(x, _hot);
+    _size--;
+    updateHeightAbove(_hot);
+    return true;
+}
+
+template <typename T>
+static BinNodePosi(T) __removeAt(BinNodePosi(T) & x, BinNodePosi(T) & hot)
+{
+    BinNodePosi(T) w = x;
+    BinNodePosi(T) replacer = NULL;
+    if (!HasLChild(*x))
+        replacer = (x = x->rc);
+    else if (!HasRChild(*x))
+        replacer = (x = x->lc);
+    else
+    {
+        w = w->succ();
+        swap(x->data, w->data);
+        BinNodePosi(T) u = w->parent;
+        ((u == x) ? u->rc : u->lc) = replacer = w->rc;
+    }
+    hot = w->parent;
+    if (replacer)
+        replacer->parent = hot;
+    release(w->data);
+    release(w);
+    return replacer;
+}
