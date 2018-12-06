@@ -1,6 +1,4 @@
 
-#pragma once
-
 class Fib {  
 private:
    int f, g;  
