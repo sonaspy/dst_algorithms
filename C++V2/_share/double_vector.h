@@ -6,7 +6,7 @@
  * Copyright (c) 2006-2013. All rights reserved.
  ******************************************************************************************/
 
-#pragma once
+
 
 template <typename T> void double ( Vector<T> & V )  
 {  V.traverse ( Double<T>() );  }  

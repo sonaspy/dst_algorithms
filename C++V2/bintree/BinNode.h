@@ -1,4 +1,4 @@
-#pragma once
+
 #include "../stack/stack_list.h"
 #include "../queue/queue.h"
 #define BinNodePosi(T) BinNode<T> *

@@ -1,4 +1,4 @@
-#pragma once
+
 #include"../vector/vector.h"
 template <typename T>
 class Stack : public Vector<T>

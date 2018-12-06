@@ -6,7 +6,7 @@
  * Copyright (c) 2006-2013. All rights reserved.
  ******************************************************************************************/
 
-#pragma once
+
 #define _CRT_SECURE_NO_WARNINGS
 
 #include <iostream>

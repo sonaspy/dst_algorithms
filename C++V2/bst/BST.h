@@ -1,4 +1,4 @@
-#pragma once
+
 #include "../bintree/BinTree.h"
 template <typename T>
 class BST : public BinTree<T>

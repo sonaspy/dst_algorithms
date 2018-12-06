@@ -1,5 +1,5 @@
 
-#pragma once
+
 
 #include "BinNode.h"
 template <typename T>

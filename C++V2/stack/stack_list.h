@@ -1,4 +1,4 @@
-#pragma once
+
 
 #include "../list/List.h"  
 template <typename T> class Stack: public List<T> {  

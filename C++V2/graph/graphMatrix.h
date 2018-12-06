@@ -1,4 +1,4 @@
-#pragma once
+
 #include"graph.h"
 template <typename Tv>
 struct Vertex
