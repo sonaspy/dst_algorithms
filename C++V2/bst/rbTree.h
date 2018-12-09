@@ -1,9 +1,10 @@
 #include"../bintree/BinNode.h"
+#include"./BST.h"
 
 #ifndef rbTree_
 #define rbTree_
 
-template <typename T>
+template <class T>
 class RedBlack : public BST<T>
 {
   protected:
@@ -16,7 +17,7 @@ class RedBlack : public BST<T>
     bool remove(const T &e);
 };
 
-template <typename T>
+template <class T>
 BinNodePosi(T) RedBlack<T>::insert(const T &e)
 {
     BinNodePosi(T) &x = search(e);
@@ -28,7 +29,7 @@ BinNodePosi(T) RedBlack<T>::insert(const T &e)
     return x ? x : _hot->parent;
 }
 
-template <typename T>
+template <class T>
 int RedBlack<T>::updateHeight(BinNodePosi(T) x)
 {
     x->height = max(stature(x->lc), stature(x->rc));
@@ -36,7 +37,37 @@ int RedBlack<T>::updateHeight(BinNodePosi(T) x)
     return IsBlack(x) ? x->height++ : x->height;
 }
 
-template <typename T>
+template <class T>
+bool RedBlack<T>::remove(const T &e)
+{
+    BinNodePosi(T) &x = search(e);
+    if (!x)
+        return false;
+    BinNodePosi(T) r = removeAt(x, _hot);
+    if (!(--_size))
+        return true;
+
+    if (!_hot)
+    {
+        _root->color = RB_BLACK;
+        updateHeight(_root);
+        return true;
+    }
+
+    if (BlackHeightUpdated(*_hot))
+        return true;
+    if (IsRed(r))
+    {
+        r->color = RB_BLACK;
+        r->height++;
+        return true;
+    }
+
+    solveDoubleBlack(r);
+    return true;
+}
+
+template <class T>
 void RedBlack<T>::solveDoubleRed(BinNodePosi(T) x)
 {
     if (IsRoot(*x))
@@ -74,7 +105,7 @@ void RedBlack<T>::solveDoubleRed(BinNodePosi(T) x)
     }
 }
 
-template <typename T>
+template <class T>
 void RedBlack<T>::solveDoubleBlack(BinNodePosi(T) r)
 {
     BinNodePosi(T) p = r ? r->parent : _hot;
@@ -132,34 +163,6 @@ void RedBlack<T>::solveDoubleBlack(BinNodePosi(T) r)
     }
 }
 
-template <typename T>
-bool RedBlack<T>::remove(const T &e)
-{
-    BinNodePosi(T) &x = search(e);
-    if (!x)
-        return false;
-    BinNodePosi(T) r = removeAt(x, _hot);
-    if (!(--_size))
-        return true;
 
-    if (!_hot)
-    {
-        _root->color = RB_BLACK;
-        updateHeight(_root);
-        return true;
-    }
-
-    if (BlackHeightUpdated(*_hot))
-        return true;
-    if (IsRed(r))
-    {
-        r->color = RB_BLACK;
-        r->height++;
-        return true;
-    }
-
-    solveDoubleBlack(r);
-    return true;
-}
 
 #endif
