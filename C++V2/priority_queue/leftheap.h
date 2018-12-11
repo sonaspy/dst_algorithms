@@ -6,13 +6,12 @@
 #ifndef LeftHeap_
 #define LeftHeap_
 
-template <typename T>
+template <class T>
 class PQ_LeftHeap : public PQ<T>, public BinTree<T>
 {
   public:
     PQ_LeftHeap() {}
     PQ_LeftHeap(T *E, int n)
-
     {
         for (int i = 0; i < n; i++)
             insert(E[i]);
@@ -22,7 +21,7 @@ class PQ_LeftHeap : public PQ<T>, public BinTree<T>
     T delMax();
 };
 
-template <typename T>
+template <class T>
 T PQ_LeftHeap<T>::delMax()
 {
     BinNodePosi(T) lHeap = _root->lc;
@@ -35,14 +34,13 @@ T PQ_LeftHeap<T>::delMax()
     return e;
 }
 
-template <typename T>
+template <class T>
 T PQ_LeftHeap<T>::getMax()
-
 {
     return _root->data;
 }
 
-template <typename T>
+template <class T>
 void PQ_LeftHeap<T>::insert(T e)
 {
     BinNodePosi(T) v = new BinNode<T>(e);
@@ -51,7 +49,7 @@ void PQ_LeftHeap<T>::insert(T e)
     _size++;
 }
 
-template <typename T>
+template <class T>
 static BinNodePosi(T) merge(BinNodePosi(T) a, BinNodePosi(T) b)
 {
     if (!a)

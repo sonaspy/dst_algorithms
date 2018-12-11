@@ -24,6 +24,7 @@ class Vector{
       Rank partition(Rank lo, Rank hi);
       void quickSort(Rank lo, Rank hi);
       void heapSort(Rank lo, Rank hi);
+      void ShellSort(Rank lo, Rank hi);
       Rank bubble_fast(Rank lo, Rank hi);
       void bubbleSort_fast(Rank lo, Rank hi);
       int disordered() const;
@@ -364,13 +365,14 @@ Rank Vector<T>::partition(Rank lo, Rank hi)
 template <class T>
 void Vector<T>::quickSort(Rank lo, Rank hi)
 {
-    /*DSA*/ printf("\tQUICKsort [%3d, %3d)\n", lo, hi);
     if (hi - lo < 2)
         return;
     Rank mi = partition(lo, hi - 1);
     quickSort(lo, mi);
     quickSort(mi + 1, hi);
 }
+
+
 
 
 template <class T>
@@ -448,6 +450,14 @@ void Vector<T>::heapSort(Rank lo, Rank hi)
     while (!H.empty())
         _elem[--hi] = H.delMax();
 }
+
+template <class T>
+void Vector<T>::ShellSort(Rank lo, Rank hi){
+    
+}
+
+// shell sequence1 {1, 2, 4, 8...2^k}
+// seq2 {929, 505, 209, 109, 41, 19, 5, 1, 0}
 
 
 #endif
