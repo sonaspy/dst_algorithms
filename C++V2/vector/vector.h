@@ -1,5 +1,5 @@
 #include "Fib.h"
-
+#include "../priority_queue/PQ.h"
 #ifndef Vector_
 #define Vector_
 
@@ -438,6 +438,15 @@ static Rank fibSearch(T *A, T const &e, Rank lo, Rank hi)
     else
         printf("<<<<|\n");
     return --lo;
+}
+
+template <class T>
+void Vector<T>::heapSort(Rank lo, Rank hi)
+{
+
+    PQ_ComplHeap<T> H(_elem + lo, hi - lo);
+    while (!H.empty())
+        _elem[--hi] = H.delMax();
 }
 
 
