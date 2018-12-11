@@ -7,7 +7,7 @@
 #include "./bitmap.h"
 #include "../entry.h"
 
-template <typename K, typename V> //key、value
+template <class K, class V> //key、value
 class Hashtable : public Dictionary<K, V>
 { //符合Dictionary接口的Hashtable模板类
   private:
@@ -46,7 +46,7 @@ static size_t hashCode(char s[])
 
 } //对于英语单词，"循环左移5位"是实验统计得出的最佳值
 
-template <typename K, typename V>
+template <class K, class V>
 Hashtable<K, V>::~Hashtable()
 {                               //析构前释放桶数组及非空词条
     for (int i = 0; i < M; i++) //逐一检查各桶
@@ -57,7 +57,7 @@ Hashtable<K, V>::~Hashtable()
 
 } //release()负责释放复杂结构，与算法无直接关系，具体实现详见代码包
 
-template <typename K, typename V>
+template <class K, class V>
 void Hashtable<K, V>::rehash()
 {
     int old_capacity = M;
@@ -74,7 +74,7 @@ void Hashtable<K, V>::rehash()
     release(old_ht);                               //释放原桶数组——由于其中原先存放的词条均已转移，故只需释放桶数组本身
 }
 
-template <typename K, typename V>
+template <class K, class V>
 Hashtable<K, V>::Hashtable(int c)
 {                                                                      //创建散列表，容量为
     M = primeNLT(c, 1048576, "../../_input/prime-1048576-bitmap.txt"); //不小于c的素数M
@@ -84,7 +84,7 @@ Hashtable<K, V>::Hashtable(int c)
     lazyRemoval = new Bitmap(M);              //懒惰删除标记比特图
 }
 
-template <typename K, typename V>
+template <class K, class V>
 bool Hashtable<K, V>::remove(K k)
 { //散列表词条删除算法
     int r = probe4Hit(k);
@@ -97,7 +97,7 @@ bool Hashtable<K, V>::remove(K k)
     return true;
     //否则释放桶中词条，设置懒惰删除标记，并更新词条总数
 }
-template <typename K, typename V>
+template <class K, class V>
 bool Hashtable<K, V>::put(K k, V v)
 { //散列表词条插入
     if (ht[probe4Hit(k)])
@@ -110,7 +110,7 @@ bool Hashtable<K, V>::put(K k, V v)
     return true;
 }
 
-template <typename K, typename V>
+template <class K, class V>
 int Hashtable<K, V>::probe4Hit(const K &k)
 {
     int r = hashCode(k) % M; //从起始桶（按除余法确定）出发
@@ -119,7 +119,7 @@ int Hashtable<K, V>::probe4Hit(const K &k)
     return r;            //调用者根据ht[r]是否为空，即可判断查找是否成功
 }
 
-template <typename K, typename V>
+template <class K, class V>
 int Hashtable<K, V>::probe4Free(const K &k)
 {
     int r = hashCode(k) % M; //从起始桶（按除余法确定）出发
@@ -128,7 +128,7 @@ int Hashtable<K, V>::probe4Free(const K &k)
     return r;            //为保证空桶总能找到，装填因子及散列表长需要合理设置
 }
 
-template <typename K, typename V>
+template <class K, class V>
 V *Hashtable<K, V>::get(K k) //散列表词条查找算法
 
 {

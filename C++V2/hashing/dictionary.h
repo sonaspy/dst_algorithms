@@ -1,6 +1,6 @@
 #pragma once
 
-template <typename K, typename V>
+template <class K, class V>
 struct Dictionary
 {                                 //词典Dictionary模板类
     virtual int size() const = 0; //当前词条总数
