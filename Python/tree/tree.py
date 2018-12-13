@@ -1,9 +1,9 @@
 # author - newguo@sonaspy.cn
 # coding - utf_8
-import collections
-from linked_queue import LinkedQueue
 import sys
 sys.path.append("../linked/")
+import collections
+from linked_queue import LinkedQueue
 
 
 class Tree:
