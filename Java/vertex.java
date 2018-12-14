@@ -1,16 +1,4 @@
 
- 
- 
- 
- 
- 
- 
-
-
- 
- 
- 
-
 package  dsa;
 
 public interface Vertex {

@@ -1,15 +1,3 @@
-
- 
- 
- 
- 
- 
- 
-
-
- 
- 
-
 package dsa;
 
 public class Vector_ExtArray implements Vector {

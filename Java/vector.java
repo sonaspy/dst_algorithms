@@ -1,15 +1,4 @@
 
- 
- 
- 
- 
- 
- 
-
-
- 
- 
-
 package dsa;
 
 public interface Vector {
