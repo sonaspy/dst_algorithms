@@ -2,7 +2,6 @@
 # coding - utf_8
 from tree import Tree
 
-
 class BinaryTree(Tree):
     """Abstract base class representing a binary tree structure."""
     # --------------------- additional abstract methods ---------------------
