@@ -1,15 +1,4 @@
 
- 
- 
- 
- 
- 
- 
-
-
- 
- 
-
 package  dsa;
 
 public class Vertex_List implements Vertex {
