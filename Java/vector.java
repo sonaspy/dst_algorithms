@@ -4,8 +4,6 @@ package dsa;
 public interface Vector {
     
    public int getSize();
-
-    
    public boolean isEmpty();
 
     
