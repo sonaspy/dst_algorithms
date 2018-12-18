@@ -56,8 +56,6 @@ public class Vertex_List implements Vertex {
     
    public int getDistance() { return distance; }
    public int setDistance(int s) { int ss = distance; distance = s; return ss; }
-
-    
    public Vertex getBFSParent() { return bfsParent; }
    public Vertex setBFSParent(Vertex s) { Vertex ss = bfsParent; bfsParent = s; return ss; }
 }
