@@ -7,7 +7,6 @@ public interface Vertex {
    final static int DISCOVERED = 1; 
    final static int VISITED = 2; 
 
-    
    public Object getInfo();
     
    public Object setInfo(Object x);
