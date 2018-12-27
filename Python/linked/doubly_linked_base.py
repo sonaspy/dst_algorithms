@@ -1,7 +1,6 @@
 # author - newguo@sonaspy.cn
 # coding - utf_8
 
-
 class _DoublyLinkedBase:
     """A base class providing a doubly linked list representation."""
     # -------------------------- nested _Node class --------------------------
