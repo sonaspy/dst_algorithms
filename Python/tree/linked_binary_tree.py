@@ -151,7 +151,7 @@ class LinkedBinaryTree(BinaryTree):
             else:
                 parent._right = child
         self._size -= 1
-        node._parent = node
+        node._parent = None
         return node._element
 
     def _attach(self, p, t1, t2):
