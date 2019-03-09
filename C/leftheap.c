@@ -48,7 +48,7 @@ Merge1( PriorityQueue H1, PriorityQueue H2 )
 {
     /* 1*/      if( H1->Left == NULL )  /* Single node */
         /* 2*/          H1->Left = H2;      /* H1->Right is already NULL,
-                                   H1->Npl is already 0 */
+                               H1->Npl is already 0 */
     else
         {
             /* 3*/          H1->Right = Merge( H1->Right, H2 );
