@@ -37,8 +37,8 @@ struct BinNode
 
     T data;
     BinNodePosi(T) parent,
-        lc,
-        rc;
+                lc,
+                rc;
     int height;
     int npl;
     RBColor color;
@@ -65,8 +65,14 @@ struct BinNode
     template <class VST>
     void travPost(VST &);
 
-    bool operator<(BinNode const &bn) { return data < bn.data; }
-    bool operator==(BinNode const &bn) { return data == bn.data; }
+    bool operator<(BinNode const &bn)
+    {
+        return data < bn.data;
+    }
+    bool operator==(BinNode const &bn)
+    {
+        return data == bn.data;
+    }
 };
 
 template <class T>
@@ -109,37 +115,37 @@ void travPre_I1(BinNodePosi(T) x, VST &visit)
     if (x)
         S.push(x);
     while (!S.empty())
-    {
-        x = S.pop();
-        visit(x->data);
-        if (x->rc)
-            S.push(x->rc);
-        if (x->lc)
-            S.push(x->lc);
-    }
+        {
+            x = S.pop();
+            visit(x->data);
+            if (x->rc)
+                S.push(x->rc);
+            if (x->lc)
+                S.push(x->lc);
+        }
 }
 
 template <class T, class VST>
 static void visitAlongVine_pre(BinNodePosi(T) x, VST &visit, Stack<BinNodePosi(T)> &S)
 {
     while (x)
-    {
-        visit(x->data);
-        S.push(x->rc);
-        x = x->lc;
-    }
+        {
+            visit(x->data);
+            S.push(x->rc);
+            x = x->lc;
+        }
 }
 template <class T, class VST>
 void travPre_I2(BinNodePosi(T) x, VST &visit)
 {
     Stack<BinNodePosi(T)> S;
     while (true)
-    {
-        visitAlongVine_pre(x, visit, S);
-        if (S.empty())
-            break;
-        x = S.pop();
-    }
+        {
+            visitAlongVine_pre(x, visit, S);
+            if (S.empty())
+                break;
+            x = S.pop();
+        }
 }
 
 template <class T, class VST>
@@ -156,10 +162,10 @@ template <class T, class VST>
 static void visitAlongVine_in(BinNodePosi(T) x, Stack<BinNodePosi(T)> &S)
 {
     while (x)
-    {
-        S.push(x);
-        x = x->lc;
-    }
+        {
+            S.push(x);
+            x = x->lc;
+        }
 }
 
 template <class T, class VST>
@@ -167,14 +173,14 @@ void travIn_I1(BinNodePosi(T) x, VST &visit)
 {
     Stack<BinNodePosi(T)> S;
     while (true)
-    {
-        visitAlongVine_in(x, S);
-        if (S.empty())
-            break;
-        x = S.pop();
-        visit(x->data);
-        x = x->rc;
-    }
+        {
+            visitAlongVine_in(x, S);
+            if (S.empty())
+                break;
+            x = S.pop();
+            visit(x->data);
+            x = x->rc;
+        }
 }
 template <class T, class VST>
 void travIn_I4(BinNodePosi(T) x, VST &visit)
@@ -183,15 +189,15 @@ void travIn_I4(BinNodePosi(T) x, VST &visit)
         if (x->lc)
             x = x->lc;
         else
-        {
-            visit(x->data);
-            while (x->rc)
-                if (!(x = x->succ()))
-                    return;
-                else
-                    visit(x->data);
-            x = x->rc;
-        }
+            {
+                visit(x->data);
+                while (x->rc)
+                    if (!(x = x->succ()))
+                        return;
+                    else
+                        visit(x->data);
+                x = x->rc;
+            }
 }
 
 template <class T, class VST>
@@ -200,14 +206,14 @@ void BinNode<T>::travLevel(VST &visit)
     Queue<BinNodePosi(T)> Q;
     Q.enqueue(this);
     while (!Q.empty())
-    {
-        BinNodePosi(T) x = Q.dequeue();
-        visit(x->data);
-        if (x->lc)
-            Q.enqueue(x->lc);
-        if (x->rc)
-            Q.enqueue(x->rc);
-    }
+        {
+            BinNodePosi(T) x = Q.dequeue();
+            visit(x->data);
+            if (x->lc)
+                Q.enqueue(x->lc);
+            if (x->rc)
+                Q.enqueue(x->rc);
+        }
 }
 
 template <class T>
@@ -215,47 +221,54 @@ BinNodePosi(T) BinNode<T>::succ()
 {
     BinNodePosi(T) s = this;
     if (rc)
-    {
-        s = rc;
-        while (HasLChild(*s))
-            s = s->lc;
-    }
+        {
+            s = rc;
+            while (HasLChild(*s))
+                s = s->lc;
+        }
     else
-    {
-        while (IsRChild(*s))
+        {
+            while (IsRChild(*s))
+                s = s->parent;
             s = s->parent;
-        s = s->parent;
-    }
+        }
     return s;
 }
 
-template <class T, class VST> 
-void travPost_R ( BinNodePosi(T) x, VST& visit ){
-     if ( !x ) return;
-     travPost_R ( x->lc, visit );
-     travPost_R ( x->rc, visit );
-     visit ( x->data );
+template <class T, class VST>
+void travPost_R ( BinNodePosi(T) x, VST& visit )
+{
+    if ( !x ) return;
+    travPost_R ( x->lc, visit );
+    travPost_R ( x->rc, visit );
+    visit ( x->data );
 }
 
 template <class T>
-static void gotoHLVFL ( Stack<BinNodePosi(T)>& S ){
-    while ( BinNodePosi(T) x = S.top() ) 
-          if ( HasLChild ( *x ) ){
-              if ( HasRChild ( *x ) ) S.push ( x->rc ); 
-               S.push ( x->lc );
-          }else
-            S.push ( x->rc ); 
-        S.pop();
+static void gotoHLVFL ( Stack<BinNodePosi(T)>& S )
+{
+    while ( BinNodePosi(T) x = S.top() )
+        if ( HasLChild ( *x ) )
+            {
+                if ( HasRChild ( *x ) ) S.push ( x->rc );
+                S.push ( x->lc );
+            }
+        else
+            S.push ( x->rc );
+    S.pop();
 }
 template <class T, class VST>
-void travPost_I ( BinNodePosi(T) x, VST& visit ) {
-    Stack<BinNodePosi(T)> S; 
-     if ( x ) S.push ( x );
-     while ( !S.empty() ){
-         if ( S.top() != x->parent )
-            gotoHLVFL ( S ); 
-        x = S.pop(); visit ( x->data );
-     }
+void travPost_I ( BinNodePosi(T) x, VST& visit )
+{
+    Stack<BinNodePosi(T)> S;
+    if ( x ) S.push ( x );
+    while ( !S.empty() )
+        {
+            if ( S.top() != x->parent )
+                gotoHLVFL ( S );
+            x = S.pop();
+            visit ( x->data );
+        }
 }
 
 

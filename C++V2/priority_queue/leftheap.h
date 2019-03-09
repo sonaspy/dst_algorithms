@@ -9,7 +9,7 @@
 template <class T>
 class PQ_LeftHeap : public PQ<T>, public BinTree<T>
 {
-  public:
+public:
     PQ_LeftHeap() {}
     PQ_LeftHeap(T *E, int n)
     {
@@ -30,7 +30,6 @@ T PQ_LeftHeap<T>::delMax()
     delete _root;
     _size--;
     _root = merge(lHeap, rHeap);
-
     return e;
 }
 
@@ -45,7 +44,6 @@ void PQ_LeftHeap<T>::insert(T e)
 {
     BinNodePosi(T) v = new BinNode<T>(e);
     _root = merge(_root, v);
-
     _size++;
 }
 

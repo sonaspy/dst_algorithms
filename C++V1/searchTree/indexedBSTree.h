@@ -14,15 +14,15 @@ template <class K, class E>
 class indexedBSTree : public bsTree<K, E>
 {
 public:
-  virtual pair<const K, E> *get(int) const = 0;
-  // return pointer to pair with given index
-  virtual void delete (int) = 0;
-  // delete pair with given index
+    virtual pair<const K, E> *get(int) const = 0;
+    // return pointer to pair with given index
+    virtual void delete (int) = 0;
+    // delete pair with given index
 };
 
 
 /*
- * 
+ *
  *
  *  AbstractDataType dIndexedBSTree
 {
@@ -36,9 +36,9 @@ public:
       erase(index): delete the indexth pair
       ascend(): output all pairs in nondecreasing order of key
 }
- * 
- * 
- * 
+ *
+ *
+ *
  */
 
 #endif

@@ -3,13 +3,13 @@
 
 using namespace std;
 
-int main(int argc, char const *argv[]) {
-  /* code */
-  int x[3] = {0, 1, 2};
-
-  // use a pointer y to iterate through the array x
-  for (int* y = x; y != x + 3; y++)
-     cout << *y << "  ";
-  cout << endl;
-  return 0;
+int main(int argc, char const *argv[])
+{
+    /* code */
+    int x[3] = {0, 1, 2};
+    // use a pointer y to iterate through the array x
+    for (int* y = x; y != x + 3; y++)
+        cout << *y << "  ";
+    cout << endl;
+    return 0;
 }

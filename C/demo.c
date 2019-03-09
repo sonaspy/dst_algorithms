@@ -1,4 +1,4 @@
-// author - newguo@sonaspy.cn 
+// author - newguo@sonaspy.cn
 // coding - utf_8
 
 #include <stdio.h>
@@ -13,15 +13,13 @@ struct student
     char name[20];
 };
 
-int  main()
+int main()
 {
     int gender_offset, id_offset, age_offset, name_offset;
-
     gender_offset = offsetof(struct student, gender);
     id_offset = offsetof(struct student, id);
     age_offset = offsetof(struct student, age);
     name_offset = offsetof(struct student, name);
-
     printf("gender_offset = %d\n", gender_offset);
     printf("id_offset = %d\n", id_offset);
     printf("age_offset = %d\n", age_offset);

@@ -17,7 +17,7 @@ enum signType
 
 class currency
 {
-  public:
+public:
     // constructor
     currency(signType theSign = plus,
              unsigned long theDollars = 0,
@@ -59,29 +59,32 @@ class currency
     currency percent(float x);
     currency multiply(float x);
     currency divide(float x);
-    private : long amount;
+private :
+    long amount;
 };
 
 currency::currency(signType theSign, unsigned long theDollars,
                    unsigned int theCents)
-{ // Create a currency object.
+{
+    // Create a currency object.
     setValue(theSign, theDollars, theCents);
 }
 
 void currency::setValue(signType theSign, unsigned long theDollars,
                         unsigned int theCents)
-{ // Set currency value.
+{
+    // Set currency value.
     if (theCents > 99)
         // too many cents
         throw illegalParameterValue("Cents should be < 100");
-
     amount = theDollars * 100 + theCents;
     if (theSign == minus)
         amount = -amount;
 }
 
 void currency::setValue(double theAmount)
-{ // Set currency value.
+{
+    // Set currency value.
     if (theAmount < 0)
         amount = (long)((theAmount - 0.001) * 100);
     else
@@ -90,20 +93,22 @@ void currency::setValue(double theAmount)
 }
 
 currency currency::add(const currency &x) const
-{ // Add x and *this.
+{
+    // Add x and *this.
     currency y;
     y.amount = amount + x.amount;
     return y;
 }
 
 void currency::output() const
-{ // Output currency value.
+{
+    // Output currency value.
     long theAmount = amount;
     if (theAmount < 0)
-    {
-        cout << '-';
-        theAmount = -theAmount;
-    }
+        {
+            cout << '-';
+            theAmount = -theAmount;
+        }
     long dollars = theAmount / 100; // dollars
     cout << '$' << dollars << '.';
     int cents = theAmount - dollars * 100; // cents
@@ -112,38 +117,42 @@ void currency::output() const
     cout << cents;
 }
 
-void currency::input(){
+void currency::input()
+{
     // input the amount as a double
     cout << "Enter the currency amount as a real number" << endl;
     double theValue;
     cin >> theValue;
-
     // set the value
     setValue(theValue);
 }
 
 currency currency::subtract(const currency &x)
-{ // Return *this - x.
+{
+    // Return *this - x.
     currency result;
     result.amount = amount - x.amount;
     return result;
 }
 currency currency::percent(float x)
-{ // Return x percent of *this.
+{
+    // Return x percent of *this.
     currency result;
     result.amount = (long)(amount * x / 100);
     return result;
 }
 
 currency currency::multiply(float x)
-{ // Return this * x.
+{
+    // Return this * x.
     currency result;
     result.amount = (long)(amount * x);
     return result;
 }
 
 currency currency::divide(float x)
-{ // Return this / x.
+{
+    // Return this / x.
     currency result;
     result.amount = (long)(amount / x);
     return result;

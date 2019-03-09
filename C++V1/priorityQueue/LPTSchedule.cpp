@@ -5,45 +5,46 @@
 
 using namespace std;
 
-void makeSchedule(jobNode a[], int n, int m){
-   // Output an m machine LPT schedule for the jobs a[1:n].
-
+void makeSchedule(jobNode a[], int n, int m)
+{
+    // Output an m machine LPT schedule for the jobs a[1:n].
     if (n <= m)
-    {
-      cout << "Schedule each job on a different machine" << endl;
-      return;
-    }
+        {
+            cout << "Schedule each job on a different machine" << endl;
+            return;
+        }
     // ascending order.
     heapSort(a,n);
     // initialize m machines and the min heap
     minHeap<machineNode> machineHeap(m);
     for(int i = 1; i <= m; i++)
-      machineHeap.push(machineNode(i,0));
+        machineHeap.push(machineNode(i,0));
     // construct schedule
-    for(int i = n; i >= 1; i--){
-      cout << a[i] << " ";
-      machineNode x = machineHeap.top();
-      machineHeap.pop();
-      cout << "Schedule job " << a[i].id
-           << " on machine " << x.id << " from " << x.avail
-           << " to " << (x.avail + a[i].time) << endl;
-      x.avail += a[i].time; // new available time for this machine
-      machineHeap.push(x);
-    }
+    for(int i = n; i >= 1; i--)
+        {
+            cout << a[i] << " ";
+            machineNode x = machineHeap.top();
+            machineHeap.pop();
+            cout << "Schedule job " << a[i].id
+                 << " on machine " << x.id << " from " << x.avail
+                 << " to " << (x.avail + a[i].time) << endl;
+            x.avail += a[i].time; // new available time for this machine
+            machineHeap.push(x);
+        }
 }
 
 
 int main(int argc, char const *argv[])
 {
-  /* code */
-  jobNode a[11];
-  int n = 10;
-  for (int i = 1; i <= n; i++)
-  {
-    a[i].id = i;
-    a[i].time = i*i*2;
-  }
-  makeSchedule(a, 10, 3);
-  return 0;
+    /* code */
+    jobNode a[11];
+    int n = 10;
+    for (int i = 1; i <= n; i++)
+        {
+            a[i].id = i;
+            a[i].time = i*i*2;
+        }
+    makeSchedule(a, 10, 3);
+    return 0;
 }
 

@@ -5,7 +5,7 @@
 
 struct binNode
 {
-  int left, right; // pointers to left and right nodes
+    int left, right; // pointers to left and right nodes
 };
 
 #endif

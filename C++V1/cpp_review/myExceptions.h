@@ -10,146 +10,176 @@ using namespace std;
 class illegalParameterValue
 {
 public:
-  illegalParameterValue(string theMessage = "Illegal parameter value")
-  {
-    message = theMessage;
-  }
-  void outputMessage() { cout << message << endl; }
+    illegalParameterValue(string theMessage = "Illegal parameter value")
+    {
+        message = theMessage;
+    }
+    void outputMessage()
+    {
+        cout << message << endl;
+    }
 
 private:
-  string message;
+    string message;
 };
 
 // illegal input data
 class illegalInputData
 {
 public:
-  illegalInputData(string theMessage = "Illegal data input")
-  {
-    message = theMessage;
-  }
-  void outputMessage() { cout << message << endl; }
+    illegalInputData(string theMessage = "Illegal data input")
+    {
+        message = theMessage;
+    }
+    void outputMessage()
+    {
+        cout << message << endl;
+    }
 
 private:
-  string message;
+    string message;
 };
 
 // illegal index
 class illegalIndex
 {
 public:
-  illegalIndex(string theMessage = "Illegal index")
-  {
-    message = theMessage;
-  }
-  void outputMessage() { cout << message << endl; }
+    illegalIndex(string theMessage = "Illegal index")
+    {
+        message = theMessage;
+    }
+    void outputMessage()
+    {
+        cout << message << endl;
+    }
 
 private:
-  string message;
+    string message;
 };
 
 // matrix index out of bounds
 class matrixIndexOutOfBounds
 {
 public:
-  matrixIndexOutOfBounds(string theMessage = "Matrix index out of bounds")
-  {
-    message = theMessage;
-  }
-  void outputMessage() { cout << message << endl; }
+    matrixIndexOutOfBounds(string theMessage = "Matrix index out of bounds")
+    {
+        message = theMessage;
+    }
+    void outputMessage()
+    {
+        cout << message << endl;
+    }
 
 private:
-  string message;
+    string message;
 };
 
 // matrix size mismatch
 class matrixSizeMismatch
 {
 public:
-  matrixSizeMismatch(string theMessage =
-                         "The size of the two matrics doesn't match")
-  {
-    message = theMessage;
-  }
-  void outputMessage() { cout << message << endl; }
+    matrixSizeMismatch(string theMessage =
+                           "The size of the two matrics doesn't match")
+    {
+        message = theMessage;
+    }
+    void outputMessage()
+    {
+        cout << message << endl;
+    }
 
 private:
-  string message;
+    string message;
 };
 
 // stack is empty
 class stackEmpty
 {
 public:
-  stackEmpty(string theMessage =
-                 "Invalid operation on empty stack")
-  {
-    message = theMessage;
-  }
-  void outputMessage() { cout << message << endl; }
+    stackEmpty(string theMessage =
+                   "Invalid operation on empty stack")
+    {
+        message = theMessage;
+    }
+    void outputMessage()
+    {
+        cout << message << endl;
+    }
 
 private:
-  string message;
+    string message;
 };
 
 // queue is empty
 class queueEmpty
 {
 public:
-  queueEmpty(string theMessage =
-                 "Invalid operation on empty queue")
-  {
-    message = theMessage;
-  }
-  void outputMessage() { cout << message << endl; }
+    queueEmpty(string theMessage =
+                   "Invalid operation on empty queue")
+    {
+        message = theMessage;
+    }
+    void outputMessage()
+    {
+        cout << message << endl;
+    }
 
 private:
-  string message;
+    string message;
 };
 
 // hash table is full
 class hashTableFull
 {
 public:
-  hashTableFull(string theMessage =
-                    "The hash table is full")
-  {
-    message = theMessage;
-  }
-  void outputMessage() { cout << message << endl; }
+    hashTableFull(string theMessage =
+                      "The hash table is full")
+    {
+        message = theMessage;
+    }
+    void outputMessage()
+    {
+        cout << message << endl;
+    }
 
 private:
-  string message;
+    string message;
 };
 
 // edge weight undefined
 class undefinedEdgeWeight
 {
 public:
-  undefinedEdgeWeight(string theMessage =
-                          "No edge weights defined")
-  {
-    message = theMessage;
-  }
-  void outputMessage() { cout << message << endl; }
+    undefinedEdgeWeight(string theMessage =
+                            "No edge weights defined")
+    {
+        message = theMessage;
+    }
+    void outputMessage()
+    {
+        cout << message << endl;
+    }
 
 private:
-  string message;
+    string message;
 };
 
 // method undefined
 class undefinedMethod
 {
 public:
-  undefinedMethod(string theMessage =
-                      "This method is undefined")
-  {
-    message = theMessage;
-  }
-  void outputMessage() { cout << message << endl; }
+    undefinedMethod(string theMessage =
+                        "This method is undefined")
+    {
+        message = theMessage;
+    }
+    void outputMessage()
+    {
+        cout << message << endl;
+    }
 
 private:
-  string message;
+    string message;
 };
 
 // bad allocate
@@ -157,15 +187,18 @@ private:
 class failedAllocate
 {
 public:
-  failedAllocate(string theMessage =
-                 "failed to allocate memory.")
-  {
-    message = theMessage;
-  }
-  void outputMessage() { cout << message << endl; }
+    failedAllocate(string theMessage =
+                       "failed to allocate memory.")
+    {
+        message = theMessage;
+    }
+    void outputMessage()
+    {
+        cout << message << endl;
+    }
 
 private:
-  string message;
+    string message;
 };
 
 #endif

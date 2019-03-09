@@ -15,45 +15,45 @@ using namespace std;
 
 template <class T>
 class derivedArrayStackWithCatch : private arrayList<T>,
-                                   public stack<T>
+    public stack<T>
 {
 public:
-  derivedArrayStackWithCatch(int initialCapacity = 10)
-      : arrayList<T>(initialCapacity) {}
-  bool empty() const
-  {
-    return arrayList<T>::empty();
-  }
-  int size() const
-  {
-    return arrayList<T>::size();
-  }
-  T &top()
-  {
-    try
+    derivedArrayStackWithCatch(int initialCapacity = 10)
+        : arrayList<T>(initialCapacity) {}
+    bool empty() const
     {
-      return get(arrayList<T>::size() - 1);
+        return arrayList<T>::empty();
     }
-    catch (illegalIndex)
+    int size() const
     {
-      throw stackEmpty();
+        return arrayList<T>::size();
     }
-  }
-  void pop()
-  {
-    try
+    T &top()
     {
-      erase(arrayList<T>::size() - 1);
+        try
+            {
+                return get(arrayList<T>::size() - 1);
+            }
+        catch (illegalIndex)
+            {
+                throw stackEmpty();
+            }
     }
-    catch (illegalIndex)
+    void pop()
     {
-      throw stackEmpty();
+        try
+            {
+                erase(arrayList<T>::size() - 1);
+            }
+        catch (illegalIndex)
+            {
+                throw stackEmpty();
+            }
     }
-  }
-  void push(const T &theElement)
-  {
-    insert(arrayList<T>::size(), theElement);
-  }
+    void push(const T &theElement)
+    {
+        insert(arrayList<T>::size(), theElement);
+    }
 };
 
 #endif

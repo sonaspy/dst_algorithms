@@ -53,9 +53,10 @@ typedef int __darwin_ct_rune_t;
 
 
 
-typedef union {
- char __mbstate8[128];
- long long _mbstateL;
+typedef union
+{
+    char __mbstate8[128];
+    long long _mbstateL;
 } __mbstate_t;
 
 typedef __mbstate_t __darwin_mbstate_t;
@@ -129,56 +130,66 @@ typedef char __darwin_uuid_string_t[37];
 
 # 1 "/usr/include/sys/_pthread/_pthread_types.h" 1 3 4
 # 57 "/usr/include/sys/_pthread/_pthread_types.h" 3 4
-struct __darwin_pthread_handler_rec {
- void (*__routine)(void *);
- void *__arg;
- struct __darwin_pthread_handler_rec *__next;
+struct __darwin_pthread_handler_rec
+{
+    void (*__routine)(void *);
+    void *__arg;
+    struct __darwin_pthread_handler_rec *__next;
 };
 
-struct _opaque_pthread_attr_t {
- long __sig;
- char __opaque[56];
+struct _opaque_pthread_attr_t
+{
+    long __sig;
+    char __opaque[56];
 };
 
-struct _opaque_pthread_cond_t {
- long __sig;
- char __opaque[40];
+struct _opaque_pthread_cond_t
+{
+    long __sig;
+    char __opaque[40];
 };
 
-struct _opaque_pthread_condattr_t {
- long __sig;
- char __opaque[8];
+struct _opaque_pthread_condattr_t
+{
+    long __sig;
+    char __opaque[8];
 };
 
-struct _opaque_pthread_mutex_t {
- long __sig;
- char __opaque[56];
+struct _opaque_pthread_mutex_t
+{
+    long __sig;
+    char __opaque[56];
 };
 
-struct _opaque_pthread_mutexattr_t {
- long __sig;
- char __opaque[8];
+struct _opaque_pthread_mutexattr_t
+{
+    long __sig;
+    char __opaque[8];
 };
 
-struct _opaque_pthread_once_t {
- long __sig;
- char __opaque[8];
+struct _opaque_pthread_once_t
+{
+    long __sig;
+    char __opaque[8];
 };
 
-struct _opaque_pthread_rwlock_t {
- long __sig;
- char __opaque[192];
+struct _opaque_pthread_rwlock_t
+{
+    long __sig;
+    char __opaque[192];
 };
 
-struct _opaque_pthread_rwlockattr_t {
- long __sig;
- char __opaque[16];
+struct _opaque_pthread_rwlockattr_t
+{
+    long __sig;
+    char __opaque[16];
 };
 
-struct _opaque_pthread_t {
- long __sig;
- struct __darwin_pthread_handler_rec *__cleanup_stack;
- char __opaque[8176];
+struct _opaque_pthread_t
+{
+    long __sig;
+    struct __darwin_pthread_handler_rec *__cleanup_stack;
+    char __opaque[8176];
 };
 
 typedef struct _opaque_pthread_attr_t __darwin_pthread_attr_t;
@@ -228,45 +239,47 @@ int renameatx_np(int, const char *, int, const char *, unsigned int) __attribute
 
 typedef __darwin_off_t fpos_t;
 # 88 "/usr/include/stdio.h" 3 4
-struct __sbuf {
- unsigned char *_base;
- int _size;
+struct __sbuf
+{
+    unsigned char *_base;
+    int _size;
 };
 
 
 struct __sFILEX;
 # 122 "/usr/include/stdio.h" 3 4
-typedef struct __sFILE {
- unsigned char *_p;
- int _r;
- int _w;
- short _flags;
- short _file;
- struct __sbuf _bf;
- int _lbfsize;
+typedef struct __sFILE
+{
+    unsigned char *_p;
+    int _r;
+    int _w;
+    short _flags;
+    short _file;
+    struct __sbuf _bf;
+    int _lbfsize;
 
 
- void *_cookie;
- int (* _Nullable _close)(void *);
- int (* _Nullable _read) (void *, char *, int);
- fpos_t (* _Nullable _seek) (void *, fpos_t, int);
- int (* _Nullable _write)(void *, const char *, int);
+    void *_cookie;
+    int (* _Nullable _close)(void *);
+    int (* _Nullable _read) (void *, char *, int);
+    fpos_t (* _Nullable _seek) (void *, fpos_t, int);
+    int (* _Nullable _write)(void *, const char *, int);
 
 
- struct __sbuf _ub;
- struct __sFILEX *_extra;
- int _ur;
+    struct __sbuf _ub;
+    struct __sFILEX *_extra;
+    int _ur;
 
 
- unsigned char _ubuf[3];
- unsigned char _nbuf[1];
+    unsigned char _ubuf[3];
+    unsigned char _nbuf[1];
 
 
- struct __sbuf _lb;
+    struct __sbuf _lb;
 
 
- int _blksize;
- fpos_t _offset;
+    int _blksize;
+    fpos_t _offset;
 } FILE;
 
 
@@ -292,7 +305,7 @@ int fputc(int, FILE *);
 int fputs(const char * restrict, FILE * restrict) __asm("_" "fputs" );
 size_t fread(void * restrict __ptr, size_t __size, size_t __nitems, FILE * restrict __stream);
 FILE *freopen(const char * restrict, const char * restrict,
-                 FILE * restrict) __asm("_" "freopen" );
+              FILE * restrict) __asm("_" "freopen" );
 int fscanf(FILE * restrict, const char * restrict, ...) __attribute__((__format__ (__scanf__, 2, 3)));
 int fseek(FILE *, long, int);
 int fsetpos(FILE *, const fpos_t *);
@@ -346,11 +359,12 @@ int __srget(FILE *);
 int __svfscanf(FILE *, const char *, va_list) __attribute__((__format__ (__scanf__, 2, 0)));
 int __swbuf(int, FILE *);
 # 353 "/usr/include/stdio.h" 3 4
-inline __attribute__ ((__always_inline__)) int __sputc(int _c, FILE *_p) {
- if (--_p->_w >= 0 || (_p->_w >= _p->_lbfsize && (char)_c != '\n'))
-  return (*_p->_p++ = _c);
- else
-  return (__swbuf(_c, _p));
+inline __attribute__ ((__always_inline__)) int __sputc(int _c, FILE *_p)
+{
+    if (--_p->_w >= 0 || (_p->_w >= _p->_lbfsize && (char)_c != '\n'))
+        return (*_p->_p++ = _c);
+    else
+        return (__swbuf(_c, _p));
 }
 # 379 "/usr/include/stdio.h" 3 4
 void flockfile(FILE *);
@@ -421,10 +435,10 @@ FILE *zopen(const char *, const char *, int);
 
 
 FILE *funopen(const void *,
-                 int (* _Nullable)(void *, char *, int),
-                 int (* _Nullable)(void *, const char *, int),
-                 fpos_t (* _Nullable)(void *, fpos_t, int),
-                 int (* _Nullable)(void *));
+              int (* _Nullable)(void *, char *, int),
+              int (* _Nullable)(void *, const char *, int),
+              fpos_t (* _Nullable)(void *, fpos_t, int),
+              int (* _Nullable)(void *));
 # 498 "/usr/include/stdio.h" 3 4
 # 1 "/usr/include/secure/_stdio.h" 1 3 4
 # 31 "/usr/include/secure/_stdio.h" 3 4
@@ -432,10 +446,10 @@ FILE *funopen(const void *,
 # 32 "/usr/include/secure/_stdio.h" 2 3 4
 # 42 "/usr/include/secure/_stdio.h" 3 4
 extern int __sprintf_chk (char * restrict, int, size_t,
-     const char * restrict, ...);
+                          const char * restrict, ...);
 # 52 "/usr/include/secure/_stdio.h" 3 4
 extern int __snprintf_chk (char * restrict, size_t, int, size_t,
-      const char * restrict, ...);
+                           const char * restrict, ...);
 
 
 
@@ -444,7 +458,7 @@ extern int __snprintf_chk (char * restrict, size_t, int, size_t,
 
 
 extern int __vsprintf_chk (char * restrict, int, size_t,
-      const char * restrict, va_list);
+                           const char * restrict, va_list);
 
 
 
@@ -453,7 +467,7 @@ extern int __vsprintf_chk (char * restrict, int, size_t,
 
 
 extern int __vsnprintf_chk (char * restrict, size_t, int, size_t,
-       const char * restrict, va_list);
+                            const char * restrict, va_list);
 # 499 "/usr/include/stdio.h" 2 3 4
 # 5 "demo.c" 2
 

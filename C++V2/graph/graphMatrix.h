@@ -11,7 +11,7 @@ struct Vertex
     int parent;
     int priority;
     Vertex(Tv const &d = (Tv)0) : data(d), inDegree(0), outDegree(0), status(UNDISCOVERED),
-                                  dTime(-1), fTime(-1), parent(-1), priority(INT_MAX) {}
+        dTime(-1), fTime(-1), parent(-1), priority(INT_MAX) {}
 };
 
 template <class Te>
@@ -26,9 +26,13 @@ struct Edge
 template <class Tv, class Te>
 class GraphMatrix : public Graph<Tv, Te>
 {
-  private:
+private:
     Vector<Vertex<Tv> > V;
-    Vector < Vector < Edge<Te> public : GraphMatrix() { n = e = 0; }
+Vector < Vector < Edge<Te> public :
+    GraphMatrix()
+    {
+        n = e = 0;
+    }
     ~GraphMatrix()
     {
         for (int j = 0; j < n; j++)
@@ -36,59 +40,96 @@ class GraphMatrix : public Graph<Tv, Te>
                 delete E[j][k];
     }
 
-    virtual Tv &vertex(int i) { return V[i].data; }
-    virtual int inDegree(int i) { return V[i].inDegree; }
-    virtual int outDegree(int i) { return V[i].outDegree; }
-    virtual int firstNbr(int i) { return nextNbr(i, n); }
+    virtual Tv &vertex(int i)
+    {
+        return V[i].data;
+    }
+    virtual int inDegree(int i)
+    {
+        return V[i].inDegree;
+    }
+    virtual int outDegree(int i)
+    {
+        return V[i].outDegree;
+    }
+    virtual int firstNbr(int i)
+    {
+        return nextNbr(i, n);
+    }
     virtual int nextNbr(int i, int j)
     {
         while ((-1 < j) && (!exists(i, --j)))
             ;
         return j;
     }
-    virtual VStatus &status(int i) { return V[i].status; }
-    virtual int &dTime(int i) { return V[i].dTime; }
-    virtual int &fTime(int i) { return V[i].fTime; }
-    virtual int &parent(int i) { return V[i].parent; }
-    virtual int &priority(int i) { return V[i].priority; }
+    virtual VStatus &status(int i)
+    {
+        return V[i].status;
+    }
+    virtual int &dTime(int i)
+    {
+        return V[i].dTime;
+    }
+    virtual int &fTime(int i)
+    {
+        return V[i].fTime;
+    }
+    virtual int &parent(int i)
+    {
+        return V[i].parent;
+    }
+    virtual int &priority(int i)
+    {
+        return V[i].priority;
+    }
 
     virtual int insert(Tv const &vertex)
     {
         for (int j = 0; j < n; j++)
             E[j].insert(NULL);
         n++;
-      E.insert ( Vector<Edge<Te>* >(n, n, NULL);
-      return V.insert ( Vertex<Tv> ( vertex ) );
+        E.insert ( Vector<Edge<Te>* >(n, n, NULL);
+                   return V.insert ( Vertex<Tv> ( vertex ) );
     }
     virtual Tv remove(int i)
     {
         for (int j = 0; j < n; j++)
             if (exists(i, j))
-            {
-                delete E[i][j];
-                V[j].inDegree--;
-            }
+                {
+                    delete E[i][j];
+                    V[j].inDegree--;
+                }
         E.remove(i);
         n--;
         for (int j = 0; j < n; j++)
-         if (exists(j, i)){
-             delete E[j].remove(i);
-             V[j].outDegree--;
-         }
-         Tv vBak = vertex(i);
+            if (exists(j, i))
+                {
+                    delete E[j].remove(i);
+                    V[j].outDegree--;
+                }
+        Tv vBak = vertex(i);
         V.remove(i);
-      return vBak;
+        return vBak;
     }
 
     virtual bool exists(int i, int j)
     {
         return (0 <= i) && (i < n) && (0 <= j) && (j < n)
-                 && E[i][j] != NULL;
+               && E[i][j] != NULL;
     }
 
-    virtual EType &type(int i, int j) { return E[i][j]->type; }
-    virtual Te &edge(int i, int j) { return E[i][j]->data; }
-    virtual int &weight(int i, int j) { return E[i][j]->weight; }
+    virtual EType &type(int i, int j)
+    {
+        return E[i][j]->type;
+    }
+    virtual Te &edge(int i, int j)
+    {
+        return E[i][j]->data;
+    }
+    virtual int &weight(int i, int j)
+    {
+        return E[i][j]->weight;
+    }
 
     virtual void insert(Te const &edge, int w, int i, int j)
     {

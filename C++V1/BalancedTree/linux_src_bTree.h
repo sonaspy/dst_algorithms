@@ -34,9 +34,9 @@
  */
 struct btree_head
 {
-  unsigned long *node;
-  mempool_t *mempool;
-  int height;
+    unsigned long *node;
+    mempool_t *mempool;
+    int height;
 };
 
 /* btree geometry */
