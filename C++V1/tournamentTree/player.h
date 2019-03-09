@@ -5,9 +5,12 @@
 
 struct player
 {
-  int id, key;
+    int id, key;
 
-  operator int() const { return key; }
+    operator int() const
+    {
+        return key;
+    }
 };
 
 #endif

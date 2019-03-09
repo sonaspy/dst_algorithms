@@ -1,7 +1,7 @@
 /*
   Red Black Trees
   (C) 1999  Andrea Arcangeli <andrea@suse.de>
-  
+
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
   the Free Software Foundation; either version 2 of the License, or
@@ -35,15 +35,15 @@
 
 struct rb_node
 {
-  unsigned long __rb_parent_color;
-  struct rb_node *rb_right;
-  struct rb_node *rb_left;
+    unsigned long __rb_parent_color;
+    struct rb_node *rb_right;
+    struct rb_node *rb_left;
 } __attribute__((aligned(sizeof(long))));
 /* The alignment might seem pointless, but allegedly CRIS needs it */
 
 struct rb_root
 {
-  struct rb_node *rb_node;
+    struct rb_node *rb_node;
 };
 
 /*
@@ -58,8 +58,8 @@ struct rb_root
  */
 struct rb_root_cached
 {
-  struct rb_root rb_root;
-  struct rb_node *rb_leftmost;
+    struct rb_root rb_root;
+    struct rb_node *rb_leftmost;
 };
 
 #define rb_parent(r) ((struct rb_node *)((r)->__rb_parent_color & ~3))
@@ -111,19 +111,17 @@ extern void rb_replace_node_cached(struct rb_node *victim, struct rb_node *new,
 static inline void rb_link_node(struct rb_node *node, struct rb_node *parent,
                                 struct rb_node **rb_link)
 {
-  node->__rb_parent_color = (unsigned long)parent;
-  node->rb_left = node->rb_right = NULL;
-
-  *rb_link = node;
+    node->__rb_parent_color = (unsigned long)parent;
+    node->rb_left = node->rb_right = NULL;
+    *rb_link = node;
 }
 
 static inline void rb_link_node_rcu(struct rb_node *node, struct rb_node *parent,
                                     struct rb_node **rb_link)
 {
-  node->__rb_parent_color = (unsigned long)parent;
-  node->rb_left = node->rb_right = NULL;
-
-  rcu_assign_pointer(*rb_link, node);
+    node->__rb_parent_color = (unsigned long)parent;
+    node->rb_left = node->rb_right = NULL;
+    rcu_assign_pointer(*rb_link, node);
 }
 
 #define rb_entry_safe(ptr, type, member)              \

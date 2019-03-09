@@ -3,6 +3,6 @@
 
 int RAND(int x)
 {
-  srand((int)time(0));
-  return rand() % (x+1);
+    srand((int)time(0));
+    return rand() % (x+1);
 }

@@ -19,14 +19,11 @@ int main()
 {
     struct student stu;
     struct student *pstu;
-
     stu.gender = '1';
     stu.id = 9527;
     stu.age = 24;
     strcpy(stu.name, "zhouxingxing");
-
     pstu = container_of(&stu.id, struct student, id);
-
     printf("gender= %c\n", pstu->gender);
     printf("age= %d\n", pstu->age);
     printf("name= %s\n", pstu->name);

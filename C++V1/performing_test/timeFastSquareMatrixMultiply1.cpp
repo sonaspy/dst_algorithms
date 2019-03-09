@@ -1,5 +1,5 @@
-// author - newguo@sonaspy.cn 
-// coding - utf_8 
+// author - newguo@sonaspy.cn
+// coding - utf_8
 
 #include<iostream>
 #include<ctime>
@@ -20,7 +20,6 @@ void fastSquareMatrixMultiply(int **a, int **b, int **c, int n)
     for (int i = 0; i < n; i++)
         for (int j = 0; j < n; j++)
             c[i][j] = 0;
-
     for (int i = 0; i < n; i++)
         for (int j = 0; j < n; j++)
             for (int k = 0; k < n; k++)
@@ -35,15 +34,13 @@ int main(int argc, char const *argv[])
     make2dArray(a, n, n);
     make2dArray(b, n, n);
     make2dArray(c, n, n);
-
     // initialize the matrices a and b
     for (int i = 0; i < n; i++)
         for (int j = 0; j < n; j++)
-        {
-            a[i][j] = 2;
-            b[i][j] = 3;
-        }
-
+            {
+                a[i][j] = 2;
+                b[i][j] = 3;
+            }
     long startTime = clock();
     fastSquareMatrixMultiply(a, b, c, n);
     double elapsedTimeSec = ((double)(clock() - startTime)) / CLOCKS_PER_SEC;

@@ -4,10 +4,10 @@
 
 
 template <class T>
-void delete2dArray(T ** & Arr, int numOfRows){
+void delete2dArray(T ** & Arr, int numOfRows)
+{
     for(int i = 0; i < numOfRows; i++)
         delete [] Arr[i];
-
     delete [] Arr;
     Arr = 0;
 }

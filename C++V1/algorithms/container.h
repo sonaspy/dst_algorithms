@@ -5,8 +5,11 @@
 
 struct container
 {
-  int id, weight;
-  operator int() const { return weight; }
+    int id, weight;
+    operator int() const
+    {
+        return weight;
+    }
 };
 
 #endif

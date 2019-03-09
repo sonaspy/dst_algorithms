@@ -7,64 +7,100 @@ typedef int Rank;
 #define DEFAULT_CAPACITY 3;
 
 template <class T>
-class Vector{
-    protected:
-      Rank _size;
-      int _capacity;
-      T *_elem;
-      void copyFrom(T const *A, Rank lo, Rank hi);
-      void expand();
-      void shrink();
-      bool bubble(Rank lo, Rank hi);
-      void bubbleSort(Rank lo, Rank hi);
-      Rank max(Rank lo, Rank hi);
-      void selectionSort(Rank lo, Rank hi);
-      void merge(Rank lo, Rank mi, Rank hi);
-      void mergeSort(Rank lo, Rank hi);
-      Rank partition(Rank lo, Rank hi);
-      void quickSort(Rank lo, Rank hi);
-      void heapSort(Rank lo, Rank hi);
-      void ShellSort(Rank lo, Rank hi);
-      Rank bubble_fast(Rank lo, Rank hi);
-      void bubbleSort_fast(Rank lo, Rank hi);
-      int disordered() const;
+class Vector
+{
+protected:
+    Rank _size;
+    int _capacity;
+    T *_elem;
+    void copyFrom(T const *A, Rank lo, Rank hi);
+    void expand();
+    void shrink();
+    bool bubble(Rank lo, Rank hi);
+    void bubbleSort(Rank lo, Rank hi);
+    Rank max(Rank lo, Rank hi);
+    void selectionSort(Rank lo, Rank hi);
+    void merge(Rank lo, Rank mi, Rank hi);
+    void mergeSort(Rank lo, Rank hi);
+    Rank partition(Rank lo, Rank hi);
+    void quickSort(Rank lo, Rank hi);
+    void heapSort(Rank lo, Rank hi);
+    void ShellSort(Rank lo, Rank hi);
+    Rank bubble_fast(Rank lo, Rank hi);
+    void bubbleSort_fast(Rank lo, Rank hi);
+    int disordered() const;
 
 
-    public:
-      Vector(int c = DEFAULT_CAPACITY, int s = 0, T v = 0){
-          _elem = new T[_capacity = c];
-          for (_size = 0; _size < s; _elem[_size++] = v)
-              ;
-      }
-      Vector(T const *A, Rank n) { copyFrom(A, 0, n); }
-      Vector(T const *A, Rank lo, Rank hi) { copyFrom(A, lo, hi); }
-      Vector(Vector<T> const &V) { copyFrom(V._elem, 0, V._size); }
-      Vector(Vector<T> const &V, Rank lo, Rank hi) { copyFrom(V._elem, lo, hi); }
-      ~Vector() { delete[] _elem; }
-      Rank size() const { return _size; }
-      bool empty() const { return !_size; }
-      int disordered() const;
-      Rank find(T const &e) const { return find(e, 0, _size); }
-      Rank find(T const &e, Rank lo, Rank hi) const;
-      Rank search(T const &e) const{
-          return (0 >= _size) ? -1 : search(e, 0, _size);
-      }
-      Rank search(T const &e, Rank lo, Rank hi) const;
-      T &operator[](Rank r) const;
-      Vector<T> &operator=(Vector<T> const &);
-      T remove(Rank r);
-      int remove(Rank lo, Rank hi);
-      Rank insert(Rank r, T const &e);
-      Rank insert(T const &e) { return insert(_size, e); }
-      void sort(Rank lo, Rank hi);
-      void sort() { sort(0, _size); }
-      void unsort(Rank lo, Rank hi);
-      void unsort() { unsort(0, _size); }
-      int deduplicate();
-      int uniquify();
-      void traverse(void (*)(T &));
-      template <class VST>
-      void traverse(VST &);
+public:
+    Vector(int c = DEFAULT_CAPACITY, int s = 0, T v = 0)
+    {
+        _elem = new T[_capacity = c];
+        for (_size = 0; _size < s; _elem[_size++] = v)
+            ;
+    }
+    Vector(T const *A, Rank n)
+    {
+        copyFrom(A, 0, n);
+    }
+    Vector(T const *A, Rank lo, Rank hi)
+    {
+        copyFrom(A, lo, hi);
+    }
+    Vector(Vector<T> const &V)
+    {
+        copyFrom(V._elem, 0, V._size);
+    }
+    Vector(Vector<T> const &V, Rank lo, Rank hi)
+    {
+        copyFrom(V._elem, lo, hi);
+    }
+    ~Vector()
+    {
+        delete[] _elem;
+    }
+    Rank size() const
+    {
+        return _size;
+    }
+    bool empty() const
+    {
+        return !_size;
+    }
+    int disordered() const;
+    Rank find(T const &e) const
+    {
+        return find(e, 0, _size);
+    }
+    Rank find(T const &e, Rank lo, Rank hi) const;
+    Rank search(T const &e) const
+    {
+        return (0 >= _size) ? -1 : search(e, 0, _size);
+    }
+    Rank search(T const &e, Rank lo, Rank hi) const;
+    T &operator[](Rank r) const;
+    Vector<T> &operator=(Vector<T> const &);
+    T remove(Rank r);
+    int remove(Rank lo, Rank hi);
+    Rank insert(Rank r, T const &e);
+    Rank insert(T const &e)
+    {
+        return insert(_size, e);
+    }
+    void sort(Rank lo, Rank hi);
+    void sort()
+    {
+        sort(0, _size);
+    }
+    void unsort(Rank lo, Rank hi);
+    void unsort()
+    {
+        unsort(0, _size);
+    }
+    int deduplicate();
+    int uniquify();
+    void traverse(void (*)(T &));
+    template <class VST>
+    void traverse(VST &);
 };
 
 template <class T>
@@ -121,23 +157,23 @@ template <class T>
 void Vector<T>::sort(Rank lo, Rank hi)
 {
     switch (rand() % 5)
-    {
-    case 1:
-        bubbleSort(lo, hi);
-        break;
-    case 2:
-        selectionSort(lo, hi);
-        break;
-    case 3:
-        mergeSort(lo, hi);
-        break;
-    case 4:
-        heapSort(lo, hi);
-        break;
-    default:
-        quickSort(lo, hi);
-        break;
-    }
+        {
+        case 1:
+            bubbleSort(lo, hi);
+            break;
+        case 2:
+            selectionSort(lo, hi);
+            break;
+        case 3:
+            mergeSort(lo, hi);
+            break;
+        case 4:
+            heapSort(lo, hi);
+            break;
+        default:
+            quickSort(lo, hi);
+            break;
+        }
     /*DSA*/
 }
 
@@ -195,10 +231,10 @@ bool Vector<T>::bubble(Rank lo, Rank hi)
     bool sorted = true;
     while (++lo < hi)
         if (_elem[lo - 1] > _elem[lo])
-        {
-            sorted = false;
-            swap(_elem[lo - 1], _elem[lo]);
-        }
+            {
+                sorted = false;
+                swap(_elem[lo - 1], _elem[lo]);
+            }
     return sorted;
 }
 
@@ -208,10 +244,10 @@ Rank Vector<T>::bubble_fast(Rank lo, Rank hi)
     Rank last_swap_p = lo;
     while (++lo < hi)
         if (_elem[lo - 1] > _elem[lo])
-        {
-            last_swap_p = lo;
-            swap(_elem[lo - 1], _elem[lo]);
-        }
+            {
+                last_swap_p = lo;
+                swap(_elem[lo - 1], _elem[lo]);
+            }
     return last_swap_p;
 }
 
@@ -222,13 +258,13 @@ void Vector<T>::bubbleSort_fast(Rank lo, Rank hi)
         ;
 }
 
-template <class T> 
+template <class T>
 void Vector<T>::copyFrom(T const *A, Rank lo, Rank hi)
-{ 
+{
     _elem = new T[_capacity = 2 * (hi - lo)];
-    _size = 0;               
-    while (lo < hi)             
-        _elem[_size++] = A[lo++]; 
+    _size = 0;
+    while (lo < hi)
+        _elem[_size++] = A[lo++];
 }
 
 template <class T>
@@ -253,17 +289,17 @@ int Vector<T>::disordered() const
 
 template <class T>
 void Vector<T>::expand()
-{  
+{
     if (_size < _capacity)
-        return;  
+        return;
     if (_capacity < DEFAULT_CAPACITY)
-        _capacity = DEFAULT_CAPACITY;  
+        _capacity = DEFAULT_CAPACITY;
     T *oldElem = _elem;
-    _elem = new T[_capacity <<= 1];  
+    _elem = new T[_capacity <<= 1];
     for (int i = 0; i < _size; i++)
-        _elem[i] = oldElem[i];  
-    /*DSA*/                     
-    delete[] oldElem;           
+        _elem[i] = oldElem[i];
+    /*DSA*/
+    delete[] oldElem;
 }
 
 
@@ -273,7 +309,7 @@ Rank Vector<T>::find(T const &e, Rank lo, Rank hi) const
     while ((hi-- > lo) && (e != _elem[hi]))
         ;
     return hi;
-}   
+}
 
 template <class T>
 void Vector<T>::heapSort(Rank lo, Rank hi)
@@ -281,13 +317,15 @@ void Vector<T>::heapSort(Rank lo, Rank hi)
     /*DSA*/ printf("\tHEAPsort [%3d, %3d)\n", lo, hi);
     PQ_ComplHeap<T> H(_elem + lo, hi - lo);
     while (!H.empty())
-    /*DSA*/ {
-        _elem[--hi] = H.delMax();
-        /*DSA*/ for (int i = lo; i < hi; i++)
-            print(H[i]);
-        print(_elem[hi]);
-        printf("\n");
-/*DSA*/}
+        /*DSA*/
+        {
+            _elem[--hi] = H.delMax();
+            /*DSA*/ for (int i = lo; i < hi; i++)
+                print(H[i]);
+            print(_elem[hi]);
+            printf("\n");
+            /*DSA*/
+        }
 }
 
 
@@ -313,12 +351,12 @@ void Vector<T>::merge(Rank lo, Rank mi, Rank hi)
     int lc = hi - mi;
     T *C = _elem + mi;
     for (Rank i = 0, j = 0, k = 0; j < lb; )
-    {
-        if (!(k < lc) || B[j] <= C[k])
-            A[i++] = B[j++];
-        if (k < lc && C[k] < B[j])
-            A[i++] = C[k++];
-    }
+        {
+            if (!(k < lc) || B[j] <= C[k])
+                A[i++] = B[j++];
+            if (k < lc && C[k] < B[j])
+                A[i++] = C[k++];
+        }
     delete[] B;
 }
 
@@ -340,24 +378,24 @@ Rank Vector<T>::partition(Rank lo, Rank hi)
     swap(_elem[lo], _elem[lo + rand() % (hi - lo + 1)]);
     T pivot = _elem[lo];
     while (lo < hi)
-    {
-        while (lo < hi)
-            if (pivot < _elem[hi])
-                hi--;
-            else
-            {
-                _elem[lo++] = _elem[hi];
-                break;
-            }
-        while (lo < hi)
-            if (_elem[lo] < pivot)
-                lo++;
-            else
-            {
-                _elem[hi--] = _elem[lo];
-                break;
-            }
-    }
+        {
+            while (lo < hi)
+                if (pivot < _elem[hi])
+                    hi--;
+                else
+                    {
+                        _elem[lo++] = _elem[hi];
+                        break;
+                    }
+            while (lo < hi)
+                if (_elem[lo] < pivot)
+                    lo++;
+                else
+                    {
+                        _elem[hi--] = _elem[lo];
+                        break;
+                    }
+        }
     _elem[lo] = pivot;
     return lo;
 }
@@ -405,10 +443,10 @@ template <class T>
 static Rank binSearch(T *A, T const &e, Rank lo, Rank hi)
 {
     while (lo < hi)
-    {
-        Rank mi = (lo + hi) >> 1;
-        (e < A[mi]) ? hi = mi : lo = mi + 1;
-    }
+        {
+            Rank mi = (lo + hi) >> 1;
+            (e < A[mi]) ? hi = mi : lo = mi + 1;
+        }
     return --lo;
 }
 
@@ -419,20 +457,20 @@ static Rank fibSearch(T *A, T const &e, Rank lo, Rank hi)
     /*DSA*/ printf("FIB search (B)\n");
     Fib fib(hi - lo);
     while (lo < hi)
-    {
-        /*DSA*/ for (int i = 0; i < lo; i++)
-            printf("     ");
-        if (lo >= 0)
-            for (int i = lo; i < hi; i++)
-                printf("....^");
-        else
-            printf("<<<<|");
-        printf("\n");
-        while (hi - lo < fib.get())
-            fib.prev();
-        Rank mi = lo + fib.get() - 1;
-        (e < A[mi]) ? hi = mi : lo = mi + 1;
-    }
+        {
+            /*DSA*/ for (int i = 0; i < lo; i++)
+                printf("     ");
+            if (lo >= 0)
+                for (int i = lo; i < hi; i++)
+                    printf("....^");
+            else
+                printf("<<<<|");
+            printf("\n");
+            while (hi - lo < fib.get())
+                fib.prev();
+            Rank mi = lo + fib.get() - 1;
+            (e < A[mi]) ? hi = mi : lo = mi + 1;
+        }
     /*DSA*/ for (int i = 0; i < lo - 1; i++)
         printf("     ");
     if (lo > 0)
@@ -445,15 +483,14 @@ static Rank fibSearch(T *A, T const &e, Rank lo, Rank hi)
 template <class T>
 void Vector<T>::heapSort(Rank lo, Rank hi)
 {
-
     PQ_ComplHeap<T> H(_elem + lo, hi - lo);
     while (!H.empty())
         _elem[--hi] = H.delMax();
 }
 
 template <class T>
-void Vector<T>::ShellSort(Rank lo, Rank hi){
-    
+void Vector<T>::ShellSort(Rank lo, Rank hi)
+{
 }
 
 // shell sequence1 {1, 2, 4, 8...2^k}

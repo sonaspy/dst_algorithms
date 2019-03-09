@@ -38,20 +38,35 @@ void checkOrder(Vector<T> &V)
 }
 
 template <class T>
-static bool lt(T *a, T *b) { return lt(*a, *b); }
+static bool lt(T *a, T *b)
+{
+    return lt(*a, *b);
+}
 template <class T>
-static bool lt(T &a, T &b) { return a < b; }
+static bool lt(T &a, T &b)
+{
+    return a < b;
+}
 template <class T>
-static bool eq(T *a, T *b) { return eq(*a, *b); }
+static bool eq(T *a, T *b)
+{
+    return eq(*a, *b);
+}
 template <class T>
-static bool eq(T &a, T &b) { return a == b; }
+static bool eq(T &a, T &b)
+{
+    return a == b;
+}
 
 template <class T>
 struct Crc
 {
     T &c;
     Crc(T &crc) : c(crc) {}
-    virtual void operator()(T &e) { c += e; }
+    virtual void operator()(T &e)
+    {
+        c += e;
+    }
 };
 
 template <class T>
@@ -77,7 +92,10 @@ void crc(Vector<T> &V)
 template <class T>
 struct Decrease
 {
-    virtual void operator()(T &e) { e--; }
+    virtual void operator()(T &e)
+    {
+        e--;
+    }
 };
 
 template <class T>
@@ -95,7 +113,10 @@ void decrease(Vector<T> &V)
 template <class T>
 struct Double
 {
-    virtual void operator()(T &e) { e *= 2; }
+    virtual void operator()(T &e)
+    {
+        e *= 2;
+    }
 };
 
 template <class T>
@@ -111,10 +132,10 @@ struct Hailstone
     {
         int step = 0;
         while (1 != e)
-        {
-            (e % 2) ? e = 3 *e + 1 : e /= 2;
-            step++;
-        }
+            {
+                (e % 2) ? e = 3 *e + 1 : e /= 2;
+                step++;
+            }
         e = step;
     }
 };
@@ -122,7 +143,10 @@ struct Hailstone
 template <class T>
 struct Half
 {
-    virtual void operator()(T &e) { e /= 2; }
+    virtual void operator()(T &e)
+    {
+        e /= 2;
+    }
 };
 
 template <class T>
@@ -134,7 +158,10 @@ void half(List<T> &L)
 template <class T>
 struct Increase
 {
-    virtual void operator()(T &e) { e++; }
+    virtual void operator()(T &e)
+    {
+        e++;
+    }
 };
 
 /*DSA*/
@@ -155,10 +182,22 @@ static int dice(int range)
 {
     return rand() % range;
 }
-static int dice(int lo, int hi) { return lo + rand() % (hi - lo); }
-static float dice(float range) { return rand() % (1000 * (int)range) / (float)1000.; }
-static double dice(double range) { return rand() % (1000 * (int)range) / (double)1000.; }
-static char dice(char range) { return (char)(32 + rand() % 96); }
+static int dice(int lo, int hi)
+{
+    return lo + rand() % (hi - lo);
+}
+static float dice(float range)
+{
+    return rand() % (1000 * (int)range) / (float)1000.;
+}
+static double dice(double range)
+{
+    return rand() % (1000 * (int)range) / (double)1000.;
+}
+static char dice(char range)
+{
+    return (char)(32 + rand() % 96);
+}
 
 template <class T>
 struct Cleaner
@@ -168,11 +207,11 @@ struct Cleaner
 #ifdef _DEBUG
         static int n = 0;
         if (7 > strlen(typeid(T).name()))
-        {
-            printf("\t<%s>[%d]=", typeid(T).name(), ++n);
-            print(x);
-            printf(" purged\n");
-        }
+            {
+                printf("\t<%s>[%d]=", typeid(T).name(), ++n);
+                print(x);
+                printf(" purged\n");
+            }
 #endif
     }
 };
@@ -183,9 +222,9 @@ struct Cleaner<T>
     static void clean(T *x)
     {
         if (x)
-        {
-            delete x;
-        }
+            {
+                delete x;
+            }
 #ifdef _DEBUG
         static int n = 0;
         printf("\t<%s>[%d] released\n", typeid(T *).name(), ++n);
@@ -194,7 +233,10 @@ struct Cleaner<T>
 };
 
 template <class T>
-void release(T x) { Cleaner<T>::clean(x); }
+void release(T x)
+{
+    Cleaner<T>::clean(x);
+}
 
 #define _CRT_SECURE_NO_WARNINGS
 #if defined(DSA_DEBUG)

@@ -5,10 +5,13 @@
 template <class T>
 struct huffmanNode
 {
-  linkedBinaryTree<int> *tree;
-  T weight;
+    linkedBinaryTree<int> *tree;
+    T weight;
 
-  operator T() const { return weight; }
+    operator T() const
+    {
+        return weight;
+    }
 };
 
 #endif

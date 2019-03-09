@@ -13,7 +13,7 @@ using namespace std;
 template <class K, class E>
 class bsTree : public dictionary<K, E>
 {
-  public:
+public:
     virtual void ascend() = 0;
     // output in ascending order of key
 };

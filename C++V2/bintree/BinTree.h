@@ -6,22 +6,31 @@
 template <class T>
 class BinTree
 {
-  protected:
+protected:
     int _size;
     BinNodePosi(T) _root;
     virtual int updateHeight(BinNodePosi(T) x);
     void updateHeightAbove(BinNodePosi(T) x);
 
-  public:
+public:
     BinTree() : _size(0), _root(NULL) {}
     ~BinTree()
     {
         if (0 < _size)
             remove(_root);
     }
-    int size() const { return _size; }
-    bool empty() const { return !_root; }
-    BinNodePosi(T) root() const { return _root; }
+    int size() const
+    {
+        return _size;
+    }
+    bool empty() const
+    {
+        return !_root;
+    }
+    BinNodePosi(T) root() const
+    {
+        return _root;
+    }
     BinNodePosi(T) insertAsRoot(T const &e);
     BinNodePosi(T) insertAsLC(BinNodePosi(T) x, T const &e);
     BinNodePosi(T) insertAsRC(BinNodePosi(T) x, T const &e);
@@ -145,10 +154,10 @@ void BinTree<T>::updateHeightAbove(BinNodePosi(T) x)
 
 {
     while (x)
-    {
-        updateHeight(x);
-        x = x->parent;
-    }
+        {
+            updateHeight(x);
+            x = x->parent;
+        }
 }
 
 #endif

@@ -29,7 +29,8 @@ struct BTNode
         if (rc)
             rc->parent = this;
     }
-    BinNodePosi(T) BinNode<T>::zig(){
+    BinNodePosi(T) BinNode<T>::zig()
+    {
         BinNodePosi(T) lChild = lc;
         lChild->parent = this->parent;
         if (lChild->parent)

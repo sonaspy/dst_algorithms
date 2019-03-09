@@ -8,9 +8,9 @@
 using namespace std;
 
 template <class T>
-void make2dArrayNoCatch(T ** &x, int numOfRows, int numOfColumns){
+void make2dArrayNoCatch(T ** &x, int numOfRows, int numOfColumns)
+{
     x = new T *[numOfRows];
-
     for(int i = 0; i < numOfRows; i++)
         x[i] = new T [numOfColumns];
 }
