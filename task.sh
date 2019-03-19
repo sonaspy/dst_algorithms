@@ -1,7 +1,7 @@
 function read_dir(){
-for file in `ls $1` #注意此处这是两个反引号，表示运行系统命令
+for file in `ls $1` 
 do
- if [ -d $1"/"$file ] #注意此处之间一定要加上空格，否则会报错
+ if [ -d $1"/"$file ]
  then
  read_dir $1"/"$file
  else
