@@ -14,7 +14,7 @@ class illegalParameterValue
     {
         message = theMessage;
     }
-    void outputMessage() { std::cerr << message << std::std::endl; }
+    void outputMessage() { std::cerr << message << std::endl; }
 
   private:
     string message;
@@ -28,7 +28,7 @@ class illegalInputData
     {
         message = theMessage;
     }
-    void outputMessage() { std::cerr << message << std::std::endl; }
+    void outputMessage() { std::cerr << message << std::endl; }
 
   private:
     string message;
@@ -42,7 +42,7 @@ class illegalIndex
     {
         message = theMessage;
     }
-    void outputMessage() { std::cerr << message << std::std::endl; }
+    void outputMessage() { std::cerr << message << std::endl; }
 
   private:
     string message;
@@ -56,7 +56,7 @@ class matrixIndexOutOfBounds
     {
         message = theMessage;
     }
-    void outputMessage() { std::cerr << message << std::std::endl; }
+    void outputMessage() { std::cerr << message << std::endl; }
 
   private:
     string message;
@@ -71,7 +71,7 @@ class matrixSizeMismatch
     {
         message = theMessage;
     }
-    void outputMessage() { std::cerr << message << std::std::endl; }
+    void outputMessage() { std::cerr << message << std::endl; }
 
   private:
     string message;
@@ -86,7 +86,7 @@ class stackEmpty
     {
         message = theMessage;
     }
-    void outputMessage() { std::cerr << message << std::std::endl; }
+    void outputMessage() { std::cerr << message << std::endl; }
 
   private:
     string message;
@@ -101,7 +101,7 @@ class queueEmpty
     {
         message = theMessage;
     }
-    void outputMessage() { std::cerr << message << std::std::endl; }
+    void outputMessage() { std::cerr << message << std::endl; }
 
   private:
     string message;
@@ -116,7 +116,7 @@ class hashTableFull
     {
         message = theMessage;
     }
-    void outputMessage() { std::cerr << message << std::std::endl; }
+    void outputMessage() { std::cerr << message << std::endl; }
 
   private:
     string message;
@@ -131,7 +131,7 @@ class undefinedEdgeWeight
     {
         message = theMessage;
     }
-    void outputMessage() { std::cerr << message << std::std::endl; }
+    void outputMessage() { std::cerr << message << std::endl; }
 
   private:
     string message;
@@ -146,7 +146,7 @@ class undefinedMethod
     {
         message = theMessage;
     }
-    void outputMessage() { std::cerr << message << std::std::endl; }
+    void outputMessage() { std::cerr << message << std::endl; }
 
   private:
     string message;
