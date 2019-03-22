@@ -17,13 +17,13 @@ void main(void)
    int a[6] = {1, 2, 3, 4, 5, 6};
 
    // output the array elements
-   cout << "a[0:5] = ";
-   copy(a, a+6, ostream_iterator<int>(cout, " "));
-   cout << endl;
+   std::cout << "a[0:5] = ";
+   copy(a, a+6, ostream_iterator<int>(std::cout, " "));
+   std::cout << std::endl;
 
    // test the function rSum
-   cout << "rSum(a,0) = " << rSum(a,0) << endl;
-   cout << "rSum(a,1) = " << rSum(a,1) << endl;
-   cout << "rSum(a,6) = " << rSum(a,6) << endl;
+   std::cout << "rSum(a,0) = " << rSum(a,0) << std::endl;
+   std::cout << "rSum(a,1) = " << rSum(a,1) << std::endl;
+   std::cout << "rSum(a,6) = " << rSum(a,6) << std::endl;
    return 0;
 }

@@ -22,12 +22,12 @@ void main()
    z.insert(p);
    p.first = 12; p.second = 60;
    z.insert(p);
-   cout << "The dictionary is " << endl << z << endl;
-   cout << "Its size is " << z.size() << endl;
+   std::cout << "The dictionary is " << std::endl << z << std::endl;
+   std::cout << "Its size is " << z.size() << std::endl;
 
    // test find
-   cout << "Element associated with 2 is " << z.find(2)->second << endl;
-   cout << "Element associated with 10 is " << z.find(10)->second << endl;
-   cout << "Element associated with 12 is " << z.find(12)->second << endl;
+   std::cout << "Element associated with 2 is " << z.find(2)->second << std::endl;
+   std::cout << "Element associated with 10 is " << z.find(10)->second << std::endl;
+   std::cout << "Element associated with 12 is " << z.find(12)->second << std::endl;
 
 }

@@ -132,7 +132,7 @@ void vectorList<T>::insert(int theIndex, const T& theElement)
 template<class T>
 void vectorList<T>::output(ostream& out) const
 {// Put the list into the stream out.
-   copy(element->begin(), element->end(), ostream_iterator<T>(cout, "  "));
+   copy(element->begin(), element->end(), ostream_iterator<T>(std::cout, "  "));
 }
 
 // overload <<

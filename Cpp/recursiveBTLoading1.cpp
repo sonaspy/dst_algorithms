@@ -37,5 +37,5 @@ void main(void)
    numberOfContainers = 5;
    capacity = 10;
    rLoad(1);
-   cout << "Value of max loading is " << maxWeightSoFar << endl;
+   std::cout << "Value of max loading is " << maxWeightSoFar << std::endl;
 }

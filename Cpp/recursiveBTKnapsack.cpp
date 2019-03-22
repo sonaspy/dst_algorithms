@@ -125,5 +125,5 @@ void main(void)
    double w[] = {0, 2, 2, 6, 5, 4};
    int n = 5;
    int c = 10;
-   cout << "Optimal value is " << knapsack(p, w, n, c) << endl;
+   std::cout << "Optimal value is " << knapsack(p, w, n, c) << std::endl;
 }

@@ -24,28 +24,28 @@ int main()
    int n = 7;
 
    // output the elements
-   cout << "a[0:6] = ";
-   copy(a, a+n, ostream_iterator<int>(cout, " "));
-   cout << endl;
+   std::cout << "a[0:6] = ";
+   copy(a, a+n, ostream_iterator<int>(std::cout, " "));
+   std::cout << std::endl;
 
    // do a few inserts
    x = 14;
    insert(a,n,x);
-   cout << "After inserting 14, a[0:7] = ";
-   copy(a, a+n, ostream_iterator<int>(cout, " "));
-   cout << endl;
+   std::cout << "After inserting 14, a[0:7] = ";
+   copy(a, a+n, ostream_iterator<int>(std::cout, " "));
+   std::cout << std::endl;
 
    x = 5;
    insert(a,n,x);
-   cout << "After inserting 5, a[0:8] = ";
-   copy(a, a+n, ostream_iterator<int>(cout, " "));
-   cout << endl;
+   std::cout << "After inserting 5, a[0:8] = ";
+   copy(a, a+n, ostream_iterator<int>(std::cout, " "));
+   std::cout << std::endl;
 
    x = 0;
    insert(a,n,x);
-   cout << "After inserting 0, a[0:9] = ";
-   copy(a, a+n, ostream_iterator<int>(cout, " "));
-   cout << endl;
+   std::cout << "After inserting 0, a[0:9] = ";
+   copy(a, a+n, ostream_iterator<int>(std::cout, " "));
+   std::cout << std::endl;
 
    return 0;
 }

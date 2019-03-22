@@ -8,18 +8,18 @@ int main(void)
    sparseMatrix<int> a, b, c;
 
    // test input and output
-   cin >> a;
-   cout << "Matrix a is" << endl << a;
-   cin >> b;
-   cout << "Matrix b is" << endl << b;
+   std::cin >> a;
+   std::cout << "Matrix a is" << std::endl << a;
+   std::cin >> b;
+   std::cout << "Matrix b is" << std::endl << b;
 
    // test transpose
    a.transpose(c);
-   cout << "The transpose of a is" << endl << c;
+   std::cout << "The transpose of a is" << std::endl << c;
 
    // test add
    a.add(b,c);
-   cout << "The sum of a and b is" << endl << c;
+   std::cout << "The sum of a and b is" << std::endl << c;
 
    return 0;
 }

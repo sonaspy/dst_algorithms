@@ -10,7 +10,7 @@ using namespace std;
 template <class T>
 void visit(binaryTreeNode<T> *x)
 {// visit node *x, just output element field.
-   cout << x->element << ' ';
+   std::cout << x->element << ' ';
 }
 
 template <class T>
@@ -76,18 +76,18 @@ int main(void)
    x = new binaryTreeNode<int> (1, y, z);
 
    // traverse x in all ways
-   cout << "Inorder sequence is ";
+   std::cout << "Inorder sequence is ";
    inOrder(x);
-   cout << endl;
-   cout << "Preorder sequence is ";
+   std::cout << std::endl;
+   std::cout << "Preorder sequence is ";
    preOrder(x);
-   cout << endl;
-   cout << "Postorder sequence is ";
+   std::cout << std::endl;
+   std::cout << "Postorder sequence is ";
    postOrder(x);
-   cout << endl;
-   cout << "Level order sequence is ";
+   std::cout << std::endl;
+   std::cout << "Level order sequence is ";
    levelOrder(x);
-   cout << endl;
+   std::cout << std::endl;
 
    return 0;
 }

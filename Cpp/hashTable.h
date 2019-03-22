@@ -109,10 +109,10 @@ void hashTable<K,E>::output(ostream& out) const
 {// Insert the hash table into the stream out.
    for (int i = 0; i < divisor; i++)
       if (table[i] == NULL)
-         cout << "NULL" << endl;
+         std::cout << "NULL" << std::endl;
       else
-         cout << table[i]->first << " "
-              << table[i]->second << endl;
+         std::cout << table[i]->first << " "
+              << table[i]->second << std::endl;
 }
 
 // overload <<

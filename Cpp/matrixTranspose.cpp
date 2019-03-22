@@ -19,14 +19,14 @@ int main()
    make2dArray(a,2,2);
    a[0][0] = 1; a[0][1] = 2; a[1][0] = 3; a[1][1] = 4;
 
-   cout << "The matrix is" << endl;
-   cout << a[0][0] << ' ' << a[0][1] << endl;
-   cout << a[1][0] << ' ' << a[1][1] << endl;
+   std::cout << "The matrix is" << std::endl;
+   std::cout << a[0][0] << ' ' << a[0][1] << std::endl;
+   std::cout << a[1][0] << ' ' << a[1][1] << std::endl;
 
    transpose(a,2);
 
-   cout << "The transposed matrix is" << endl;
-   cout << a[0][0] << ' ' << a[0][1] << endl;
-   cout << a[1][0] << ' ' << a[1][1] << endl;
+   std::cout << "The transposed matrix is" << std::endl;
+   std::cout << a[0][0] << ' ' << a[0][1] << std::endl;
+   std::cout << a[1][0] << ' ' << a[1][1] << std::endl;
    return 0;
 }

@@ -32,14 +32,14 @@ ostream& operator<<(ostream& out, sparseMatrix<T>& x)
 
    // put matrix characteristics
    out << "rows = " << x.rows << " columns = "
-       << x.cols  << endl;
-   out << "nonzero terms = " << x.terms.size() << endl;
+       << x.cols  << std::endl;
+   out << "nonzero terms = " << x.terms.size() << std::endl;
 
    // put terms, one per line
    for (arrayList<matrixTerm<T> >::iterator i = x.terms.begin();
         i != x.terms.end(); i++)
       out << "a(" << (*i).row << ',' << (*i).col
-          << ") = " << (*i).value << endl;
+          << ") = " << (*i).value << std::endl;
 
    return out;
 }
@@ -51,8 +51,8 @@ istream& operator>>(istream& in, sparseMatrix<T>& x)
 
    // input matrix characteristics
    int numberOfTerms;
-   cout << "Enter number of rows, columns, and #terms"
-        << endl;
+   std::cout << "Enter number of rows, columns, and #terms"
+        << std::endl;
    in >> x.rows >> x.cols >> numberOfTerms;
 
    // set size of x.terms and ensure enough capacity
@@ -62,8 +62,8 @@ istream& operator>>(istream& in, sparseMatrix<T>& x)
    matrixTerm<T> mTerm;
    for (int i = 0; i < numberOfTerms; i++)
    {
-      cout << "Enter row, column, and value of term " 
-           << (i + 1) << endl;
+      std::cout << "Enter row, column, and value of term " 
+           << (i + 1) << std::endl;
       in >> mTerm.row >> mTerm.col >> mTerm.value;
       x.terms.set(i, mTerm);
    }
@@ -82,14 +82,14 @@ ostream& operator<<(ostream& out, sparseMatrix<int>& x)
 
    // put matrix characteristics
    out << "rows = " << x.rows << " columns = "
-       << x.cols  << endl;
-   out << "nonzero terms = " << x.terms.size() << endl;
+       << x.cols  << std::endl;
+   out << "nonzero terms = " << x.terms.size() << std::endl;
 
    // put terms, one per line
    for (arrayList<matrixTerm<int> >::iterator i = x.terms.begin();
         i != x.terms.end(); i++)
       out << "a(" << (*i).row << ',' << (*i).col
-          << ") = " << (*i).value << endl;
+          << ") = " << (*i).value << std::endl;
 
    return out;
 }
@@ -100,8 +100,8 @@ istream& operator>>(istream& in, sparseMatrix<int>& x)
 
    // input matrix characteristics
    int numberOfTerms;
-   cout << "Enter number of rows, columns, and #terms"
-        << endl;
+   std::cout << "Enter number of rows, columns, and #terms"
+        << std::endl;
    in >> x.rows >> x.cols >> numberOfTerms;
 
    // set size of x.terms and ensure enough capacity
@@ -111,8 +111,8 @@ istream& operator>>(istream& in, sparseMatrix<int>& x)
    matrixTerm<int> mTerm;
    for (int i = 0; i < numberOfTerms; i++)
    {
-      cout << "Enter row, column, and value of term " 
-           << (i + 1) << endl;
+      std::cout << "Enter row, column, and value of term " 
+           << (i + 1) << std::endl;
       in >> mTerm.row >> mTerm.col >> mTerm.value;
       x.terms.set(i, mTerm);
    }

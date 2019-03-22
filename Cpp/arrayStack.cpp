@@ -16,27 +16,27 @@ int main(void)
    s.push(3);
    s.push(4);
 
-   cout << "Stack should be 1234, bottom to top" << endl;
+   std::cout << "Stack should be 1234, bottom to top" << std::endl;
 
    // test empty and size
    if (s.empty())
-      cout << "The stack is empty" << endl;
+      std::cout << "The stack is empty" << std::endl;
    else
-      cout << "The stack is not empty" << endl;
+      std::cout << "The stack is not empty" << std::endl;
 
-   cout << "The stack size is " << s.size() << endl;
+   std::cout << "The stack size is " << s.size() << std::endl;
 
    while (!s.empty())
    {
-      cout << "Stack top is " << s.top() << endl;
+      std::cout << "Stack top is " << s.top() << std::endl;
       s.pop();
-      cout << "Popped top element" << endl;
+      std::cout << "Popped top element" << std::endl;
    }
 
    try {s.pop();}
    catch (stackEmpty message)
    {
-      cout << "Last pop failed " << endl;
+      std::cout << "Last pop failed " << std::endl;
       message.outputMessage();
    }
 

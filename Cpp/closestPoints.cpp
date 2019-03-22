@@ -164,21 +164,21 @@ pointPair closestPair(point1 x[], int numberOfPoints)
   
 void main(void)
 {
-   cout << "Enter number of points" << endl;
+   std::cout << "Enter number of points" << std::endl;
    int n;
-   cin >> n;
+   std::cin >> n;
    point1 *x = new point1 [n];
 
    for (int i = 0; i < n; i++)
    {
-      cout << "Enter point " << i + 1 << endl;
+      std::cout << "Enter point " << i + 1 << std::endl;
       double xcoord, ycoord;
-      cin >> xcoord >> ycoord;
+      std::cin >> xcoord >> ycoord;
       x[i] = point1(xcoord, ycoord, i + 1);
    }
 
    pointPair best = closestPair(x, n);
-   cout << "Closest points are " << best.a.id <<
-                      " and " << best.b.id << endl;
-   cout << "Their distance is " << best.dist << endl;
+   std::cout << "Closest points are " << best.a.id <<
+                      " and " << best.b.id << std::endl;
+   std::cout << "Their distance is " << best.dist << std::endl;
 }

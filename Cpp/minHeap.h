@@ -147,7 +147,7 @@ void minHeap<T>::initialize(T *theHeap, int theSize)
 template<class T>
 void minHeap<T>::output(ostream& out) const
 {// Put the array into the stream out.
-   copy(heap + 1, heap + heapSize + 1, ostream_iterator<T>(cout, "  "));
+   copy(heap + 1, heap + heapSize + 1, ostream_iterator<T>(std::cout, "  "));
 }
 
 // overload <<

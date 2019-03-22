@@ -30,16 +30,16 @@ int main()
    int a[10] = {10,9,1,2,3,4,8,7,6,5};
 
    // output the elements
-   cout << "a[0:9] = ";
-   copy(a, a+10, ostream_iterator<int>(cout, " "));
-   cout << endl;
+   std::cout << "a[0:9] = ";
+   copy(a, a+10, ostream_iterator<int>(std::cout, " "));
+   std::cout << std::endl;
 
    // sort
    bubbleSort(a,10);
 
    // output the sorted sequence
-   cout << "After the sort, a[0:9] = ";
-   copy(a, a+10, ostream_iterator<int>(cout, " "));
-   cout << endl;
+   std::cout << "After the sort, a[0:9] = ";
+   copy(a, a+10, ostream_iterator<int>(std::cout, " "));
+   std::cout << std::endl;
    return 0;
 }

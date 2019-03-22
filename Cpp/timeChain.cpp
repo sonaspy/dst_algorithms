@@ -14,7 +14,7 @@ int main()
    listType* s = NULL;
 
    // best-case test
-   cout << "Best-case times in progress" << endl;
+   std::cout << "Best-case times in progress" << std::endl;
    int n = 50000;
 
    // insert n elements
@@ -30,7 +30,7 @@ int main()
    }
 
    double elapsedTime = (clock() - startTime)/clocksPerMillis/m;
-   cout << n << " inserts took " << elapsedTime << " ms" << endl;
+   std::cout << n << " inserts took " << elapsedTime << " ms" << std::endl;
 
    double insertTime = elapsedTime;
 
@@ -42,8 +42,8 @@ int main()
         s->get(i);
 
    elapsedTime = (clock() - startTime)/clocksPerMillis/m;
-   cout << n << " gets took " << elapsedTime <<
-                " ms" << endl;
+   std::cout << n << " gets took " << elapsedTime <<
+                " ms" << std::endl;
 
    // time indexOf 
    startTime = clock();
@@ -51,8 +51,8 @@ int main()
       s->indexOf(i);
 
    elapsedTime = (clock() - startTime)/clocksPerMillis;
-   cout << n << " indexOfs took " << elapsedTime <<
-                " ms" << endl;
+   std::cout << n << " indexOfs took " << elapsedTime <<
+                " ms" << std::endl;
 
    // worst-case time for indexOf 
    m = 5000;
@@ -61,8 +61,8 @@ int main()
       s->indexOf(n);
 
    elapsedTime = (clock() - startTime)/clocksPerMillis/m;
-   cout << "Worst-case indexOf took " << elapsedTime <<
-                " ms" << endl;
+   std::cout << "Worst-case indexOf took " << elapsedTime <<
+                " ms" << std::endl;
 
 
    // time erase
@@ -82,12 +82,12 @@ int main()
 
    elapsedTime = elapsedTime1 - insertTime;
 
-   cout << n << " erases took " << elapsedTime <<
-                " ms" << endl; 
+   std::cout << n << " erases took " << elapsedTime <<
+                " ms" << std::endl; 
 
 
    // average-case test
-   cout << "Average-case times in progress" << endl;
+   std::cout << "Average-case times in progress" << std::endl;
 
    // random number overhead
    m = 5000000;
@@ -96,7 +96,7 @@ int main()
      int j = rand() % m;
 
    elapsedTime = clock() - startTime;
-   cout << m << " randoms took " << elapsedTime << " ms" << endl;
+   std::cout << m << " randoms took " << elapsedTime << " ms" << std::endl;
 
    s = new listType();
 
@@ -110,7 +110,7 @@ int main()
    }
 
    elapsedTime = clock() - startTime;
-   cout << n << " inserts took " << elapsedTime << " ms" << endl;
+   std::cout << n << " inserts took " << elapsedTime << " ms" << std::endl;
 
 
 
@@ -123,11 +123,11 @@ int main()
    }
 
    elapsedTime = clock() - startTime;
-   cout << n << " erases took " << elapsedTime <<
-                " ms" << endl;
+   std::cout << n << " erases took " << elapsedTime <<
+                " ms" << std::endl;
 
 // random inserts, worst-case deletes
-   cout << "Random inserts, worst-case deletes" << endl;
+   std::cout << "Random inserts, worst-case deletes" << std::endl;
    delete s;
    s = new listType();
 
@@ -141,7 +141,7 @@ int main()
    }
 
    elapsedTime = clock() - startTime;
-   cout << n << " inserts took " << elapsedTime << " ms" << endl;
+   std::cout << n << " inserts took " << elapsedTime << " ms" << std::endl;
 
 
 
@@ -151,12 +151,12 @@ int main()
      s->erase(i);
 
    elapsedTime = clock() - startTime;
-   cout << n << " erases took " << elapsedTime <<
-                " ms" << endl;
+   std::cout << n << " erases took " << elapsedTime <<
+                " ms" << std::endl;
 
 
    // worst-case test
-   cout << "Worst-case times in progress" << endl;
+   std::cout << "Worst-case times in progress" << std::endl;
    delete s;
    s = new listType();
 
@@ -167,7 +167,7 @@ int main()
      s->insert(i,i);
 
    elapsedTime = clock() - startTime;
-   cout << n << " inserts took " << elapsedTime << " ms" << endl;
+   std::cout << n << " inserts took " << elapsedTime << " ms" << std::endl;
 
 
 
@@ -177,8 +177,8 @@ int main()
      s->erase(i);
 
    elapsedTime = clock() - startTime;
-   cout << n << " erases took " << elapsedTime <<
-                " ms" << endl;
+   std::cout << n << " erases took " << elapsedTime <<
+                " ms" << std::endl;
 
    return 0;
 }

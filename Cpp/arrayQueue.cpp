@@ -12,35 +12,35 @@ int main(void)
 
    // add a few elements
    q.push(1);
-   cout << "Queue rear is " << q.back() << endl;
+   std::cout << "Queue rear is " << q.back() << std::endl;
    q.push(2);
-   cout << "Queue rear is " << q.back() << endl;
+   std::cout << "Queue rear is " << q.back() << std::endl;
    q.push(3);
-   cout << "Queue rear is " << q.back() << endl;
+   std::cout << "Queue rear is " << q.back() << std::endl;
    q.push(4);
-   cout << "Queue rear is " << q.back() << endl;
+   std::cout << "Queue rear is " << q.back() << std::endl;
 
-   cout << "Queue should be 1234, front to rear" << endl;
+   std::cout << "Queue should be 1234, front to rear" << std::endl;
 
    // test empty and size
    if (q.empty())
-      cout << "The queue is empty" << endl;
+      std::cout << "The queue is empty" << std::endl;
    else
-      cout << "The queue is not empty" << endl;
+      std::cout << "The queue is not empty" << std::endl;
 
-   cout << "The queue size is " << q.size() << endl;
+   std::cout << "The queue size is " << q.size() << std::endl;
 
    while (!q.empty())
    {
-      cout << "Queue front is " << q.front() << endl;
+      std::cout << "Queue front is " << q.front() << std::endl;
       q.pop();
-      cout << "Popped front element" << endl;
+      std::cout << "Popped front element" << std::endl;
    }
 
    try {q.pop();}
    catch (queueEmpty message)
    {
-      cout << "Last pop failed " << endl;
+      std::cout << "Last pop failed " << std::endl;
       message.outputMessage();
    }
 
@@ -56,21 +56,21 @@ int main(void)
    r.push(6);
    r.push(7);
 
-   cout << "Queue should be 34567, front to rear" << endl;
+   std::cout << "Queue should be 34567, front to rear" << std::endl;
 
    // test empty and size
    if (r.empty())
-      cout << "The queue is empty" << endl;
+      std::cout << "The queue is empty" << std::endl;
    else
-      cout << "The queue is not empty" << endl;
+      std::cout << "The queue is not empty" << std::endl;
 
-   cout << "The queue size is " << r.size() << endl;
+   std::cout << "The queue size is " << r.size() << std::endl;
 
    while (!r.empty())
    {
-      cout << "Queue front is " << r.front() << endl;
+      std::cout << "Queue front is " << r.front() << std::endl;
       r.pop();
-      cout << "Popped front element" << endl;
+      std::cout << "Popped front element" << std::endl;
    }
 
    return 0;

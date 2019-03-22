@@ -53,35 +53,35 @@ int traceback(int *c, int numberOfNets, int **size, int *net)
 void main(void)
 {
    // initialize
-   cout << "Enter number of nets" << endl;
+   std::cout << "Enter number of nets" << std::endl;
    int n;
-   cin >> n;
+   std::cin >> n;
    int **size;
    make2dArray(size, n + 1, n + 1);
    int *c = new int [n + 1];
 
    // input net data
-   cout << "Enter the C values" << endl;
+   std::cout << "Enter the C values" << std::endl;
    for (int i = 1; i <= n; i++)
-      cin >> c[i];
+      std::cin >> c[i];
 
    // compute size[][]
    mns(c, n, size);
    
-   cout << "Matrix size is" << endl;
+   std::cout << "Matrix size is" << std::endl;
    for (int i = 1; i < n; i++)
    {
       for (int j = 1; j <= n; j++)
-         cout << size[i][j] << " ";
-      cout << endl;
+         std::cout << size[i][j] << " ";
+      std::cout << std::endl;
    }
    
    // determine the MNS and its size
    int *net = new int [n + 1];
    int s = traceback(c, n, size, net);
    
-   cout << "\nMaximum non-crossing subset is ";
+   std::cout << "\nMaximum non-crossing subset is ";
    for (int i = 0; i < s; i++)
-      cout << net[i] << " ";
-   cout << endl;
+      std::cout << net[i] << " ";
+   std::cout << std::endl;
 }

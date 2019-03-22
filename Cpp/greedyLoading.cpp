@@ -45,7 +45,7 @@ void main(void)
    containerLoading(c, 150, n, x);
 
    // output loading vector
-   cout << "Loading vector is ";
-   copy(x + 1, x + n + 1, ostream_iterator<int>(cout, "  "));
-   cout << endl;
+   std::cout << "Loading vector is ";
+   copy(x + 1, x + n + 1, ostream_iterator<int>(std::cout, "  "));
+   std::cout << std::endl;
 }

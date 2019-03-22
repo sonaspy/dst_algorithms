@@ -38,7 +38,7 @@ int main()
      s.pop();
    }
    long elapsedTime = clock() - startTime;
-   cout << "Time for n = " << n << " stack operations is "
-        << elapsedTime << " milliseconds" << endl;
+   std::cout << "Time for n = " << n << " stack operations is "
+        << elapsedTime << " milliseconds" << std::endl;
    return 0;
 }

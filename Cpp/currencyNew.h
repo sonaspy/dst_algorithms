@@ -75,13 +75,13 @@ currency currency::add(const currency& x) const
 void currency::output() const
 {// Output currency value.
    long theAmount = amount;
-   if (theAmount < 0) {cout << '-';
+   if (theAmount < 0) {std::cout << '-';
                        theAmount = -theAmount;}
    long dollars = theAmount / 100; // dollars
-   cout << '$' << dollars << '.';
+   std::cout << '$' << dollars << '.';
    int cents = theAmount - dollars * 100; // cents
-   if (cents < 10) cout << '0';
-   cout << cents;
+   if (cents < 10) std::cout << '0';
+   std::cout << cents;
 }
 
 #endif

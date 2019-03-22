@@ -13,43 +13,43 @@ int main(void)
    y.insert(pair<int, char>(6, 'c'));
    y.insert(pair<int, char>(4, 'b'));
    y.insert(pair<int, char>(8, 'd'));
-   cout << "Tree size is " << y.size() << endl;
-   cout << "Elements in ascending order are" << endl;
+   std::cout << "Tree size is " << y.size() << std::endl;
+   std::cout << "Elements in ascending order are" << std::endl;
    y.ascend();
 
    pair<const int, char> *s = y.find(4);
-   cout << "Search for 4 succeeds " << endl;
-   cout << s->first << ' ' << s->second << endl;
+   std::cout << "Search for 4 succeeds " << std::endl;
+   std::cout << s->first << ' ' << s->second << std::endl;
    y.erase(4);
-   cout << "4 deleted " << endl;
-   cout << "Tree size is " << y.size() << endl;
-   cout << "Elements in ascending order are" << endl;
+   std::cout << "4 deleted " << std::endl;
+   std::cout << "Tree size is " << y.size() << std::endl;
+   std::cout << "Elements in ascending order are" << std::endl;
    y.ascend();
 
    s = y.find(8);
-   cout << "Search for 8 succeeds " << endl;
-   cout << s->first << ' ' << s->second << endl;
+   std::cout << "Search for 8 succeeds " << std::endl;
+   std::cout << s->first << ' ' << s->second << std::endl;
    y.erase(8);
-   cout << "8 deleted " << endl;
-   cout << "Tree size is " << y.size() << endl;
-   cout << "Elements in ascending order are" << endl;
+   std::cout << "8 deleted " << std::endl;
+   std::cout << "Tree size is " << y.size() << std::endl;
+   std::cout << "Elements in ascending order are" << std::endl;
    y.ascend();
 
    s = y.find(6);
-   cout << "Search for 6 succeeds " << endl;
-   cout << s->first << ' ' << s->second << endl;
+   std::cout << "Search for 6 succeeds " << std::endl;
+   std::cout << s->first << ' ' << s->second << std::endl;
    y.erase(6);
-   cout << "6 deleted " << endl;
-   cout << "Tree size is " << y.size() << endl;
-   cout << "Elements in ascending order are" << endl;
+   std::cout << "6 deleted " << std::endl;
+   std::cout << "Tree size is " << y.size() << std::endl;
+   std::cout << "Elements in ascending order are" << std::endl;
    y.ascend();
 
    s = y.find(1);
-   cout << "Search for 1 succeeds " << endl;
-   cout << s->first << ' ' << s->second << endl;
+   std::cout << "Search for 1 succeeds " << std::endl;
+   std::cout << s->first << ' ' << s->second << std::endl;
    y.erase(1);
-   cout << "1 deleted " << endl;
-   cout << "Tree size is " << y.size() << endl;
-   cout << "Elements in ascending order are" << endl;
+   std::cout << "1 deleted " << std::endl;
+   std::cout << "Tree size is " << y.size() << std::endl;
+   std::cout << "Elements in ascending order are" << std::endl;
    y.ascend();
 }

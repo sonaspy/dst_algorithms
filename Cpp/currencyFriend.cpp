@@ -15,29 +15,29 @@ int main()
 
    // do an add and output
    j = h + g;
-   cout << h << " + " << g << " = " << j << endl;
+   std::cout << h << " + " << g << " = " << j << std::endl;
 
    // do an increment and output
-   cout << i << " incremented by " << h
-        << " is " << (i += h) << endl;
+   std::cout << i << " incremented by " << h
+        << " is " << (i += h) << std::endl;
 
    // do two adds in a sequence
    j = i + g + h;
-   cout << i << " + " << g << " + " 
-        << h << " = " << j << endl;
+   std::cout << i << " + " << g << " + " 
+        << h << " = " << j << std::endl;
 
    // do an increment and add
-   cout << "Increment " << i << " by " << g
-        << " and then add " << h << endl;
+   std::cout << "Increment " << i << " by " << g
+        << " and then add " << h << std::endl;
    j = (i += g) + h;
-   cout << "Result is " << j << endl;
-   cout << "Incremented object is " << i << endl;
+   std::cout << "Result is " << j << std::endl;
+   std::cout << "Incremented object is " << i << std::endl;
 
    // test the exception
-   cout << "Attempting to initialize with cents = 152" << endl;
+   std::cout << "Attempting to initialize with cents = 152" << std::endl;
    try {i.setValue(plus, 3, 152);}
    catch (illegalParameterValue e) {
-      cout << "Caught thrown exception" << endl;
+      std::cout << "Caught thrown exception" << std::endl;
       e.outputMessage();
        }
    return 0;

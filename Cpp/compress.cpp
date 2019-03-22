@@ -34,15 +34,15 @@ void setFiles(int argc, char* argv[])
       strcpy(inputFile, argv[1]);
    else
    {// name not provided, ask for it
-      cout << "Enter name of file to compress" << endl;
-      cin >> inputFile;
+      std::cout << "Enter name of file to compress" << std::endl;
+      std::cin >> inputFile;
    }
 
    // open files in binary mode
    in.open(inputFile, ios::binary);
    if (in.fail())
    {
-      cerr << "Cannot open " << inputFile << endl;
+      cerr << "Cannot open " << inputFile << std::endl;
       exit(1);
    }
    strcpy(outputFile, inputFile);

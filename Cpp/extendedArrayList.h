@@ -223,7 +223,7 @@ void arrayList<T>::insert(int theIndex, const T& theElement)
 template<class T>
 void arrayList<T>::output(ostream& out) const
 {// Put the list into the stream out.
-   copy(element, element + listSize, ostream_iterator<T>(cout, "  "));
+   copy(element, element + listSize, ostream_iterator<T>(std::cout, "  "));
 }
 
 // overload <<

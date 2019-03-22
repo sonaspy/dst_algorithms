@@ -9,11 +9,11 @@ using namespace std;
 void inputCoefficients(double& a, double& b, double& c)
 {// Read in the coefficients of the quadratic.
 
-   cout << "Enter the coefficients a, b, and c"
-        << endl
+   std::cout << "Enter the coefficients a, b, and c"
+        << std::endl
         << "a should not be zero"
-        << endl;
-   cin >> a >> b >> c;
+        << std::endl;
+   std::cin >> a >> b >> c;
    if (fabs(a) <= 0.1E-9) 
        throw illegalInputData("a should be non-zero");
 }
@@ -24,23 +24,23 @@ void outputRoots(const double& a, const double& b, const double& c)
    double d = b * b - 4 * a * c;
    if (d > 0) {// two real roots
                  double sqrtd = sqrt(d);
-                 cout << "There are two real roots "
+                 std::cout << "There are two real roots "
                       << (-b + sqrtd) / (2 * a) << " and "
                       << (-b - sqrtd) / (2 * a)
-                      << endl;
+                      << std::endl;
                }
    else if (d == 0)
            // both roots are the same
-           cout << "There is only one distinct root "
+           std::cout << "There is only one distinct root "
                 << -b / (2 * a)
-                << endl;
+                << std::endl;
         else //  complex conjugate roots
-             cout << "The roots are complex"
-                  << endl
+             std::cout << "The roots are complex"
+                  << std::endl
                   << "The real part is "
-                  << -b / (2 * a) << endl
+                  << -b / (2 * a) << std::endl
                   << "The imaginary part is "
-                  << sqrt(-d) / (2 * a) << endl;
+                  << sqrt(-d) / (2 * a) << std::endl;
 }
    
 int main()
@@ -53,15 +53,15 @@ int main()
          inputCoefficients(a,b,c);
           }
       catch (illegalInputData e) {
-         cout << "Caught illegalInputData exception" << endl;
+         std::cout << "Caught illegalInputData exception" << std::endl;
          e.outputMessage();
          return 1;
           }
      
-      cout << "The coefficients of the quadratic are "
-           << a << " " << b << " " << c << endl;
+      std::cout << "The coefficients of the quadratic are "
+           << a << " " << b << " " << c << std::endl;
       outputRoots(a,b,c);
-      cout << endl;}
+      std::cout << std::endl;}
    return 0;
 }
 

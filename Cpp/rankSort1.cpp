@@ -44,17 +44,17 @@ int main()
    int r[6];
 
    // output the elements
-   cout << "a[0:5] = ";
-   copy(a, a+6, ostream_iterator<int>(cout, " "));
-   cout << endl;
+   std::cout << "a[0:5] = ";
+   copy(a, a+6, ostream_iterator<int>(std::cout, " "));
+   std::cout << std::endl;
 
    // sort
    rank(a,6,r);
    rearrange(a,6,r);
 
    // output the sorted sequence
-   cout << "After the sort, a[0:5] = ";
-   copy(a, a+6, ostream_iterator<int>(cout, " "));
-   cout << endl;
+   std::cout << "After the sort, a[0:5] = ";
+   copy(a, a+6, ostream_iterator<int>(std::cout, " "));
+   std::cout << std::endl;
    return 0;
 }

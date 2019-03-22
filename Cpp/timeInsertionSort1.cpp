@@ -13,8 +13,8 @@ int main()
    double clocksPerMillis = double(CLOCKS_PER_SEC) / 1000;
                       // clock ticks per millisecond
 
-   cout << "The worst-case time, in milliseconds, are" << endl;
-   cout << "n \t Time" << endl;
+   std::cout << "The worst-case time, in milliseconds, are" << std::endl;
+   std::cout << "n \t Time" << std::endl;
 
    // times for n = 0, 10, 20, ..., 100, 200, 300, ..., 1000
    for (int n = 0; n <= 1000; n += step) 
@@ -27,7 +27,7 @@ int main()
       insertionSort(a, n);
       double elapsedMillis = (clock( ) - startTime) / clocksPerMillis;
 
-      cout << n << '\t' << elapsedMillis << endl;
+      std::cout << n << '\t' << elapsedMillis << std::endl;
 
       if (n == 100) step = 100;
    }

@@ -11,8 +11,8 @@ int numberOfTracks;
 
 void outputFromHoldingTrack(int c)
 {// Move car c from its holding track to the output track.
-   cout << "Move car " << c << " from holding track "
-        << whichTrack[c] << " to output track" << endl;
+   std::cout << "Move car " << c << " from holding track "
+        << whichTrack[c] << " to output track" << std::endl;
 
    // if c was the last car in its track, the track is now empty
    if (c == lastCar[whichTrack[c]])
@@ -50,8 +50,8 @@ bool putInHoldingTrack(int c)
    // add c to bestTrack
    whichTrack[c] = bestTrack;
    lastCar[bestTrack] = c;
-   cout << "Move car " << c << " from input track "
-        << "to holding track " << bestTrack << endl;
+   std::cout << "Move car " << c << " from input track "
+        << "to holding track " << bestTrack << std::endl;
 
    return true;
 }
@@ -78,8 +78,8 @@ bool railroad(int* inputOrder,
    for (int i = 1; i <= numberOfCars; i++)
       if (inputOrder[i] == nextCarToOutput)
       {// send car inputOrder[i] straight out
-          cout << "Move car " << inputOrder[i] << " from input "
-               << "track to output track" << endl;
+          std::cout << "Move car " << inputOrder[i] << " from input "
+               << "track to output track" << std::endl;
           nextCarToOutput++;
  
           // output from holding tracks
@@ -101,9 +101,9 @@ bool railroad(int* inputOrder,
 int main()
 {
    //int p[] = {0, 5, 8, 1, 7, 4, 2, 9, 6, 3};
-   //cout << "Input permutation is 581742963" << endl;
+   //std::cout << "Input permutation is 581742963" << std::endl;
    int p[] = {0, 3, 6, 9, 2, 4, 7, 1, 8, 5};
-   cout << "Input permutation is 369247185" << endl;
+   std::cout << "Input permutation is 369247185" << std::endl;
    railroad(p, 9, 3);
 
    return 0;

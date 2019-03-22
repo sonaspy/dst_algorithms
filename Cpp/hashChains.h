@@ -50,9 +50,9 @@ class hashChains : public dictionary<K,E>
       {
          for (int i = 0; i < divisor; i++)
             if (table[i].size() == 0)
-               cout << "NULL" << endl;
+               std::cout << "NULL" << std::endl;
             else
-               cout << table[i] << endl;
+               std::cout << table[i] << std::endl;
       }
 
 

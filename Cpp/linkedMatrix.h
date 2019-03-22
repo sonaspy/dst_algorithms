@@ -34,8 +34,8 @@ istream& operator>>(istream& in, linkedMatrix<T>& x)
 
    // get matrix characteristics
    int terms;   // number of terms to be input
-   cout << "Enter number of rows, columns, and terms" 
-        << endl;
+   std::cout << "Enter number of rows, columns, and terms" 
+        << std::endl;
    in >> x.rows >> x.cols >> terms;
 
    // create fictional row zero
@@ -46,8 +46,8 @@ istream& operator>>(istream& in, linkedMatrix<T>& x)
    for (int i = 1; i <= terms; i++) 
    {
       // input next term
-      cout << "Enter row, column, and value of term " 
-           << i << endl;
+      std::cout << "Enter row, column, and value of term " 
+           << i << std::endl;
       rowElement<T> *term = new rowElement<T>;
       int row;
       in >> row >> term->col >> term->value;
@@ -83,15 +83,15 @@ ostream& operator<<(ostream& out, linkedMatrix<T>& x)
 {// Put matrix x into the output stream out.
    // output matrix dimensions
    out << "rows = " << x.rows << " columns = "
-       << x.cols << endl << "  ";
+       << x.cols << std::endl << "  ";
 
    if (x.headerChain.empty())
    {
-      out << "No non-zero terms" << endl;
+      out << "No non-zero terms" << std::endl;
       return out;
    }
 
-   out << x.headerChain << endl;
+   out << x.headerChain << std::endl;
    return out;
 }
 
@@ -106,8 +106,8 @@ istream& operator>>(istream& in, linkedMatrix<int>& x)
 
    // get matrix characteristics
    int terms;   // number of terms to be input
-   cout << "Enter number of rows, columns, and terms" 
-        << endl;
+   std::cout << "Enter number of rows, columns, and terms" 
+        << std::endl;
    in >> x.rows >> x.cols >> terms;
 
    // create fictional row zero
@@ -118,8 +118,8 @@ istream& operator>>(istream& in, linkedMatrix<int>& x)
    for (int i = 1; i <= terms; i++) 
    {
       // input next term
-      cout << "Enter row, column, and value of term " 
-           << i << endl;
+      std::cout << "Enter row, column, and value of term " 
+           << i << std::endl;
       rowElement<int> *term = new rowElement<int>;
       int row;
       in >> row >> term->col >> term->value;
@@ -154,15 +154,15 @@ ostream& operator<<(ostream& out, linkedMatrix<int>& x)
 {// Put matrix x into the output stream out.
    // output matrix dimensions
    out << "rows = " << x.rows << " columns = "
-       << x.cols << endl << "  ";
+       << x.cols << std::endl << "  ";
 
    if (x.headerChain.empty())
    {
-      out << "No non-zero terms" << endl;
+      out << "No non-zero terms" << std::endl;
       return out;
    }
 
-   out << x.headerChain << endl;
+   out << x.headerChain << std::endl;
 
    return out;
 }

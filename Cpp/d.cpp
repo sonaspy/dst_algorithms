@@ -24,18 +24,18 @@ int main()
    int n = 10;
 
    // output the array elements
-   cout << "a[0:9] = ";
-   copy(a, a+10, ostream_iterator<int>(cout, " "));
-   cout << endl;
+   std::cout << "a[0:9] = ";
+   copy(a, a+10, ostream_iterator<int>(std::cout, " "));
+   std::cout << std::endl;
    
    d(a,n);
 
-   cout << "Completed function d(y,10)" << endl;
+   std::cout << "Completed function d(y,10)" << std::endl;
 
    // output the array elements
-   cout << "a[0:9] = ";
-   copy(a, a+10, ostream_iterator<int>(cout, " "));
-   cout << endl;
+   std::cout << "a[0:9] = ";
+   copy(a, a+10, ostream_iterator<int>(std::cout, " "));
+   std::cout << std::endl;
 
    return 0;
 }

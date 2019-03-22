@@ -36,10 +36,10 @@ class linkedBinaryTree : public binaryTree<binaryTreeNode<E> >
       void postOrder(void(*theVisit)(binaryTreeNode<E>*))
            {visit = theVisit; postOrder(root);}
       void levelOrder(void(*)(binaryTreeNode<E> *));
-      void preOrderOutput() {preOrder(output); cout << endl;}
-      void inOrderOutput() {inOrder(output); cout << endl;}
-      void postOrderOutput() {postOrder(output); cout << endl;}
-      void levelOrderOutput() {levelOrder(output); cout << endl;}
+      void preOrderOutput() {preOrder(output); std::cout << std::endl;}
+      void inOrderOutput() {inOrder(output); std::cout << std::endl;}
+      void postOrderOutput() {postOrder(output); std::cout << std::endl;}
+      void levelOrderOutput() {levelOrder(output); std::cout << std::endl;}
       void erase()
            {
               postOrder(dispose);
@@ -63,7 +63,7 @@ class linkedBinaryTree : public binaryTree<binaryTreeNode<E> >
                   }
       static void dispose(binaryTreeNode<E> *t) {delete t;}
       static void output(binaryTreeNode<E> *t)
-                  {cout << t->element << ' ';}
+                  {std::cout << t->element << ' ';}
       static void addToCount(binaryTreeNode<E> *t)
                   {count++;}
       static int height(binaryTreeNode<E> *t);

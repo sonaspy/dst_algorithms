@@ -189,7 +189,7 @@ class adjacencyWDigraph : public graph<T>
          for (int i = 1; i <= n; i++)
          {
             copy(a[i] + 1, a[i] + n + 1, ostream_iterator<T>(out, "  "));
-            out << endl;
+            out << std::endl;
          }
       }
 

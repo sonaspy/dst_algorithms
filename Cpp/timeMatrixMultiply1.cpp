@@ -38,8 +38,8 @@ int main()
    long startTime = clock();
    squareMatrixMultiply(a,b,c,n);
    double elapsedTimeSec = ((double) (clock() - startTime)) / CLOCKS_PER_SEC;
-   cout << "Multiply time for n = " << n << " is "
-        << elapsedTimeSec << " seconds" << endl;
+   std::cout << "Multiply time for n = " << n << " is "
+        << elapsedTimeSec << " seconds" << std::endl;
 
    return 0;
 }

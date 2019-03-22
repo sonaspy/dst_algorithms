@@ -22,20 +22,20 @@ void main()
    z.insert(p);
    p.first = 12; p.second = 60;
    z.insert(p);
-   cout << "The chain is " << z << endl;
-   cout << "Its size is " << z.size() << endl;
+   std::cout << "The chain is " << z << std::endl;
+   std::cout << "Its size is " << z.size() << std::endl;
 
    // test find
-   cout << "Element associated with 1 is " << z.find(1)->second << endl;
-   cout << "Element associated with 6 is " << z.find(6)->second << endl;
-   cout << "Element associated with 12 is " << z.find(12)->second << endl;
+   std::cout << "Element associated with 1 is " << z.find(1)->second << std::endl;
+   std::cout << "Element associated with 6 is " << z.find(6)->second << std::endl;
+   std::cout << "Element associated with 12 is " << z.find(12)->second << std::endl;
 
    // test erase
    z.erase(1);
    z.erase(2);
    z.erase(6);
    z.erase(12);
-   cout << "Deleted 1, 2, 6, 12" << endl;
-   cout << "The chain is " << z << endl;
-   cout << "Its size is " << z.size() << endl;
+   std::cout << "Deleted 1, 2, 6, 12" << std::endl;
+   std::cout << "The chain is " << z << std::endl;
+   std::cout << "Its size is " << z.size() << std::endl;
 }

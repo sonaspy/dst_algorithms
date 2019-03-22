@@ -19,8 +19,8 @@ void main(void)
    int numPoints = 12;
    int step = 10;
 
-   cout << "The average-case times, in milliseconds, are" << endl;
-   cout << "n \trepetitions \ttime/sort" << endl;
+   std::cout << "The average-case times, in milliseconds, are" << std::endl;
+   std::cout << "n \trepetitions \ttime/sort" << std::endl;
    for (int i = 0; i < numPoints; i++)
    {
       int n = theN[i];
@@ -47,7 +47,7 @@ void main(void)
 
       double elapsedTime = ((double) (clock() - startTime)) / counter;
       elapsedTime /= clocksPerMillis;
-      cout << n << "\t" << counter << "\t\t" 
-           << elapsedTime << endl;
+      std::cout << n << "\t" << counter << "\t\t" 
+           << elapsedTime << std::endl;
    }
 }

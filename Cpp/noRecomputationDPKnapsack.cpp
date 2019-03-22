@@ -40,16 +40,16 @@ int f(int i, int theCapacity)
 
 void main(void)
 {
-   cout << "Enter number of objects and knapsack capacity" << endl;
+   std::cout << "Enter number of objects and knapsack capacity" << std::endl;
    int knapsackCapacity;
-   cin >> numberOfObjects >> knapsackCapacity;
+   std::cin >> numberOfObjects >> knapsackCapacity;
    profit = new int [numberOfObjects + 1];
    weight = new int [numberOfObjects + 1];
 
    for (int i = 1; i <= numberOfObjects; i++)
    {
-      cout << "Enter profit and weight of object " << i << endl;
-      cin >> profit[i] >> weight[i];
+      std::cout << "Enter profit and weight of object " << i << std::endl;
+      std::cin >> profit[i] >> weight[i];
    }
 
    make2dArray(fArray, numberOfObjects + 1, knapsackCapacity + 1);
@@ -57,5 +57,5 @@ void main(void)
       for (int j = 0; j <= knapsackCapacity; j++)
          fArray[i][j] = -1;
 
-   cout << "Optimal value is " << f(1, knapsackCapacity) << endl;
+   std::cout << "Optimal value is " << f(1, knapsackCapacity) << std::endl;
 }

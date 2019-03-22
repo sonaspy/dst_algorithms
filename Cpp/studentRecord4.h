@@ -16,7 +16,7 @@ struct studentRecord
 ostream& operator<<(ostream& out, const studentRecord& x)
 {
    out << x.name << ' ' << x.exam1 << ' ' << x.exam2 
-       << ' ' << x.exam3 << endl;
+       << ' ' << x.exam3 << std::endl;
    return out;
 }
 

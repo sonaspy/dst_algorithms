@@ -147,7 +147,7 @@ void maxHeap<T>::initialize(T *theHeap, int theSize)
 template<class T>
 void maxHeap<T>::output(ostream& out) const
 {// Put the list into the stream out.
-   copy(heap + 1, heap + heapSize + 1, ostream_iterator<T>(cout, "  "));
+   copy(heap + 1, heap + heapSize + 1, ostream_iterator<T>(std::cout, "  "));
 }
 
 // overload <<

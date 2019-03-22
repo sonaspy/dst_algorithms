@@ -43,8 +43,8 @@ void main(void)
 
    double elapsedTime = ((double) (clock() - startTime)) / numTimes;
    elapsedTime /= clocksPerMillis;
-   cout << "BFS time for adjacency matrix is " 
-        << elapsedTime << " milliseconds" << endl;
+   std::cout << "BFS time for adjacency matrix is " 
+        << elapsedTime << " milliseconds" << std::endl;
 
    startTime = clock();
    for (int r = 1; r <= numTimes; r++)
@@ -55,6 +55,6 @@ void main(void)
    }
    elapsedTime = ((double) (clock() - startTime)) / numTimes;
    elapsedTime /= clocksPerMillis;
-   cout << "BFS time for linked adjacency lists is " 
-        << elapsedTime << " milliseconds" << endl;
+   std::cout << "BFS time for linked adjacency lists is " 
+        << elapsedTime << " milliseconds" << std::endl;
 }

@@ -20,20 +20,20 @@ void printMatchedPairs(string expr)
          if (expr.at(i) == ')')
    	 try
          {// remove location of matching '(' from stack
-            cout << s.top() << ' ' << i << endl;
+            std::cout << s.top() << ' ' << i << std::endl;
             s.pop();  // unstack match
          }
          catch (stackEmpty)
          {// stack was empty, no match exists
-            cout << "No match for right parenthesis"
-                 << " at " << i << endl;
+            std::cout << "No match for right parenthesis"
+                 << " at " << i << std::endl;
          }
 
    // remaining '(' in stack are unmatched
    while (!s.empty()) 
    {
-      cout << "No match for left parenthesis at "
-           << s.top() << endl;
+      std::cout << "No match for left parenthesis at "
+           << s.top() << std::endl;
       s.pop();
    }
 }
@@ -41,10 +41,10 @@ void printMatchedPairs(string expr)
 int main(void)
 {
    string expr;
-   cout << "Type an expression" << endl;
-   cin >> expr;
-   cout <<"The pairs of matching parentheses in"
-        << endl << expr << endl << "are" << endl;
+   std::cout << "Type an expression" << std::endl;
+   std::cin >> expr;
+   std::cout <<"The pairs of matching parentheses in"
+        << std::endl << expr << std::endl << "are" << std::endl;
 
    printMatchedPairs(expr);
 

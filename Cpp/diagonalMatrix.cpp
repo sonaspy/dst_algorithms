@@ -11,9 +11,9 @@ int main(void)
    x.set(1,1,22);
    x.set(5,5,44);
    x.set(8,5,0);
-   cout << x.get(5,5) << endl;
-   cout << x.get(1,1) << endl;
-   cout << x.get(10,1) << endl;
+   std::cout << x.get(5,5) << std::endl;
+   std::cout << x.get(1,1) << std::endl;
+   std::cout << x.get(10,1) << std::endl;
    
    return 0;
 }

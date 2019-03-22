@@ -23,5 +23,5 @@ int binarySearch(T a[], int n, const T& x)
 int main()
 {
    int a[7] = {0, 2, 3, 4, 6, 7, 9};
-   cout << binarySearch(a, 7, 4) << endl;
+   std::cout << binarySearch(a, 7, 4) << std::endl;
 }

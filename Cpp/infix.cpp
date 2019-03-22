@@ -10,11 +10,11 @@ void infix(binaryTreeNode<T> *t)
 {// Output infix form of expression.
    if (t != NULL)
    {
-      cout << '(';
+      std::cout << '(';
       infix(t->leftChild);   // left operand
-      cout << t->element;    // operator
+      std::cout << t->element;    // operator
       infix(t->rightChild);  // right operand
-      cout << ')';
+      std::cout << ')';
    }
 }
 
@@ -25,5 +25,5 @@ int main(void)
    x.leftChild = &y; x.rightChild = &z;
    y.leftChild = y.rightChild = z.leftChild = z.rightChild = 0;
    infix(&x);
-   cout << endl;
+   std::cout << std::endl;
 }

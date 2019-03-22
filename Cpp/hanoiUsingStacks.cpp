@@ -32,14 +32,14 @@ void moveAndShow(int n, int x, int y, int z)
       tower[y].push(d);         // tower y
    // showState();              // show state of 3 towers
    // substitute showState code for test run
-      cout << "Move disk " << d << " from tower "
-           << x << " to top of tower " << y << endl;
+      std::cout << "Move disk " << d << " from tower "
+           << x << " to top of tower " << y << std::endl;
       moveAndShow(n-1, z, y, x);
    }
 }
 
 void main(void)
 {
-   cout << "Moves for a three disk problem are" << endl;
+   std::cout << "Moves for a three disk problem are" << std::endl;
    towersOfHanoi(3);
 }

@@ -14,12 +14,12 @@ int abc(int a, int b, int c)
 
 int main()
 {
-  try {cout << abc(2,0,4) << endl;}
+  try {std::cout << abc(2,0,4) << std::endl;}
   catch (char* e)
       {
-         cout << "The parameters to abc were 2, 0, and 4" << endl;
-         cout << "An exception has been thrown" << endl;
-         cout << e << endl;
+         std::cout << "The parameters to abc were 2, 0, and 4" << std::endl;
+         std::cout << "An exception has been thrown" << std::endl;
+         std::cout << e << std::endl;
          return 1;
       }
    return 0;

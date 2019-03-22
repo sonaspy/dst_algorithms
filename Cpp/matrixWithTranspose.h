@@ -192,7 +192,7 @@ ostream& operator<<(ostream& out, const matrix<T>& m)
          out << m.element[k++] << "  ";
 
       // row i finished
-      out << endl;
+      out << std::endl;
    }
 
    return out;
@@ -209,7 +209,7 @@ ostream& operator<<(ostream& out, const matrix<int>& m)
          out << m.element[k++] << "  ";
 
       // row i finished
-      out << endl;
+      out << std::endl;
    }
 
    return out;

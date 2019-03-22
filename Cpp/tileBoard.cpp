@@ -88,8 +88,8 @@ void outputBoard(int size)
 {// Output the tiled chessboard.
    for (int i = 0; i < size; i++)
    {
-      copy(board[i], board[i] + size, ostream_iterator<int>(cout, "\t"));
-      cout << endl;
+      copy(board[i], board[i] + size, ostream_iterator<int>(std::cout, "\t"));
+      std::cout << std::endl;
    }
 }
 
@@ -97,13 +97,13 @@ void main(void)
 {// Tile a defective chessboard.
 
    // input the chessboard size
-   cout << "Enter k, board size is 2^k" << endl;
-   cout << "k should be in the range 0 through 6" << endl;
+   std::cout << "Enter k, board size is 2^k" << std::endl;
+   std::cout << "k should be in the range 0 through 6" << std::endl;
    int k;
-   cin >> k;
+   std::cin >> k;
    if (k < 0 || k > 6)
    {
-      cout << "k out of range" << endl;
+      std::cout << "k out of range" << std::endl;
       exit(1);
    }
    int size = 1;
@@ -113,13 +113,13 @@ void main(void)
    make2dArray(board, size, size);
 
    // input location of defect
-   cout << "Enter location of defect" << endl;
+   std::cout << "Enter location of defect" << std::endl;
    int defectRow, defectColumn;
-   cin >> defectRow >> defectColumn;
+   std::cin >> defectRow >> defectColumn;
    if (defectRow < 1 || defectRow > size || defectColumn < 1
        || defectColumn > size)
    {
-      cout << "Improper defect location" << endl;
+      std::cout << "Improper defect location" << std::endl;
       exit(1);
    }
 

@@ -67,17 +67,17 @@ int main()
    int n = 10, theMin, theMax;
 
    // output the array elements
-   cout << "a[0:9] = ";
-   copy(a, a + n, ostream_iterator<int>(cout, " "));
-   cout << endl;
+   std::cout << "a[0:9] = ";
+   copy(a, a + n, ostream_iterator<int>(std::cout, " "));
+   std::cout << std::endl;
 
    // locate min and max
    minmax(a, n, theMin, theMax);
 
    // output locations and values
-   cout << "The min element is at " << theMin  << endl
-        << "Its value is " << a[theMin] << endl;
-   cout << "The max element is at " << theMax  << endl
-        << "Its value is " << a[theMax] << endl;
+   std::cout << "The min element is at " << theMin  << std::endl
+        << "Its value is " << a[theMin] << std::endl;
+   std::cout << "The max element is at " << theMax  << std::endl
+        << "Its value is " << a[theMax] << std::endl;
    return 0;
 }

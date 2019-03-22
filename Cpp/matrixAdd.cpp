@@ -24,19 +24,19 @@ int main()
    a[0][0] = 1; a[0][1] = 2; a[1][0] = 3; a[1][1] = 4;
    b[0][0] = 5; b[0][1] = 6; b[1][0] = 1; b[1][1] = 2;
 
-   cout << "The first matrix is" << endl;
-   cout << a[0][0] << ' ' << a[0][1] << endl;
-   cout << a[1][0] << ' ' << a[1][1] << endl;
+   std::cout << "The first matrix is" << std::endl;
+   std::cout << a[0][0] << ' ' << a[0][1] << std::endl;
+   std::cout << a[1][0] << ' ' << a[1][1] << std::endl;
 
-   cout << "The second matrix is" << endl;
-   cout << b[0][0] << ' ' << b[0][1] << endl;
-   cout << b[1][0] << ' ' << b[1][1] << endl;
+   std::cout << "The second matrix is" << std::endl;
+   std::cout << b[0][0] << ' ' << b[0][1] << std::endl;
+   std::cout << b[1][0] << ' ' << b[1][1] << std::endl;
 
    matrixAdd(a,b,c,2,2);
 
-   cout << "Their sum is" << endl;
-   cout << c[0][0] << ' ' << c[0][1] << endl;
-   cout << c[1][0] << ' ' << c[1][1] << endl;
+   std::cout << "Their sum is" << std::endl;
+   std::cout << c[0][0] << ' ' << c[0][1] << std::endl;
+   std::cout << c[1][0] << ' ' << c[1][1] << std::endl;
 
    return 0;
 }

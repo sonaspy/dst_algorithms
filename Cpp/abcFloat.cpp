@@ -11,7 +11,7 @@ float abc(float a, float b, float c)
 
 int main()
 {
-   cout << abc(2,3,4) << endl;
+   std::cout << abc(2,3,4) << std::endl;
    return 0;
 }
 

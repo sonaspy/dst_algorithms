@@ -33,8 +33,8 @@ int stringToInt(string s)
 void main(void)
 {
     string s = "abc";
-    cout << s << " = " << stringToInt(s) << endl;
+    std::cout << s << " = " << stringToInt(s) << std::endl;
 
     s = "abcde";
-    cout << s << " = " << stringToInt(s) << endl;
+    std::cout << s << " = " << stringToInt(s) << std::endl;
 }

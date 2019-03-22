@@ -12,12 +12,12 @@ template <class T>
 void outputPath(T **c, int **kay, T noEdge, int i, int j)
 {// Output shortest path from i to j.
    if (c[i][j] == noEdge)
-      cout << "There is no path from " << i << " to " << j << endl;
+      std::cout << "There is no path from " << i << " to " << j << std::endl;
    else
    {
-      cout << "The path is " << i << " ";
+      std::cout << "The path is " << i << " ";
       outputPath(kay, i, j);
-      cout << endl;
+      std::cout << std::endl;
    }
 }
 
@@ -26,7 +26,7 @@ void outputPath(int **kay, int i, int j)
    if (i == j)
       return;
    if (kay[i][j] == 0)  // no intermediate vertices on path
-      cout << j << " ";
+      std::cout << j << " ";
    else
    {// kay[i][j] is an intermediate vertex on the path
       outputPath(kay, i, kay[i][j]);
@@ -45,69 +45,69 @@ void main(void)
    g[1] = new adjacencyWDigraph<int>(n, noEdge);
 
    // input a test graph
-   cout << "Enter number of edges in 5 vertex graph" << endl;
+   std::cout << "Enter number of edges in 5 vertex graph" << std::endl;
    int e;
-   cin >> e;
+   std::cin >> e;
    for (int i = 1; i <= e; i++)
    {
-      cout << "Enter weighted edge " << i << endl;
+      std::cout << "Enter weighted edge " << i << std::endl;
       int u, v, w;
-      cin >> u >> v >> w;
+      std::cin >> u >> v >> w;
       g[0]->insertEdge(new weightedEdge<int>(u, v, w));
       g[1]->insertEdge(new weightedEdge<int>(u, v, w));
    }
 
-   cout << "The weighted undirected graph is" << endl;
-   g[0]->output(cout);
-   cout << "\nThe weighted digraph is" << endl;
-   g[1]->output(cout);
+   std::cout << "The weighted undirected graph is" << std::endl;
+   g[0]->output(std::cout);
+   std::cout << "\nThe weighted digraph is" << std::endl;
+   g[1]->output(std::cout);
 
    // test allPairs
    int **c, **kay;
    make2dArray(c, n + 1, n + 1);
    make2dArray(kay, n + 1, n + 1);
    // first do for g[0]
-   cout << "\nWorking on weighted undirected graph" << endl;
+   std::cout << "\nWorking on weighted undirected graph" << std::endl;
    g[0]->allPairs(c, kay);
-   cout << "Cost matrix is" << endl;
+   std::cout << "Cost matrix is" << std::endl;
    for (int i = 1; i <= n; i++)
    {
       for (int j = 1; j <= n; j++)
-         cout << c[i][j] << " ";
-      cout << endl;
+         std::cout << c[i][j] << " ";
+      std::cout << std::endl;
    }
    
-   cout << "\nKay matrix is" << endl;
+   std::cout << "\nKay matrix is" << std::endl;
    for (int i = 1; i <= n; i++)
    {
       for (int j = 1; j <= n; j++)
-         cout << kay[i][j] << " ";
-      cout << endl;
+         std::cout << kay[i][j] << " ";
+      std::cout << std::endl;
    }
 
-   cout << endl;
+   std::cout << std::endl;
    outputPath(c, kay, noEdge, 1, 5);
-   cout << endl;
+   std::cout << std::endl;
 
    // now do for g[1]
-   cout << "\nWorking on weighted directed graph" << endl;
+   std::cout << "\nWorking on weighted directed graph" << std::endl;
    g[1]->allPairs(c, kay);
-   cout << "Cost matrix is" << endl;
+   std::cout << "Cost matrix is" << std::endl;
    for (int i = 1; i <= n; i++)
    {
       for (int j = 1; j <= n; j++)
-         cout << c[i][j] << " ";
-      cout << endl;
+         std::cout << c[i][j] << " ";
+      std::cout << std::endl;
    }
    
-   cout << "\nKay matrix is" << endl;
+   std::cout << "\nKay matrix is" << std::endl;
    for (int i = 1; i <= n; i++)
    {
       for (int j = 1; j <= n; j++)
-         cout << kay[i][j] << " ";
-      cout << endl;
+         std::cout << kay[i][j] << " ";
+      std::cout << std::endl;
    }
-   cout << endl;
+   std::cout << std::endl;
 
    outputPath(c, kay, noEdge, 1, 5);
 }

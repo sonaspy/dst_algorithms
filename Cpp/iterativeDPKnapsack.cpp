@@ -58,16 +58,16 @@ void traceback(int **f, int *weight, int numberOfObjects,
 
 void main(void)
 {
-   cout << "Enter number of objects and knapsack capacity" << endl;
+   std::cout << "Enter number of objects and knapsack capacity" << std::endl;
    int numberOfObjects, knapsackCapacity;
-   cin >> numberOfObjects >> knapsackCapacity;
+   std::cin >> numberOfObjects >> knapsackCapacity;
    int* profit = new int [numberOfObjects + 1];
    int* weight = new int [numberOfObjects + 1];
 
    for (int i = 1; i <= numberOfObjects; i++)
    {
-      cout << "Enter profit and weight of object " << i << endl;
-      cin >> profit[i] >> weight[i];
+      std::cout << "Enter profit and weight of object " << i << std::endl;
+      std::cin >> profit[i] >> weight[i];
    }
 
    int** f;
@@ -76,18 +76,18 @@ void main(void)
 
    knapsack(profit, weight, numberOfObjects, knapsackCapacity, f);
 
-   cout << "Optimal value is " << f[1][knapsackCapacity] << endl;
-   cout << "Rest of table is" << endl;
+   std::cout << "Optimal value is " << f[1][knapsackCapacity] << std::endl;
+   std::cout << "Rest of table is" << std::endl;
    for (int i = 2; i <= numberOfObjects; i++)
    {
-      copy(f[i], f[i] + knapsackCapacity + 1, ostream_iterator<int>(cout, "  "));
-      cout << endl;
+      copy(f[i], f[i] + knapsackCapacity + 1, ostream_iterator<int>(std::cout, "  "));
+      std::cout << std::endl;
    }
 
    int *x = new int[numberOfObjects + 1];
    traceback(f, weight, numberOfObjects, knapsackCapacity, x);
 
-   cout << endl;
-   copy(x + 1, x + numberOfObjects + 1, ostream_iterator<int>(cout, "  "));
-   cout << endl;
+   std::cout << std::endl;
+   copy(x + 1, x + numberOfObjects + 1, ostream_iterator<int>(std::cout, "  "));
+   std::cout << std::endl;
 }

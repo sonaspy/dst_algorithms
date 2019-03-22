@@ -47,8 +47,8 @@ void firstFitPack(int *objectSize, int numberOfObjects,
        else  // arises when n is odd
           binToUse = winTree.winner(child / 2);
  
-       cout << "Pack object " << i << " in bin "
-            << binToUse << endl;
+       std::cout << "Pack object " << i << " in bin "
+            << binToUse << std::endl;
        bin[binToUse].unusedCapacity -= objectSize[i];
        winTree.rePlay(binToUse);
    }
@@ -59,25 +59,25 @@ void firstFitPack(int *objectSize, int numberOfObjects,
 void main(void)
 {
    int n, binCapacity; // number of objects and bin capacity
-   cout << "Enter number of objects and bin capacity"
-        << endl;
-   cin >> n >> binCapacity;
+   std::cout << "Enter number of objects and bin capacity"
+        << std::endl;
+   std::cin >> n >> binCapacity;
    if (n < 2)
    {
-      cout << "Too few objects" << endl;
+      std::cout << "Too few objects" << std::endl;
       exit(1);
    }
    int *objectSize = new int[n+1];
    
    for (int i = 1; i <= n; i++)
    {
-     cout << "Enter space requirement of object "
-          << i << endl;
-     cin >> objectSize[i];
+     std::cout << "Enter space requirement of object "
+          << i << std::endl;
+     std::cin >> objectSize[i];
      if (objectSize[i] > binCapacity)
      {
-       cout << "Object too large to fit in a bin"
-            << endl;
+       std::cout << "Object too large to fit in a bin"
+            << std::endl;
        exit(1);}
      }
    firstFitPack(objectSize, n, binCapacity);

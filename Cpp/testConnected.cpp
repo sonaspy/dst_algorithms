@@ -36,13 +36,13 @@ void main(void)
    for (int q = 1; q <= 2; q++)
    {
       // input a test graph
-      cout << "Enter number of edges in graph" << endl;
+      std::cout << "Enter number of edges in graph" << std::endl;
       int e, u, v, w;
-      cin >> e;
+      std::cin >> e;
       for (int i = 1; i <= e; i++)
       {
-         cout << "Enter weighted edge " << i << endl;
-         cin >> u >> v >> w;
+         std::cout << "Enter weighted edge " << i << std::endl;
+         std::cin >> u >> v >> w;
          for (int j = 0; j < numberOfTypes; j++)
          {
             g[j]->insertEdge(new unweightedEdge(u, v));
@@ -53,11 +53,11 @@ void main(void)
       // output the test graph .. undirected and directed version
       for (int i = 0; i < 2; i++)
       {
-         cout << "Graph " << i << " is" << endl;
-         cout << "Number of Vertices = " << g[i]->numberOfVertices() << endl;
-         cout << "Number of Edges = " << g[i]->numberOfEdges() << endl;
-         g[i]->output(cout);
-         cout << endl << endl;
+         std::cout << "Graph " << i << " is" << std::endl;
+         std::cout << "Number of Vertices = " << g[i]->numberOfVertices() << std::endl;
+         std::cout << "Number of Edges = " << g[i]->numberOfEdges() << std::endl;
+         g[i]->output(std::cout);
+         std::cout << std::endl << std::endl;
       }
    
       // test connected on unweighted graph types
@@ -66,9 +66,9 @@ void main(void)
          try
          {
             if (g[i]->connected())
-               cout << "The graph is connected" << endl;
+               std::cout << "The graph is connected" << std::endl;
             else
-               cout << "The graph is not connected" << endl;
+               std::cout << "The graph is not connected" << std::endl;
          }
          catch (undefinedMethod e)
             {e.outputMessage();}
@@ -80,9 +80,9 @@ void main(void)
          try
          {
             if (h[i]->connected())
-               cout << "The graph is connected" << endl;
+               std::cout << "The graph is connected" << std::endl;
             else
-               cout << "The graph is not connected" << endl;
+               std::cout << "The graph is not connected" << std::endl;
          }
          catch (undefinedMethod e)
             {e.outputMessage();}

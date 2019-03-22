@@ -28,15 +28,15 @@ int main()
    int n = 6;
 
    // output the array elements
-   cout << "a[0:5] = ";
-   copy(a, a+6, ostream_iterator<int>(cout, " "));
-   cout << endl;
+   std::cout << "a[0:5] = ";
+   copy(a, a+6, ostream_iterator<int>(std::cout, " "));
+   std::cout << std::endl;
 
    // compute the prefix sums inefficiently
    inef(a,b,n);
 
    // output the prefix sums
-   cout << "The prefix sums are ";
-   copy(b, b+6, ostream_iterator<int>(cout, " "));
-   cout << endl;
+   std::cout << "The prefix sums are ";
+   copy(b, b+6, ostream_iterator<int>(std::cout, " "));
+   std::cout << std::endl;
 }

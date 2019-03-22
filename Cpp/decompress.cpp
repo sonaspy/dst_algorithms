@@ -33,10 +33,10 @@ void setFiles(int argc, char* argv[])
       strcpy(outputFile,argv[1]);
    else
    {// name not provided, ask for it
-         cout << "Enter name of file to decompress"
-              << endl;
-         cout << "Omit the extension .zzz"  << endl;
-         cin >> outputFile;
+         std::cout << "Enter name of file to decompress"
+              << std::endl;
+         std::cout << "Omit the extension .zzz"  << std::endl;
+         std::cin >> outputFile;
    }
 
    strcpy(inputFile, outputFile);
@@ -46,7 +46,7 @@ void setFiles(int argc, char* argv[])
    in.open(inputFile, ios::binary);
    if (in.fail())
    {
-      cerr << "Cannot open " << inputFile  << endl;
+      cerr << "Cannot open " << inputFile  << std::endl;
       exit(1);
    }
    out.open(outputFile, ios::binary);

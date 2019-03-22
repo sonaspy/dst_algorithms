@@ -30,8 +30,8 @@ void bestFitPack(int *objectSize, int numberOfObjects, int binCapacity)
          theTree.erase(bestBin->first);
       }
    
-      cout << "Pack object " << i << " in bin "
-           << theBin.second << endl;
+      std::cout << "Pack object " << i << " in bin "
+           << theBin.second << std::endl;
 
       // insert bin in tree unless bin is full
       theBin.first -= objectSize[i];
@@ -43,12 +43,12 @@ void bestFitPack(int *objectSize, int numberOfObjects, int binCapacity)
 // test program
 int main(void)
 {
-   cout << "Enter number of objects and bin capacity" << endl;
+   std::cout << "Enter number of objects and bin capacity" << std::endl;
    int numberOfObjects, binCapacity;
-   cin >> numberOfObjects >> binCapacity;
+   std::cin >> numberOfObjects >> binCapacity;
    if (numberOfObjects < 2)
    {
-      cout << "Too few objects" << endl;
+      std::cout << "Too few objects" << std::endl;
       exit(1);
    }
 
@@ -56,11 +56,11 @@ int main(void)
    int *objectSize = new int [numberOfObjects + 1];
    for (int i = 1; i <= numberOfObjects; i++)
    {
-      cout << "Enter space requirement of object " << i << endl;
-      cin >> objectSize[i];
+      std::cout << "Enter space requirement of object " << i << std::endl;
+      std::cin >> objectSize[i];
       if (objectSize[i] > binCapacity)
       {
-        cout << "Object too large to fit in a bin" << endl;
+        std::cout << "Object too large to fit in a bin" << std::endl;
         exit(1);
       }
    }

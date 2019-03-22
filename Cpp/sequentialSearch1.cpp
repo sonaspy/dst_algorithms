@@ -20,14 +20,14 @@ int main()
    int a[7] = {1, 5, 3, 4, 7, 2, 0};
 
    // output the array elements
-   cout << "a[0:6] = ";
-   copy(a, a+7, ostream_iterator<int>(cout, " "));
-   cout << endl;
+   std::cout << "a[0:6] = ";
+   copy(a, a+7, ostream_iterator<int>(std::cout, " "));
+   std::cout << std::endl;
 
    // test the search function
-   cout << "4 is at position " << sequentialSearch(a, 7, 4) << endl;
-   cout << "0 is at position " << sequentialSearch(a, 7, 0) << endl;
-   cout << "1 is at position " << sequentialSearch(a, 7, 1) << endl;
-   cout << "8 is at position " << sequentialSearch(a, 7, 8) << endl;
+   std::cout << "4 is at position " << sequentialSearch(a, 7, 4) << std::endl;
+   std::cout << "0 is at position " << sequentialSearch(a, 7, 0) << std::endl;
+   std::cout << "1 is at position " << sequentialSearch(a, 7, 1) << std::endl;
+   std::cout << "8 is at position " << sequentialSearch(a, 7, 8) << std::endl;
    return 0;
 }
