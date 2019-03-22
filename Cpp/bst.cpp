@@ -17,27 +17,27 @@ void main(void)
    y.Insert(q);
    q.key = 8; q.ID = 'd';
    y.Insert(q);
-   cout << "Elements in ascending order are" << endl;
+   std::cout << "Elements in ascending order are" << std::endl;
    y.Ascend();
    DataType s;
    y.Delete(4,s);
-   cout << "Delete of 4 succeeds " << endl;
-   cout << s.key << ' ' << s.ID << endl;
-   cout << "Elements in ascending order are" << endl;
+   std::cout << "Delete of 4 succeeds " << std::endl;
+   std::cout << s.key << ' ' << s.ID << std::endl;
+   std::cout << "Elements in ascending order are" << std::endl;
    y.Ascend();
    y.Delete(8,s);
-   cout << "Delete of 8 succeeds " << endl;
-   cout << s.key << ' ' << s.ID << endl;
-   cout << "Elements in ascending order are" << endl;
+   std::cout << "Delete of 8 succeeds " << std::endl;
+   std::cout << s.key << ' ' << s.ID << std::endl;
+   std::cout << "Elements in ascending order are" << std::endl;
    y.Ascend();
    y.Delete(6,s);
-   cout << "Delete of 6 succeeds " << endl;
-   cout << s.key << ' ' << s.ID << endl;
-   cout << "Elements in ascending order are" << endl;
+   std::cout << "Delete of 6 succeeds " << std::endl;
+   std::cout << s.key << ' ' << s.ID << std::endl;
+   std::cout << "Elements in ascending order are" << std::endl;
    y.Ascend();
    try {y.Delete(6,s);}
    catch (BadInput)
-      {cout << "Delete of 6 fails " << endl;}
-   cout << "Elements in ascending order are" << endl;
+      {std::cout << "Delete of 6 fails " << std::endl;}
+   std::cout << "Elements in ascending order are" << std::endl;
    y.Ascend();
 }

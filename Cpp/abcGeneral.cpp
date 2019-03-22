@@ -13,7 +13,7 @@ Ta abc(const Ta& a, const Tb& b, const Tc& c)
 
 int main()
 {
-   cout << abc(2,3,4) << endl;
+   std::cout << abc(2,3,4) << std::endl;
    return 0;
 }
 

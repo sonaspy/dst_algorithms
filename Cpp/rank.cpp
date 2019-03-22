@@ -26,16 +26,16 @@ int main()
    int r[6];
 
    // output the elements
-   cout << "a[0:5] = ";
-   copy(a, a+6, ostream_iterator<int>(cout, " "));
-   cout << endl;
+   std::cout << "a[0:5] = ";
+   copy(a, a+6, ostream_iterator<int>(std::cout, " "));
+   std::cout << std::endl;
 
    // determine the ranks
    rank(a,6,r);
 
    // output the ranks
-   cout << "r[0:5] = ";
-   copy(r, r+6, ostream_iterator<int>(cout, " "));
-   cout << endl;
+   std::cout << "r[0:5] = ";
+   copy(r, r+6, ostream_iterator<int>(std::cout, " "));
+   std::cout << std::endl;
    return 0;
 }

@@ -26,28 +26,28 @@ bool checkBox(int net[], int n)
    // any unrouted nets left?
    if (s->empty())
    {// no nets remain
-       cout << "Switch box is routable" << endl;
+       std::cout << "Switch box is routable" << std::endl;
        return true;
     }
 
-   cout << "Switch box is not routable" << endl;
+   std::cout << "Switch box is not routable" << std::endl;
    return false;
 }
 
 void main()
 {
    // input the number of pins and their net assignment
-   cout << "Type number of pins in switch box" << endl;
+   std::cout << "Type number of pins in switch box" << std::endl;
    int n;
-   cin >> n;
+   std::cin >> n;
 
    // create net assignment array
    int* net = new int[n];
 
    // input the net assignments
-   cout << "Type net numbers for pins 1 through "  << n << endl;
+   std::cout << "Type net numbers for pins 1 through "  << n << std::endl;
    for (int i = 0; i < n; i++)
-      cin >> net[i];
+      std::cin >> net[i];
 
    // see if the switch box is routable
    checkBox(net, n);

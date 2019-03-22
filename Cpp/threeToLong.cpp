@@ -24,7 +24,7 @@ void main(void)
 {
     string s = "abc";
     for (int i = 0; i < 3; i++)
-       cout << s.at(i) << " " << ((int) s.at(i)) << endl;
+       std::cout << s.at(i) << " " << ((int) s.at(i)) << std::endl;
 
-    cout << threeToLong(s) << endl;
+    std::cout << threeToLong(s) << std::endl;
 }

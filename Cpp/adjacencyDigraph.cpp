@@ -9,39 +9,39 @@ using namespace std;
 void main(void)
 {
    adjacencyDigraph g(4);
-   cout << "Number of Vertices = " << g.numberOfVertices() << endl;
-   cout << "Number of Edges = " << g.numberOfEdges() << endl;
-   cout << endl;
+   std::cout << "Number of Vertices = " << g.numberOfVertices() << std::endl;
+   std::cout << "Number of Edges = " << g.numberOfEdges() << std::endl;
+   std::cout << std::endl;
 
    g.insertEdge(new unweightedEdge(2, 4));
    g.insertEdge(new unweightedEdge(1, 3));
    g.insertEdge(new unweightedEdge(2, 1));
    g.insertEdge(new unweightedEdge(1, 4));
    g.insertEdge(new unweightedEdge(4, 2));
-   cout << "The graph is" << endl;
-   cout << "Number of Vertices = " << g.numberOfVertices() << endl;
-   cout << "Number of Edges = " << g.numberOfEdges() << endl;
-   cout << g << endl;
-   cout << endl;
+   std::cout << "The graph is" << std::endl;
+   std::cout << "Number of Vertices = " << g.numberOfVertices() << std::endl;
+   std::cout << "Number of Edges = " << g.numberOfEdges() << std::endl;
+   std::cout << g << std::endl;
+   std::cout << std::endl;
 
    g.eraseEdge(2,1);
-   cout << "The graph after deleting (2,1) is" << endl;
-   cout << "Number of Vertices = " << g.numberOfVertices() << endl;
-   cout << "Number of Edges = " << g.numberOfEdges() << endl;
-   cout << g << endl;
+   std::cout << "The graph after deleting (2,1) is" << std::endl;
+   std::cout << "Number of Vertices = " << g.numberOfVertices() << std::endl;
+   std::cout << "Number of Edges = " << g.numberOfEdges() << std::endl;
+   std::cout << g << std::endl;
 
-   cout << "existsEdge(3,1) = " << g.existsEdge(3,1) << endl;
-   cout << "existsEdge(1,3) = " << g.existsEdge(1,3) << endl;
-   cout << "inDegree(3) = " << g.inDegree(3) << endl;
-   cout << "outDegree(1) = " << g.outDegree(1) << endl;
-   cout << "Number of Vertices = " << g.numberOfVertices() << endl;
-   cout << "Number of Edges = " << g.numberOfEdges() << endl;
-   cout << endl;
+   std::cout << "existsEdge(3,1) = " << g.existsEdge(3,1) << std::endl;
+   std::cout << "existsEdge(1,3) = " << g.existsEdge(1,3) << std::endl;
+   std::cout << "inDegree(3) = " << g.inDegree(3) << std::endl;
+   std::cout << "outDegree(1) = " << g.outDegree(1) << std::endl;
+   std::cout << "Number of Vertices = " << g.numberOfVertices() << std::endl;
+   std::cout << "Number of Edges = " << g.numberOfEdges() << std::endl;
+   std::cout << std::endl;
 
    // test iterator
-   cout << "Vertices adjacenct to vertex 4" << endl;
+   std::cout << "Vertices adjacenct to vertex 4" << std::endl;
    vertexIterator<bool>* gi = g.iterator(4);
    pair<int,bool>* thePair;
    while((thePair = gi->next()) != NULL)
-      cout << thePair->first << endl;
+      std::cout << thePair->first << std::endl;
 }

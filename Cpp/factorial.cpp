@@ -13,8 +13,8 @@ int factorial(int n)
 
 int main()
 {// test the function
-   cout << "0! = " << factorial(0) << endl;
-   cout << "1! = " << factorial(1) << endl;
-   cout << "5! = " << factorial(5) << endl;
+   std::cout << "0! = " << factorial(0) << std::endl;
+   std::cout << "1! = " << factorial(1) << std::endl;
+   std::cout << "5! = " << factorial(5) << std::endl;
    return 0;
 }

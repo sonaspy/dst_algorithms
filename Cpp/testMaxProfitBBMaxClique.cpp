@@ -11,24 +11,24 @@ using namespace std;
 void main(void)
 {
    // input a test graph
-   cout << "Enter number of vertices and edges" << endl;
+   std::cout << "Enter number of vertices and edges" << std::endl;
    int n, e;
-   cin >> n >> e;
+   std::cin >> n >> e;
    adjacencyGraph g(n);
 
    for (int i = 1; i <= e; i++)
    {
-      cout << "Enter edge " << i << endl;
+      std::cout << "Enter edge " << i << std::endl;
       int u, v;
-      cin >> u >> v;
+      std::cin >> u >> v;
       g.insertEdge(new unweightedEdge(u, v));
    }
-   cout << "The undirected graph is" << endl;
-   g.output(cout);
+   std::cout << "The undirected graph is" << std::endl;
+   g.output(std::cout);
 
    int *c = new int [n + 1];
-   cout << "The max clique size is " << g.maxProfitBBMaxClique(c) << endl;
-   cout << "The vertex selection vector is ";
-   copy(c + 1, c + n + 1, ostream_iterator<int>(cout, "  "));
-   cout << endl;
+   std::cout << "The max clique size is " << g.maxProfitBBMaxClique(c) << std::endl;
+   std::cout << "The vertex selection vector is ";
+   copy(c + 1, c + n + 1, ostream_iterator<int>(std::cout, "  "));
+   std::cout << std::endl;
 }

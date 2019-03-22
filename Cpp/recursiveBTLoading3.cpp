@@ -80,8 +80,8 @@ void main(void)
    int *x = new int [n + 1];
 
    // compute and output best loading
-   cout << "Value of max loading is " << maxLoading(w, n, c, x) << endl;
-   cout << "x values are ";
-   copy(x + 1, x + n + 1, ostream_iterator<int>(cout, "  "));
-   cout << endl;
+   std::cout << "Value of max loading is " << maxLoading(w, n, c, x) << std::endl;
+   std::cout << "x values are ";
+   copy(x + 1, x + n + 1, ostream_iterator<int>(std::cout, "  "));
+   std::cout << std::endl;
 }

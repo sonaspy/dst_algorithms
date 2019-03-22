@@ -8,17 +8,17 @@ int main()
    int n = 500;  // matrix size
 
    // initialize the matrices a and b
-   cout << n << " " << n << " " << "1994" << endl;
+   std::cout << n << " " << n << " " << "1994" << std::endl;
    for (int i = 1; i <= n; i++)
       for (int j = 1; j <= n; j++)
          if (i >= j && i - j < 4)
-            cout << i << " " << j << " " << "3" << endl;
+            std::cout << i << " " << j << " " << "3" << std::endl;
 
-   cout << n << " " << n << " " << "999" << endl;
+   std::cout << n << " " << n << " " << "999" << std::endl;
    for (int i = 1; i <= n; i++)
       for (int j = 1; j <= n; j++)
          if (i <= j && j - i < 2)
-            cout << i << " " << j << " " << "5" << endl;
+            std::cout << i << " " << j << " " << "5" << std::endl;
 
    return 0;
 }

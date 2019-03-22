@@ -45,30 +45,30 @@ void traceback(int i, int j)
       return;
    traceback(i, kay[i][j]);
    traceback(kay[i][j] + 1, j);
-   cout << "Multiply M " << i << ", " << kay[i][j] <<
-           " and M " << (kay[i][j] + 1) << ", " << j << endl;
+   std::cout << "Multiply M " << i << ", " << kay[i][j] <<
+           " and M " << (kay[i][j] + 1) << ", " << j << std::endl;
 }
 
 void main(void)
 {
    // initialize
-   cout << "Enter number of matrices" << endl;
+   std::cout << "Enter number of matrices" << std::endl;
    int q;
-   cin >> q;
+   std::cin >> q;
    r = new int [q + 2];
    make2dArray(kay, q + 1, q + 1);
 
    // input matrix data
    for (int i = 1; i <= q; i++)
    {
-      cout << "Enter number of rows in matrix " << i << endl;
-      cin >> r[i];
+      std::cout << "Enter number of rows in matrix " << i << std::endl;
+      std::cin >> r[i];
    }
-   cout << "Enter number of columns in matrix " << q << endl;
-   cin >> r[q + 1];
+   std::cout << "Enter number of columns in matrix " << q << std::endl;
+   std::cin >> r[q + 1];
 
    // compute cost of best way to multiply
-   cout << "Minimum cost is " << c(1, q) << endl;
+   std::cout << "Minimum cost is " << c(1, q) << std::endl;
 
    // output optimal multiplication sequence
    traceback(1, q);

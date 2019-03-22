@@ -32,13 +32,13 @@ void main(void)
    int n = 7;   // number of vertices
 
    // input a test graph
-   cout << "Enter number of edges in graph" << endl;
+   std::cout << "Enter number of edges in graph" << std::endl;
    int e, u, v, w;
-   cin >> e;
+   std::cin >> e;
    for (int i = 1; i <= e; i++)
    {
-      cout << "Enter weighted edge " << i << endl;
-      cin >> u >> v >> w;
+      std::cout << "Enter weighted edge " << i << std::endl;
+      std::cin >> u >> v >> w;
       for (int j = 0; j < numberOfTypes; j++)
       {
          g[j]->insertEdge(new unweightedEdge(u, v));
@@ -49,19 +49,19 @@ void main(void)
    // output the test graphs
    for (int i = 0; i < numberOfTypes; i++)
    {
-      cout << "Graph " << i << " is" << endl;
-      cout << "Number of Vertices = " << g[i]->numberOfVertices() << endl;
-      cout << "Number of Edges = " << g[i]->numberOfEdges() << endl;
-      g[i]->output(cout);
-      cout << endl << endl;
+      std::cout << "Graph " << i << " is" << std::endl;
+      std::cout << "Number of Vertices = " << g[i]->numberOfVertices() << std::endl;
+      std::cout << "Number of Edges = " << g[i]->numberOfEdges() << std::endl;
+      g[i]->output(std::cout);
+      std::cout << std::endl << std::endl;
    }
    for (int i = 0; i < numberOfTypes; i++)
    {
-      cout << "Graph " << i + numberOfTypes << " is" << endl;
-      cout << "Number of Vertices = " << h[i]->numberOfVertices() << endl;
-      cout << "Number of Edges = " << h[i]->numberOfEdges() << endl;
-      h[i]->output(cout);
-      cout << endl << endl;
+      std::cout << "Graph " << i + numberOfTypes << " is" << std::endl;
+      std::cout << "Number of Vertices = " << h[i]->numberOfVertices() << std::endl;
+      std::cout << "Number of Edges = " << h[i]->numberOfEdges() << std::endl;
+      h[i]->output(std::cout);
+      std::cout << std::endl << std::endl;
    }
 
    // test findPath on all graph types
@@ -69,64 +69,64 @@ void main(void)
    {
       int* path = g[i]->findPath(1, 3);
       if (path == NULL)
-         cout << "No path from 1 to 3" << endl;
+         std::cout << "No path from 1 to 3" << std::endl;
       else
       {
-         cout << "Path from 1 to 3 is ";
-         copy(path + 1, path + path[0] + 2, ostream_iterator<int>(cout, "  "));
-         cout << endl;
+         std::cout << "Path from 1 to 3 is ";
+         copy(path + 1, path + path[0] + 2, ostream_iterator<int>(std::cout, "  "));
+         std::cout << std::endl;
       }
 
       path = g[i]->findPath(4, 6);
       if (path == NULL)
-         cout << "No path from 4 to 6" << endl;
+         std::cout << "No path from 4 to 6" << std::endl;
       else
       {
-         cout << "Path from 4 to 6 is ";
-         copy(path + 1, path + path[0] + 2, ostream_iterator<int>(cout, "  "));
-         cout << endl;
+         std::cout << "Path from 4 to 6 is ";
+         copy(path + 1, path + path[0] + 2, ostream_iterator<int>(std::cout, "  "));
+         std::cout << std::endl;
       }
 
       path = g[i]->findPath(1, 6);
       if (path == NULL)
-         cout << "No path from 1 to 6" << endl;
+         std::cout << "No path from 1 to 6" << std::endl;
       else
       {
-         cout << "Path from 1 to 6 is ";
-         copy(path + 1, path + path[0] + 2, ostream_iterator<int>(cout, "  "));
-         cout << endl;
+         std::cout << "Path from 1 to 6 is ";
+         copy(path + 1, path + path[0] + 2, ostream_iterator<int>(std::cout, "  "));
+         std::cout << std::endl;
       }
    }
    for (int i = 0; i < numberOfTypes; i++)
    {
       int* path = h[i]->findPath(1, 3);
       if (path == NULL)
-         cout << "No path from 1 to 3" << endl;
+         std::cout << "No path from 1 to 3" << std::endl;
       else
       {
-         cout << "Path from 1 to 3 is ";
-         copy(path + 1, path + path[0] + 2, ostream_iterator<int>(cout, "  "));
-         cout << endl;
+         std::cout << "Path from 1 to 3 is ";
+         copy(path + 1, path + path[0] + 2, ostream_iterator<int>(std::cout, "  "));
+         std::cout << std::endl;
       }
 
       path = h[i]->findPath(4, 6);
       if (path == NULL)
-         cout << "No path from 4 to 6" << endl;
+         std::cout << "No path from 4 to 6" << std::endl;
       else
       {
-         cout << "Path from 4 to 6 is ";
-         copy(path + 1, path + path[0] + 2, ostream_iterator<int>(cout, "  "));
-         cout << endl;
+         std::cout << "Path from 4 to 6 is ";
+         copy(path + 1, path + path[0] + 2, ostream_iterator<int>(std::cout, "  "));
+         std::cout << std::endl;
       }
 
       path = h[i]->findPath(1, 6);
       if (path == NULL)
-         cout << "No path from 1 to 6" << endl;
+         std::cout << "No path from 1 to 6" << std::endl;
       else
       {
-         cout << "Path from 1 to 6 is ";
-         copy(path + 1, path + path[0] + 2, ostream_iterator<int>(cout, "  "));
-         cout << endl;
+         std::cout << "Path from 1 to 6 is ";
+         copy(path + 1, path + path[0] + 2, ostream_iterator<int>(std::cout, "  "));
+         std::cout << std::endl;
       }
    }
 }

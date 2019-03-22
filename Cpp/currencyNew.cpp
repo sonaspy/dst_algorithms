@@ -16,48 +16,48 @@ int main()
    // do an add and output
    j = h.add(g);
    h.output();
-   cout << " + ";
+   std::cout << " + ";
    g.output();
-   cout << " = ";
-   j.output(); cout << endl;
+   std::cout << " = ";
+   j.output(); std::cout << std::endl;
 
    // do an increment and output
    i.output();
-   cout << " incremented by ";
+   std::cout << " incremented by ";
    h.output();
-   cout << " is ";
+   std::cout << " is ";
    i.increment(h);
-   i.output(); cout << endl;
+   i.output(); std::cout << std::endl;
 
    // do two adds in a sequence
    j = i.add(g).add(h);
    i.output();
-   cout << " + ";
+   std::cout << " + ";
    g.output();
-   cout << " + ";
+   std::cout << " + ";
    h.output();
-   cout << " = ";
-   j.output(); cout << endl;
+   std::cout << " = ";
+   j.output(); std::cout << std::endl;
 
    // do an increment and add
-   cout << "Increment ";
+   std::cout << "Increment ";
    i.output();
-   cout << " by ";
+   std::cout << " by ";
    g.output();
-   cout << " and then add ";
+   std::cout << " and then add ";
    h.output();
-   cout << endl << "Result is ";
+   std::cout << std::endl << "Result is ";
    j = i.increment(g).add(h);
-   j.output(); cout << endl;
-   cout << "Incremented object is ";
-   i.output(); cout << endl;
+   j.output(); std::cout << std::endl;
+   std::cout << "Incremented object is ";
+   i.output(); std::cout << std::endl;
 
    // test the exception
-   cout << "Attempting to initialize with cents = 152" << endl;
+   std::cout << "Attempting to initialize with cents = 152" << std::endl;
    try {i.setValue(plus, 3, 152);}
    catch (illegalParameterValue e)
    {
-      cout << "Caught thrown exception" << endl;
+      std::cout << "Caught thrown exception" << std::endl;
       e.outputMessage();
    }
    return 0;

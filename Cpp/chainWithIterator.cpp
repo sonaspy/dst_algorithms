@@ -16,28 +16,28 @@ int main()
    y.insert(2, 4);
    y.insert(3, 5);
    y.insert(2, 3);
-   cout << "Inserted 6 integers, list y should be 1 2 3 4 5 6" << endl;
-   cout << "Size of y = " << y.size() << endl;
+   std::cout << "Inserted 6 integers, list y should be 1 2 3 4 5 6" << std::endl;
+   std::cout << "Size of y = " << y.size() << std::endl;
 
    // test iterator
-   cout << "Ouput using forward iterators pre and post ++" << endl;
+   std::cout << "Ouput using forward iterators pre and post ++" << std::endl;
    for (chain<int>::iterator i = y.begin();
         i != y.end(); i++)
-      cout << *i << "  ";
-   cout << endl;
+      std::cout << *i << "  ";
+   std::cout << std::endl;
    for (chain<int>::iterator i = y.begin();
         i != y.end(); ++i)
    {
-      cout << *i << "  ";
+      std::cout << *i << "  ";
       *i += 1;
    }
-   cout << endl;
+   std::cout << std::endl;
 
-   cout << "Incremented by 1 list is " << y << endl;
+   std::cout << "Incremented by 1 list is " << y << std::endl;
    
    // try out an STL algorithm
    int sum = accumulate(y.begin(), y.end(), 0);
-   cout << "The sum of the elements is " << sum << endl;
+   std::cout << "The sum of the elements is " << sum << std::endl;
 
    return 0;
 }

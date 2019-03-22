@@ -14,6 +14,6 @@ struct studentRecord
 };
 
 ostream& operator<<(ostream& out, const studentRecord& x)
-   {out << x.score << ' ' << *x.name << endl; return out;}
+   {out << x.score << ' ' << *x.name << std::endl; return out;}
 
 #endif

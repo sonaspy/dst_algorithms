@@ -16,14 +16,14 @@ int main()
    int n = 500;   // matrix size
 
 
-   cin >> a;
-   cin >> b;
+   std::cin >> a;
+   std::cin >> b;
 
    long startTime = clock();
    for (int i = 1; i <= m; i++)
       a.transpose(b);
    double elapsedTime = ((double) (clock() - startTime)) / m;
-   cout << "Transpose time for n = " << n << " is "
-        << elapsedTime << " milliseconds" << endl;
+   std::cout << "Transpose time for n = " << n << " is "
+        << elapsedTime << " milliseconds" << std::endl;
    return 0;
 }

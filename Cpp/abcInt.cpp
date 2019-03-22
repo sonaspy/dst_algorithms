@@ -11,7 +11,7 @@ int abc(int a, int b, int c)
 
 int main()
 {
-   cout << abc(2,3,4) << endl;
+   std::cout << abc(2,3,4) << std::endl;
    return 0;
 }
 

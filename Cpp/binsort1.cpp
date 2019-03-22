@@ -43,9 +43,9 @@ int main(void)
       s.name = new string(s.score, 'a');
       c.insert(0,s);
    }
-   cout << "The unsorted chain is" << endl;
-   cout << "  " << c << endl;
+   std::cout << "The unsorted chain is" << std::endl;
+   std::cout << "  " << c << std::endl;
    binSort(c,10);
-   cout << "The sorted chain is" << endl;
-   cout << "  " << c << endl;
+   std::cout << "The sorted chain is" << std::endl;
+   std::cout << "  " << c << std::endl;
 }

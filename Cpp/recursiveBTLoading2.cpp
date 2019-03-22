@@ -52,5 +52,5 @@ void main(void)
       remainingWeight += weight[i];
 
    rLoad(1);
-   cout << "Value of max loading is " << maxWeightSoFar << endl;
+   std::cout << "Value of max loading is " << maxWeightSoFar << std::endl;
 }

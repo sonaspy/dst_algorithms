@@ -13,7 +13,7 @@ T abc(T a, T b, T c)
 
 int main()
 {
-   cout << abc(2,3,4) << endl;
+   std::cout << abc(2,3,4) << std::endl;
    return 0;
 }
 

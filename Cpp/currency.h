@@ -96,10 +96,10 @@ currency& currency::increment(const currency& x)
 
 void currency::output() const
 {// Output currency value.
-   if (sign == minus) cout << '-';
-   cout << '$' << dollars << '.';
-   if (cents < 10) cout << '0';
-   cout << cents;
+   if (sign == minus) std::cout << '-';
+   std::cout << '$' << dollars << '.';
+   if (cents < 10) std::cout << '0';
+   std::cout << cents;
 }
 
 #endif

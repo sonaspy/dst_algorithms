@@ -27,16 +27,16 @@ int main()
    int a[10] = {3, 2, 4, 1, 6, 9, 8, 7, 5, 0};
 
    // output the elements
-   cout << "a[0:9] = ";
-   copy(a, a+10, ostream_iterator<int>(cout, " "));
-   cout << endl;
+   std::cout << "a[0:9] = ";
+   copy(a, a+10, ostream_iterator<int>(std::cout, " "));
+   std::cout << std::endl;
 
    // sort
    selectionSort(a,10);
 
    // output the sorted sequence
-   cout << "After the sort, a[0:9] = ";
-   copy(a, a+10, ostream_iterator<int>(cout, " "));
-   cout << endl;
+   std::cout << "After the sort, a[0:9] = ";
+   copy(a, a+10, ostream_iterator<int>(std::cout, " "));
+   std::cout << std::endl;
    return 0;
 }

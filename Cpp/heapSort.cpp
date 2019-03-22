@@ -16,7 +16,7 @@ int main(void)
    heapSort(a, 10);
 
    // output sorted data
-   copy(a, a+n, ostream_iterator<int>(cout, " "));
-   cout << endl;
+   copy(a, a+n, ostream_iterator<int>(std::cout, " "));
+   std::cout << std::endl;
    return 0;
 }

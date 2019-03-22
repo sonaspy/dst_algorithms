@@ -24,12 +24,12 @@ int main(void)
         theChain.insert(0, x);
     }
     theChain.binSort(10, f1);
-    cout << "Sort on exam 1" << endl;
-    cout << "  " << theChain << endl;
+    std::cout << "Sort on exam 1" << std::endl;
+    std::cout << "  " << theChain << std::endl;
     theChain.binSort(20, f2);
-    cout << "Sort on exam 2" << endl;
-    cout << "  " << theChain << endl;
+    std::cout << "Sort on exam 2" << std::endl;
+    std::cout << "  " << theChain << std::endl;
     theChain.binSort(130, f3);
-    cout << "Sort on sum of exams" << endl;
-    cout << "  " << theChain << endl;
+    std::cout << "Sort on sum of exams" << std::endl;
+    std::cout << "  " << theChain << std::endl;
 }

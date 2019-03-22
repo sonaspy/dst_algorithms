@@ -12,7 +12,7 @@ void makeSchedule(jobNode a[], int n, int m)
 {// Output an m machine LPT schedule for the jobs a[1:n].
    if (n <= m)
    {
-      cout << "Schedule each job on a different machine." << endl;
+      std::cout << "Schedule each job on a different machine." << std::endl;
       return;
    }
 
@@ -28,9 +28,9 @@ void makeSchedule(jobNode a[], int n, int m)
    {// schedule job i on first free machine
       machineNode x =  machineHeap.top();
       machineHeap.pop();
-      cout << "Schedule job " << a[i].id 
+      std::cout << "Schedule job " << a[i].id 
            << " on machine " << x.id << " from " << x.avail
-           << " to " << (x.avail + a[i].time) << endl;
+           << " to " << (x.avail + a[i].time) << std::endl;
       x.avail += a[i].time;  // new available time for this machine
       machineHeap.push(x);
    }

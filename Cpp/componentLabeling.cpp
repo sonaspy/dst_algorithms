@@ -18,15 +18,15 @@ void welcome()
 
 void inputImage()
 {// Input the image.
-   cout << "Enter image size" << endl;
-   cin >> size;
+   std::cout << "Enter image size" << std::endl;
+   std::cin >> size;
 
    // create and input the pixel array
    make2dArray(pixel, size + 2, size + 2);
-   cout << "Enter the pixel array in row-major order" << endl;
+   std::cout << "Enter the pixel array in row-major order" << std::endl;
    for (int i = 1; i <= size; i++)
       for (int j = 1; j <= size; j++)
-          cin >> pixel[i][j];
+          std::cin >> pixel[i][j];
 }
 
 void labelComponents()
@@ -85,12 +85,12 @@ void labelComponents()
 void outputImage()
 {// Output labeled image.
 
-   cout << "The labeled image is" << endl;
+   std::cout << "The labeled image is" << std::endl;
    for (int i = 1; i <= size; i++)
    {
       for (int j = 1; j <= size; j++)
-         cout << pixel[i][j] << "  ";
-      cout << endl;
+         std::cout << pixel[i][j] << "  ";
+      std::cout << std::endl;
    }
 }
 

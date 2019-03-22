@@ -43,8 +43,8 @@ int main()
    for (int i = 1; i <= m; i++)
       matrixAdd(a,b,c,n,n);
    double elapsedTime = ((double) (clock() - startTime)) / m;
-   cout << "Add time for n = " << n << " is "
-        << elapsedTime << " milliseconds" << endl;
+   std::cout << "Add time for n = " << n << " is "
+        << elapsedTime << " milliseconds" << std::endl;
 
    return 0;
 }

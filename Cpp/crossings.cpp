@@ -59,13 +59,13 @@ void main(void)
    for (int i = 1; i <= n; i++)
       theB[i] = theC[theX[i]];
    
-   cout << "A is ";
+   std::cout << "A is ";
    for (int i = 1; i <= n; i++)
-      cout << theA[i] << " ";
-   cout << endl;
+      std::cout << theA[i] << " ";
+   std::cout << std::endl;
    
-   cout << "B is ";
+   std::cout << "B is ";
    for (int i = 1; i <= n; i++)
-      cout << theB[i] << " ";
-   cout << endl;
+      std::cout << theB[i] << " ";
+   std::cout << std::endl;
 }

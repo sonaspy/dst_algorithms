@@ -27,9 +27,9 @@ int main(void)
    irregularArray[1][1] = 3;
 
    // output selected elements
-   cout << irregularArray[2][3] << endl;
-   cout << irregularArray[4][6] << endl;
-   cout << irregularArray[1][1] << endl;
+   std::cout << irregularArray[2][3] << std::endl;
+   std::cout << irregularArray[4][6] << std::endl;
+   std::cout << irregularArray[1][1] << std::endl;
 
    return 0;
 }

@@ -184,7 +184,7 @@ class linkedWDigraph : public graph<T>
       void output(ostream& out) const
       {// Output the adjacency matrix.
          for (int i = 1; i <= n; i++)
-            out << aList[i] << endl;
+            out << aList[i] << std::endl;
       }
 };
       

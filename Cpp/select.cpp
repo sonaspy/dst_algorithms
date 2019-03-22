@@ -12,12 +12,12 @@ int main()
    int n = 10;
 
    // output the elements
-   cout << "a[0:9] = ";
-   copy(a, a+10, ostream_iterator<int>(cout, " "));
-   cout << endl;
+   std::cout << "a[0:9] = ";
+   copy(a, a+10, ostream_iterator<int>(std::cout, " "));
+   std::cout << std::endl;
 
    // select and output
    for (int i = 1; i <= n; i++)
-      cout << "The " << i << "'th element is " << select(a, n, i) << endl;
+      std::cout << "The " << i << "'th element is " << select(a, n, i) << std::endl;
    return 0;
 }

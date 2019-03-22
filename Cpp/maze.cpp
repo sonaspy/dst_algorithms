@@ -13,13 +13,13 @@ void welcome() {};
 
 void inputMaze()
 {// Input the maze.
-   cout << "Enter maze size" << endl;
-   cin >> size;
+   std::cout << "Enter maze size" << std::endl;
+   std::cin >> size;
    make2dArray(maze, size + 2, size + 2);
-   cout << "Enter maze in row major order" << endl;
+   std::cout << "Enter maze in row major order" << std::endl;
    for (int i = 1; i <= size; i++)
       for (int j = 1; j <= size; j++)
-         cin >> maze[i][j];
+         std::cin >> maze[i][j];
 }
 
 bool findPath()
@@ -89,13 +89,13 @@ bool findPath()
 
 void outputPath()
 {// Output path to exit.
-   cout << "The path is" << endl;
+   std::cout << "The path is" << std::endl;
    position here;
    while (!path->empty())
    {
       here = path->top();
       path->pop();
-      cout << here.row << ' ' << here.col << endl;
+      std::cout << here.row << ' ' << here.col << std::endl;
    }
 }
 
@@ -106,5 +106,5 @@ void main()
    if (findPath()) 
       outputPath();
    else
-      cout << "No path" << endl;
+      std::cout << "No path" << std::endl;
 }

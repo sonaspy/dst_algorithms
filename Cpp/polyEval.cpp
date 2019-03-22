@@ -24,12 +24,12 @@ int main()
    int a[6] = {1, 2, 3, 4, 5, 6};
 
    // output the coefficients
-   cout << "The coefficients a[0:5] are ";
-   copy(a, a+6, ostream_iterator<int>(cout, " "));
-   cout << endl;
+   std::cout << "The coefficients a[0:5] are ";
+   copy(a, a+6, ostream_iterator<int>(std::cout, " "));
+   std::cout << std::endl;
 
-   cout << "The value at 2 is " << polyEval(a,5,2) << endl;
-   cout << "The value at 1 is " << polyEval(a,5,1) << endl;
-   cout << "The value at 0 is " << polyEval(a,5,0) << endl;
+   std::cout << "The value at 2 is " << polyEval(a,5,2) << std::endl;
+   std::cout << "The value at 1 is " << polyEval(a,5,1) << std::endl;
+   std::cout << "The value at 0 is " << polyEval(a,5,0) << std::endl;
    return 0;
 }

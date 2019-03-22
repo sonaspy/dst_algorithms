@@ -38,12 +38,12 @@ class maxHblt : public maxPriorityQueue<T>,
             theHblt.root = NULL;
             theHblt.treeSize = 0;
          }
-      void output() {postOrder(hbltOutput); cout << endl;}
+      void output() {postOrder(hbltOutput); std::cout << std::endl;}
    private:
       void meld(binaryTreeNode<pair<int,T> >* &,
                 binaryTreeNode<pair<int,T> >* &);
       static void hbltOutput(binaryTreeNode<pair<int,T> > *t)
-                  {cout << t->element.second << ' ';}
+                  {std::cout << t->element.second << ' ';}
 };
 
 template<class T>

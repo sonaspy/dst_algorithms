@@ -243,8 +243,8 @@ void main(void)
    int n = 5;
    int c = 10;
    int *bestx = new int [n + 1];
-   cout << "Optimal value is " << knapsack(p, w, n, c, bestx) << endl;
-   cout << "Packing vector is ";
-   copy(bestx + 1, bestx + n + 1, ostream_iterator<int>(cout, "  "));
-   cout << endl;
+   std::cout << "Optimal value is " << knapsack(p, w, n, c, bestx) << std::endl;
+   std::cout << "Packing vector is ";
+   copy(bestx + 1, bestx + n + 1, ostream_iterator<int>(std::cout, "  "));
+   std::cout << std::endl;
 }

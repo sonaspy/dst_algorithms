@@ -71,5 +71,5 @@ void main(void)
    int w[] = {0, 2, 2, 6, 5, 5};
    int n = 5;
    int c = 16;
-   cout << "Value of max loading is " << maxLoading(w, n, c) << endl;
+   std::cout << "Value of max loading is " << maxLoading(w, n, c) << std::endl;
 }

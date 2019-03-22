@@ -147,13 +147,13 @@ void completeWinnerTree<T>::rePlay(int thePlayer)
 template<class T>
 void completeWinnerTree<T>::output() const
 {
-   cout << "number of players  = " << numberOfPlayers
+   std::cout << "number of players  = " << numberOfPlayers
         << " lowExt = " << lowExt
-        << " offset = " << offset << endl;
-   cout << "complete winner tree pointers are" << endl;
+        << " offset = " << offset << std::endl;
+   std::cout << "complete winner tree pointers are" << std::endl;
    for (int i = 1; i < numberOfPlayers; i++)
-      cout << tree[i] << ' ';
-   cout << endl;
+      std::cout << tree[i] << ' ';
+   std::cout << std::endl;
 }
 
 #endif

@@ -17,7 +17,7 @@ struct rowElement
       {return (value != y.value);}
    void output(ostream& out) const
       {out << "column " << col 
-           << " value " << value << endl;}
+           << " value " << value << std::endl;}
 };
 
 template<class T>
@@ -33,7 +33,7 @@ struct headerElement
       bool operator !=(const headerElement<T>& y)
          {return (row != y.row);}
       void output(ostream& out) const
-         {out << "row " << row << endl << "  " << rowChain << endl;}
+         {out << "row " << row << std::endl << "  " << rowChain << std::endl;}
 };
 
 template<class T>

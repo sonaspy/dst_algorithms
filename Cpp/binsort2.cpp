@@ -14,9 +14,9 @@ int main(void)
       s.name = new string(s.score, 'a');
       theChain.insert(0,s);
    }
-   cout << "The unsorted chain is" << endl;
-   cout << "  " << theChain << endl;
+   std::cout << "The unsorted chain is" << std::endl;
+   std::cout << "  " << theChain << std::endl;
    theChain.binSort(10);
-   cout << "The sorted chain is" << endl;
-   cout << "  " << theChain << endl;
+   std::cout << "The sorted chain is" << std::endl;
+   std::cout << "  " << theChain << std::endl;
 }

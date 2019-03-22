@@ -9,7 +9,7 @@ int main()
 
    // use a pointer y to iterate through the array x
    for (int* y = x; y != x + 3; y++)
-      cout << *y << "  ";
-   cout << endl;
+      std::cout << *y << "  ";
+   std::cout << std::endl;
    return 0;
 }

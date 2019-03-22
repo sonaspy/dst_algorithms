@@ -17,36 +17,36 @@ int main()
    y.insert(2, 4);
    y.insert(3, 5);
    y.insert(2, 3);
-   cout << "Inserted 6 integers, list y should be 1 2 3 4 5 6" << endl;
-   cout << "Size of y = " << y.size() << endl;
-   cout << "Capacity of y = " << y.capacity() << endl;
+   std::cout << "Inserted 6 integers, list y should be 1 2 3 4 5 6" << std::endl;
+   std::cout << "Size of y = " << y.size() << std::endl;
+   std::cout << "Capacity of y = " << y.capacity() << std::endl;
 
    // test iterator
-   cout << "Ouput using forward iterators pre and post ++" << endl;
+   std::cout << "Ouput using forward iterators pre and post ++" << std::endl;
    for (arrayList<int>::iterator i = y.begin();
         i != y.end(); i++)
-      cout << *i << "  ";
-   cout << endl;
+      std::cout << *i << "  ";
+   std::cout << std::endl;
    for (arrayList<int>::iterator i = y.begin();
         i != y.end(); ++i)
-      cout << *i << "  ";
-   cout << endl;
+      std::cout << *i << "  ";
+   std::cout << std::endl;
 
-   cout << "Ouput using backward iterators pre and post --" << endl;
+   std::cout << "Ouput using backward iterators pre and post --" << std::endl;
    for (arrayList<int>::iterator i = y.end();
-        i != y.begin(); cout << *(--i) << "  ");
-   cout << endl;
+        i != y.begin(); std::cout << *(--i) << "  ");
+   std::cout << std::endl;
    for (arrayList<int>::iterator i = y.end();
         i != y.begin();)
-      {i--; cout << *i << "  "; *i += 1;} 
-   cout << endl;
-   cout << "Incremented by 1 list is " << y << endl;
+      {i--; std::cout << *i << "  "; *i += 1;} 
+   std::cout << std::endl;
+   std::cout << "Incremented by 1 list is " << y << std::endl;
    
    // try out some STL algorithms
    reverse(y.begin(), y.end());
-   cout << "The reversed list is " << y << endl;
+   std::cout << "The reversed list is " << y << std::endl;
    int sum = accumulate(y.begin(), y.end(), 0);
-   cout << "The sum of the elements is " << sum << endl;
+   std::cout << "The sum of the elements is " << sum << std::endl;
 
    return 0;
 }

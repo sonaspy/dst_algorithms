@@ -25,21 +25,21 @@ void welcome()
 void inputData()
 {// Input the wire routing data.
 
-   cout << "Enter grid size" << endl;
-   cin >> size;
+   std::cout << "Enter grid size" << std::endl;
+   std::cin >> size;
 
-   cout << "Enter the start position" << endl;
-   cin >> start.row >> start.col;
+   std::cout << "Enter the start position" << std::endl;
+   std::cin >> start.row >> start.col;
 
-   cout << "Enter the finish position" << endl;
-   cin >> finish.row >> finish.col;
+   std::cout << "Enter the finish position" << std::endl;
+   std::cin >> finish.row >> finish.col;
 
    // create and input the wiring grid array
    make2dArray(grid, size + 2, size + 2);
-   cout << "Enter the wiring grid in row-major order" << endl;
+   std::cout << "Enter the wiring grid in row-major order" << std::endl;
    for (int i = 1; i <= size; i++)
       for (int j = 1; j <= size; j++)
-          cin >> grid[i][j];
+          std::cin >> grid[i][j];
 }
 
 bool findPath()
@@ -126,9 +126,9 @@ bool findPath()
 // output path to exit
 void outputPath()
 {
-   cout << "The wire path is" << endl;
+   std::cout << "The wire path is" << std::endl;
    for (int i = 0; i < pathLength; i++)
-      cout << path[i].row << " " << path[i].col << endl;
+      std::cout << path[i].row << " " << path[i].col << std::endl;
 }
 
 int main()
@@ -138,7 +138,7 @@ int main()
    if (findPath())
       outputPath();
    else
-      cout << "There is no wire path" << endl;
+      std::cout << "There is no wire path" << std::endl;
 
    return 0;
 }

@@ -56,8 +56,8 @@ void main(void)
    unite(1,2);
    unite(3,4);
    unite(1,3);
-   cout << "find(1) = " << find(1) << " find(2) = " << find(2) << endl;
-   cout << "find(3) = " << find(3) << " find(4) = " << find(4) << endl;
-   cout << "find(5) = " << find(5) << " find(6) = " << find(6) << endl;
+   std::cout << "find(1) = " << find(1) << " find(2) = " << find(2) << std::endl;
+   std::cout << "find(3) = " << find(3) << " find(4) = " << find(4) << std::endl;
+   std::cout << "find(5) = " << find(5) << " find(6) = " << find(6) << std::endl;
 }
 

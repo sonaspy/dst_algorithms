@@ -56,6 +56,6 @@ int main(void)
    unite(3,4);
    unite(2,4);
    for (int i = 1; i < 7; i++)
-      cout << "Element " << i << " is in equivalence class "
-           << find(i) << endl;
+      std::cout << "Element " << i << " is in equivalence class "
+           << find(i) << std::endl;
 }

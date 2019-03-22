@@ -17,38 +17,38 @@ void main(void)
    g[1] = new linkedWGraph<int>(n);
 
    // input a test graph
-   cout << "Enter number of edges in 7 vertex graph" << endl;
+   std::cout << "Enter number of edges in 7 vertex graph" << std::endl;
    int e;
-   cin >> e;
+   std::cin >> e;
    for (int i = 1; i <= e; i++)
    {
-      cout << "Enter weighted edge " << i << endl;
+      std::cout << "Enter weighted edge " << i << std::endl;
       int u, v, w;
-      cin >> u >> v >> w;
+      std::cin >> u >> v >> w;
       g[0]->insertEdge(new weightedEdge<int>(u, v, w));
       g[1]->insertEdge(new weightedEdge<int>(u, v, w));
    }
 
-   cout << "The adjacency matrix is" << endl;
-   g[0]->output(cout);
-   cout << "\nThe linked lists are" << endl;
-   g[1]->output(cout);
+   std::cout << "The adjacency matrix is" << std::endl;
+   g[0]->output(std::cout);
+   std::cout << "\nThe linked lists are" << std::endl;
+   g[1]->output(std::cout);
 
    // test kruskal
    weightedEdge<int> *edge = new weightedEdge<int> [n];
-   cout << "Using cost-adjacency matrix" << endl;
+   std::cout << "Using cost-adjacency matrix" << std::endl;
    if (g[0]->kruskal(edge))
    {// found the spanning tree
-      cout << "The min cost spanning tree edges are" << endl;
+      std::cout << "The min cost spanning tree edges are" << std::endl;
       for (int i = 0; i < n - 1; i++)
-         cout << edge[i] << endl;
+         std::cout << edge[i] << std::endl;
    }
 
-   cout << "\nUsing linked-adjacency lists" << endl;
+   std::cout << "\nUsing linked-adjacency lists" << std::endl;
    if (g[1]->kruskal(edge))
    {// found the spanning tree
-      cout << "The min cost spanning tree edges are" << endl;
+      std::cout << "The min cost spanning tree edges are" << std::endl;
       for (int i = 0; i < n - 1; i++)
-         cout << edge[i] << endl;
+         std::cout << edge[i] << std::endl;
    }
 }

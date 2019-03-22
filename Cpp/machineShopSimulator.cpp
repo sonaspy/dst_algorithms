@@ -26,9 +26,9 @@ bool moveToNextMachine(job* theJob)
 
    if (theJob->taskQ.empty())
    {// no next task
-      cout << "Job " << theJob->id << " has completed at "
+      std::cout << "Job " << theJob->id << " has completed at "
            << timeNow << " Total wait was " 
-           << (timeNow - theJob->length) << endl;
+           << (timeNow - theJob->length) << std::endl;
       return false;
    }
    else
@@ -84,8 +84,8 @@ job* changeState(int theMachine)
 void inputData()
 {// Input machine shop data.
 
-   cout << "Enter number of machines and jobs" << endl;
-   cin >> numMachines >> numJobs;
+   std::cout << "Enter number of machines and jobs" << std::endl;
+   std::cin >> numMachines >> numJobs;
    if (numMachines < 1 || numJobs < 1)
          throw illegalInputData
                ("number of machines and jobs must be >= 1");
@@ -95,11 +95,11 @@ void inputData()
    mArray = new machine [numMachines + 1];
    
    // input the change-over times
-   cout << "Enter change-over times for machines" << endl;
+   std::cout << "Enter change-over times for machines" << std::endl;
    int ct;
    for (int j = 1; j <= numMachines; j++)
    {
-      cin >> ct;
+      std::cin >> ct;
       if (ct < 0)
          throw illegalInputData("change-over time must be >= 0");
       mArray[j].changeTime = ct;
@@ -110,19 +110,19 @@ void inputData()
    int numTasks, firstMachine, theMachine, theTaskTime;
    for (int i = 1; i <= numJobs; i++)
    {
-      cout << "Enter number of tasks for job " << i << endl;
-      cin >> numTasks;
+      std::cout << "Enter number of tasks for job " << i << std::endl;
+      std::cin >> numTasks;
       firstMachine = 0;   // machine for first task
       if (numTasks < 1)
          throw illegalInputData("each job must have > 1 task");
 
       // create the job
       theJob = new job(i);
-      cout << "Enter the tasks (machine, time)"
-           << " in process order" << endl;
+      std::cout << "Enter the tasks (machine, time)"
+           << " in process order" << std::endl;
       for (int j = 1; j <= numTasks; j++)
       {// get tasks for job i
-         cin >> theMachine >> theTaskTime;
+         std::cin >> theMachine >> theTaskTime;
          if (theMachine < 1 || theMachine > numMachines
              || theTaskTime < 1)
          throw illegalInputData("bad machine number or task time");
@@ -157,14 +157,14 @@ void simulate()
 
 void outputStatistics()
 {// Output wait times at machines.
-   cout << "Finish time = " << timeNow << endl;
+   std::cout << "Finish time = " << timeNow << std::endl;
    for (int p = 1; p <= numMachines; p++)
    {
-      cout << "Machine " << p << " completed "
-           << mArray[p].numTasks << " tasks" << endl;
-      cout << "The total wait time was "
-           << mArray[p].totalWait << endl;
-      cout <<  endl;
+      std::cout << "Machine " << p << " completed "
+           << mArray[p].numTasks << " tasks" << std::endl;
+      std::cout << "The total wait time was "
+           << mArray[p].totalWait << std::endl;
+      std::cout <<  std::endl;
    }
 }
 

@@ -14,7 +14,7 @@ T abc(T& a, T& b, T& c)
 int main()
 {
    int a = 2, b = 3, c = 4;
-   cout << abc(a,b,c) << endl;
+   std::cout << abc(a,b,c) << std::endl;
    return 0;
 }
 

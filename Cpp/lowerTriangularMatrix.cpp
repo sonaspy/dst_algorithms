@@ -13,11 +13,11 @@ int main(void)
    x.set(8,5,0);
    x.set(10,2,55);
    x.set(8,5,0);
-   cout << x.get(10,2) << endl;
-   cout << x.get(5,3) << endl;
-   cout << x.get(1,1) << endl;
-   cout << x.get(10,14) << endl;
-   cout << x.get(8,5) << endl;
+   std::cout << x.get(10,2) << std::endl;
+   std::cout << x.get(5,3) << std::endl;
+   std::cout << x.get(1,1) << std::endl;
+   std::cout << x.get(10,14) << std::endl;
+   std::cout << x.get(8,5) << std::endl;
 
    return 0;
 }

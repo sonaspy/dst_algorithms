@@ -15,7 +15,7 @@ int main()
    a[0][0] = 1; a[0][1] = 2; a[1][0] = 3; a[1][1] = 4;
 
    // output assigned values
-   cout << a[0][0] << ' ' << a[0][1] << endl;
-   cout << a[0][0] << ' ' << a[1][1] << endl;
+   std::cout << a[0][0] << ' ' << a[0][1] << std::endl;
+   std::cout << a[0][0] << ' ' << a[1][1] << std::endl;
    return 0;
 }

@@ -124,8 +124,8 @@ void main(void)
    int c = 16;
    int n = 5;
    int *x = new int [n + 1];
-   cout << "Value of max loading is " << maxLoading(w, n, c, x) << endl;
-   cout << "Loading vector is ";
-   copy(x + 1, x + n + 1, ostream_iterator<int>(cout, "  "));
-   cout << endl;
+   std::cout << "Value of max loading is " << maxLoading(w, n, c, x) << std::endl;
+   std::cout << "Loading vector is ";
+   copy(x + 1, x + n + 1, ostream_iterator<int>(std::cout, "  "));
+   std::cout << std::endl;
 }

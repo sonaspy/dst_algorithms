@@ -19,12 +19,12 @@ int main()
    
 
    // output the values
-   cout << "Before swapping, a = " << a << " b = " << b << endl;
+   std::cout << "Before swapping, a = " << a << " b = " << b << std::endl;
 
    // swap a and b
    swap(a,b);
 
    // output the new values
-   cout << "After swapping, a = " << a << " b = " << b << endl;
+   std::cout << "After swapping, a = " << a << " b = " << b << std::endl;
    return 0;
 }

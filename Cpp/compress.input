@@ -514,12 +514,12 @@ void PrintMatchedPairs(char *expr);
 void main(void)
 {
 char expr[MaxLength];
-cout << "Type an expression of length at most "
-     << MaxLength << endl;
-cin.getline(expr, MaxLength);
-cout << "The pairs of matching parentheses in the expression" << endl;
+std::cout << "Type an expression of length at most "
+     << MaxLength << std::endl;
+std::cin.getline(expr, MaxLength);
+std::cout << "The pairs of matching parentheses in the expression" << std::endl;
 puts(expr);
-cout << "are" << endl;
+std::cout << "are" << std::endl;
 PrintMatchedPairs(expr);
 }
 
@@ -530,14 +530,14 @@ int j, length = strlen(expr);
 for (int i = 1; i <= length; i++) {
    if (expr[i - 1] == '(') s + i;
    else if (expr[i - 1] == ')')
-	{if (s - j) cout << j << ' ' << i << endl;
-      else cout << "No match for right parenthesis at "
-                << i << endl;}
+	{if (s - j) std::cout << j << ' ' << i << std::endl;
+      else std::cout << "No match for right parenthesis at "
+                << i << std::endl;}
    }
 while (!s.IsEmpty()) {
    s - j;
-   cout << "No match for left parenthesis at " << j 
-        << endl;}
+   std::cout << "No match for left parenthesis at " << j 
+        << std::endl;}
 }
 .fi
 .hl
@@ -645,8 +645,8 @@ void TowersOfHanoi(int n, int x, int y, int z)
 //Use tower z for intermediate storage
 if (n > 0) {
    TowersOfHanoi(n-1, x, z, y);
-   cout << "Move top disk from tower " << x 
-        << " to top of tower " << y << endl;
+   std::cout << "Move top disk from tower " << x 
+        << " to top of tower " << y << std::endl;
    TowersOfHanoi(n-1, z, y, x);}
 }
 .ft R
@@ -723,8 +723,8 @@ int i;
 if (n > 0) {
    TowersOfHanoi(n-1, x, z, y);
    (*S[x]) - i;  (*S[y]) + i;
-   cout << "Move disk " << i << " from tower " << x
-	<< " to tower " << y << endl;
+   std::cout << "Move disk " << i << " from tower " << x
+	<< " to tower " << y << std::endl;
    TowersOfHanoi(n-1, z, y, x);}
 }
 
@@ -930,8 +930,8 @@ if (!H) return -1;
 int NowOut = 1, minH = n+1, minS;
 for (int i = 1; i <= n; i++) {
    if (p[i] == NowOut) {
-      cout << "Move car " << p[i] <<
-        " from input to output" << endl;
+      std::cout << "Move car " << p[i] <<
+        " from input to output" << std::endl;
       NowOut++;
       while (minH == NowOut) {
          Output(minH, minS, H, k, n);
@@ -983,8 +983,8 @@ void Output(int& minH, int& minS,
 {//move from hold to output
 int x;
 H[minS] - x;
-cout << "Move car " << minH << " from holding track "
-     << minS << " to output" << endl;
+std::cout << "Move car " << minH << " from holding track "
+     << minS << " to output" << std::endl;
 minH = n + 2;
 for (int i = 1; i <= k; i++)
    if (H[i].Top(x) && x < minH) {

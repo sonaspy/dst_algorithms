@@ -13,41 +13,41 @@ int main(void)
       for (i = 1; i <= 3; i++)
          for (j = 1; j <= 2; j++)
             x(i,j) = 2*i + j;
-      cout << "Initialized x(i,j) = 2*i + j" << endl;
-      cout << "x(3,1) = " << x(3,1) << endl;
-      cout << "x is" << endl;;
-      cout << x << endl;
+      std::cout << "Initialized x(i,j) = 2*i + j" << std::endl;
+      std::cout << "x(3,1) = " << x(3,1) << std::endl;
+      std::cout << "x is" << std::endl;;
+      std::cout << x << std::endl;
 
       y = x;
-      cout << "Assigned y = x" << endl;
-      cout << "y is" << endl;
-      cout << y << endl;
+      std::cout << "Assigned y = x" << std::endl;
+      std::cout << "y is" << std::endl;
+      std::cout << y << std::endl;
 
       x += 2;
-      cout << "x incremented by 2 is" << endl;
-      cout << x << endl;
+      std::cout << "x incremented by 2 is" << std::endl;
+      std::cout << x << std::endl;
 
       z = y + x;
-      cout << "y + x is" << endl;
-      cout << z << endl;
+      std::cout << "y + x is" << std::endl;
+      std::cout << z << std::endl;
 
-      cout << "-(y + x) is" << endl;
-      cout << -z << endl;
+      std::cout << "-(y + x) is" << std::endl;
+      std::cout << -z << std::endl;
 
       matrix<int> w(2,3);
       for (i = 1; i <= 2; i++)
          for (j = 1; j <= 3; j++)
             w(i,j) = i + j;
-      cout << "Initialized w(i,j) = i + j" << endl;
-      cout << "w is" << endl;
-      cout << w << endl;
+      std::cout << "Initialized w(i,j) = i + j" << std::endl;
+      std::cout << "w is" << std::endl;
+      std::cout << w << std::endl;
 
       z = y * w;
-      cout << "y * w is" << endl;
-      cout << z << endl;
+      std::cout << "y * w is" << std::endl;
+      std::cout << z << std::endl;
    }
    catch (...) {
-      cerr << "An exception has occurred" << endl;}
+      cerr << "An exception has occurred" << std::endl;}
 
    return 0;
 }

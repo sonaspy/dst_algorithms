@@ -127,23 +127,23 @@ int leastCostBBBoards(int **board, int numberOfBoards, int numberOfNets,
 void main()
 {
    // input number of boards and nets
-   cout << "Enter number of boards and number of nets" << endl;
+   std::cout << "Enter number of boards and number of nets" << std::endl;
    int n, m;
-   cin >> n >> m;
+   std::cin >> n >> m;
 
    // define and input board array
    int **board;
    make2dArray(board, n + 1, n + 1);
-   cout << "Enter net matrix" << endl;
+   std::cout << "Enter net matrix" << std::endl;
    for (int i = 1; i <= n; i++) 
       for (int j = 1; j <= m; j++)
-         cin >> board[i][j];
+         std::cin >> board[i][j];
 
    // define array for best board arrangement
    int *p = new int [n + 1];
 
-   cout << "\nMinimum density is " << leastCostBBBoards(board, n, m, p) << endl;
-   cout << "Optimal arrangement is ";
-   copy(p + 1, p + n + 1, ostream_iterator<int>(cout, "  "));
-   cout << endl;
+   std::cout << "\nMinimum density is " << leastCostBBBoards(board, n, m, p) << std::endl;
+   std::cout << "Optimal arrangement is ";
+   copy(p + 1, p + n + 1, ostream_iterator<int>(std::cout, "  "));
+   std::cout << std::endl;
 }

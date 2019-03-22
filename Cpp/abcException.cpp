@@ -16,11 +16,11 @@ int abc(int a, int b, int c)
 
 int main()
 {
-   try {cout << abc(2,0,4) << endl;}
+   try {std::cout << abc(2,0,4) << std::endl;}
    catch (illegalParameterValue e)
    {
-      cout << "The parameters to abc were 2, 0, and 4" << endl;
-      cout << "illegalParameterValue exception thrown" << endl;
+      std::cout << "The parameters to abc were 2, 0, and 4" << std::endl;
+      std::cout << "illegalParameterValue exception thrown" << std::endl;
       e.outputMessage();
       return 1;
    }
