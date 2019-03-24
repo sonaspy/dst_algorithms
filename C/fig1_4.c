@@ -11,7 +11,7 @@ void PrintOut(unsigned int N) /* Print nonnegative N */
 }
 /* END */
 
-main()
+int main()
 {
     PrintOut(1369);
     putchar('\n');

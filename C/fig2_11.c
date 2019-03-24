@@ -17,7 +17,7 @@ Pow( long int X, unsigned int N )
 }
 /* END */
 
-main( )
+int main()
 {
     printf( "2^21 = %ld\n", Pow( 2, 21 ) );
     return 0;

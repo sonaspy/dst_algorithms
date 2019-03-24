@@ -3,7 +3,7 @@
 
 #define NumItems 12000
 
-main( )
+int main()
 {
     Treap T;
     Position P;

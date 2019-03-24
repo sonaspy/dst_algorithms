@@ -3,7 +3,7 @@
 
 #define MaxSize (12000)
 
-main( )
+int main()
 {
     BinQueue H;
     int i, j;

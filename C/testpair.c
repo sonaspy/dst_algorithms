@@ -14,7 +14,7 @@ sleep( int x )
 
 #define MaxSize 500
 
-main( )
+int main()
 {
     PairHeap H;
     Position P[ MaxSize ];

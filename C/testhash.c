@@ -13,7 +13,7 @@
 
 #define NumItems 400
 
-main( )
+int main()
 {
     HashTable H;
     Position P;

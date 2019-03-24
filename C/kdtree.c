@@ -74,7 +74,7 @@ PrintRange( ItemType Low, ItemType High, KdTree T )
 }
 /* END */
 
-main( )
+int main()
 {
     KdTree T;
     ItemType It, L, H;

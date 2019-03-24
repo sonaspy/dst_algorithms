@@ -285,7 +285,7 @@ Copy( ElementType Lhs[ ], const ElementType Rhs[ ], int N )
 int Arr1[ MaxSize ];
 int Arr2[ MaxSize ];
 
-main( )
+int main()
 {
     int i;
     for( i = 0; i < 10; i++ )

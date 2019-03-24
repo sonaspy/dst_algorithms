@@ -3,7 +3,7 @@
 
 #define NumItems 20
 
-main( )
+int main()
 {
     AATree T;
     Position P;

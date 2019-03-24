@@ -40,7 +40,7 @@ AllPairs( TwoDimArray A, TwoDimArray D,
 }
 /* END */
 
-main( )
+int main()
 {
     TwoDimArray A = { { 0, 2, -2, 2 }, { 1000, 0, -3, 1000 },
         { 4, 1000, 0, 1000 }, { 1000, -2, 3, 0 }
