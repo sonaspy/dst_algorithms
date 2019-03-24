@@ -2,7 +2,7 @@
 #include <stdio.h>
 #define NumItems 500
 
-main( )
+int main()
 {
     SplayTree T;
     SplayTree P;

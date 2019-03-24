@@ -88,7 +88,7 @@ PrintPoly( const Polynomial Q )
     printf( "%d\n", Q->CoeffArray[ 0 ] );
 }
 
-main( )
+int main()
 {
     Polynomial P, Q;
     P = malloc( sizeof( *P ) );

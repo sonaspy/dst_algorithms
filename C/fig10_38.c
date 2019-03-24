@@ -19,7 +19,7 @@ void MatrixMultiply(Matrix A, Matrix B, Matrix C, int N)
 }
 /* END */
 
-main()
+int main()
 {
     Matrix A = {{1, 2}, {3, 4}};
     Matrix C;

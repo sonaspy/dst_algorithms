@@ -19,7 +19,7 @@ PrintList( const List L )
         }
 }
 
-main( )
+int main()
 {
     List L;
     Position P;

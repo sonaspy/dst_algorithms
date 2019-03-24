@@ -31,7 +31,7 @@ Fibonacci( int N )
 }
 /* END */
 
-main( )
+int main()
 {
     printf( "%d\n%d\n", Fib( 7 ), Fibonacci( 7 ) );
     return 0;

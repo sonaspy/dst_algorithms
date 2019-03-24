@@ -43,7 +43,7 @@ OptMatrix( const long C[ ], int N,
 }
 /* END */
 
-main( )
+int main()
 {
     long C[ ] = { 50, 10, 40, 30, 5 };
     long M[ 5 ][ 5 ], LastChange[ 5 ][ 5 ];

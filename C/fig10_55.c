@@ -29,7 +29,7 @@ Initialize( unsigned long InitVal )
 }
 /* END */
 
-main( )
+int main()
 {
     int i;
     for( i = 0; i < 20; i++ )

@@ -134,7 +134,7 @@ MaxSubsequenceSum( const int A[ ], int N )
 
 #endif
 
-main( )
+int main()
 {
     static int A[ ] = { 4, -3, 5, -2, -1, 2, 6, -2 };
     printf( "Maxsum = %d\n",

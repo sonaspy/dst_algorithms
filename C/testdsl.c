@@ -3,7 +3,7 @@
 
 #define N 800
 
-main( )
+int main()
 {
     SkipList T;
     Position P;

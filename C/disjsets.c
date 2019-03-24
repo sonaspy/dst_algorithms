@@ -82,7 +82,7 @@ Find(ElementType X, DisjSet S)
 /* END */
 #endif
 
-main()
+int main()
 {
     DisjSet S;
     int i, j, k, Set1, Set2;

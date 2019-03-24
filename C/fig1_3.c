@@ -10,8 +10,9 @@ int Bad(unsigned int N)
 }
 /* END */
 
-main()
+int main()
 {
     printf("Bad is infinite recursion\n");
     return 0;
+
 }

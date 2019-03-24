@@ -3,7 +3,7 @@
 
 #define MaxSize 5000
 
-main( )
+int main()
 {
     PriorityQueue H;
     int i, j;

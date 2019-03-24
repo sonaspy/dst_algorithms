@@ -15,7 +15,7 @@ Gcd(unsigned int M, unsigned int N)
 }
 /* END */
 
-main()
+int main()
 {
     printf("Gcd( 45, 35 ) = %d\n", Gcd(45, 35));
     printf("Gcd( 1989, 1590 ) = %d\n", Gcd(1989, 1590));

@@ -18,7 +18,7 @@ Eval(int N)
 }
 /* END */
 
-main()
+int main()
 {
     printf("%f\n", Eval(10));
     return 0;
