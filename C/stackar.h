@@ -6,16 +6,16 @@ typedef int DataType;
 struct StackRecord;
 typedef struct StackRecord *Stack;
 
-int IsEmpty( Stack S );
-int IsFull( Stack S );
-Stack CreateStack( int MaxElements );
-void DisposeStack( Stack S );
-void MakeEmpty( Stack S );
-void Push( DataType X, Stack S );
-DataType Top( Stack S );
-void Pop( Stack S );
-DataType TopAndPop( Stack S );
+int IsEmpty(Stack S);
+int IsFull(Stack S);
+Stack CreateStack(int MaxElements);
+void DisposeStack(Stack S);
+void MakeEmpty(Stack S);
+void Push(DataType X, Stack S);
+DataType Top(Stack S);
+void Pop(Stack S);
+DataType TopAndPop(Stack S);
 
-#endif  /* _Stack_h */
+#endif /* _Stack_h */
 
 /* END */

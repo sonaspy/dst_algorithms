@@ -92,12 +92,12 @@ void Delete(DataType X, List L)
     Position P, TmpCell;
     P = FindPrevious(X, L);
     if (!IsLast(P, L)) /* Assumption of header use */
-        {
-            /* X is found; delete it */
-            TmpCell = CursorSpace[P].Next;
-            CursorSpace[P].Next = CursorSpace[TmpCell].Next;
-            CursorFree(TmpCell);
-        }
+    {
+        /* X is found; delete it */
+        TmpCell = CursorSpace[P].Next;
+        CursorSpace[P].Next = CursorSpace[TmpCell].Next;
+        CursorFree(TmpCell);
+    }
 }
 /* END */
 
@@ -140,11 +140,11 @@ void DeleteList(List L)
     /* 1*/ P = CursorSpace[L].Next; /* Header assumed */
     /* 2*/ CursorSpace[L].Next = 0;
     /* 3*/ while (P != 0)
-        {
-            /* 4*/ Tmp = CursorSpace[P].Next;
-            /* 5*/ CursorFree(P);
-            /* 6*/ P = Tmp;
-        }
+    {
+        /* 4*/ Tmp = CursorSpace[P].Next;
+        /* 5*/ CursorFree(P);
+        /* 6*/ P = Tmp;
+    }
 }
 
 Position
