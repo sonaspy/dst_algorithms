@@ -4,7 +4,7 @@
 
 struct SplayNode
 {
-    ElementType Element;
+    DataType Element;
     SplayTree      Left;
     SplayTree      Right;
 };
@@ -25,7 +25,7 @@ Initialize( void )
     return NullNode;
 }
 
-static SplayTree Splay( ElementType Item, Position X );
+static SplayTree Splay( DataType Item, Position X );
 
 SplayTree
 MakeEmpty( SplayTree T )
@@ -51,7 +51,7 @@ PrintTree( SplayTree T )
 }
 
 SplayTree
-Find( ElementType X, SplayTree T )
+Find( DataType X, SplayTree T )
 {
     return Splay( X, T );
 }
@@ -101,7 +101,7 @@ SingleRotateWithRight( Position K1 )
 /* not requiring Item to be in tree */
 
 SplayTree
-Splay( ElementType Item, Position X )
+Splay( DataType Item, Position X )
 {
     static struct SplayNode Header;
     Position LeftTreeMax, RightTreeMin;
@@ -147,7 +147,7 @@ Splay( ElementType Item, Position X )
 
 /* START: fig12_7.txt */
 SplayTree
-Insert( ElementType Item, SplayTree T )
+Insert( DataType Item, SplayTree T )
 {
     static Position NewNode = NULL;
     if( NewNode == NULL )
@@ -190,7 +190,7 @@ Insert( ElementType Item, SplayTree T )
 
 /* START: fig12_8.txt */
 SplayTree
-Remove( ElementType Item, SplayTree T )
+Remove( DataType Item, SplayTree T )
 {
     Position NewTree;
     if( T != NullNode )
@@ -216,7 +216,7 @@ Remove( ElementType Item, SplayTree T )
 
 /* END */
 
-ElementType
+DataType
 Retrieve( SplayTree T )
 {
     return T->Element;

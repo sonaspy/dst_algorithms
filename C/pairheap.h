@@ -1,5 +1,5 @@
 
-typedef int ElementType;
+typedef int DataType;
 
 #ifndef _PairHeap_H
 #define _PairHeap_H
@@ -11,11 +11,11 @@ typedef struct PairNode *Position;
 PairHeap Initialize( void );
 void Destroy( PairHeap H );
 PairHeap MakeEmpty( PairHeap H );
-PairHeap Insert( ElementType Item, PairHeap H, Position *Loc );
-PairHeap DeleteMin( ElementType *MinItem, PairHeap H );
-ElementType FindMin( PairHeap H );
+PairHeap Insert( DataType Item, PairHeap H, Position *Loc );
+PairHeap DeleteMin( DataType *MinItem, PairHeap H );
+DataType FindMin( PairHeap H );
 PairHeap DecreaseKey( Position P,
-                      ElementType NewVal, PairHeap H );
+                      DataType NewVal, PairHeap H );
 int IsEmpty( PairHeap H );
 int IsFull( PairHeap H );
 #endif

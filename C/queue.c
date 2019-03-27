@@ -10,7 +10,7 @@ struct QueueRecord
     int Front;
     int Rear;
     int Size;
-    ElementType *Array;
+    DataType *Array;
 };
 
 /* START: fig3_58.txt */
@@ -36,7 +36,7 @@ CreateQueue( int MaxElements )
     /* 3*/      Q = malloc( sizeof( struct QueueRecord ) );
     /* 4*/      if( Q == NULL )
         /* 5*/          FatalError( "Out of space!!!" );
-    /* 6*/      Q->Array = malloc( sizeof( ElementType ) * MaxElements );
+    /* 6*/      Q->Array = malloc( sizeof( DataType ) * MaxElements );
     /* 7*/      if( Q->Array == NULL )
         /* 8*/          FatalError( "Out of space!!!" );
     /* 9*/      Q->Capacity = MaxElements;
@@ -75,7 +75,7 @@ Succ( int Value, Queue Q )
 }
 
 void
-Enqueue( ElementType X, Queue Q )
+Enqueue( DataType X, Queue Q )
 {
     if( IsFull( Q ) )
         Error( "Full queue" );
@@ -90,7 +90,7 @@ Enqueue( ElementType X, Queue Q )
 
 
 
-ElementType
+DataType
 Front( Queue Q )
 {
     if( !IsEmpty( Q ) )
@@ -111,10 +111,10 @@ Dequeue( Queue Q )
         }
 }
 
-ElementType
+DataType
 FrontAndDequeue( Queue Q )
 {
-    ElementType X = 0;
+    DataType X = 0;
     if( IsEmpty( Q ) )
         Error( "Empty queue" );
     else

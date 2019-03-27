@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include "fatal.h"
 
-typedef int ElementType;
+typedef int DataType;
 #define Infinity 32767
 
 #ifndef _Treap_H
@@ -12,13 +12,13 @@ typedef struct TreapNode *Position;
 typedef struct TreapNode *Treap;
 
 Treap MakeEmpty( Treap T );
-Position Find( ElementType X, Treap T );
+Position Find( DataType X, Treap T );
 Position FindMin( Treap T );
 Position FindMax( Treap T );
 Treap Initialize( void );
-Treap Insert( ElementType X, Treap T );
-Treap Remove( ElementType X, Treap T );
-ElementType Retrieve( Position P );
+Treap Insert( DataType X, Treap T );
+Treap Remove( DataType X, Treap T );
+DataType Retrieve( Position P );
 
 
 extern Position NullNode;

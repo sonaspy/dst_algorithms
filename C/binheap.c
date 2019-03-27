@@ -9,7 +9,7 @@ struct HeapStruct
 {
     int Capacity;
     int Size;
-    ElementType *Elements;
+    DataType *Elements;
 };
 
 /* START: fig6_0.txt */
@@ -23,7 +23,7 @@ Initialize(int MaxElements)
     /* 4*/ if (H == NULL)
         /* 5*/ FatalError("Out of space!!!");
     /* Allocate the array plus one extra for sentinel */
-    /* 6*/ H->Elements = malloc((MaxElements + 1) * sizeof(ElementType));
+    /* 6*/ H->Elements = malloc((MaxElements + 1) * sizeof(DataType));
     /* 7*/ if (H->Elements == NULL)
         /* 8*/ FatalError("Out of space!!!");
     /* 9*/ H->Capacity = MaxElements;
@@ -41,7 +41,7 @@ void MakeEmpty(PriorityQueue H)
 /* START: fig6_8.txt */
 /* H->Element[ 0 ] is a sentinel */
 
-void Insert(ElementType X, PriorityQueue H)
+void Insert(DataType X, PriorityQueue H)
 {
     int i;
     if (IsFull(H))
@@ -56,11 +56,11 @@ void Insert(ElementType X, PriorityQueue H)
 /* END */
 
 /* START: fig6_12.txt */
-ElementType
+DataType
 DeleteMin(PriorityQueue H)
 {
     int i, Child;
-    ElementType MinElement, LastElement;
+    DataType MinElement, LastElement;
     /* 1*/ if (IsEmpty(H))
         {
             /* 2*/ Error("Priority queue is empty");
@@ -87,7 +87,7 @@ DeleteMin(PriorityQueue H)
 }
 /* END */
 
-ElementType
+DataType
 FindMin(PriorityQueue H)
 {
     if (!IsEmpty(H))

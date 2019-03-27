@@ -5,7 +5,7 @@
 
 struct TreeNode
 {
-    ElementType   Element;
+    DataType   Element;
     PriorityQueue Left;
     PriorityQueue Right;
     int           Npl;
@@ -63,7 +63,7 @@ Merge1( PriorityQueue H1, PriorityQueue H2 )
 /* START: fig6_29.txt */
 
 PriorityQueue
-Insert1( ElementType X, PriorityQueue H )
+Insert1( DataType X, PriorityQueue H )
 {
     PriorityQueue SingleNode;
     /* 1*/      SingleNode = malloc( sizeof( struct TreeNode ) );
@@ -102,7 +102,7 @@ DeleteMin1( PriorityQueue H )
 }
 /* END */
 
-ElementType
+DataType
 FindMin( PriorityQueue H )
 {
     if( !IsEmpty( H ) )

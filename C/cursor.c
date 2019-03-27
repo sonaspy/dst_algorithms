@@ -5,7 +5,7 @@
 /* Place in the interface file */
 struct Node
 {
-    ElementType Element;
+    DataType Element;
     Position Next;
 };
 
@@ -72,7 +72,7 @@ int IsLast(Position P, List L)
 /* Uses a header node */
 
 Position
-Find(ElementType X, List L)
+Find(DataType X, List L)
 {
     Position P;
     /* 1*/ P = CursorSpace[L].Next;
@@ -87,7 +87,7 @@ Find(ElementType X, List L)
 /* Assume that the position is legal */
 /* Assume use of a header node */
 
-void Delete(ElementType X, List L)
+void Delete(DataType X, List L)
 {
     Position P, TmpCell;
     P = FindPrevious(X, L);
@@ -105,7 +105,7 @@ void Delete(ElementType X, List L)
 /* Assumes a header */
 
 Position
-FindPrevious(ElementType X, List L)
+FindPrevious(DataType X, List L)
 {
     Position P;
     /* 1*/ P = L;
@@ -120,7 +120,7 @@ FindPrevious(ElementType X, List L)
 /* Header implementation assumed */
 /* Parameter L is unused in this implementation */
 
-void Insert(ElementType X, List L, Position P)
+void Insert(DataType X, List L, Position P)
 {
     Position TmpCell;
     /* 1*/ TmpCell = CursorAlloc();
@@ -165,7 +165,7 @@ Advance(Position P)
     return CursorSpace[P].Next;
 }
 
-ElementType
+DataType
 Retrieve(Position P)
 {
     return CursorSpace[P].Element;

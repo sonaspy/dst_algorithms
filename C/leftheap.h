@@ -1,5 +1,5 @@
 
-typedef int ElementType;
+typedef int DataType;
 
 /* START: fig6_25.txt */
 #ifndef _LeftHeap_H
@@ -14,14 +14,14 @@ typedef struct TreeNode *PriorityQueue;
 /* make sure to not use the old leftist heaps */
 
 PriorityQueue Initialize( void );
-ElementType FindMin( PriorityQueue H );
+DataType FindMin( PriorityQueue H );
 int IsEmpty( PriorityQueue H );
 PriorityQueue Merge( PriorityQueue H1, PriorityQueue H2 );
 
 #define Insert( X, H ) ( H = Insert1( ( X ), H ) )
 /* DeleteMin macro is left as an exercise */
 
-PriorityQueue Insert1( ElementType X, PriorityQueue H );
+PriorityQueue Insert1( DataType X, PriorityQueue H );
 PriorityQueue DeleteMin1( PriorityQueue H );
 
 #endif

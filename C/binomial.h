@@ -1,5 +1,5 @@
 
-typedef long ElementType;
+typedef long DataType;
 #define Infinity (30000L)
 
 #ifndef _BinHeap_H
@@ -16,10 +16,10 @@ typedef struct Collection *BinQueue;
 BinQueue Initialize(void);
 void Destroy(BinQueue H);
 BinQueue MakeEmpty(BinQueue H);
-BinQueue Insert(ElementType Item, BinQueue H);
-ElementType DeleteMin(BinQueue H);
+BinQueue Insert(DataType Item, BinQueue H);
+DataType DeleteMin(BinQueue H);
 BinQueue Merge(BinQueue H1, BinQueue H2);
-ElementType FindMin(BinQueue H);
+DataType FindMin(BinQueue H);
 int IsEmpty(BinQueue H);
 int IsFull(BinQueue H);
 #endif

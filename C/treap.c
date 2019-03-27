@@ -5,7 +5,7 @@
 
 struct TreapNode
 {
-    ElementType Element;
+    DataType Element;
     Treap       Left;
     Treap       Right;
     int         Priority;
@@ -61,7 +61,7 @@ PrintTree( Treap T )
 }
 
 Position
-Find( ElementType X, Treap T )
+Find( DataType X, Treap T )
 {
     if( T == NullNode )
         return NullNode;
@@ -123,7 +123,7 @@ SingleRotateWithRight( Position K1 )
 
 /* START: fig12_40.txt */
 Treap
-Insert( ElementType Item, Treap T )
+Insert( DataType Item, Treap T )
 {
     if( T == NullNode )
         {
@@ -157,7 +157,7 @@ Insert( ElementType Item, Treap T )
 
 /* START: fig12_41.txt */
 Treap
-Remove( ElementType Item, Treap T )
+Remove( DataType Item, Treap T )
 {
     if( T != NullNode )
         {
@@ -186,7 +186,7 @@ Remove( ElementType Item, Treap T )
 }
 /* END */
 
-ElementType
+DataType
 Retrieve( Position P )
 {
     return P->Element;

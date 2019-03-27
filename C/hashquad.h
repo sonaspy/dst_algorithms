@@ -1,5 +1,5 @@
 /* Interface for quadratic probing hash table */
-typedef int ElementType;
+typedef int DataType;
 
 /* START: fig5_14.txt */
 #ifndef _HashQuad_H
@@ -13,9 +13,9 @@ typedef struct HashTbl *HashTable;
 
 HashTable InitializeTable( int TableSize );
 void DestroyTable( HashTable H );
-Position Find( ElementType Key, HashTable H );
-void Insert( ElementType Key, HashTable H );
-ElementType Retrieve( Position P, HashTable H );
+Position Find( DataType Key, HashTable H );
+void Insert( DataType Key, HashTable H );
+DataType Retrieve( Position P, HashTable H );
 HashTable Rehash( HashTable H );
 /* Routines such as Delete are MakeEmpty are omitted */
 

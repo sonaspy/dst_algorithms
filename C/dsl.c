@@ -5,7 +5,7 @@
 /* START: fig12_23.txt */
 struct SkipNode
 {
-    ElementType Element;
+    DataType Element;
     SkipList Right;
     SkipList Down;
 };
@@ -42,7 +42,7 @@ Initialize(void)
 }
 /* END */
 
-void Output(ElementType Element)
+void Output(DataType Element)
 {
     printf("%d\n", Element);
 }
@@ -62,7 +62,7 @@ MakeEmpty(SkipList L)
 /* or Bottom if not found */
 
 Position
-Find(ElementType Item, SkipList L)
+Find(DataType Item, SkipList L)
 {
     Position Current = L;
     Bottom->Element = Item;
@@ -101,7 +101,7 @@ FindMax(SkipList L)
 
 /* START: fig12_25.txt */
 SkipList
-Insert(ElementType Item, SkipList L)
+Insert(DataType Item, SkipList L)
 {
     Position Current = L;
     Position NewNode;
@@ -143,7 +143,7 @@ Insert(ElementType Item, SkipList L)
 /* END */
 
 SkipList
-Remove(ElementType Item, SkipList L)
+Remove(DataType Item, SkipList L)
 {
     printf("Remove is unimplemented\n");
     if (Item)
@@ -151,7 +151,7 @@ Remove(ElementType Item, SkipList L)
     return L;
 }
 
-ElementType
+DataType
 Retrieve(Position P)
 {
     return P->Element;

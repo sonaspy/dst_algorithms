@@ -4,7 +4,7 @@
 
 struct TreeNode
 {
-    ElementType Element;
+    DataType Element;
     SearchTree  Left;
     SearchTree  Right;
 };
@@ -25,7 +25,7 @@ MakeEmpty( SearchTree T )
 
 /* START: fig4_18.txt */
 Position
-Find( ElementType X, SearchTree T )
+Find( DataType X, SearchTree T )
 {
     if( T == NULL )
         return NULL;
@@ -64,7 +64,7 @@ FindMax( SearchTree T )
 
 /* START: fig4_22.txt */
 SearchTree
-Insert( ElementType X, SearchTree T )
+Insert( DataType X, SearchTree T )
 {
     /* 1*/      if( T == NULL )
         {
@@ -91,7 +91,7 @@ Insert( ElementType X, SearchTree T )
 
 /* START: fig4_25.txt */
 SearchTree
-Delete( ElementType X, SearchTree T )
+Delete( DataType X, SearchTree T )
 {
     Position TmpCell;
     if( T == NULL )
@@ -121,7 +121,7 @@ Delete( ElementType X, SearchTree T )
 }
 /* END */
 
-ElementType
+DataType
 Retrieve( Position P )
 {
     return P->Element;

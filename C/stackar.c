@@ -9,7 +9,7 @@ struct StackRecord
 {
     int Capacity;
     int TopOfStack;
-    ElementType *Array;
+    DataType *Array;
 };
 
 /* START: fig3_48.txt */
@@ -36,7 +36,7 @@ CreateStack( int MaxElements )
     /* 3*/      S = malloc( sizeof( struct StackRecord ) );
     /* 4*/      if( S == NULL )
         /* 5*/          FatalError( "Out of space!!!" );
-    /* 6*/      S->Array = malloc( sizeof( ElementType ) * MaxElements );
+    /* 6*/      S->Array = malloc( sizeof( DataType ) * MaxElements );
     /* 7*/      if( S->Array == NULL )
         /* 8*/          FatalError( "Out of space!!!" );
     /* 9*/      S->Capacity = MaxElements;
@@ -67,7 +67,7 @@ DisposeStack( Stack S )
 
 /* START: fig3_50.txt */
 void
-Push( ElementType X, Stack S )
+Push( DataType X, Stack S )
 {
     if( IsFull( S ) )
         Error( "Full stack" );
@@ -78,7 +78,7 @@ Push( ElementType X, Stack S )
 
 
 /* START: fig3_51.txt */
-ElementType
+DataType
 Top( Stack S )
 {
     if( !IsEmpty( S ) )
@@ -100,7 +100,7 @@ Pop( Stack S )
 /* END */
 
 /* START: fig3_53.txt */
-ElementType
+DataType
 TopAndPop( Stack S )
 {
     if( !IsEmpty( S ) )

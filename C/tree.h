@@ -1,4 +1,4 @@
-typedef int ElementType;
+typedef int DataType;
 
 /* START: fig4_16.txt */
 #ifndef _Tree_H
@@ -9,12 +9,12 @@ typedef struct TreeNode *Position;
 typedef struct TreeNode *SearchTree;
 
 SearchTree MakeEmpty( SearchTree T );
-Position Find( ElementType X, SearchTree T );
+Position Find( DataType X, SearchTree T );
 Position FindMin( SearchTree T );
 Position FindMax( SearchTree T );
-SearchTree Insert( ElementType X, SearchTree T );
-SearchTree Delete( ElementType X, SearchTree T );
-ElementType Retrieve( Position P );
+SearchTree Insert( DataType X, SearchTree T );
+SearchTree Delete( DataType X, SearchTree T );
+DataType Retrieve( Position P );
 
 #endif  /* _Tree_H */
 

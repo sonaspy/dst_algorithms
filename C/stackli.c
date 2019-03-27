@@ -4,7 +4,7 @@
 
 struct Node
 {
-    ElementType Element;
+    DataType Element;
     PtrToNode   Next;
 };
 
@@ -49,7 +49,7 @@ DisposeStack( Stack S )
 
 /* START: fig3_42.txt */
 void
-Push( ElementType X, Stack S )
+Push( DataType X, Stack S )
 {
     PtrToNode TmpCell;
     TmpCell = malloc( sizeof( struct Node ) );
@@ -65,7 +65,7 @@ Push( ElementType X, Stack S )
 /* END */
 
 /* START: fig3_43.txt */
-ElementType
+DataType
 Top( Stack S )
 {
     if( !IsEmpty( S ) )
