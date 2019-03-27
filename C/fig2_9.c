@@ -1,10 +1,10 @@
 #include <stdio.h>
 
-typedef int ElementType;
+typedef int DataType;
 #define NotFound (-1)
 
 /* START: fig2_9.txt */
-int BinarySearch(const ElementType A[], ElementType X, int N)
+int BinarySearch(const DataType A[], DataType X, int N)
 {
     int Low, Mid, High;
     /* 1*/ Low = 0;

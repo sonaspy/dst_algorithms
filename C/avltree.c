@@ -4,7 +4,7 @@
 
 struct AvlNode
 {
-    ElementType Element;
+    DataType Element;
     AvlTree Left;
     AvlTree Right;
     int Height;
@@ -23,7 +23,7 @@ MakeEmpty(AvlTree T)
 }
 
 Position
-Find(ElementType X, AvlTree T)
+Find(DataType X, AvlTree T)
 {
     if (T == NULL)
         return NULL;
@@ -138,7 +138,7 @@ DoubleRotateWithRight(Position K1)
 
 /* START: fig4_37.txt */
 AvlTree
-Insert(ElementType X, AvlTree T)
+Insert(DataType X, AvlTree T)
 {
     if (T == NULL)
         {
@@ -178,13 +178,13 @@ Insert(ElementType X, AvlTree T)
 /* END */
 
 AvlTree
-Delete(ElementType X, AvlTree T)
+Delete(DataType X, AvlTree T)
 {
     printf("Sorry; Delete is unimplemented; %d remains\n", X);
     return T;
 }
 
-ElementType
+DataType
 Retrieve(Position P)
 {
     return P->Element;

@@ -4,7 +4,7 @@
 
 struct PairNode
 {
-    ElementType Element;
+    DataType Element;
     Position    LeftChild;
     Position    NextSibling;
     Position    Prev;
@@ -41,7 +41,7 @@ MakeEmpty( PairHeap H )
 /* is passed back by reference and accessed as *Loc */
 
 PairHeap
-Insert( ElementType Item, PairHeap H, Position *Loc )
+Insert( DataType Item, PairHeap H, Position *Loc )
 {
     Position NewNode;
     NewNode = malloc( sizeof( struct PairNode ) );
@@ -61,7 +61,7 @@ Insert( ElementType Item, PairHeap H, Position *Loc )
 /* Lower item in Position P by Delta */
 
 PairHeap
-DecreaseKey( Position P, ElementType Delta, PairHeap H )
+DecreaseKey( Position P, DataType Delta, PairHeap H )
 {
     if( Delta < 0 )
         Error( "DecreaseKey called with negative Delta" );
@@ -82,7 +82,7 @@ DecreaseKey( Position P, ElementType Delta, PairHeap H )
 
 /* START: fig12_55.txt */
 PairHeap
-DeleteMin( ElementType *MinItem, PairHeap H )
+DeleteMin( DataType *MinItem, PairHeap H )
 {
     Position NewRoot = NULL;
     if( IsEmpty( H ) )
@@ -176,7 +176,7 @@ CombineSiblings( Position FirstSibling )
 }
 /* END */
 
-ElementType
+DataType
 FindMin( PairHeap H )
 {
     if( !IsEmpty( H ) )

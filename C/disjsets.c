@@ -10,11 +10,11 @@
 
 typedef int DisjSet[NumSets + 1];
 typedef int SetType;
-typedef int ElementType;
+typedef int DataType;
 
 void Initialize(DisjSet S);
 void SetUnion(DisjSet S, SetType Root1, SetType Root2);
-SetType Find(ElementType X, DisjSet S);
+SetType Find(DataType X, DisjSet S);
 
 #endif /* _DisjSet_H */
 /* END */
@@ -42,7 +42,7 @@ void SetUnion(DisjSet S, SetType Root1, SetType Root2)
 
 /* START: fig8_9.txt */
 SetType
-Find(ElementType X, DisjSet S)
+Find(DataType X, DisjSet S)
 {
     if (S[X] <= 0)
         return X;
@@ -72,7 +72,7 @@ void SetUnion(DisjSet S, SetType Root1, SetType Root2)
 
 /* START: fig8_15.txt */
 SetType
-Find(ElementType X, DisjSet S)
+Find(DataType X, DisjSet S)
 {
     if (S[X] <= 0)
         return X;

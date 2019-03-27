@@ -6,7 +6,7 @@ typedef struct BinNode *Position;
 
 struct BinNode
 {
-    ElementType Element;
+    DataType Element;
     Position LeftChild;
     Position NextSibling;
 };
@@ -62,7 +62,7 @@ MakeEmpty(BinQueue H)
 
 /* Not optimized for O(1) amortized performance */
 BinQueue
-Insert(ElementType Item, BinQueue H)
+Insert(DataType Item, BinQueue H)
 {
     BinTree NewNode;
     BinQueue OneItem;
@@ -78,14 +78,14 @@ Insert(ElementType Item, BinQueue H)
 }
 
 /* START: fig6_56.txt */
-ElementType
+DataType
 DeleteMin(BinQueue H)
 {
     int i, j;
     int MinTree; /* The tree with the minimum item */
     BinQueue DeletedQueue;
     Position DeletedTree, OldRoot;
-    ElementType MinItem;
+    DataType MinItem;
     if (IsEmpty(H))
         {
             Error("Empty binomial queue");
@@ -121,11 +121,11 @@ DeleteMin(BinQueue H)
 }
 /* END */
 
-ElementType
+DataType
 FindMin(BinQueue H)
 {
     int i;
-    ElementType MinItem;
+    DataType MinItem;
     if (IsEmpty(H))
         {
             Error("Empty binomial queue");

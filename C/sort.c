@@ -3,22 +3,22 @@
 #include <stdlib.h>
 #include "fatal.h"
 
-typedef int ElementType;
+typedef int DataType;
 
 void
-Swap( ElementType *Lhs, ElementType *Rhs )
+Swap( DataType *Lhs, DataType *Rhs )
 {
-    ElementType Tmp = *Lhs;
+    DataType Tmp = *Lhs;
     *Lhs = *Rhs;
     *Rhs = Tmp;
 }
 
 /* START: fig7_2.txt */
 void
-InsertionSort( ElementType A[ ], int N )
+InsertionSort( DataType A[ ], int N )
 {
     int j, P;
-    ElementType Tmp;
+    DataType Tmp;
     /* 1*/      for( P = 1; P < N; P++ )
         {
             /* 2*/          Tmp = A[ P ];
@@ -31,10 +31,10 @@ InsertionSort( ElementType A[ ], int N )
 
 /* START: fig7_4.txt */
 void
-Shellsort( ElementType A[ ], int N )
+Shellsort( DataType A[ ], int N )
 {
     int i, j, Increment;
-    ElementType Tmp;
+    DataType Tmp;
     /* 1*/      for( Increment = N / 2; Increment > 0; Increment /= 2 )
         /* 2*/          for( i = Increment; i < N; i++ )
             {
@@ -54,10 +54,10 @@ Shellsort( ElementType A[ ], int N )
 #define LeftChild( i )  ( 2 * ( i ) + 1 )
 
 void
-PercDown( ElementType A[ ], int i, int N )
+PercDown( DataType A[ ], int i, int N )
 {
     int Child;
-    ElementType Tmp;
+    DataType Tmp;
     /* 1*/      for( Tmp = A[ i ]; LeftChild( i ) < N; i = Child )
         {
             /* 2*/          Child = LeftChild( i );
@@ -72,7 +72,7 @@ PercDown( ElementType A[ ], int i, int N )
 }
 
 void
-Heapsort( ElementType A[ ], int N )
+Heapsort( DataType A[ ], int N )
 {
     int i;
     /* 1*/      for( i = N / 2; i >= 0; i-- )  /* BuildHeap */
@@ -89,7 +89,7 @@ Heapsort( ElementType A[ ], int N )
 /* Lpos = start of left half, Rpos = start of right half */
 
 void
-Merge( ElementType A[ ], ElementType TmpArray[ ],
+Merge( DataType A[ ], DataType TmpArray[ ],
        int Lpos, int Rpos, int RightEnd )
 {
     int i, LeftEnd, NumElements, TmpPos;
@@ -114,7 +114,7 @@ Merge( ElementType A[ ], ElementType TmpArray[ ],
 
 /* START: fig7_9.txt */
 void
-MSort( ElementType A[ ], ElementType TmpArray[ ],
+MSort( DataType A[ ], DataType TmpArray[ ],
        int Left, int Right )
 {
     int Center;
@@ -128,10 +128,10 @@ MSort( ElementType A[ ], ElementType TmpArray[ ],
 }
 
 void
-Mergesort( ElementType A[ ], int N )
+Mergesort( DataType A[ ], int N )
 {
-    ElementType *TmpArray;
-    TmpArray = malloc( N * sizeof( ElementType ) );
+    DataType *TmpArray;
+    TmpArray = malloc( N * sizeof( DataType ) );
     if( TmpArray != NULL )
         {
             MSort( A, TmpArray, 0, N - 1 );
@@ -146,8 +146,8 @@ Mergesort( ElementType A[ ], int N )
 /* Return median of Left, Center, and Right */
 /* Order these and hide the pivot */
 
-ElementType
-Median3( ElementType A[ ], int Left, int Right )
+DataType
+Median3( DataType A[ ], int Left, int Right )
 {
     int Center = ( Left + Right ) / 2;
     if( A[ Left ] > A[ Center ] )
@@ -166,10 +166,10 @@ Median3( ElementType A[ ], int Left, int Right )
 #define Cutoff ( 3 )
 
 void
-Qsort( ElementType A[ ], int Left, int Right )
+Qsort( DataType A[ ], int Left, int Right )
 {
     int i, j;
-    ElementType Pivot;
+    DataType Pivot;
     /* 1*/      if( Left + Cutoff <= Right )
         {
             /* 2*/          Pivot = Median3( A, Left, Right );
@@ -212,7 +212,7 @@ j = Right - 2;
 
 /* START: fig7_12.txt */
 void
-Quicksort( ElementType A[ ], int N )
+Quicksort( DataType A[ ], int N )
 {
     Qsort( A, 0, N - 1 );
 }
@@ -222,10 +222,10 @@ Quicksort( ElementType A[ ], int N )
 /* Places the kth smallest element in the kth position */
 /* Because arrays start at 0, this will be index k-1 */
 void
-Qselect( ElementType A[ ], int k, int Left, int Right )
+Qselect( DataType A[ ], int k, int Left, int Right )
 {
     int i, j;
-    ElementType Pivot;
+    DataType Pivot;
     /* 1*/      if( Left + Cutoff <= Right )
         {
             /* 2*/          Pivot = Median3( A, Left, Right );
@@ -254,7 +254,7 @@ Qselect( ElementType A[ ], int k, int Left, int Right )
 /* ROUTINES TO TEST THE SORTS */
 
 void
-Permute( ElementType A[ ], int N )
+Permute( DataType A[ ], int N )
 {
     int i;
     for( i = 0; i < N; i++ )
@@ -264,7 +264,7 @@ Permute( ElementType A[ ], int N )
 }
 
 void
-Checksort( ElementType A[ ], int N )
+Checksort( DataType A[ ], int N )
 {
     int i;
     for( i = 0; i < N; i++ )
@@ -274,7 +274,7 @@ Checksort( ElementType A[ ], int N )
 }
 
 void
-Copy( ElementType Lhs[ ], const ElementType Rhs[ ], int N )
+Copy( DataType Lhs[ ], const DataType Rhs[ ], int N )
 {
     int i;
     for( i = 0; i < N; i++ )

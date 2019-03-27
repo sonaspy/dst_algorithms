@@ -7,7 +7,7 @@ int main()
 {
     BinQueue H;
     int i, j;
-    ElementType AnItem;
+    DataType AnItem;
     H = Initialize( );
     for( i=0, j=MaxSize/2; i<MaxSize; i++, j=( j+71)%MaxSize )
         {

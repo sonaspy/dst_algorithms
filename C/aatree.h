@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include "fatal.h"
 
-typedef int ElementType;
+typedef int DataType;
 
 #ifndef _AATree_H
 #define _AATree_H
@@ -11,13 +11,13 @@ typedef struct AANode *Position;
 typedef struct AANode *AATree;
 
 AATree MakeEmpty(AATree T);
-Position Find(ElementType X, AATree T);
+Position Find(DataType X, AATree T);
 Position FindMin(AATree T);
 Position FindMax(AATree T);
 AATree Initialize(void);
-AATree Insert(ElementType X, AATree T);
-AATree Remove(ElementType X, AATree T);
-ElementType Retrieve(Position P);
+AATree Insert(DataType X, AATree T);
+AATree Remove(DataType X, AATree T);
+DataType Retrieve(Position P);
 
 extern Position NullNode;
 

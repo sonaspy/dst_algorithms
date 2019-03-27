@@ -62,7 +62,10 @@
     "unordered_set": "cpp",
     "__hash_table": "cpp",
     "__tree": "cpp",
-    "__memory": "cpp"
+    "__memory": "cpp",
+    "fatal.h": "c",
+    "aatree.h": "c",
+    "stdlib.h": "c"
 },
   "python.pythonPath": "/usr/local/opt/python/bin/python3.7",
 

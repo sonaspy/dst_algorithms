@@ -1,5 +1,5 @@
 
-typedef int ElementType;
+typedef int DataType;
 
 /* START: fig6_4.txt */
 #ifndef _BinHeap_H
@@ -11,9 +11,9 @@ typedef struct HeapStruct *PriorityQueue;
 PriorityQueue Initialize(int MaxElements);
 void Destroy(PriorityQueue H);
 void MakeEmpty(PriorityQueue H);
-void Insert(ElementType X, PriorityQueue H);
-ElementType DeleteMin(PriorityQueue H);
-ElementType FindMin(PriorityQueue H);
+void Insert(DataType X, PriorityQueue H);
+DataType DeleteMin(PriorityQueue H);
+DataType FindMin(PriorityQueue H);
 int IsEmpty(PriorityQueue H);
 int IsFull(PriorityQueue H);
 

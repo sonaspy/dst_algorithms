@@ -1,5 +1,5 @@
 /* Interface for separate chaining hash table */
-typedef int ElementType;
+typedef int DataType;
 
 /* START: fig5_2.txt */
 typedef unsigned int Index;
@@ -16,9 +16,9 @@ typedef struct HashTbl *HashTable;
 
 HashTable InitializeTable( int TableSize );
 void DestroyTable( HashTable H );
-Position Find( ElementType Key, HashTable H );
-void Insert( ElementType Key, HashTable H );
-ElementType Retrieve( Position P );
+Position Find( DataType Key, HashTable H );
+void Insert( DataType Key, HashTable H );
+DataType Retrieve( Position P );
 /* Routines such as Delete are MakeEmpty are omitted */
 
 #endif  /* _HashSep_H */

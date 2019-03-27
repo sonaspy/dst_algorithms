@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include "fatal.h"
 
-typedef int ElementType;
-typedef ElementType ItemType[ 2 ];
+typedef int DataType;
+typedef DataType ItemType[ 2 ];
 
 struct KdNode;
 typedef struct KdNode *Position;

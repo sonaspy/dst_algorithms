@@ -1,4 +1,4 @@
-typedef int ElementType;
+typedef int DataType;
 /* START: fig3_57.txt */
 #ifndef _Queue_h
 #define _Queue_h
@@ -11,10 +11,10 @@ int IsFull( Queue Q );
 Queue CreateQueue( int MaxElements );
 void DisposeQueue( Queue Q );
 void MakeEmpty( Queue Q );
-void Enqueue( ElementType X, Queue Q );
-ElementType Front( Queue Q );
+void Enqueue( DataType X, Queue Q );
+DataType Front( Queue Q );
 void Dequeue( Queue Q );
-ElementType FrontAndDequeue( Queue Q );
+DataType FrontAndDequeue( Queue Q );
 
 #endif  /* _Queue_h */
 /* END */

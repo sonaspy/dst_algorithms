@@ -8,7 +8,7 @@ enum KindOfEntry { Legitimate, Empty, Deleted };
 
 struct HashEntry
 {
-    ElementType      Element;
+    DataType      Element;
     enum KindOfEntry Info;
 };
 
@@ -43,7 +43,7 @@ ContOuter:
 
 /* Hash function for ints */
 Index
-Hash( ElementType Key, int TableSize )
+Hash( DataType Key, int TableSize )
 {
     return Key % TableSize;
 }
@@ -76,7 +76,7 @@ InitializeTable( int TableSize )
 
 /* START: fig5_16.txt */
 Position
-Find( ElementType Key, HashTable H )
+Find( DataType Key, HashTable H )
 {
     Position CurrentPos;
     int CollisionNum;
@@ -96,7 +96,7 @@ Find( ElementType Key, HashTable H )
 
 /* START: fig5_17.txt */
 void
-Insert( ElementType Key, HashTable H )
+Insert( DataType Key, HashTable H )
 {
     Position Pos;
     Pos = Find( Key, H );
@@ -131,7 +131,7 @@ Rehash( HashTable H )
 
 
 
-ElementType
+DataType
 Retrieve( Position P, HashTable H )
 {
     return H->TheCells[ P ].Element;

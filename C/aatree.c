@@ -8,7 +8,7 @@ Position NullNode = NULL; /* Needs more initialization */
 
 struct AANode
 {
-    ElementType Element;
+    DataType Element;
     AATree Left;
     AATree Right;
     int Level;
@@ -42,7 +42,7 @@ MakeEmpty(AATree T)
 }
 
 Position
-Find(ElementType X, AATree T)
+Find(DataType X, AATree T)
 {
     if (T == NullNode)
         return NullNode;
@@ -131,7 +131,7 @@ Split(AATree T)
 
 /* START: fig12_36.txt */
 AATree
-Insert(ElementType Item, AATree T)
+Insert(DataType Item, AATree T)
 {
     if (T == NullNode)
         {
@@ -159,7 +159,7 @@ Insert(ElementType Item, AATree T)
 
 /* START: fig12_38.txt */
 AATree
-Remove(ElementType Item, AATree T)
+Remove(DataType Item, AATree T)
 {
     static Position DeletePtr, LastPtr;
     if (T != NullNode)
@@ -205,7 +205,7 @@ Remove(ElementType Item, AATree T)
 }
 /* END */
 
-ElementType
+DataType
 Retrieve(Position P)
 {
     return P->Element;

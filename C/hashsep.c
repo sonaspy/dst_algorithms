@@ -6,7 +6,7 @@
 
 struct ListNode
 {
-    ElementType Element;
+    DataType Element;
     Position    Next;
 };
 
@@ -41,7 +41,7 @@ ContOuter:
 
 /* Hash function for ints */
 Index
-Hash( ElementType Key, int TableSize )
+Hash( DataType Key, int TableSize )
 {
     return Key % TableSize;
 }
@@ -81,7 +81,7 @@ InitializeTable( int TableSize )
 
 /* START: fig5_9.txt */
 Position
-Find( ElementType Key, HashTable H )
+Find( DataType Key, HashTable H )
 {
     Position P;
     List L;
@@ -96,7 +96,7 @@ Find( ElementType Key, HashTable H )
 
 /* START: fig5_10.txt */
 void
-Insert( ElementType Key, HashTable H )
+Insert( DataType Key, HashTable H )
 {
     Position Pos, NewCell;
     List L;
@@ -117,7 +117,7 @@ Insert( ElementType Key, HashTable H )
 }
 /* END */
 
-ElementType
+DataType
 Retrieve( Position P )
 {
     return P->Element;

@@ -8,7 +8,7 @@ typedef enum ColorType { Red, Black } ColorType;
 
 struct RedBlackNode
 {
-    ElementType  Element;
+    DataType  Element;
     RedBlackTree Left;
     RedBlackTree Right;
     ColorType    Color;
@@ -42,7 +42,7 @@ Initialize( void )
 /* END */
 
 void
-Output( ElementType Element )
+Output( DataType Element )
 {
     printf( "%d\n", Element );
 }
@@ -89,7 +89,7 @@ MakeEmpty( RedBlackTree T )
 }
 
 Position
-Find( ElementType X, RedBlackTree T )
+Find( DataType X, RedBlackTree T )
 {
     if( T == NullNode )
         return NullNode;
@@ -152,7 +152,7 @@ SingleRotateWithRight( Position K1 )
 /* The child is deduced by examining Item */
 
 static Position
-Rotate( ElementType Item, Position Parent )
+Rotate( DataType Item, Position Parent )
 {
     if( Item < Parent->Element )
         return Parent->Left = Item < Parent->Left->Element ?
@@ -169,7 +169,7 @@ Rotate( ElementType Item, Position Parent )
 static Position X, P, GP, GGP;
 
 static
-void HandleReorient( ElementType Item, RedBlackTree T )
+void HandleReorient( DataType Item, RedBlackTree T )
 {
     X->Color = Red;        /* Do the color flip */
     X->Left->Color = Black;
@@ -186,7 +186,7 @@ void HandleReorient( ElementType Item, RedBlackTree T )
 }
 
 RedBlackTree
-Insert( ElementType Item, RedBlackTree T )
+Insert( DataType Item, RedBlackTree T )
 {
     X = P = GP = T;
     NullNode->Element = Item;
@@ -219,7 +219,7 @@ Insert( ElementType Item, RedBlackTree T )
 /* END */
 
 RedBlackTree
-Remove( ElementType Item, RedBlackTree T )
+Remove( DataType Item, RedBlackTree T )
 {
     printf( "Remove is unimplemented\n" );
     if( Item )
@@ -227,7 +227,7 @@ Remove( ElementType Item, RedBlackTree T )
     return T;
 }
 
-ElementType
+DataType
 Retrieve( Position P )
 {
     return P->Element;
