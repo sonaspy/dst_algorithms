@@ -5,88 +5,82 @@
 struct Node
 {
     DataType Element;
-    PtrToNode   Next;
+    PtrToNode Next;
 };
 
 /* START: fig3_40.txt */
-int
-IsEmpty( Stack S )
+int IsEmpty(Stack S)
 {
     return S->Next == NULL;
 }
 /* END */
 
 /* START: fig3_41.txt */
-Stack
-CreateStack( void )
+Stack CreateStack(void)
 {
     Stack S;
-    S = malloc( sizeof( struct Node ) );
-    if( S == NULL )
-        FatalError( "Out of space!!!" );
+    S = malloc(sizeof(struct Node));
+    if (S == NULL)
+        FatalError("Out of space!!!");
     S->Next = NULL;
-    MakeEmpty( S );
+    MakeEmpty(S);
     return S;
 }
 
-void
-MakeEmpty( Stack S )
+void MakeEmpty(Stack S)
 {
-    if( S == NULL )
-        Error( "Must use CreateStack first" );
+    if (S == NULL)
+        Error("Must use CreateStack first");
     else
-        while( !IsEmpty( S ) )
-            Pop( S );
+        while (!IsEmpty(S))
+            Pop(S);
 }
 /* END */
 
-void
-DisposeStack( Stack S )
+void DisposeStack(Stack S)
 {
-    MakeEmpty( S );
-    free( S );
+    MakeEmpty(S);
+    free(S);
 }
 
 /* START: fig3_42.txt */
-void
-Push( DataType X, Stack S )
+void Push(DataType X, Stack S)
 {
     PtrToNode TmpCell;
-    TmpCell = malloc( sizeof( struct Node ) );
-    if( TmpCell == NULL )
-        FatalError( "Out of space!!!" );
+    TmpCell = malloc(sizeof(struct Node));
+    if (TmpCell == NULL)
+        FatalError("Out of space!!!");
     else
-        {
-            TmpCell->Element = X;
-            TmpCell->Next = S->Next;
-            S->Next = TmpCell;
-        }
+    {
+        TmpCell->Element = X;
+        TmpCell->Next = S->Next;
+        S->Next = TmpCell;
+    }
 }
 /* END */
 
 /* START: fig3_43.txt */
 DataType
-Top( Stack S )
+Top(Stack S)
 {
-    if( !IsEmpty( S ) )
+    if (!IsEmpty(S))
         return S->Next->Element;
-    Error( "Empty stack" );
-    return 0;  /* Return value used to avoid warning */
+    Error("Empty stack");
+    return 0; /* Return value used to avoid warning */
 }
 /* END */
 
 /* START: fig3_44.txt */
-void
-Pop( Stack S )
+void Pop(Stack S)
 {
     PtrToNode FirstCell;
-    if( IsEmpty( S ) )
-        Error( "Empty stack" );
+    if (IsEmpty(S))
+        Error("Empty stack");
     else
-        {
-            FirstCell = S->Next;
-            S->Next = S->Next->Next;
-            free( FirstCell );
-        }
+    {
+        FirstCell = S->Next;
+        S->Next = S->Next->Next;
+        free(FirstCell);
+    }
 }
 /* END */

@@ -7,14 +7,14 @@ struct Node;
 typedef struct Node *PtrToNode;
 typedef PtrToNode Stack;
 
-int IsEmpty( Stack S );
-Stack CreateStack( void );
-void DisposeStack( Stack S );
-void MakeEmpty( Stack S );
-void Push( DataType X, Stack S );
-DataType Top( Stack S );
-void Pop( Stack S );
+int IsEmpty(Stack S);
+Stack CreateStack(void);
+void DisposeStack(Stack S);
+void MakeEmpty(Stack S);
+void Push(DataType X, Stack S);
+DataType Top(Stack S);
+void Pop(Stack S);
 
-#endif  /* _Stack_h */
+#endif /* _Stack_h */
 
 /* END */
