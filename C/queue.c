@@ -67,11 +67,11 @@ DisposeQueue( Queue Q )
 /* START: fig3_60.txt */
 
 static int
-Succ( int Value, Queue Q )
+Succ( int Cur, Queue Q )
 {
-    if( ++Value == Q->Capacity )
-        Value = 0;
-    return Value;
+    if( ++Cur == Q->Capacity )
+        Cur = 0;
+    return Cur;
 }
 
 void
