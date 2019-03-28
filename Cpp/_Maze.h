@@ -340,9 +340,7 @@ void Maze::printMaze()
     }
 
     if (__slow_rhythm)
-    {
         sleep(1);
-    }
 }
 
 void Maze::maze_feasible_check(PathOfMaze &s)
