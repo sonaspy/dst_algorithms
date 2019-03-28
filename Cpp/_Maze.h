@@ -59,25 +59,6 @@ class PathOfMaze;
 class Maze;
 char getch();
 
-char getch()
-{
-    char ch;
-
-    static struct termios oldt, newt;
-
-    tcgetattr(STDIN_FILENO, &oldt);
-
-    newt = oldt;
-    newt.c_lflag &= ~(ICANON);
-    tcsetattr(STDIN_FILENO, TCSANOW, &newt);
-
-    system("stty -echo");
-    ch = getchar();
-    system("stty echo");
-    tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
-    return ch;
-}
-
 class Maze
 {
   public:
@@ -102,44 +83,44 @@ class Maze
     bool __flag;
     bool __slow_rhythm;
     bool __auto_game;
-    int _Maze[__max_x_size][__max_y_size];
+    int __maze[__max_x_size][__max_y_size];
 };
 
 class PathOfMaze
 {
   private:
-    struct _Node
+    struct __Node
     {
         int x,
             y;
         char direction;
-        _Node *next;
+        __Node *next;
     };
-    _Node *_start_point;
+    __Node *__start_point;
 
   public:
     friend class Maze;
     friend class GameFrame;
     PathOfMaze()
     {
-        _start_point = nullptr;
+        __start_point = nullptr;
     }
 
     ~PathOfMaze()
     {
-        _Node *p = _start_point;
+        __Node *p = __start_point;
 
-        while (_start_point != nullptr)
+        while (__start_point != nullptr)
         {
-            _start_point = _start_point->next;
+            __start_point = __start_point->next;
             delete p;
-            p = _start_point;
+            p = __start_point;
         }
     }
 
     void push(int xx, int yy, char _direct);
 
-    _Node *pop(int &xx, int &yy);
+    __Node *pop(int &xx, int &yy);
 
     void print();
 };
@@ -153,19 +134,19 @@ class GameFrame
     void StartGame();
 
   private:
-    class Maze __maze_now;
+    class Maze __maze_map;
 };
 
 void GameFrame::StartGame()
 {
-    __maze_now.__flag = false;
-    while (!__maze_now.__flag)
+    __maze_map.__flag = false;
+    while (!__maze_map.__flag)
     {
         PathOfMaze Map;
 
-        __maze_now.createMaze();
+        __maze_map.createMaze();
 
-        __maze_now.maze_feasible_check(Map);
+        __maze_map.maze_feasible_check(Map);
         system("clear");
         cout << "\t*                loading.              *" << endl;
         system("clear");
@@ -174,13 +155,13 @@ void GameFrame::StartGame()
         cout << "\t*                loading...            *" << endl;
     }
 
-    __maze_now.printMaze();
+    __maze_map.printMaze();
     cout << "\n\n              input the \"enter\" to continue" << endl;
     getchar();
 
-    if (!__maze_now.__auto_game)
+    if (!__maze_map.__auto_game)
     {
-        __maze_now.move();
+        __maze_map.move();
         cout << "\n\n              input the \"enter\" to continue" << endl;
         getchar();
         game_entrance();
@@ -189,9 +170,9 @@ void GameFrame::StartGame()
     else
     {
         PathOfMaze stack1;
-        __maze_now.autoMove(stack1);
+        __maze_map.autoMove(stack1);
     }
-    __maze_now.printMaze();
+    __maze_map.printMaze();
     cout << "\n\n              input the \"enter\" to continue" << endl;
     getchar();
     game_entrance();
@@ -212,21 +193,21 @@ void GameFrame::game_entrance()
     cout << "\t*               4.exit game                  *" << endl;
     cout << "\t*                                            *" << endl;
     cout << "\t==============================================" << endl;
-    __maze_now.__slow_rhythm = false;
+    __maze_map.__slow_rhythm = false;
 
     switch (getch())
     {
     case '1':
-        __maze_now.__auto_game = true;
+        __maze_map.__auto_game = true;
         StartGame();
         break;
     case '2':
-        __maze_now.__auto_game = true;
-        __maze_now.__slow_rhythm = true;
+        __maze_map.__auto_game = true;
+        __maze_map.__slow_rhythm = true;
         StartGame();
         break;
     case '3':
-        __maze_now.__auto_game = false;
+        __maze_map.__auto_game = false;
         StartGame();
         break;
     case '4':
@@ -244,18 +225,18 @@ void PathOfMaze::push(int xx, int yy, char _direct)
 {
     try
     {
-        _Node *new_node = new _Node;
+        __Node *new_node = new __Node;
         new_node->x = xx;
         new_node->y = yy;
         new_node->direction = _direct;
         new_node->next = nullptr;
 
-        if (_start_point == nullptr)
-            _start_point = new_node;
+        if (__start_point == nullptr)
+            __start_point = new_node;
         else
         {
-            new_node->next = _start_point;
-            _start_point = new_node;
+            new_node->next = __start_point;
+            __start_point = new_node;
         }
     }
     catch (bad_alloc)
@@ -264,24 +245,24 @@ void PathOfMaze::push(int xx, int yy, char _direct)
     }
 };
 
-PathOfMaze::_Node *PathOfMaze::pop(int &xx, int &yy)
+PathOfMaze::__Node *PathOfMaze::pop(int &xx, int &yy)
 {
-    if (_start_point != nullptr)
+    if (__start_point != nullptr)
     {
-        _Node *p = _start_point;
-        _start_point = _start_point->next;
+        __Node *p = __start_point;
+        __start_point = __start_point->next;
         xx = p->x;
         yy = p->y;
         delete p;
     }
-    return _start_point;
+    return __start_point;
 };
 
 void PathOfMaze::print()
 {
-    if (_start_point != nullptr)
+    if (__start_point != nullptr)
     {
-        _Node *p = _start_point;
+        __Node *p = __start_point;
         while (p != nullptr)
         {
             cout << " " << p->x << " " << p->y << " " << p->direction << endl;
@@ -297,7 +278,7 @@ void Maze::createMaze()
     int node_number = __max_x_size * __max_y_size,
         x, y;
 
-    fill(*_Maze, *_Maze + __max_x_size * __max_y_size, 1);
+    fill(*__maze, *__maze + __max_x_size * __max_y_size, 1);
 
     srand((unsigned)time(NULL));
 
@@ -305,14 +286,14 @@ void Maze::createMaze()
     {
         x = rand() % (__max_x_size - 2) + 1;
         y = rand() % (__max_y_size - 2) + 1;
-        _Maze[x][y] = 0;
+        __maze[x][y] = 0;
     }
 
-    _Maze[1][1] = 0;                               // entrance
-    _Maze[__max_x_size - 2][__max_y_size - 2] = 0; // exit
+    __maze[1][1] = 0;                               // entrance
+    __maze[__max_x_size - 2][__max_y_size - 2] = 0; // exit
 
-    _Maze[0][1] = 3;
-    _Maze[__max_x_size - 1][__max_y_size - 2] = 0;
+    __maze[0][1] = 3;
+    __maze[__max_x_size - 1][__max_y_size - 2] = 0;
 };
 
 void Maze::printMaze()
@@ -324,7 +305,7 @@ void Maze::printMaze()
     {
         for (y = 0; y < __max_y_size; y++)
         {
-            switch (_Maze[x][y])
+            switch (__maze[x][y])
             {
             case 0: // the node is available for move
                 cout << "  ";
@@ -369,7 +350,7 @@ void Maze::maze_feasible_check(PathOfMaze &s)
     int backup__[__max_x_size][__max_y_size];
     for (int x = 0; x < __max_x_size; x++)
         for (int y = 0; y < __max_y_size; y++)
-            backup__[x][y] = _Maze[x][y];
+            backup__[x][y] = __maze[x][y];
 
     int x = 1, y = 1; // start coordinate.
 
@@ -462,12 +443,12 @@ void Maze::move()
         switch (getch())
         {
         case 's':
-            if (_Maze[x + 1][y] == 0)
+            if (__maze[x + 1][y] == 0)
             {
 
-                _Maze[x][y] = 0;
+                __maze[x][y] = 0;
                 ++x;
-                _Maze[x][y] = 7;
+                __maze[x][y] = 7;
                 printMaze();
                 if (REACH_DST)
                 {
@@ -477,13 +458,13 @@ void Maze::move()
             }
             break;
         case 'd':
-            if (_Maze[x][y + 1] == 0)
+            if (__maze[x][y + 1] == 0)
             {
-                if (_Maze[x][y + 1] == 0)
+                if (__maze[x][y + 1] == 0)
                 {
-                    _Maze[x][y] = 0;
+                    __maze[x][y] = 0;
                     ++y;
-                    _Maze[x][y] = 7;
+                    __maze[x][y] = 7;
                     printMaze();
                     if (REACH_DST)
                     {
@@ -495,11 +476,11 @@ void Maze::move()
 
             break;
         case 'w':
-            if (_Maze[x - 1][y] == 0)
+            if (__maze[x - 1][y] == 0)
             {
-                _Maze[x][y] = 0;
+                __maze[x][y] = 0;
                 --x;
-                _Maze[x][y] = 7;
+                __maze[x][y] = 7;
                 printMaze();
                 if (REACH_DST)
                 {
@@ -509,11 +490,11 @@ void Maze::move()
             }
             break;
         case 'a':
-            if (_Maze[x][y - 1] == 0)
+            if (__maze[x][y - 1] == 0)
             {
-                _Maze[x][y] = 0;
+                __maze[x][y] = 0;
                 --y;
-                _Maze[x][y] = 7;
+                __maze[x][y] = 7;
                 printMaze();
                 if (REACH_DST)
                 {
@@ -532,14 +513,14 @@ void Maze::autoMove(PathOfMaze &s)
         y = 1;
     while (true)
     {
-        _Maze[x][y] = 2; // setting guard. prevent from rolling back immediately.
+        __maze[x][y] = 2; // setting guard. prevent from rolling back immediately.
 
-        if (_Maze[x + 1][y] == 0)
+        if (__maze[x + 1][y] == 0)
         {
             s.push(x, y, 'D');
-            _Maze[x][y] = 3;
+            __maze[x][y] = 3;
             x = x + 1;
-            _Maze[x][y] = 7;
+            __maze[x][y] = 7;
             if (__slow_rhythm)
                 printMaze();
             if (REACH_DST)
@@ -552,12 +533,12 @@ void Maze::autoMove(PathOfMaze &s)
                 continue;
         }
 
-        else if (_Maze[x][y + 1] == 0)
+        else if (__maze[x][y + 1] == 0)
         {
             s.push(x, y, 'R');
-            _Maze[x][y] = 4;
+            __maze[x][y] = 4;
             y = y + 1;
-            _Maze[x][y] = 7;
+            __maze[x][y] = 7;
             if (__slow_rhythm)
                 printMaze();
             if (REACH_DST)
@@ -570,12 +551,12 @@ void Maze::autoMove(PathOfMaze &s)
                 continue;
         }
 
-        else if (_Maze[x - 1][y] == 0)
+        else if (__maze[x - 1][y] == 0)
         {
             s.push(x, y, 'U');
-            _Maze[x][y] = 6;
+            __maze[x][y] = 6;
             x = x - 1;
-            _Maze[x][y] = 7;
+            __maze[x][y] = 7;
             if (__slow_rhythm)
                 printMaze();
             if (REACH_DST)
@@ -588,12 +569,12 @@ void Maze::autoMove(PathOfMaze &s)
                 continue;
         }
 
-        else if (_Maze[x][y - 1] == 0)
+        else if (__maze[x][y - 1] == 0)
         {
             s.push(x, y, 'L');
-            _Maze[x][y] = 5;
+            __maze[x][y] = 5;
             y = y - 1;
-            _Maze[x][y] = 7;
+            __maze[x][y] = 7;
             if (__slow_rhythm)
                 printMaze();
             if (REACH_DST)
@@ -606,13 +587,29 @@ void Maze::autoMove(PathOfMaze &s)
                 continue;
         }
 
-        else if (s.pop(x, y) == nullptr && _Maze[x - 1][y] != 0 && _Maze[x][y - 1] != 0 && _Maze[x][y + 1] != 0 && _Maze[x + 1][y] != 0)
+        else if (s.pop(x, y) == nullptr && __maze[x - 1][y] != 0 && __maze[x][y - 1] != 0 && __maze[x][y + 1] != 0 && __maze[x + 1][y] != 0)
         {
             cout << "\n\n              No suitable path" << endl;
-            _Maze[0][1] = 7;
-            if (_Maze[1][1] != 1)
-                _Maze[1][1] = 2;
+            __maze[0][1] = 7;
+            if (__maze[1][1] != 1)
+                __maze[1][1] = 2;
             return;
         }
     }
+}
+char getch()
+{
+    char ch;
+    static struct termios oldt, newt;
+    tcgetattr(STDIN_FILENO, &oldt);
+
+    newt = oldt;
+    newt.c_lflag &= ~(ICANON);
+    tcsetattr(STDIN_FILENO, TCSANOW, &newt);
+
+    system("stty -echo");
+    ch = getchar();
+    system("stty echo");
+    tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
+    return ch;
 }
