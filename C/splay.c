@@ -5,67 +5,66 @@
 struct SplayNode
 {
     DataType Element;
-    SplayTree      Left;
-    SplayTree      Right;
+    SplayTree Left;
+    SplayTree Right;
 };
 
 typedef struct SplayNode *Position;
-static Position NullNode = NULL;  /* Needs initialization */
+static Position NullNode = NULL; /* Needs initialization */
 
 SplayTree
-Initialize( void )
+Initialize(void)
 {
-    if( NullNode == NULL )
-        {
-            NullNode = malloc( sizeof( struct SplayNode ) );
-            if( NullNode == NULL )
-                FatalError( "Out of space!!!" );
-            NullNode->Left = NullNode->Right = NullNode;
-        }
+    if (NullNode == NULL)
+    {
+        NullNode = malloc(sizeof(struct SplayNode));
+        if (NullNode == NULL)
+            FatalError("Out of space!!!");
+        NullNode->Left = NullNode->Right = NullNode;
+    }
     return NullNode;
 }
 
-static SplayTree Splay( DataType Item, Position X );
+static SplayTree Splay(DataType Item, Position X);
 
 SplayTree
-MakeEmpty( SplayTree T )
+MakeEmpty(SplayTree T)
 {
-    if( T != NullNode )
-        {
-            MakeEmpty( T->Left );
-            MakeEmpty( T->Right );
-            free( T );
-        }
+    if (T != NullNode)
+    {
+        MakeEmpty(T->Left);
+        MakeEmpty(T->Right);
+        free(T);
+    }
     return NullNode;
 }
 
-void
-PrintTree( SplayTree T )
+void PrintTree(SplayTree T)
 {
-    if( T != NullNode )
-        {
-            PrintTree( T->Left );
-            printf( "%d ", T->Element );
-            PrintTree( T->Right );
-        }
+    if (T != NullNode)
+    {
+        PrintTree(T->Left);
+        printf("%d ", T->Element);
+        PrintTree(T->Right);
+    }
 }
 
 SplayTree
-Find( DataType X, SplayTree T )
+Find(DataType X, SplayTree T)
 {
-    return Splay( X, T );
+    return Splay(X, T);
 }
 
 SplayTree
-FindMin( SplayTree T )
+FindMin(SplayTree T)
 {
-    return Splay( NegInfinity, T );
+    return Splay(NegInfinity, T);
 }
 
 SplayTree
-FindMax( SplayTree T )
+FindMax(SplayTree T)
 {
-    return Splay( Infinity, T );
+    return Splay(Infinity, T);
 }
 
 /* This function can be called only if K2 has a left child */
@@ -73,13 +72,13 @@ FindMax( SplayTree T )
 /* Update heights, then return new root */
 
 static Position
-SingleRotateWithLeft( Position K2 )
+SingleRotateWithLeft(Position K2)
 {
     Position K1;
     K1 = K2->Left;
     K2->Left = K1->Right;
     K1->Right = K2;
-    return K1;  /* New root */
+    return K1; /* New root */
 }
 
 /* This function can be called only if K1 has a right child */
@@ -87,13 +86,13 @@ SingleRotateWithLeft( Position K2 )
 /* Update heights, then return new root */
 
 static Position
-SingleRotateWithRight( Position K1 )
+SingleRotateWithRight(Position K1)
 {
     Position K2;
     K2 = K1->Right;
     K1->Right = K2->Left;
     K2->Left = K1;
-    return K2;  /* New root */
+    return K2; /* New root */
 }
 
 /* START: fig12_6.txt */
@@ -101,38 +100,38 @@ SingleRotateWithRight( Position K1 )
 /* not requiring Item to be in tree */
 
 SplayTree
-Splay( DataType Item, Position X )
+Splay(DataType Item, Position X)
 {
     static struct SplayNode Header;
     Position LeftTreeMax, RightTreeMin;
     Header.Left = Header.Right = NullNode;
     LeftTreeMax = RightTreeMin = &Header;
     NullNode->Element = Item;
-    while( Item != X->Element )
+    while (Item != X->Element)
+    {
+        if (Item < X->Element)
         {
-            if( Item < X->Element )
-                {
-                    if( Item < X->Left->Element )
-                        X = SingleRotateWithLeft( X );
-                    if( X->Left == NullNode )
-                        break;
-                    /* Link right */
-                    RightTreeMin->Left = X;
-                    RightTreeMin = X;
-                    X = X->Left;
-                }
-            else
-                {
-                    if( Item > X->Right->Element )
-                        X = SingleRotateWithRight( X );
-                    if( X->Right == NullNode )
-                        break;
-                    /* Link left */
-                    LeftTreeMax->Right = X;
-                    LeftTreeMax = X;
-                    X = X->Right;
-                }
-        }  /* while Item != X->Element */
+            if (Item < X->Left->Element)
+                X = SingleRotateWithLeft(X);
+            if (X->Left == NullNode)
+                break;
+            /* Link right */
+            RightTreeMin->Left = X;
+            RightTreeMin = X;
+            X = X->Left;
+        }
+        else
+        {
+            if (Item > X->Right->Element)
+                X = SingleRotateWithRight(X);
+            if (X->Right == NullNode)
+                break;
+            /* Link left */
+            LeftTreeMax->Right = X;
+            LeftTreeMax = X;
+            X = X->Right;
+        }
+    } /* while Item != X->Element */
     /* Reassemble */
     LeftTreeMax->Right = X->Left;
     RightTreeMin->Left = X->Right;
@@ -142,82 +141,78 @@ Splay( DataType Item, Position X )
 }
 /* END */
 
-
-
-
 /* START: fig12_7.txt */
 SplayTree
-Insert( DataType Item, SplayTree T )
+Insert(DataType Item, SplayTree T)
 {
     static Position NewNode = NULL;
-    if( NewNode == NULL )
-        {
-            NewNode = malloc( sizeof( struct SplayNode ) );
-            if( NewNode == NULL )
-                FatalError( "Out of space!!!" );
-        }
+    if (NewNode == NULL)
+    {
+        NewNode = malloc(sizeof(struct SplayNode));
+        if (NewNode == NULL)
+            FatalError("Out of space!!!");
+    }
     NewNode->Element = Item;
-    if( T == NullNode )
+    if (T == NullNode)
+    {
+        NewNode->Left = NewNode->Right = NullNode;
+        T = NewNode;
+    }
+    else
+    {
+        T = Splay(Item, T);
+        if (Item < T->Element)
         {
-            NewNode->Left = NewNode->Right = NullNode;
+            NewNode->Left = T->Left;
+            NewNode->Right = T;
+            T->Left = NullNode;
             T = NewNode;
         }
-    else
+        else if (T->Element < Item)
         {
-            T = Splay( Item, T );
-            if( Item < T->Element )
-                {
-                    NewNode->Left = T->Left;
-                    NewNode->Right = T;
-                    T->Left = NullNode;
-                    T = NewNode;
-                }
-            else if( T->Element < Item )
-                {
-                    NewNode->Right = T->Right;
-                    NewNode->Left = T;
-                    T->Right = NullNode;
-                    T = NewNode;
-                }
-            else
-                return T;  /* Already in the tree */
+            NewNode->Right = T->Right;
+            NewNode->Left = T;
+            T->Right = NullNode;
+            T = NewNode;
         }
-    NewNode = NULL;   /* So next insert will call malloc */
+        else
+            return T; /* Already in the tree */
+    }
+    NewNode = NULL; /* So next insert will call malloc */
     return T;
 }
 /* END */
 
-
 /* START: fig12_8.txt */
 SplayTree
-Remove( DataType Item, SplayTree T )
+Remove(DataType Item, SplayTree T)
 {
     Position NewTree;
-    if( T != NullNode )
+    if (T != NullNode)
+    {
+        T = Splay(Item, T);
+        if (Item == T->Element)
         {
-            T = Splay( Item, T );
-            if( Item == T->Element )
-                {
-                    /* Found it! */
-                    if( T->Left == NullNode )
-                        NewTree = T->Right;
-                    else
-                        {
-                            NewTree = T->Left;
-                            NewTree = Splay( Item, NewTree );
-                            NewTree->Right = T->Right;
-                        }
-                    free( T );
-                    T = NewTree;
-                }
+            /* Found it! */
+            if (T->Left == NullNode)
+                NewTree = T->Right;
+            else
+            {
+                NewTree = T->Left;
+                NewTree = Splay(Item, NewTree);
+                NewTree->Right = T->Right;
+            }
+            free(T);
+            T = NewTree;
         }
+    }
     return T;
 }
 
 /* END */
 
 DataType
-Retrieve( SplayTree T )
+Retrieve(SplayTree T)
 {
     return T->Element;
 }
