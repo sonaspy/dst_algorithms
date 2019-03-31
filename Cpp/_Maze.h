@@ -37,7 +37,7 @@
  * 
  *  The game is divided into automatic operation and means operation:
  *      1.automatic operation is the use of breadth-first algorithm to automatically find the path until the exit; 
- *      2.Manual operation is divided into up, down, left and right movement, corresponding to w,__x,a and d respectively.
+ *      2.Manual operation is divided into up, down, left and right movement, corresponding to w,x,a and d respectively.
  * 
  *  It is necessary to determine the next operation address for comparison. 
  *  If the next operation is feasible, move and clear the current information.
@@ -52,7 +52,7 @@
 #include <algorithm>
 
 #define __REACH_DST__ \
-    ((__x == __max_x_size - 1) && (__y == __max_y_size - 2))
+    ((x == __max_x_size - 1) && (y == __max_y_size - 2))
 
 // X -> vertical direction . Y -> horizontal direction
 class GameFrame;
@@ -92,8 +92,8 @@ class PathOfMaze
   private:
     struct __Coordinate
     {
-        int __x,
-            __y;
+        int x,
+            y;
         char direction;
         __Coordinate *next;
     };
@@ -227,8 +227,8 @@ void PathOfMaze::push(int xx, int yy, char _direct)
     try
     {
         __Coordinate *new_node = new __Coordinate;
-        new_node->__x = xx;
-        new_node->__y = yy;
+        new_node->x = xx;
+        new_node->y = yy;
         new_node->direction = _direct;
         new_node->next = nullptr;
 
@@ -252,8 +252,8 @@ PathOfMaze::__Coordinate *PathOfMaze::pop(int &xx, int &yy)
     {
         __Coordinate *p = __start_point;
         __start_point = __start_point->next;
-        xx = p->__x;
-        yy = p->__y;
+        xx = p->x;
+        yy = p->y;
         delete p;
     }
     return __start_point;
@@ -266,7 +266,7 @@ void PathOfMaze::print()
         __Coordinate *p = __start_point;
         while (p != nullptr)
         {
-            std::cout << " " << p->__x << " " << p->__y << " " << p->direction << std::endl;
+            std::cout << " " << p->x << " " << p->y << " " << p->direction << std::endl;
             p = p->next;
         }
     }
@@ -277,7 +277,7 @@ void PathOfMaze::print()
 void Maze::createMaze()
 {
     int node_number = __max_x_size * __max_y_size,
-        __x, __y;
+        x, y;
 
     std::fill(*__maze, *__maze + __max_x_size * __max_y_size, 1);
 
@@ -285,9 +285,9 @@ void Maze::createMaze()
 
     for (int i = 0; i < node_number; i++)
     {
-        __x = rand() % (__max_x_size - 2) + 1;
-        __y = rand() % (__max_y_size - 2) + 1;
-        __maze[__x][__y] = 0;
+        x = rand() % (__max_x_size - 2) + 1;
+        y = rand() % (__max_y_size - 2) + 1;
+        __maze[x][y] = 0;
     }
 
     __maze[1][1] = 0;                               // entrance
@@ -299,14 +299,14 @@ void Maze::createMaze()
 
 void Maze::printMaze()
 {
-    int __x, __y;
+    int x, y;
     system("clear");
 
-    for (__x = 0; __x < __max_x_size; __x++)
+    for (x = 0; x < __max_x_size; x++)
     {
-        for (__y = 0; __y < __max_y_size; __y++)
+        for (y = 0; y < __max_y_size; y++)
         {
-            switch (__maze[__x][__y])
+            switch (__maze[x][y])
             {
             case 0: // the node is available for move
                 std::cout << "  ";
@@ -347,23 +347,23 @@ void Maze::printMaze()
 void Maze::maze_feasible_check(PathOfMaze &s)
 {
     int backup__[__max_x_size][__max_y_size];
-    for (int __x = 0; __x < __max_x_size; __x++)
-        for (int __y = 0; __y < __max_y_size; __y++)
-            backup__[__x][__y] = __maze[__x][__y];
+    for (int x = 0; x < __max_x_size; x++)
+        for (int y = 0; y < __max_y_size; y++)
+            backup__[x][y] = __maze[x][y];
 
-    int __x = 1, __y = 1; // start coordinate.
+    int x = 1, y = 1; // start coordinate.
 
     while (true)
     {
-        backup__[__x][__y] = 2; // setting guard. prevent from rolling back immediately.
+        backup__[x][y] = 2; // setting guard. prevent from rolling back immediately.
 
-        if (backup__[__x + 1][__y] == 0)
+        if (backup__[x + 1][y] == 0)
         {
-            s.push(__x, __y, 'D'); // Down
+            s.push(x, y, 'D'); // Down
 
-            backup__[__x][__y] = 3;
-            ++__x;
-            backup__[__x][__y] = 7; // current locate
+            backup__[x][y] = 3;
+            ++x;
+            backup__[x][y] = 7; // current locate
 
             if (__REACH_DST__)
             {
@@ -374,13 +374,13 @@ void Maze::maze_feasible_check(PathOfMaze &s)
                 continue;
         }
 
-        else if (backup__[__x][__y + 1] == 0)
+        else if (backup__[x][y + 1] == 0)
         {
-            s.push(__x, __y, 'R'); // Right
+            s.push(x, y, 'R'); // Right
 
-            backup__[__x][__y] = 4;
-            ++__y;
-            backup__[__x][__y] = 7;
+            backup__[x][y] = 4;
+            ++y;
+            backup__[x][y] = 7;
             if (__REACH_DST__)
             {
                 __flag = true;
@@ -390,13 +390,13 @@ void Maze::maze_feasible_check(PathOfMaze &s)
                 continue;
         }
 
-        else if (backup__[__x - 1][__y] == 0)
+        else if (backup__[x - 1][y] == 0)
         {
-            s.push(__x, __y, 'U'); // Up
+            s.push(x, y, 'U'); // Up
 
-            backup__[__x][__y] = 6;
-            --__x;
-            backup__[__x][__y] = 7;
+            backup__[x][y] = 6;
+            --x;
+            backup__[x][y] = 7;
             if (__REACH_DST__)
             {
                 __flag = true;
@@ -406,13 +406,13 @@ void Maze::maze_feasible_check(PathOfMaze &s)
                 continue;
         }
 
-        else if (backup__[__x][__y - 1] == 0)
+        else if (backup__[x][y - 1] == 0)
         {
-            s.push(__x, __y, 'L');
+            s.push(x, y, 'L');
 
-            backup__[__x][__y] = 5;
-            --__y;
-            backup__[__x][__y] = 7;
+            backup__[x][y] = 5;
+            --y;
+            backup__[x][y] = 7;
             if (__REACH_DST__)
             {
                 __flag = true;
@@ -423,7 +423,7 @@ void Maze::maze_feasible_check(PathOfMaze &s)
         }
 
         // Reached the dead space. So, Look back upon until when a suitable path has been found.
-        else if (s.pop(__x, __y) == nullptr && backup__[__x - 1][__y] != 0 && backup__[__x][__y - 1] != 0 && backup__[__x][__y + 1] != 0 && backup__[__x + 1][__y] != 0)
+        else if (s.pop(x, y) == nullptr && backup__[x - 1][y] != 0 && backup__[x][y - 1] != 0 && backup__[x][y + 1] != 0 && backup__[x + 1][y] != 0)
         {
             backup__[0][1] = 7;
             if (backup__[1][1] != 1)
@@ -435,19 +435,19 @@ void Maze::maze_feasible_check(PathOfMaze &s)
 
 void Maze::move()
 {
-    int __x = 1, __y = 1;
+    int x = 1, y = 1;
 
     while (true)
     {
         switch (getch())
         {
         case 's':
-            if (__maze[__x + 1][__y] == 0)
+            if (__maze[x + 1][y] == 0)
             {
 
-                __maze[__x][__y] = 0;
-                ++__x;
-                __maze[__x][__y] = 7;
+                __maze[x][y] = 0;
+                ++x;
+                __maze[x][y] = 7;
                 printMaze();
                 if (__REACH_DST__)
                 {
@@ -457,13 +457,13 @@ void Maze::move()
             }
             break;
         case 'd':
-            if (__maze[__x][__y + 1] == 0)
+            if (__maze[x][y + 1] == 0)
             {
-                if (__maze[__x][__y + 1] == 0)
+                if (__maze[x][y + 1] == 0)
                 {
-                    __maze[__x][__y] = 0;
-                    ++__y;
-                    __maze[__x][__y] = 7;
+                    __maze[x][y] = 0;
+                    ++y;
+                    __maze[x][y] = 7;
                     printMaze();
                     if (__REACH_DST__)
                     {
@@ -475,11 +475,11 @@ void Maze::move()
 
             break;
         case 'w':
-            if (__maze[__x - 1][__y] == 0)
+            if (__maze[x - 1][y] == 0)
             {
-                __maze[__x][__y] = 0;
-                --__x;
-                __maze[__x][__y] = 7;
+                __maze[x][y] = 0;
+                --x;
+                __maze[x][y] = 7;
                 printMaze();
                 if (__REACH_DST__)
                 {
@@ -489,11 +489,11 @@ void Maze::move()
             }
             break;
         case 'a':
-            if (__maze[__x][__y - 1] == 0)
+            if (__maze[x][y - 1] == 0)
             {
-                __maze[__x][__y] = 0;
-                --__y;
-                __maze[__x][__y] = 7;
+                __maze[x][y] = 0;
+                --y;
+                __maze[x][y] = 7;
                 printMaze();
                 if (__REACH_DST__)
                 {
@@ -508,23 +508,23 @@ void Maze::move()
 
 void Maze::autoMove(PathOfMaze &s)
 {
-    int __x = 1,
-        __y = 1;
+    int x = 1,
+        y = 1;
     while (true)
     {
-        __maze[__x][__y] = 2; // setting guard. prevent from rolling back immediately.
+        __maze[x][y] = 2; // setting guard. prevent from rolling back immediately.
 
-        if (__maze[__x + 1][__y] == 0)
+        if (__maze[x + 1][y] == 0)
         {
-            s.push(__x, __y, 'D');
-            __maze[__x][__y] = 3;
-            __x = __x + 1;
-            __maze[__x][__y] = 7;
+            s.push(x, y, 'D');
+            __maze[x][y] = 3;
+            x = x + 1;
+            __maze[x][y] = 7;
             if (__slow_rhythm)
                 printMaze();
             if (__REACH_DST__)
             {
-                s.push(__x, __y, '*');
+                s.push(x, y, '*');
                 std::cout << "\n\n              reach the destination successfully" << std::endl;
                 return;
             }
@@ -532,17 +532,17 @@ void Maze::autoMove(PathOfMaze &s)
                 continue;
         }
 
-        else if (__maze[__x][__y + 1] == 0)
+        else if (__maze[x][y + 1] == 0)
         {
-            s.push(__x, __y, 'R');
-            __maze[__x][__y] = 4;
-            __y = __y + 1;
-            __maze[__x][__y] = 7;
+            s.push(x, y, 'R');
+            __maze[x][y] = 4;
+            y = y + 1;
+            __maze[x][y] = 7;
             if (__slow_rhythm)
                 printMaze();
             if (__REACH_DST__)
             {
-                s.push(__x, __y, '*');
+                s.push(x, y, '*');
                 std::cout << "\n\n              reach the destination successfully" << std::endl;
                 return;
             }
@@ -550,17 +550,17 @@ void Maze::autoMove(PathOfMaze &s)
                 continue;
         }
 
-        else if (__maze[__x - 1][__y] == 0)
+        else if (__maze[x - 1][y] == 0)
         {
-            s.push(__x, __y, 'U');
-            __maze[__x][__y] = 6;
-            __x = __x - 1;
-            __maze[__x][__y] = 7;
+            s.push(x, y, 'U');
+            __maze[x][y] = 6;
+            x = x - 1;
+            __maze[x][y] = 7;
             if (__slow_rhythm)
                 printMaze();
             if (__REACH_DST__)
             {
-                s.push(__x, __y, '*');
+                s.push(x, y, '*');
                 std::cout << "\n\n              reach the destination successfully" << std::endl;
                 return;
             }
@@ -568,17 +568,17 @@ void Maze::autoMove(PathOfMaze &s)
                 continue;
         }
 
-        else if (__maze[__x][__y - 1] == 0)
+        else if (__maze[x][y - 1] == 0)
         {
-            s.push(__x, __y, 'L');
-            __maze[__x][__y] = 5;
-            __y = __y - 1;
-            __maze[__x][__y] = 7;
+            s.push(x, y, 'L');
+            __maze[x][y] = 5;
+            y = y - 1;
+            __maze[x][y] = 7;
             if (__slow_rhythm)
                 printMaze();
             if (__REACH_DST__)
             {
-                s.push(__x, __y, '*');
+                s.push(x, y, '*');
                 std::cout << "\n\n              reach the destination successfully" << std::endl;
                 return;
             }
@@ -586,7 +586,7 @@ void Maze::autoMove(PathOfMaze &s)
                 continue;
         }
 
-        else if (s.pop(__x, __y) == nullptr && __maze[__x - 1][__y] != 0 && __maze[__x][__y - 1] != 0 && __maze[__x][__y + 1] != 0 && __maze[__x + 1][__y] != 0)
+        else if (s.pop(x, y) == nullptr && __maze[x - 1][y] != 0 && __maze[x][y - 1] != 0 && __maze[x][y + 1] != 0 && __maze[x + 1][y] != 0)
         {
             std::cout << "\n\n              No suitable path" << std::endl;
             __maze[0][1] = 7;
