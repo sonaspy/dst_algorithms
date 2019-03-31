@@ -65,7 +65,8 @@
     "__memory": "cpp",
     "fatal.h": "c",
     "aatree.h": "c",
-    "stdlib.h": "c"
+    "stdlib.h": "c",
+    "rope": "cpp"
 },
   "python.pythonPath": "/usr/local/opt/python/bin/python3.7",
 
