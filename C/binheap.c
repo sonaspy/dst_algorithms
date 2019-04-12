@@ -4,7 +4,7 @@
 
 #define MinPQSize (10)
 #define MinData (-32767)
-
+typedef int Position;
 struct HeapStruct
 {
     int Capacity;
@@ -41,49 +41,66 @@ void MakeEmpty(PriorityQueue H)
 /* START: fig6_8.txt */
 /* H->Element[ 0 ] is a sentinel */
 
+void percolateUP(Position k, PriorityQueue H)
+{
+    int X = H->Elements[k];
+    for (; H->Elements[k / 2] > X; k /= 2)
+        H->Elements[k] = H->Elements[k / 2];
+    H->Elements[k] = X;
+}
+
+void percolateDown(Position k, PriorityQueue H)
+{
+    int Child, i;
+    DataType LastElement = H->Elements[H->Size];
+    for (i = k; i * 2 <= H->Size; i = Child)
+    {
+        Child = i * 2;
+        if (Child != H->Size && H->Elements[Child + 1] < H->Elements[Child])
+            Child++;
+        if (LastElement > H->Elements[Child])
+            H->Elements[i] = H->Elements[Child];
+        else
+            break;
+    }
+    H->Elements[i] = LastElement;
+}
+
 void Insert(DataType X, PriorityQueue H)
 {
-    int i;
     if (IsFull(H))
-        {
-            Error("Priority queue is full");
-            return;
-        }
-    for (i = ++H->Size; H->Elements[i / 2] > X; i /= 2)
-        H->Elements[i] = H->Elements[i / 2];
-    H->Elements[i] = X;
+    {
+        Error("Priority queue is full");
+        return;
+    }
+    H->Elements[++H->Size] = X;
+    percolateUP(H->Size, H);
 }
 /* END */
+
+PriorityQueue BuildHeap(int h_size, DataType* Arr){
+    PriorityQueue newH = Initialize(10 * h_size);
+    newH->Elements = Arr;
+    newH->Size = h_size;
+    for(int i = h_size / 2; i > 0; i--)
+        percolateDown(i, newH);
+    return newH;
+}
 
 /* START: fig6_12.txt */
 DataType
 DeleteMin(PriorityQueue H)
 {
-    int i, Child;
-    DataType MinElement, LastElement;
     /* 1*/ if (IsEmpty(H))
-        {
-            /* 2*/ Error("Priority queue is empty");
-            /* 3*/ return H->Elements[0];
-        }
-    /* 4*/ MinElement = H->Elements[1];
-    /* 5*/ LastElement = H->Elements[H->Size--];
-    /* 6*/ for (i = 1; i * 2 <= H->Size; i = Child)
-        {
-            /* Find smaller child */
-            /* 7*/ Child = i * 2;
-            /* 8*/ if (Child != H->Size && H->Elements[Child + 1]
-                       /* 9*/
-                       < H->Elements[Child])
-                /*10*/ Child++;
-            /* Percolate one level */
-            /*11*/ if (LastElement > H->Elements[Child])
-                /*12*/ H->Elements[i] = H->Elements[Child];
-            else
-                /*13*/ break;
-        }
-    /*14*/ H->Elements[i] = LastElement;
-    /*15*/ return MinElement;
+    {
+        /* 2*/ Error("Priority queue is empty");
+        /* 3*/ return H->Elements[0];
+    }
+    DataType MinElement;
+    MinElement = H->Elements[1];
+    H->Size--;
+    percolateDown(1, H);
+    return MinElement;
 }
 /* END */
 
