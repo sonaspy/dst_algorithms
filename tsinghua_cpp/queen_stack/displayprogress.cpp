@@ -1,25 +1,21 @@
 /******************************************************************************************
- * Data Structures in C++
- * ISBN: 7-302-33064-6 & 7-302-33065-3 & 7-302-29652-2 & 7-302-26883-3
- * Junhui DENG, deng@tsinghua.edu.cn
- * Computer Science & Technology, Tsinghua University
- * Copyright (c) 2006-2013. All rights reserved.
+
  ******************************************************************************************/
 
 #include "queen_stack.h"
 
-int N = 0; //ÆåÅÌ´óÐ¡
+int N = 0; //ï¿½ï¿½ï¿½Ì´ï¿½Ð¡
 
-void displayRow ( Queen& q ) { //´òÓ¡µ±Ç°»Êºó£¨·ÅÖÃÓÚcolÁÐ£©ËùÔÚÐÐ
+void displayRow ( Queen& q ) { //ï¿½ï¿½Ó¡ï¿½ï¿½Ç°ï¿½Êºó£¨·ï¿½ï¿½ï¿½ï¿½ï¿½colï¿½Ð£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
    printf ( "%2d: ", q.x );
    int i = 0;
    while ( i++ < q.y ) printf ( "[]" );
-   printf ( "¨€" );
+   printf ( "ï¿½ï¿½" );
    while ( i++ < N ) printf ( "[]" );
    printf ( "%2d\n", q.y );
 }
 
-void displayProgress ( Stack<Queen>& S, int nQueen ) { //ÔÚÆåÅÌÉÏÏÔÊ¾ËÑ²éµÄ½øÕ¹
+void displayProgress ( Stack<Queen>& S, int nQueen ) { //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½Ñ²ï¿½Ä½ï¿½Õ¹
    system ( "cls" );
    N = nQueen; S.traverse ( displayRow );
    if ( nQueen <= S.size() )

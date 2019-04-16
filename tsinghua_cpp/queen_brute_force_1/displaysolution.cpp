@@ -1,18 +1,14 @@
 /******************************************************************************************
- * Data Structures in C++
- * ISBN: 7-302-33064-6 & 7-302-33065-3 & 7-302-29652-2 & 7-302-26883-3
- * Junhui DENG, deng@tsinghua.edu.cn
- * Computer Science & Technology, Tsinghua University
- * Copyright (c) 2006-2013. All rights reserved.
+
  ******************************************************************************************/
 
 #include "queen.h"
 
-void displaySolution ( int* solu, int n ) { //Êä³ön*nµÄ¿ÉÐÐ²¼¾Ö
+void displaySolution ( int* solu, int n ) { //ï¿½ï¿½ï¿½n*nï¿½Ä¿ï¿½ï¿½Ð²ï¿½ï¿½ï¿½
    ( Step == runMode ) ? system ( "cls" ) : printf ( "--\n" );
    for ( int i = 0; i < n; i++ ) {
       for ( int j = 0; j < n; j++ ) {
-         printf ( ( j == solu[i] ) ? "¨€" : "[]" );
+         printf ( ( j == solu[i] ) ? "ï¿½ï¿½" : "[]" );
       }
       printf ( "\n" );
    }

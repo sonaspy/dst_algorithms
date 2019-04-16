@@ -1,9 +1,5 @@
 /******************************************************************************************
- * Data Structures in C++
- * ISBN: 7-302-33064-6 & 7-302-33065-3 & 7-302-29652-2 & 7-302-26883-3
- * Junhui DENG, deng@tsinghua.edu.cn
- * Computer Science & Technology, Tsinghua University
- * Copyright (c) 2006-2013. All rights reserved.
+
  ******************************************************************************************/
 
 #include<iostream>
@@ -11,11 +7,11 @@ using namespace std;
 
 #define nStep  8
 char* level[8] =
-{"Ã÷Ã÷µÂì¶ÌìÏÂ", "ÖÎ‡ø", "ýR¼Ò", "ÐÞÉí", "ÕýÐÄ", "Õ\Òâ", "ÖÂÖª", "¸ñÎï"};
+{"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", "ï¿½Î‡ï¿½", "ï¿½Rï¿½ï¿½", "ï¿½ï¿½ï¿½ï¿½", "ï¿½ï¿½ï¿½ï¿½", "ï¿½\ï¿½ï¿½", "ï¿½ï¿½Öª", "ï¿½ï¿½ï¿½ï¿½"};
 
 void phase ( int n, bool done ) {
-   for ( int i = 0; i < n; i++ )  cout << "\t©¦";
-   cout << "\t" << ( done ? "©¸" : "©°" ) << level[n] << endl;
+   for ( int i = 0; i < n; i++ )  cout << "\tï¿½ï¿½";
+   cout << "\t" << ( done ? "ï¿½ï¿½" : "ï¿½ï¿½" ) << level[n] << endl;
 }
 
 void towardsDaxue ( int n ) {
