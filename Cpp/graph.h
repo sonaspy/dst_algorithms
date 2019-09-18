@@ -3,9 +3,9 @@
 
 #ifndef __NEW_GRAPH__
 #define __NEW_GRAPH__
-#include <bits/stdc++.h>
 #include "set_union.h"
 #include "functions.h"
+
 using namespace std;
 
 namespace dsa
@@ -513,6 +513,25 @@ protected:
             }
         }
     }
+    void __dfs_cycle(int v1, int v2)
+    {
+        vis[v1] = 1;
+        tmppath.push_back(v1);
+        if (v1 == v2 && tmppath.size() > 1)
+        {
+            output_vec(tmppath);
+            vis[v1] = 0;
+            tmppath.pop_back();
+            return;
+        }
+        for (auto w : posv[v1])
+        {
+            if (!vis[w] || w == v2)
+                __dfs_cycle(w, v2);
+        }
+        vis[v1] = 0;
+        tmppath.pop_back();
+    }
 
 public:
     dGraph()
@@ -564,30 +583,12 @@ public:
         __restore_buf();
         return true;
     }
-    void __dfs_cycle(int v1, int v2)
-    {
-        vis[v1] = 1;
-        tmppath.push_back(v1);
-        if (v1 == v2 && tmppath.size() > 1)
-        {
-            output_vec(tmppath);
-            vis[v1] = 0;
-            tmppath.pop_back();
-            return;
-        }
-        for (auto w : posv[v1])
-        {
-            if (!vis[w] || w == v2)
-                __dfs_cycle(w, v2);
-        }
-        vis[v1] = 0;
-        tmppath.pop_back();
-    }
+
     void getCycle(int v0)
     {
         printf("Cycles Go Through Vertex No.%d:\n", v0);
         __dfs_cycle(v0, v0);
-        cout << endl;
+        cout << "end" << endl;
         __restore_buf();
     }
     void topsort()

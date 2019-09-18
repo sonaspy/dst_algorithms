@@ -3,7 +3,11 @@
 
 #ifndef __FUNCTIONS__
 #define __FUNCTIONS__
-
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include <unordered_map>
+#include <unordered_set>
 namespace dsa
 {
 void output_vec(vector<int> &a)

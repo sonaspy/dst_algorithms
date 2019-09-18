@@ -3,7 +3,9 @@
 
 #ifndef __NEW_TREE__
 #define __NEW_TREE__
-#include <bits/stdc++.h>
+#include <vector>
+#include <unordered_map>
+#include <iostream>
 using namespace std;
 namespace dsa
 {
