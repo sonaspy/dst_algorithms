@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <bitset>
 #define test() freopen("in", "r", stdin)
 
 using namespace std;
@@ -22,5 +23,7 @@ int main(int argc, char const *argv[])
     vector<int> a(10), c(b, b + 6), d(b, b + 6), f(6);
     auto it = a.begin();
     copy(c.begin(), c.end(), it);
+    char ccc = 0255;
+    cout << ccc;
     return 0;
 }
