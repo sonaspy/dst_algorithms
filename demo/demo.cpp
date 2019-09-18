@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include "../cpp/dsa.h"
+#include<algorithm>
 #define test() freopen("in", "r", stdin)
 using namespace dsa;
 using namespace std;
@@ -14,6 +15,7 @@ int main(int argc, char const *argv[])
     //test();
     vector<int> a(100);
     iota(a.begin(), a.end(), 1);
-    cout << (0-1)/2;
+    cout << less<int>()(2,2);
+    make_heap(a.begin(), a.end());
     return 0;
 }

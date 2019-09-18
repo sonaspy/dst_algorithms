@@ -2,7 +2,7 @@
 // coding - utf_8
 #include "../cpp/dsa.h"
 
-#define SIZE 100000
+#define SIZE 1
 #define test() freopen("in", "r", stdin)
 
 using namespace std;
@@ -18,7 +18,8 @@ int main(int argc, char const *argv[])
     a.erase(unique(a.begin(), a.end()), a.end());
     clock_t startTime, endTime;
     startTime = clock();
-    heapsort_(a.begin(), a.end());
+    make_heap(a.begin(), a.end());
+    cout << __isheap(a.begin(), a.end()) << endl;
     endTime = clock();
     cout << is_sorted(a.begin(), a.end()) << endl;
     cout << "The run time is: " << (double)(endTime - startTime) / 1000 << "ms" << endl;
