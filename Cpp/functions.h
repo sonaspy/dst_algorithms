@@ -11,13 +11,16 @@
 #include <numeric>
 namespace dsa
 {
-void output_vec(vector<int> &a)
+
+template <typename T>
+void output_vec(vector<T> &a)
 {
     cout << a[0];
     for (int i = 1; i < a.size(); i++)
         cout << " -> " << a[i];
     cout << endl;
 }
+
 template <typename T, typename RandAccessor>
 RandAccessor __lower_bound(RandAccessor lo, RandAccessor hi, const T &val)
 { // binary search
