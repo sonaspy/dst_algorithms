@@ -67,7 +67,8 @@
     "aatree.h": "c",
     "stdlib.h": "c",
     "rope": "cpp",
-    "unordered_map": "cpp"
+    "unordered_map": "cpp",
+    "thread": "cpp"
 },
   "python.pythonPath": "/usr/local/opt/python/bin/python3.7",
 
