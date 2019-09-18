@@ -93,7 +93,6 @@ static void shellsort(RandAccessor lo, RandAccessor hi)
 {
     __shellsort(lo, hi, *lo);
 }
-
 template <typename RandAccessor, typename T>
 static inline void __merge(RandAccessor lo, RandAccessor mid, RandAccessor hi, const T &val)
 {
@@ -104,101 +103,125 @@ static inline void __merge(RandAccessor lo, RandAccessor mid, RandAccessor hi, c
     while (i <= mid && j <= hi)
         merged[cur++] = (*i < *j ? *(i++) : *(j++));
     while (i <= mid)
-        merged[cur++] = *i;
+        merged[cur++] = *(i++);
     while (j <= hi)
-        merged[cur++] = *j;
+        merged[cur++] = *(j++);
     copy(merged, merged + cur, lo);
 }
 
 template <typename RandAccessor, typename T>
-static void __mergesort(RandAccessor lo, RandAccessor hi, const T &val)
+static void __merge_sort(RandAccessor lo, RandAccessor hi, const T &val)
 {
     if (lo < hi)
     {
         RandAccessor mid = lo + (hi - lo) / 2;
-        __mergesort(lo, mid, val);
-        __mergesort(mid + 1, hi, val);
+        __merge_sort(lo, mid, val);
+        __merge_sort(mid + 1, hi, val);
         __merge(lo, mid, hi, val);
     }
-}
-
-template <typename RandAccessor>
-static void merge_sort(RandAccessor lo, RandAccessor hi)
-{
-    __mergesort(lo, hi, *lo);
 }
 template <typename RandAccessor, typename T>
 static void __merge_sort0(RandAccessor lo, RandAccessor hi, const T &val)
 {
-    int len = 1, n = b - arr;
+    int len = 1, n = hi - lo;
     while (len <= n)
     {
         for (RandAccessor i = lo; i + len <= hi; i += len * 2)
         {
-            RandAccessor left = i, mid = i + len - 1, right = i + 2 * len - 1;
+            RandAccessor mid = i + len - 1, right = i + 2 * len - 1;
             right = right > hi - 1 ? hi - 1 : right;
-            __merge(left, mid, right);
+            __merge(i, mid, right, *lo);
         }
-        len *= 2;
+        len <<= 1;
     }
+}
+
+template <typename RandAccessor>
+static void inline mergesort__(RandAccessor lo, RandAccessor hi)
+{
+    // __merge_sort(lo, hi, *lo);   // recursive
+    __merge_sort0(lo, hi, *lo);
 }
 
 #define CUTOFF 50
-template <typename T>
-static inline T __median3(T *lo, T *hi)
+template <typename RandAccessor>
+static inline void __median3(RandAccessor lo, RandAccessor hi)
 {
-    T *mid = lo + (hi - lo) / 2;
+    RandAccessor mid = lo + (hi - lo) / 2;
     if (*lo > *mid)
-        swap(*lo, *mid);
+        iter_swap(lo, mid);
     if (*lo > *hi)
-        swap(*lo, *hi);
+        iter_swap(lo, hi);
     if (*mid > *hi)
-        swap(*mid, *hi);
-    swap(*lo, *mid);
-    return *lo;
+        iter_swap(mid, hi);
+    iter_swap(hi, mid);
 }
 //Partition routine for quicksort
-template <typename T>
-static T *__partition(T *lo, T *hi)
+template <typename RandAccessor, typename T>
+static RandAccessor __partition(RandAccessor lo, RandAccessor hi, const T &val)
 {
-    T pivot = __median3(lo, hi);
-    T *pre = lo, *post = hi;
-    while (pre < post)
-    {
-        while (pre < post && pivot <= *post)
-            post--;
-        while (pre < post && *pre <= pivot)
-            pre++;
-        swap(*pre, *post);
-    }
-    *pre = pivot;
-    return pre;
+    __median3(lo, hi);
+    T pivot = *hi;
+    RandAccessor i = lo - 1, j = lo;
+    for (; j < hi; j++)
+        if (*j < pivot)
+        {
+            i++;
+            iter_swap(i, j);
+        }
+    iter_swap(i + 1, hi);
+    return i + 1;
 }
-template <typename T>
-static void quickSort(T *lo, T *hi)
+template <typename RandAccessor>
+static void __quicksort(RandAccessor lo, RandAccessor hi)
 {
     if (lo < hi)
     {
-        T *p = __partition(lo, hi);
-        quickSort(lo, p - 1);
-        quickSort(p + 1, hi);
+        RandAccessor p = __partition(lo, hi, *lo);
+        __quicksort(lo, p - 1);
+        __quicksort(p + 1, hi);
     }
 }
-template <typename T>
-static T *findKthMin(T *lo, T *hi, int k)
+template <typename RandAccessor>
+static void inline quicksort(RandAccessor lo, RandAccessor hi)
 {
-    T *p = __partition(lo, hi);
-    int cur = p - lo;
-    if (cur == k)
+    hi--;
+    __quicksort(lo, hi);
+}
+
+template <typename RandAccessor>
+void quickSort(RandAccessor lo, RandAccessor hi)
+{
+    if (lo >= hi)
+        return;
+    RandAccessor mid = lo;
+    mid = partition(lo + 1, hi, bind2nd(less<int>(), *mid));
+    iter_swap(mid - 1, lo);
+    quickSort(lo, mid - 1);
+    quickSort(mid, hi);
+}
+
+template <typename RandAccessor>
+static RandAccessor __kth_element(RandAccessor lo, RandAccessor hi, int k)
+{
+    RandAccessor p = __partition(lo, hi, *lo);
+    int r = p - lo;
+    if (r == k)
         return p;
-    else if (k < cur)
-        return findKthMin(lo, p - 1, k);
+    else if (k < r)
+        return __kth_element(lo, p - 1, k);
     else
-        return findKthMin(p + 1, hi, k - (cur + 1));
+        return __kth_element(p + 1, hi, k - (r + 1));
+}
+template <typename RandAccessor>
+static RandAccessor inline kth_element(RandAccessor lo, RandAccessor hi, int k)
+{
+    hi--;
+    return __kth_element(lo, hi, k);
 }
 
 template <typename T>
-static void partial_k_sort(T *lo, T *hi, int k)
+static void __partial_k_sort(T *lo, T *hi, int k)
 {
     // k < size / 2  sort k max elem to bottom;
     T *walk = hi;
@@ -208,8 +231,9 @@ static void partial_k_sort(T *lo, T *hi, int k)
     for (; hi - walk < k; walk--)
         pop_heap(lo, walk);
 }
+
 template <typename T>
-static void partial_k_sort2(T *lo, T *hi, int k)
+static void __partial_k_sort2(T *lo, T *hi, int k)
 {
     // k > size / 2  sort k max elem to neck;
     T *walk = lo + k;
@@ -268,8 +292,6 @@ static void tableSort(T *a, T *b)
         a[last] = val;
     }
 }
-
-
 
 }; // namespace dsa
 
