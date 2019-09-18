@@ -3,31 +3,26 @@
 
 #include "../cpp/huffman.h"
 using namespace dsa;
+#include <fstream>
 int main(int argc, char const *argv[])
 {
     /* code */
     //test();
     FREQ_table mp;
-    FILE *fp = fopen("./in.txt", "a+");
+    ifstream fin("./in.txt");
     char c;
-    if (!fp)
+    if (fin.bad())
     {
         cout << "Open File Failed !\n";
         exit(0);
     }
-    while (!feof(fp))
-    {
-        c = fgetc(fp);
-        cout << c << endl;
+    while (fin >> c)
         mp[c]++;
-    }
-    fclose(fp);
-
+    fin.close();
     for (auto kv : mp)
     {
         cout << kv.first << " -> " << kv.second << endl;
     }
-    ifstream fin("in.txt");
 
     return 0;
 }
