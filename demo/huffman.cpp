@@ -23,6 +23,8 @@ int main(int argc, char const *argv[])
     {
         cout << kv.first << " -> " << kv.second << endl;
     }
+    huffman hfm(mp);
+
 
     return 0;
 }

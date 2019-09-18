@@ -7,6 +7,7 @@
 namespace dsa
 {
 typedef unordered_map<char, int> FREQ_table;
+typedef unordered_map<char, string> PFCtable;
 class huffman : public bintree<char>
 {
 protected:
@@ -20,7 +21,7 @@ protected:
 public:
     huffman(FREQ_table &mp)
     {
-        _wpl = -1;
+        _wpl = 0;
         binode<char> *v, *w, *root;
         for (auto &kv : mp)
         {
@@ -39,11 +40,16 @@ public:
             _pq.push(root);
         }
         this->__update_root(root);
+        this->__update_status();
+    }
+    void generate(PFCtable &pt)
+    {
+        
     }
     inline void clear()
     {
         bintree<char>::clear();
-        _wpl = -1;
+        _wpl = 0;
     }
     int wpl()
     {
