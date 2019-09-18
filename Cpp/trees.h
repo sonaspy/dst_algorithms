@@ -9,6 +9,7 @@
 #include <string>
 #include <deque>
 #include <queue>
+#include <stack>
 using namespace std;
 namespace dsa
 {
@@ -63,9 +64,9 @@ struct binode
 {
     T val;
     binode *lc, *rc, *parent;
-    int height, depth, ltag, rtag;
+    int height, depth, ltag, rtag, freq;
     RBColor color;
-    binode(const T &x, binode<T> *p = nullptr, binode<T> *l = nullptr, binode<T> *r = nullptr, RBColor cl = blk) : val(x), lc(l), rc(r), parent(p), height(0), color(cl) {}
+    binode(const T &x, binode<T> *p = nullptr, binode<T> *l = nullptr, binode<T> *r = nullptr, RBColor cl = blk) : val(x), lc(l), rc(r), parent(p), height(0), freq(0), color(cl) {}
     bool inline is_l()
     {
         return parent && parent->lc == this;

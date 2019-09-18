@@ -1,71 +1,52 @@
-// author - sonaspy@outlook.com  
-// coding - utf_8 
+// author - sonaspy@outlook.com
+// coding - utf_8
 
 #ifndef __HUFFMAN__
 #define __HUFFMAN__
 #include "bintree.h"
 namespace dsa
 {
-
-
-template <typename T>
-class huffman : public bintree<T>
+typedef unordered_map<char, int> FREQ_table;
+class huffman : public bintree<char>
 {
 protected:
-    int _wpl;
-    struct __cmp
+    struct _cmp
     {
-        bool operator()(const binode<T> *a, const binode<T> *b) const { return a->val > b->val; }
+        bool operator()(const binode<char> *a, const binode<char> *b) const { return a->freq > b->freq; }
     };
-    void __build_hfm(vector<int> &data)
+    int _wpl;
+    priority_queue<binode<char> *, vector<binode<char> *>, _cmp> _pq;
+
+public:
+    huffman(FREQ_table &mp)
     {
-        priority_queue<binode<T> *, vector<binode<T> *>, __cmp> pq;
-        binode<T> *opnv, *w, *root;
-        for (auto i : data)
+        _wpl = -1;
+        binode<char> *v, *w, *root;
+        for (auto &kv : mp)
         {
-            binode<T> *opnv = new binode<T>(i);
-            pq.push_back(opnv);
+            v = new binode<char>(kv.first);
+            v->freq = kv.second;
+            _pq.push(v);
         }
-        while (pq.size() > 1)
+        while (_pq.size() > 1)
         {
-            opnv = pq.top(), pq.pop_front();
-            w = pq.top(), pq.pop_front();
-            root = new binode<T>(opnv->val + w->val);
-            root->lc = opnv, root->rc = w;
-            pq.push_back(root);
+            v = _pq.top(), _pq.pop();
+            w = _pq.top(), _pq.pop();
+            root = new binode<char>(0255, v, w);
+            v->parent = w->parent = root;
+            root->freq = v->freq + w->freq;
+            _wpl += root->freq;
+            _pq.push(root);
         }
         this->__update_root(root);
     }
-    void __wpl(binode<T> *opnv)
-    {
-        if (!opnv)
-            return;
-        if (opnv->lc)
-            _wpl += opnv->val;
-        __wpl(opnv->lc);
-        __wpl(opnv->rc);
-    };
-
-public:
-    huffman()
-    {
-        _wpl = -1;
-    }
-    void build(vector<int> &a)
-    {
-        if (a.empty())
-            return;
-        __build_hfm(a);
-    }
     inline void clear()
     {
-        bintree<T>::clear();
-        _wpl = 0;
+        bintree<char>::clear();
+        _wpl = -1;
     }
     int wpl()
     {
-        if (_wpl == -1)
-            __wpl(this->_root);
         return _wpl;
     }
     ~huffman() { this->clear(); }
