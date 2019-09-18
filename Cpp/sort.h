@@ -7,16 +7,66 @@
 using namespace std;
 namespace dsa
 {
-template <typename RandAccessor>
-static void HeapSort(RandAccessor lo, RandAccessor hi)
-{
-    make_heap(lo, hi);
-    for (int i = hi - lo; i > 1; --i)
-        pop_heap(lo, lo + i);
-}
 
 template <typename RandAccessor>
-static void bubbleSort(RandAccessor lo, RandAccessor hi)
+static inline void __siftdown(RandAccessor base, int pos, int border)
+{
+    int up = pos, down = pos * 2 + 1;
+    for (; down < border; up = down, down = down * 2 + 1)
+    {
+        if (down + 1 < border && *(base + down) < *(base + down + 1))
+            down++;
+        if (*(base + down) > *(base + up))
+            iter_swap(base + down, base + up);
+        else
+            break;
+    }
+}
+//[lo,hi)
+template <typename RandAccessor>
+static inline void __makeheap(RandAccessor lo, RandAccessor hi)
+{
+    int pos = (hi - lo) / 2 - 1, border = hi - lo;
+    for (; 0 <= pos; --pos)
+    {
+        __siftdown(lo, pos, border);
+    }
+}
+//[lo,hi)
+template <typename RandAccessor>
+static inline void __pushheap(RandAccessor lo, RandAccessor hi)
+{
+    int pos = hi - lo - 1, _up = (pos - 1) / 2;
+    for (; 1; pos = _up, _up = (_up - 1) / 2)
+    {
+        if (*(lo + pos) > *(lo + _up))
+            iter_swap(lo + pos, lo + _up);
+        else
+            break;
+        if (!_up)
+            break;
+    }
+}
+//[lo,hi)
+template <typename RandAccessor>
+static inline void __popheap(RandAccessor lo, RandAccessor hi)
+{
+    iter_swap(lo, hi - 1);
+    __siftdown(lo, 0, hi - 1 - lo);
+}
+
+//[lo,hi)
+template <typename RandAccessor>
+static void heapsort_(RandAccessor lo, RandAccessor hi)
+{
+    __makeheap(lo, hi);
+    for (int i = hi - lo; i > 1; --i)
+        __popheap(lo, lo + i);
+}
+
+//[lo,hi)
+template <typename RandAccessor>
+static void bubblesort(RandAccessor lo, RandAccessor hi)
 { // Bubble largest element in a[0:n-1] to hi.
     RandAccessor i, k;
     for (k = hi - 1; k > lo; k--)
@@ -32,9 +82,9 @@ static void bubbleSort(RandAccessor lo, RandAccessor hi)
             break;
     }
 }
-
+//[lo,hi)
 template <typename RandAccessor>
-static void double_bubbleSort(RandAccessor lo, RandAccessor hi)
+static void doublebubblesort(RandAccessor lo, RandAccessor hi)
 { // Bubble largest element in a[0:n-1] to hi.
     bool flag = true;
     hi--;
@@ -52,18 +102,18 @@ static void double_bubbleSort(RandAccessor lo, RandAccessor hi)
         lo++;
     }
 }
-
+//[lo,hi)
 template <typename RandAccessor>
-static void selectionSort(RandAccessor lo, RandAccessor hi)
+static void selectsort(RandAccessor lo, RandAccessor hi)
 { // Sort the n elements a[0:n-1].
 
     RandAccessor i;
     for (i = hi; i > lo + 1; i--)
         iter_swap(max_element(lo, i), (i - 1));
 }
-
+//[lo,hi)
 template <typename RandAccessor>
-static void insertionSort(RandAccessor lo, RandAccessor hi)
+static void insersort(RandAccessor lo, RandAccessor hi)
 { // [lo, hi)
     if (lo != hi)
         for (RandAccessor i = lo + 1; i != hi; ++i)
@@ -87,12 +137,13 @@ static void __shellsort(RandAccessor lo, RandAccessor hi, const T &val)
             *j = tmp;
         }
 }
-
+//[lo,hi)
 template <typename RandAccessor>
 static void shellsort(RandAccessor lo, RandAccessor hi)
 {
     __shellsort(lo, hi, *lo);
 }
+//[lo,hi]
 template <typename RandAccessor, typename T>
 static inline void __merge(RandAccessor lo, RandAccessor mid, RandAccessor hi, const T &val)
 {
@@ -109,6 +160,7 @@ static inline void __merge(RandAccessor lo, RandAccessor mid, RandAccessor hi, c
     copy(merged, merged + cur, lo);
 }
 
+//[lo,hi]
 template <typename RandAccessor, typename T>
 static void __merge_sort(RandAccessor lo, RandAccessor hi, const T &val)
 {
@@ -120,6 +172,7 @@ static void __merge_sort(RandAccessor lo, RandAccessor hi, const T &val)
         __merge(lo, mid, hi, val);
     }
 }
+
 template <typename RandAccessor, typename T>
 static void __merge_sort0(RandAccessor lo, RandAccessor hi, const T &val)
 {
@@ -136,10 +189,12 @@ static void __merge_sort0(RandAccessor lo, RandAccessor hi, const T &val)
     }
 }
 
+//[lo,hi)
 template <typename RandAccessor>
-static void inline mergesort__(RandAccessor lo, RandAccessor hi)
+static void inline mergesort_(RandAccessor lo, RandAccessor hi)
 {
-    // __merge_sort(lo, hi, *lo);   // recursive
+
+    //if recursive hi-- ;__merge_sort(lo, hi, *lo);
     __merge_sort0(lo, hi, *lo);
 }
 
@@ -156,7 +211,8 @@ static inline void __median3(RandAccessor lo, RandAccessor hi)
         iter_swap(mid, hi);
     iter_swap(hi, mid);
 }
-//Partition routine for quicksort
+
+//Partition routine for quicksort [lo,hi]
 template <typename RandAccessor, typename T>
 static RandAccessor __partition(RandAccessor lo, RandAccessor hi, const T &val)
 {
@@ -172,6 +228,7 @@ static RandAccessor __partition(RandAccessor lo, RandAccessor hi, const T &val)
     iter_swap(i + 1, hi);
     return i + 1;
 }
+//[lo,hi]
 template <typename RandAccessor>
 static void __quicksort(RandAccessor lo, RandAccessor hi)
 {
@@ -182,6 +239,8 @@ static void __quicksort(RandAccessor lo, RandAccessor hi)
         __quicksort(p + 1, hi);
     }
 }
+
+//[lo,hi)
 template <typename RandAccessor>
 static void inline quicksort(RandAccessor lo, RandAccessor hi)
 {
@@ -189,18 +248,20 @@ static void inline quicksort(RandAccessor lo, RandAccessor hi)
     __quicksort(lo, hi);
 }
 
+//[lo,hi)
 template <typename RandAccessor>
-void quickSort(RandAccessor lo, RandAccessor hi)
+void qksort(RandAccessor lo, RandAccessor hi)
 {
     if (lo >= hi)
         return;
     RandAccessor mid = lo;
     mid = partition(lo + 1, hi, bind2nd(less<int>(), *mid));
     iter_swap(mid - 1, lo);
-    quickSort(lo, mid - 1);
-    quickSort(mid, hi);
+    qksort(lo, mid - 1);
+    qksort(mid, hi);
 }
 
+//[lo,hi]
 template <typename RandAccessor>
 static RandAccessor __kth_element(RandAccessor lo, RandAccessor hi, int k)
 {
@@ -213,6 +274,7 @@ static RandAccessor __kth_element(RandAccessor lo, RandAccessor hi, int k)
     else
         return __kth_element(p + 1, hi, k - (r + 1));
 }
+//[lo,hi)
 template <typename RandAccessor>
 static RandAccessor inline kth_element(RandAccessor lo, RandAccessor hi, int k)
 {
@@ -227,9 +289,9 @@ static void __partial_k_sort(T *lo, T *hi, int k)
     T *walk = hi;
     if (k > hi - lo)
         return;
-    make_heap(lo, hi);
+    __makeheap(lo, hi);
     for (; hi - walk < k; walk--)
-        pop_heap(lo, walk);
+        __popheap(lo, walk);
 }
 
 template <typename T>
