@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <unordered_map>
 #include <unordered_set>
+#include <numeric>
 namespace dsa
 {
 void output_vec(vector<int> &a)
