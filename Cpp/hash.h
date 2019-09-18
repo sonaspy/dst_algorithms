@@ -1,46 +1,21 @@
-// functions to convert from type K to nonnegative integer
-// derived from similar classes in SGI STL
-
-
-#ifndef hash_
-#define hash_
-
-#include <iostream>
-#include <string>
-
+#include <bits/stdc++.h>
 using namespace std;
 
-template <class K> class hash;
+#ifndef __HASH_TABLE__
+#define __HASH_TABLE__
 
-template<>
-class hash<string>
+template <typename K, typename V>
+class hashtable
 {
-   public:
-      size_t operator()(const string theKey) const
-      {// Convert theKey to a nonnegative integer.
-         unsigned long hashValue = 0; 
-         int length = (int) theKey.length();
-         for (int i = 0; i < length; i++)
-            hashValue = 5 * hashValue + theKey.at(i);
-    
-         return size_t(hashValue);
-      }
-};
+protected:
+    int _size;
 
-template<>
-class hash<int>
-{
-   public:
-      size_t operator()(const int theKey) const
-      {return size_t(theKey);}
-};
-
-template<>
-class hash<long>
-{
-   public:
-      size_t operator()(const long theKey) const
-      {return size_t(theKey);}
+public:
+    bool insert(K &x) {}
+    bool count(K &x) {}
+    bool erase(K &x) {}
+    int size() {}
+    V *get(K &k) {}
 };
 
 #endif
