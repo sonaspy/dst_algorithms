@@ -1,7 +1,7 @@
 
 #ifndef __SET_UNION__
 #define __SET_UNION__
-#include <bits/stdc++.h>
+#include <vector>
 using namespace std;
 namespace dsa
 {
@@ -10,9 +10,9 @@ class _set_union
 public:
     int _size;
     vector<int> arr;
-    _set_union()
+    _set_union(int thesize = 1000)
     {
-        arr = vector<int>(9999, -1);
+        arr = vector<int>(thesize, -1);
     }
     void clear()
     {

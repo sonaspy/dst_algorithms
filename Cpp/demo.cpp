@@ -1,7 +1,8 @@
 // author -sonaspy@outlook.com
 // coding - utf_8
 
-#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
 
 #define test() freopen("in", "r", stdin)
 

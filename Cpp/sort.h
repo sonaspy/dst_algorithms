@@ -3,7 +3,6 @@
 
 #ifndef __NEW_SORT__
 #define __NEW_SORT__
-#include <bits/stdc++.h>
 #include "functions.h"
 using namespace std;
 namespace dsa
@@ -138,8 +137,6 @@ static void mergeSort_(T *arr, T *b)
     }
 }
 
-
-
 #define CUTOFF 50
 template <typename T>
 static inline T __median3(T *lo, T *hi)
@@ -193,8 +190,6 @@ static T *findKthMin(T *lo, T *hi, int k)
     else
         return findKthMin(p + 1, hi, k - (cur + 1));
 }
-
-
 
 template <typename T>
 static void partial_k_sort(T *lo, T *hi, int k)
@@ -280,9 +275,8 @@ static void tableSort(T *a, T *b)
 //     quickSort(mid, right);
 // }
 
+}; // namespace dsa
 
-};
-
- // namespace dsa
+// namespace dsa
 
 #endif
