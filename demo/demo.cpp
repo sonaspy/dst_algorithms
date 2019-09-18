@@ -14,6 +14,6 @@ int main(int argc, char const *argv[])
     //test();
     vector<int> a(100);
     iota(a.begin(), a.end(), 1);
-    cout << *__lower_bound(a.begin(), a.end(), 50);
+    cout << (0-1)/2;
     return 0;
 }

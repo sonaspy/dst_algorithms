@@ -8,7 +8,7 @@ namespace dsa
 {
 
 template <typename T>
-class heap
+class pri_queue
 {
     // data[1....n] data[0] = INT_MAX
 protected:
@@ -39,7 +39,7 @@ protected:
     }
 
 public:
-    heap()
+    pri_queue()
     {
         _size = 0;
     }
