@@ -21,6 +21,71 @@ void output_vec(vector<T> &a)
     cout << endl;
 }
 
+
+template <typename RandAccessor>
+static inline void __siftdown(RandAccessor base, int pos, int border)
+{
+    int up = pos, down = pos * 2 + 1;
+    for (; down < border; up = down, down = down * 2 + 1)
+    {
+        if (down + 1 < border && *(base + down) < *(base + down + 1))
+            down++;
+        if (*(base + down) > *(base + up))
+            iter_swap(base + down, base + up);
+        else
+            break;
+    }
+}
+//[lo,hi)
+template <typename RandAccessor>
+static inline void __makeheap(RandAccessor lo, RandAccessor hi)
+{
+    int pos = (hi - lo) / 2 - 1, border = hi - lo;
+    for (; 0 <= pos; --pos)
+    {
+        __siftdown(lo, pos, border);
+    }
+}
+//[lo,hi)
+template <typename RandAccessor>
+static inline void __pushheap(RandAccessor lo, RandAccessor hi)
+{
+    int pos = hi - lo - 1, _up = (pos - 1) / 2;
+    for (; 1; pos = _up, _up = (_up - 1) / 2)
+    {
+        if (*(lo + pos) > *(lo + _up))
+            iter_swap(lo + pos, lo + _up);
+        else
+            break;
+        if (!_up)
+            break;
+    }
+}
+//[lo,hi)
+template <typename RandAccessor>
+static inline void __popheap(RandAccessor lo, RandAccessor hi)
+{
+    iter_swap(lo, hi - 1);
+    __siftdown(lo, 0, hi - 1 - lo);
+}
+template <typename RandAccessor>
+static inline bool __isheap(RandAccessor lo, RandAccessor hi)
+{
+    int pos = (hi - lo) / 2 - 1, border = hi - lo;
+    if (!border)
+        return 0;
+    if (border % 2 == 0)
+    {
+        if (*(lo + pos) < *(lo + pos * 2 + 1))
+            return 0;
+        --pos;
+    }
+    for (; 0 <= pos; --pos)
+        if (*(lo + pos) < *(lo + pos * 2 + 1) || *(lo + pos) < *(lo + pos * 2 + 2))
+            return 0;
+    return 1;
+}
+
 template <typename T, typename RandAccessor>
 RandAccessor __lower_bound(RandAccessor lo, RandAccessor hi, const T &val)
 { // binary search
@@ -40,8 +105,6 @@ RandAccessor __lower_bound(RandAccessor lo, RandAccessor hi, const T &val)
     }
     return lo;
 }
-
-
 
 template <typename T, typename RandAccessor>
 RandAccessor __upper_bound(RandAccessor lo, RandAccessor hi, const T &val)
