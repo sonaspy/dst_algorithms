@@ -2,8 +2,8 @@
 // coding - utf_8
 
 #define SIZE 20
-#include <bits/stdc++.h>
-#include "dsa.h"
+
+#include "../cpp/dsa.h"
 #define test() freopen("in", "r", stdin)
 using namespace dsa;
 using namespace std;

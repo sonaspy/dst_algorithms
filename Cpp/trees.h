@@ -7,6 +7,8 @@
 #include <unordered_map>
 #include <iostream>
 #include <string>
+#include <deque>
+#include <queue>
 using namespace std;
 namespace dsa
 {
