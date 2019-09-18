@@ -87,51 +87,57 @@ static void __shellsort(RandAccessor lo, RandAccessor hi, const T &val)
             *j = tmp;
         }
 }
+
 template <typename RandAccessor>
 static void shellsort(RandAccessor lo, RandAccessor hi)
 {
     __shellsort(lo, hi, *lo);
 }
+
 template <typename RandAccessor, typename T>
 static inline void __merge(RandAccessor lo, RandAccessor mid, RandAccessor hi, const T &val)
 {
     // a temporary array to store merged result
-    vector<T> merged;
+    T merged[hi - lo + 1];
     RandAccessor i = lo, j = mid + 1;
+    int cur = 0;
     while (i <= mid && j <= hi)
-        merged.push_back(*i < *j ? *(i++) : *(j++));
-    merged.insert(merged.end(), i, mid + 1);
-    merged.insert(merged.end(), j, hi + 1);
-    copy(merged.begin(), merged.end(), lo);
+        merged[cur++] = (*i < *j ? *(i++) : *(j++));
+    while (i <= mid)
+        merged[cur++] = *i;
+    while (j <= hi)
+        merged[cur++] = *j;
+    copy(merged, merged + cur, lo);
 }
+
 template <typename RandAccessor, typename T>
-static void __mergeSort(RandAccessor lo, RandAccessor hi, const T &val)
+static void __mergesort(RandAccessor lo, RandAccessor hi, const T &val)
 {
     if (lo < hi)
     {
         RandAccessor mid = lo + (hi - lo) / 2;
-        __mergeSort(lo, mid, val);
-        __mergeSort(mid + 1, hi, val);
+        __mergesort(lo, mid, val);
+        __mergesort(mid + 1, hi, val);
         __merge(lo, mid, hi, val);
     }
 }
 
 template <typename RandAccessor>
-static void mergeSort(RandAccessor lo, RandAccessor hi)
+static void merge_sort(RandAccessor lo, RandAccessor hi)
 {
-    __mergeSort(lo, hi, *lo);
+    __mergesort(lo, hi, *lo);
 }
-template <typename T>
-static void mergeSort_(T *arr, T *b)
+template <typename RandAccessor, typename T>
+static void __merge_sort0(RandAccessor lo, RandAccessor hi, const T &val)
 {
     int len = 1, n = b - arr;
     while (len <= n)
     {
-        for (int i = 0; i + len <= n; i += len * 2)
+        for (RandAccessor i = lo; i + len <= hi; i += len * 2)
         {
-            int lo = i, mid = i + len - 1, hi = i + 2 * len - 1;
-            hi = hi > n - 1 ? n - 1 : hi;
-            __merge(arr + lo, arr + mid, arr + hi);
+            RandAccessor left = i, mid = i + len - 1, right = i + 2 * len - 1;
+            right = right > hi - 1 ? hi - 1 : right;
+            __merge(left, mid, right);
         }
         len *= 2;
     }
@@ -263,17 +269,7 @@ static void tableSort(T *a, T *b)
     }
 }
 
-// template <class Iter>
-// void quickSort(Iter* left, Iter* right)
-// {
-//     if (left >= right)
-//         return;
-//     Iter *mid = left;
-//     mid = partition(left + 1, right, bind2nd(less<int>(), *mid));
-//     iter_swap(mid - 1, left);
-//     quickSort(left, mid - 1);
-//     quickSort(mid, right);
-// }
+
 
 }; // namespace dsa
 

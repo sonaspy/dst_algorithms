@@ -24,39 +24,41 @@ void output_vec(vector<T> &a)
 template <typename T, typename RandAccessor>
 RandAccessor __lower_bound(RandAccessor lo, RandAccessor hi, const T &val)
 { // binary search
-    int len = hi - lo, half_len;
+    int _length = hi - lo, _half_len;
     RandAccessor mid;
-    while (len > 0)
+    while (_length > 0)
     {
-        half_len = len >> 1;
-        mid = lo + half_len;
+        _half_len = _length >> 1;
+        mid = lo + _half_len;
         if (*mid < val)
         {
             lo = mid + 1;
-            len -= half_len + 1;
+            _length -= _half_len + 1;
         }
         else
-            len = half_len;
+            _length = _half_len;
     }
     return lo;
 }
 
+
+
 template <typename T, typename RandAccessor>
 RandAccessor __upper_bound(RandAccessor lo, RandAccessor hi, const T &val)
 { // binary search
-    int len = hi - lo, half_len;
+    int _length = hi - lo, _half_len;
     RandAccessor mid;
-    while (len > 0)
+    while (_length > 0)
     {
-        half_len = len >> 1;
-        mid = lo + half_len;
+        _half_len = _length >> 1;
+        mid = lo + _half_len;
         if (*mid <= val)
         {
             lo = mid + 1;
-            len -= half_len + 1;
+            _length -= _half_len + 1;
         }
         else
-            len = half_len;
+            _length = _half_len;
     }
     return lo;
 }
