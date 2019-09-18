@@ -14,7 +14,12 @@ struct TreeNode
     int height = 1, depth = 1;
     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
-
+void finkIn2dArr(int target, int **a, int n)
+{
+    int i = 0, j = n;
+    while (a[i][j] != target)
+        a[i][j] < target ? ++i : --j;
+}
 class solution12_13
 {
 public:

@@ -1,8 +1,8 @@
 // author - sonaspy@outlook.com
 // coding - utf_8
 
-#ifndef __RED_BLK___
-#define __RED_BLK___
+#ifndef __RB_TREE__
+#define __RB_TREE__
 
 #include "avltree.h"
 namespace dsa
