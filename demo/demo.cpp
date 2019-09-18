@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include <vector>
-#include <bitset>
 #define test() freopen("in", "r", stdin)
 
 using namespace std;
@@ -19,13 +18,7 @@ int main(int argc, char const *argv[])
 {
     /* code */
     //test();
-    FILE *fp = fopen("./in.txt", "a+");
-    char c;
-    if (!fp)
-    {
-        cout << "Open File Failed !\n";
-        exit(0);
-    }
-
+    char c = 0xff;
+    cout << c;
     return 0;
 }

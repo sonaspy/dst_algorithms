@@ -1,0 +1,85 @@
+The Total optimal WPL is -> 230
+t
+freq is -> 9
+code is -> " 111 "
+e
+freq is -> 6
+code is -> " 010 "
+o
+freq is -> 5
+code is -> " 000 "
+a
+freq is -> 4
+code is -> " 1000 "
+i
+freq is -> 3
+code is -> " 0011 "
+n
+freq is -> 3
+code is -> " 0110 "
+r
+freq is -> 3
+code is -> " 0111 "
+m
+freq is -> 2
+code is -> " 10010 "
+l
+freq is -> 2
+code is -> " 11011 "
+f
+freq is -> 2
+code is -> " 11000 "
+x
+freq is -> 2
+code is -> " 10100 "
+u
+freq is -> 2
+code is -> " 0010 "
+d
+freq is -> 2
+code is -> " 10110 "
+F
+freq is -> 1
+code is -> " 101011 "
+#
+freq is -> 1
+code is -> " 101110 "
+L
+freq is -> 1
+code is -> " 101111 "
+A
+freq is -> 1
+code is -> " 100111 "
+=
+freq is -> 1
+code is -> " 110010 "
+p
+freq is -> 1
+code is -> " 110011 "
+c
+freq is -> 1
+code is -> " 110100 "
+s
+freq is -> 1
+code is -> " 110101 "
+*
+freq is -> 1
+code is -> " 100110 "
+z
+freq is -> 1
+code is -> " 101010 "
+ðŸŒ²  HUFFMAN TREE  ðŸŒ²
+                                                               ÿ                                                                 
+                                               /                               \                                                 
+                               ÿ                                                               ÿ                                 
+                       /               \                                               /               \                         
+               ÿ                               ÿ                               ÿ                               ÿ                 
+           /       \                       /       \                       /       \                       /       \             
+       o               ÿ               e               ÿ               ÿ               ÿ               ÿ               t         
+                     /   \                           /   \           /   \           /   \           /   \                       
+                   u       i                       n       r       a       ÿ       ÿ       ÿ       ÿ       ÿ                     
+                                                                          / \     / \     / \     / \     / \                    
+                                                                         m   ÿ   x   ÿ   d   ÿ   f   ÿ   ÿ   l                   
+                                                                            / \     / \     / \     / \ / \                      
+                                                                            * A     z F     # L     = p c s                      
+ðŸŒ²  HUFFMAN TREE  ðŸŒ²
