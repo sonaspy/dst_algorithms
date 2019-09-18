@@ -26,20 +26,12 @@ int main(int argc, char const *argv[])
     cout << bt.root()->key.size() << endl;
     cout << bt.root()->child.size() << endl;
     string s;
-    int key1, key2, c;
+    int key1 = 100, key2 = 800, c;
     char cc;
-    while (cin >> s && s != "q")
+
+    for (int i = key1; i <= key2; i++)
     {
-        stringstream ss(s);
-        ss >> key1 >> cc >> key2;
-        c = 0;
-        cout << key1 << " " << key2 << endl;
-        for (int i = key1; i <= key2; i++)
-        {
-            if (bt.erase(i))
-                c++;
-        }
-        cout << c << endl;
+        bt.search(i);
     }
 
     endTime = clock();

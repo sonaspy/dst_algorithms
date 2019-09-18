@@ -2,23 +2,18 @@
 // coding - utf_8
 
 #include <iostream>
-#include <vector>
+#include "../cpp/dsa.h"
 #define test() freopen("in", "r", stdin)
-
+using namespace dsa;
 using namespace std;
-template <typename T>
-class sd;
 
-template <typename T>
-class sd
-{
-};
 int fun(int &c) { return c; }
 int main(int argc, char const *argv[])
 {
     /* code */
     //test();
-    char c = 0xff;
-    cout << c;
+    vector<int> a(100);
+    iota(a.begin(), a.end(), 1);
+    cout << *__lower_bound(a.begin(), a.end(), 50);
     return 0;
 }
