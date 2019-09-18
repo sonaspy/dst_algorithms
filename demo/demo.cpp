@@ -3,19 +3,25 @@
 
 #include <iostream>
 #include "../cpp/dsa.h"
-#include<algorithm>
+#include <algorithm>
 #define test() freopen("in", "r", stdin)
 using namespace dsa;
 using namespace std;
-
-int fun(int &c) { return c; }
+struct _______node
+{
+    int x;
+};
+#define setrb(i) ((i) ? (i)->x = 1 : 0)
+int fun(int &c)
+{
+    return c;
+}
 int main(int argc, char const *argv[])
 {
     /* code */
     //test();
     vector<int> a(100);
-    iota(a.begin(), a.end(), 1);
-    cout << less<int>()(2,2);
-    make_heap(a.begin(), a.end());
+    _______node *i = nullptr;
+    setrb(i);
     return 0;
 }

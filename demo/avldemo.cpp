@@ -3,7 +3,7 @@
 
 #include "../cpp/dsa.h"
 
-#define SIZE 10
+#define SIZE 20
 using namespace std;
 using namespace dsa;
 
@@ -20,7 +20,7 @@ int main(int argc, char const *argv[])
     clock_t startTime, endTime;
     startTime = clock();
 
-    rbtree<int> ax;
+    avltree<int> ax;
     ax.build(a);
     cout << ax.size() << endl;
     ax.printTreeHorizon();

@@ -28,7 +28,7 @@ public:
     {
         // binode<T> *&w = this->search(x);
         // if (w)
-        //     return false;
+        //     return;
         // w = new binode<T>(x, this->_last);
         // this->_size++;
         // binode<T> *g = this->_last;
@@ -37,7 +37,20 @@ public:
         //     this->__updateheight(g);
         //     if (!nodeBalanced(g))
         //     {
-        //         __rotate_zz(this->_root, g);
+        //         if (_factor(g) == 2)
+        //         {
+        //             if (_factor(g) == 1)
+        //                 __rotate_left(g);
+        //             else
+        //                 __rotate_right(g->lc), __rotate_left(g);
+        //         }
+        //         if (_factor(g) == -2)
+        //         {
+        //             if (_factor(g) == -1)
+        //                 __rotate_right(g);
+        //             else
+        //                 __rotate_left(g->rc), __rotate_right(g);
+        //         }
         //         break;
         //     }
         //     this->__updateheight(g);
@@ -53,6 +66,32 @@ public:
     }
 
 protected:
+    inline void __rotate_right(binode<T> *x)
+    {
+        binode<T> *y = x->rc;
+        x->rc = y->lc;
+        if (y->lc)
+            y->lc->parent = x;
+        y->parent = x->parent;
+        x->isroot() ? (this->_root = y) : from_parent2(x) = y;
+        y->lc = x;
+        x->parent = y;
+        bintree<T>::__updateheight(x);
+        bintree<T>::__updateheight(y);
+    }
+    inline void __rotate_left(binode<T> *x)
+    {
+        binode<T> *y = x->lc;
+        x->lc = y->rc;
+        if (y->rc)
+            y->rc->parent = x;
+        y->parent = x->parent;
+        x->isroot() ? (this->_root = y) : from_parent2(x) = y;
+        y->rc = x;
+        x->parent = y;
+        bintree<T>::__updateheight(x);
+        bintree<T>::__updateheight(y);
+    }
     inline void _zig(binode<T> *&v)
     {
         binode<T> *y = v->lc;
