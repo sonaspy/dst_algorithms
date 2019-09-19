@@ -11,14 +11,41 @@ namespace dsa
 template <typename T>
 class rbtree : public avltree<T>
 {
-    // in rbtree the memver 'height' is blk height
+    // in rbtree the memver 'height' is BLK height
 protected:
-#define _blk(opnv) ((!(opnv) || (opnv)->color == blk))
+#define _blk(opnv) ((!(opnv) || (opnv)->color == BLK))
 #define _red(opnv) (!_blk(opnv))
-#define set_blk(opnv) (((opnv) ? (opnv->color = blk) : 0))
-#define set_red(opnv) (((opnv) ? (opnv->color = red) : 0))
-#define rb_color(opnv) (((opnv) ? (opnv->color) : blk))
+#define set_blk(opnv) (((opnv) ? (opnv->color = BLK) : 0))
+#define set_red(opnv) (((opnv) ? (opnv->color = RED) : 0))
+#define rb_color(opnv) (((opnv) ? (opnv->color) : BLK))
 #define _downblk(opnv) (((opnv) ? (opnv->downblk) : 0))
+
+    inline void __rotate_l(binode<T> *x)
+    {
+        binode<T> *y = x->rc;
+        x->rc = y->lc;
+        if (!y)
+            return;
+        if (y->lc)
+            y->lc->parent = x;
+        y->parent = x->parent;
+        x->isroot() ? (this->_root = y) : from_parent2(x) = y;
+        y->lc = x;
+        x->parent = y;
+    }
+    inline void __rotate_r(binode<T> *x)
+    {
+        binode<T> *y = x->lc;
+        x->lc = y->rc;
+        if (!y)
+            return;
+        if (y->rc)
+            y->rc->parent = x;
+        y->parent = x->parent;
+        x->isroot() ? (this->_root = y) : from_parent2(x) = y;
+        y->rc = x;
+        x->parent = y;
+    }
     void __double_red_solution(binode<T> *opnv)
     {
         binode<T> *p, *g, *u;
@@ -36,17 +63,17 @@ protected:
             }
             if (p->is_l() && opnv->is_r())
             {
-                this->__rotate_right(p);
+                this->__rotate_l(p);
                 swap(opnv, p);
             }
             else if (p->is_r() && opnv->is_l())
             {
-                this->__rotate_left(p);
+                this->__rotate_r(p);
                 swap(opnv, p);
             }
             set_blk(p);
             set_red(g);
-            p->is_l() ? this->__rotate_left(g) : this->__rotate_right(g);
+            p->is_l() ? this->__rotate_r(g) : this->__rotate_l(g);
         }
         set_blk(this->_root);
     }
@@ -54,80 +81,6 @@ protected:
     void __double_blk_solution(binode<T> *opnv, binode<T> *p)
     {
         binode<T> *oths;
-
-        while ((!opnv || _blk(opnv)) && opnv != this->_root)
-        {
-            if (p->lc == opnv)
-            {
-                oths = p->rc;
-                if (_red(oths))
-                {
-                    set_blk(oths);
-                    set_red(p);
-                    this->__rotate_right(p);
-                    oths = p->rc;
-                }
-                if ((!oths->lc || _blk(oths->lc)) &&
-                    (!oths->rc || _blk(oths->rc)))
-                {
-                    set_red(oths);
-                    opnv = p;
-                    p = opnv->parent;
-                }
-                else
-                {
-                    if (!oths->rc || _blk(oths->rc))
-                    {
-                        set_blk(oths->lc);
-                        set_red(oths);
-                        this->__rotate_left(oths);
-                        oths = p->rc;
-                    }
-                    oths->color = rb_color(p);
-                    set_blk(p);
-                    set_blk(oths->rc);
-                    this->__rotate_right(p);
-                    opnv = this->_root;
-                    break;
-                }
-            }
-            else
-            {
-                oths = p->lc;
-                if (_red(oths))
-                {
-                    set_blk(oths);
-                    set_red(p);
-                    this->__rotate_left(p);
-                    oths = p->lc;
-                }
-                if ((!oths->lc || _blk(oths->lc)) &&
-                    (!oths->rc || _blk(oths->rc)))
-                {
-                    set_red(oths);
-                    opnv = p;
-                    p = opnv->parent;
-                }
-                else
-                {
-                    if (!oths->lc || _blk(oths->lc))
-                    {
-                        set_blk(oths->rc);
-                        set_red(oths);
-                        this->__rotate_right(oths);
-                        oths = p->lc;
-                    }
-                    oths->color = rb_color(p);
-                    set_blk(p);
-                    set_blk(oths->lc);
-                    this->__rotate_left(p);
-                    opnv = this->_root;
-                    break;
-                }
-            }
-        }
-        if (opnv)
-            set_blk(opnv);
     }
     void __isrbtree(binode<T> *opnv)
     {
@@ -135,12 +88,12 @@ protected:
             return;
         __isrbtree(opnv->lc);
         __isrbtree(opnv->rc);
-        if (opnv->color == red && (rb_color(opnv->lc) == red || rb_color(opnv->rc) == red))
+        if (opnv->color == RED && (rb_color(opnv->lc) == RED || rb_color(opnv->rc) == RED))
             this->_isRBtree = 0;
         if (_downblk(opnv->lc) != _downblk(opnv->rc))
             this->_isRBtree = 0;
         else
-            opnv->downblk = opnv->color == blk ? _downblk(opnv->lc) : _downblk(opnv->lc);
+            opnv->downblk = opnv->color == BLK ? _downblk(opnv->lc) : _downblk(opnv->lc);
     }
 
 public:
@@ -153,28 +106,21 @@ public:
         binode<T> *&w = this->search(x);
         if (w)
             return false;
-        w = new binode<T>(x, this->_last, nullptr, nullptr, red);
+        w = new binode<T>(x, this->_last, nullptr, nullptr, RED);
         this->_size++;
         __double_red_solution(w);
         return true;
     }
     bool erase(const T &x)
     {
-        binode<T> *&opnv = this->search(x);
-        if (!opnv)
-            return false;
-        binode<T> *s = opnv->successor();
-        RBColor col = s ? s->color : blk;
-        binode<T> *r = this->__erase_at(opnv, this->_last);
-        if (col == blk)
-            __double_blk_solution(r, this->_last);
+        bstree<T>::__erase(this->_root, x);
         return true;
     }
     bool isrbtree()
     {
         this->_isRBtree = 1;
         __isrbtree(this->_root);
-        return this->_isRBtree && this->_root->color == blk;
+        return this->_isRBtree && this->_root->color == BLK;
     }
     void build(vector<T> &a)
     {

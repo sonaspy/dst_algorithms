@@ -46,6 +46,21 @@ protected:
     {
         _root = opnv;
     }
+    inline void __freeallnodes()
+    {
+        q.clear();
+        if (_root)
+            q.push_back(_root);
+        while (q.size())
+        {
+            if (q.front()->lc)
+                q.push_back(q.front()->lc);
+            if (q.front()->rc)
+                q.push_back(q.front()->rc);
+            delete q.front();
+            q.pop_front();
+        }
+    }
     binode<T> *__build_pi(int opnv, int lo, int hi, binode<T> *p)
     {
         if (hi < lo)
@@ -72,7 +87,7 @@ protected:
         else
             tp = to_string(opnv->val);
         if (_isRBtree)
-            tp += opnv->color == red ? "🔴" : "⚫️";
+            tp += opnv->color == RED ? "🔴" : "⚫️";
         while (tp.size() < _unitsize)
             tp.push_back(' ');
         this->disp_buf[root_x][root_y] = tp;
@@ -368,6 +383,7 @@ public:
         _size = 0;
         _isunique = 1;
         disp_buf.clear();
+        __freeallnodes();
     }
 
     void printhorizon()

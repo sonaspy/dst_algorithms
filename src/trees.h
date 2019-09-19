@@ -28,8 +28,8 @@ namespace dsa
 
 enum RBColor
 {
-    red,
-    blk
+    RED,
+    BLK
 };
 template <typename T>
 class rbtree;
@@ -82,7 +82,7 @@ struct binode
     binode *lc, *rc, *parent;
     int height, depth, ltag, rtag, freq, downblk;
     RBColor color;
-    binode(const T &x, binode<T> *p = nullptr, binode<T> *l = nullptr, binode<T> *r = nullptr, RBColor cl = blk) : val(x), lc(l), rc(r), parent(p), height(0), freq(0), color(cl), downblk(0) {}
+    binode(const T &x, binode<T> *p = nullptr, binode<T> *l = nullptr, binode<T> *r = nullptr, RBColor cl = BLK) : val(x), lc(l), rc(r), parent(p), height(0), freq(0), color(cl), downblk(0) {}
     bool inline is_l()
     {
         return parent && parent->lc == this;

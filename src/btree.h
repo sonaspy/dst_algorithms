@@ -7,86 +7,90 @@
 #include "trees.h"
 namespace dsa
 {
+
 template <typename T>
 class btree
 {
 protected:
     int _size, _order;
     bnode<T> *_root, *_last;
-    void __overfSolution(bnode<T> *opnv)
+    unordered_set<bnode<T> *> _memoryOfNode;
+
+    void __overfSolution(bnode<T> *v)
     {
-        if (opnv->key.size() <= _order - 1)
+        if (v->key.size() <= _order - 1)
             return;
         int s = _order / 2;
         bnode<T> *u = new bnode<T>();
 
         // right split [0 1 2 |<3>| 4 5]
-        u->child.insert(u->child.begin(), opnv->child.begin() + s + 1, opnv->child.end());
-        opnv->child.erase(opnv->child.begin() + s + 1, opnv->child.end());
+        u->child.insert(u->child.begin(), v->child.begin() + s + 1, v->child.end());
+        v->child.erase(v->child.begin() + s + 1, v->child.end());
 
-        u->key.insert(u->key.begin(), opnv->key.begin() + s + 1, opnv->key.begin() + _order);
-        opnv->key.erase(opnv->key.begin() + s + 1, opnv->key.begin() + _order);
+        u->key.insert(u->key.begin(), v->key.begin() + s + 1, v->key.begin() + _order);
+        v->key.erase(v->key.begin() + s + 1, v->key.begin() + _order);
 
-        if (opnv->child.front())
+        if (v->child.front())
         {
             for (int j = 0; j < _order - s; j++)
                 u->child[j]->parent = u;
         }
-        bnode<T> *p = opnv->parent;
+        bnode<T> *p = v->parent;
         if (!p)
         {
             p = new bnode<T>();
             _root = p;
-            p->child[0] = opnv;
-            opnv->parent = p;
+            p->child[0] = v;
+            v->parent = p;
         }
 
-        int r = __upper_bound(p->key.begin(), p->key.end(), opnv->key[0]) - p->key.begin();
-        p->key.insert(p->key.begin() + r, *(opnv->key.begin() + s));
-        opnv->key.erase(opnv->key.begin() + s);
+        int r = upper_bound(p->key.begin(), p->key.end(), v->key[0]) - p->key.begin();
+        p->key.insert(p->key.begin() + r, *(v->key.begin() + s));
+        v->key.erase(v->key.begin() + s);
         p->child.insert(p->child.begin() + r + 1, u);
         u->parent = p;
 
         __overfSolution(p);
     }
 
-    void __underfSolution(bnode<T> *opnv)
+    void __underfSolution(bnode<T> *v)
     {
         //cout << "s-1\n";
-        if (!opnv)
+        if (!v)
             return;
-        if ((_order - 1) / 2 <= opnv->key.size())
+        if ((_order - 1) / 2 <= v->key.size())
             return;
         //cout << "s-2\n";
-        bnode<T> *p = opnv->parent;
+        bnode<T> *p = v->parent;
         if (!p)
         {
             //cout << "s-3\n";
-            if (opnv->key.empty() && opnv->child[0])
+            if (v->key.empty() && v->child[0])
             {
-                _root = opnv->child[0];
+                _root = v->child[0];
                 _root->parent = nullptr;
-                opnv->child[0] = nullptr;
-                __release(opnv);
+                v->child[0] = nullptr;
+                _memoryOfNode.erase(v);
+                delete v;
             }
             return;
         }
         int r = -1;
         //cout << "sp" << endl;
-        while (p->child[++r] != opnv)
+        while (p->child[++r] != v)
             ;
         if (0 < r)
         {
             bnode<T> *ls = p->child[r - 1];
             if ((_order - 1) / 2 < ls->key.size())
             {
-                opnv->key.insert(opnv->key.begin(), p->key[r - 1]);
+                v->key.insert(v->key.begin(), p->key[r - 1]);
                 p->key[r - 1] = ls->key.back();
                 ls->key.pop_back();
-                opnv->child.insert(opnv->child.begin(), ls->child.back());
+                v->child.insert(v->child.begin(), ls->child.back());
                 ls->child.pop_back();
-                if (opnv->child[0])
-                    opnv->child[0]->parent = opnv;
+                if (v->child[0])
+                    v->child[0]->parent = v;
                 //cout << "s1" << endl;
                 return;
             }
@@ -97,13 +101,13 @@ protected:
             if ((_order - 1) / 2 < rs->key.size())
             {
                 //cout << "s2\n";
-                opnv->key.insert(opnv->key.end(), p->key[r]);
+                v->key.insert(v->key.end(), p->key[r]);
                 p->key[r] = rs->key.front();
                 rs->key.erase(rs->key.begin());
-                opnv->child.push_back(rs->child.front());
+                v->child.push_back(rs->child.front());
                 rs->child.erase(rs->child.begin());
-                if (opnv->child.back())
-                    opnv->child.back()->parent = opnv;
+                if (v->child.back())
+                    v->child.back()->parent = v;
                 return;
             }
         }
@@ -115,16 +119,17 @@ protected:
             p->key.erase(p->key.begin() + r - 1);
             p->child.erase(p->child.begin() + r);
 
-            ls->child.push_back(opnv->child.front());
-            opnv->child.erase(opnv->child.begin());
+            ls->child.push_back(v->child.front());
+            v->child.erase(v->child.begin());
             if (ls->child.back())
                 ls->child.back()->parent = ls;
-            ls->key.insert(ls->key.end(), opnv->key.begin(), opnv->key.end());
-            ls->child.insert(ls->child.end(), opnv->child.begin(), opnv->child.end());
+            ls->key.insert(ls->key.end(), v->key.begin(), v->key.end());
+            ls->child.insert(ls->child.end(), v->child.begin(), v->child.end());
             for (auto &lsch : ls->child)
                 if (lsch)
                     lsch->parent = ls;
-            __release(opnv);
+            _memoryOfNode.erase(v);
+            delete v;
         }
         else
         {
@@ -134,50 +139,52 @@ protected:
             p->key.erase(p->key.begin() + r);
             p->child.erase(p->child.begin() + r);
 
-            rs->child.insert(rs->child.begin(), opnv->child.back());
-            opnv->child.pop_back();
+            rs->child.insert(rs->child.begin(), v->child.back());
+            v->child.pop_back();
 
             if (rs->child.front())
                 rs->child.front()->parent = rs;
-            rs->key.insert(rs->key.begin(), opnv->key.begin(), opnv->key.end());
-            rs->child.insert(rs->child.begin(), opnv->child.begin(), opnv->child.end());
+            rs->key.insert(rs->key.begin(), v->key.begin(), v->key.end());
+            rs->child.insert(rs->child.begin(), v->child.begin(), v->child.end());
 
             for (auto &rsch : rs->child)
                 if (rsch)
                     rsch->parent = rs;
 
-            __release(opnv);
+            _memoryOfNode.erase(v);
+            delete v;
         }
         __underfSolution(p);
         //cout << "end\n";
     }
 
-    inline void _output_node(bnode<T> *opnv)
+    inline void _output_node(bnode<T> *v)
     {
         cout << " ( ";
-        for (auto i : opnv->key)
+        for (auto i : v->key)
             cout << i << " ";
         cout << ") ";
     }
 
-    void __inorder(bnode<T> *opnv)
+    void __inorder(bnode<T> *root)
     {
-        if (!opnv)
+        if (!root)
             return;
         int i;
-        for (i = 0; i < opnv->key.size(); i++)
+        for (i = 0; i < root->key.size(); i++)
         {
-            __inorder(opnv->child[i]);
-            cout << opnv->key[i] << " -> ";
+            __inorder(root->child[i]);
+            cout << root->key[i] << " -> ";
         }
-        for (; i < opnv->child.size(); i++)
-            __inorder(opnv->child[i]);
+        for (; i < root->child.size(); i++)
+            __inorder(root->child[i]);
     }
 
 public:
     btree<T>(int order = 3) : _order(order), _size(0)
     {
         _root = new bnode<T>();
+        _memoryOfNode.insert(_root);
     }
     ~btree()
     {
@@ -185,18 +192,18 @@ public:
     }
     inline void printTree()
     {
-        bnode<T> *opnv = _root;
+        bnode<T> *v = _root;
         queue<bnode<T> *> q, nexq;
-        q.push(opnv);
+        q.push(v);
         int le = 1;
         while (q.size())
         {
             printf("LeveL %d : ", le);
             while (q.size())
             {
-                opnv = q.front(), q.pop();
-                _output_node(opnv);
-                for (auto chi : opnv->child)
+                v = q.front(), q.pop();
+                _output_node(v);
+                for (auto chi : v->child)
                     if (chi)
                         nexq.push(chi);
             }
@@ -207,6 +214,9 @@ public:
     }
     inline void const clear()
     {
+        for (auto &ptr : _memoryOfNode)
+            delete ptr;
+        _memoryOfNode.clear();
     }
     inline int const order() { return this->_order; }
     inline int const size() { return this->_size; }
@@ -214,15 +224,15 @@ public:
     inline bool const empty() { return !size(); }
     bnode<T> *search(const T &x)
     {
-        bnode<T> *opnv = _root;
+        bnode<T> *v = _root;
         _last = nullptr;
-        while (opnv)
+        while (v)
         {
-            auto it = __lower_bound(opnv->key.begin(), opnv->key.end(), x);
-            int r = it - opnv->key.begin();
-            if (it != opnv->key.end() && *it == x)
-                return opnv;
-            _last = opnv, opnv = opnv->child[r];
+            auto it = lower_bound(v->key.begin(), v->key.end(), x);
+            int r = it - v->key.begin();
+            if (it != v->key.end() && *it == x)
+                return v;
+            _last = v, v = v->child[r];
         }
         return nullptr;
     }
@@ -238,10 +248,10 @@ public:
     }
     bool insert(const T &x)
     {
-        bnode<T> *opnv = search(x);
-        if (opnv)
+        bnode<T> *v = search(x);
+        if (v)
             return 0;
-        int r = __upper_bound(_last->key.begin(), _last->key.end(), x) - _last->key.begin();
+        int r = upper_bound(_last->key.begin(), _last->key.end(), x) - _last->key.begin();
         _last->key.insert(_last->key.begin() + r, x);
         _last->child.insert(_last->child.begin() + r + 1, nullptr);
         _size++;
@@ -250,22 +260,22 @@ public:
     }
     bool erase(const T &x)
     {
-        bnode<T> *opnv = search(x);
-        if (!opnv)
+        bnode<T> *v = search(x);
+        if (!v)
             return false;
-        int r = __lower_bound(opnv->key.begin(), opnv->key.end(), x) - opnv->key.begin();
-        if (opnv->child.front())
+        int r = lower_bound(v->key.begin(), v->key.end(), x) - v->key.begin();
+        if (v->child.front())
         {
-            bnode<T> *u = opnv->child[r + 1];
+            bnode<T> *u = v->child[r + 1];
             while (u->child[0])
                 u = u->child[0];
-            opnv->key[r] = u->key[0];
-            opnv = u, r = 0;
+            v->key[r] = u->key[0];
+            v = u, r = 0;
         }
-        opnv->key.erase(opnv->key.begin() + r);
-        opnv->child.erase(opnv->child.begin() + 1 + r);
+        v->key.erase(v->key.begin() + r);
+        v->child.erase(v->child.begin() + 1 + r);
         _size--;
-        __underfSolution(opnv);
+        __underfSolution(v);
         return true;
     }
 };
