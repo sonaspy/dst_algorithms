@@ -3,7 +3,7 @@
 
 #include "../cpp/dsa.h"
 
-#define SIZE 20
+#define SIZE 10
 using namespace std;
 using namespace dsa;
 
@@ -20,23 +20,12 @@ int main(int argc, char const *argv[])
     clock_t startTime, endTime;
     startTime = clock();
 
-    avltree<int> ax;
+    bstree<int> ax;
     ax.build(a);
     cout << ax.size() << endl;
     ax.printTreeHorizon();
-    // while (cin >> n && n != 0)
-    // {
-
-    //     cin >> s;
-    //     while (s != "q")
-    //     {
-    //         if (s[0] == 'v')
-    //             ax.printTreeVertical();
-    //         else
-    //             ax.printTreeHorizon();
-    //         cin >> s;
-    //     }
-    // }
+    ax.erase(a[3]);
+    ax.printTreeHorizon();
 
     endTime = clock();
     cout << "The run time is: " << (double)(endTime - startTime) / 1000 << "ms" << endl;

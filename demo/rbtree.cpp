@@ -24,6 +24,8 @@ int main(int argc, char const *argv[])
     ax.build(a);
     cout << ax.size() << endl;
     ax.printrb();
+    ax.erase(ax.root()->val);
+    ax.printrb();
 
     endTime = clock();
     cout << "The run time is: " << (double)(endTime - startTime) / 1000 << "ms" << endl;
