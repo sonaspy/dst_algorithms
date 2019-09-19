@@ -9,11 +9,11 @@ template <class T>
 class spltree : public bstree<T>
 {
 protected:
-    binode<T> *__splay(binode<T> *opnv)
+    binode_ptr<T> __splay(binode_ptr<T> opnv)
     {
         if (!opnv)
             return nullptr;
-        binode<T> *p, *g, *gg;
+        binode_ptr<T> p, g, gg;
         while (1)
         {
             if (!opnv->parent)
@@ -60,10 +60,10 @@ public:
             insert(data);
         this->__update_status();
     }
-    binode<T> *search(const T &e)
+    binode_ptr<T> search(const T &e)
     {
         this->_last = nullptr;
-        binode<T> *p = this->__search(this->_root, e);
+        binode_ptr<T> p = this->__search(this->_root, e);
         this->_root = __splay(p ? p : this->_last);
         return this->_root;
     }
@@ -75,7 +75,7 @@ public:
             this->_root = new binode<T>(x);
             return true;
         }
-        binode<T> *w = search(x), *t;
+        binode_ptr<T> w = search(x), t;
         if (w->val == x)
             return false;
         this->_size++;
@@ -106,7 +106,7 @@ public:
     {
         if (!this->_root || (x != search(x)->val))
             return 0;
-        binode<T> *w = this->_root, *t, *lt;
+        binode_ptr<T> w = this->_root, t, lt;
         if (!(this->_root->has_l()))
         {
             this->_root = this->_root->rc;

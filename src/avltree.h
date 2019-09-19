@@ -35,9 +35,9 @@ public:
     }
 
 protected:
-    inline void _zig(binode<T> *&v)
+    inline void _zig(binode_ptr<T> &v)
     {
-        binode<T> *y = v->lc;
+        binode_ptr<T> y = v->lc;
         if (!y)
             return;
         v->lc = y->rc;
@@ -50,9 +50,9 @@ protected:
         bintree<T>::__updateheight(y);
         v = y;
     }
-    inline void _zag(binode<T> *&v)
+    inline void _zag(binode_ptr<T> &v)
     {
-        binode<T> *y = v->rc;
+        binode_ptr<T> y = v->rc;
         if (!y)
             return;
         v->rc = y->lc;
@@ -65,17 +65,17 @@ protected:
         bintree<T>::__updateheight(y);
         v = y;
     }
-    inline void _zigzag(binode<T> *&v)
+    inline void _zigzag(binode_ptr<T> &v)
     {
         _zag(v->lc);
         _zig(v);
     }
-    inline void _zagzig(binode<T> *&v)
+    inline void _zagzig(binode_ptr<T> &v)
     {
         _zig(v->rc);
         _zag(v);
     }
-    void __insert(binode<T> *&v, const T &x, binode<T> *p)
+    void __insert(binode_ptr<T> &v, const T &x, binode_ptr<T> p)
     {
         if (!v)
         {
@@ -100,7 +100,7 @@ protected:
         }
     }
 
-    binode<T> *__erase(binode<T> *&v, const T &x)
+    binode_ptr<T> __erase(binode_ptr<T> &v, const T &x)
     {
         if (!v)
             return nullptr;
@@ -120,7 +120,7 @@ protected:
         }
         else // find it
         {
-            binode<T> *tmp;
+            binode_ptr<T> tmp;
             if (v->rc && v->lc)
             {
                 if (_factor(v) > 0)

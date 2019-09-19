@@ -16,10 +16,6 @@ namespace dsa
 #define MAXCOL 1000
 #define MAXROW 100000
 #define from_parent2(x) (((x)->is_l() ? (x)->parent->lc : (x)->parent->rc))
-// The higher of the two children
-#define tallerchild(x) ( \
-    _height((x)->lc) > _height((x)->rc) ? (x)->lc : (_height((x)->lc) < _height((x)->rc) ? (x)->rc : ((x)->is_l() ? (x)->lc : (x)->rc)))
-
 #define nodeBalanced(x) ((-2 < _factor(x)) && (_factor(x) < 2))
 #define _height(p) ((p != nullptr) ? (p)->height : -1)
 #define _depth(p) ((p != nullptr) ? (p)->depth : -1)
@@ -44,6 +40,14 @@ class bintree;
 template <typename T>
 struct binode;
 template <typename T>
+struct bnode;
+
+template <typename T>
+using binode_ptr = struct binode<T> *;
+template <typename T>
+using bnode_ptr = struct bnode<T> *;
+
+template <typename T>
 struct __ischar
 {
     operator bool()
@@ -61,14 +65,14 @@ struct __ischar<char>
 };
 
 template <typename T>
-static inline binode<T> *__getmax(binode<T> *opnv)
+static inline binode_ptr<T> __getmax(binode_ptr<T> opnv)
 {
     while (opnv->rc)
         opnv = opnv->rc;
     return opnv;
 }
 template <typename T>
-static inline binode<T> *__getmin(binode<T> *opnv)
+static inline binode_ptr<T> __getmin(binode_ptr<T> opnv)
 {
     while (opnv->lc)
         opnv = opnv->lc;
@@ -79,10 +83,11 @@ template <typename T>
 struct binode
 {
     T val;
-    binode *lc, *rc, *parent;
+    binode_ptr<T> lc, rc, parent;
     int height, depth, ltag, rtag, freq, downblk;
     RBColor color;
-    binode(const T &x, binode<T> *p = nullptr, binode<T> *l = nullptr, binode<T> *r = nullptr, RBColor cl = BLK) : val(x), lc(l), rc(r), parent(p), height(0), freq(0), color(cl), downblk(0) {}
+    binode() : lc(nullptr), rc(nullptr), parent(nullptr), height(0), freq(0), color(BLK), downblk(0) {}
+    binode(const T &x, binode_ptr<T> p = nullptr, binode_ptr<T> l = nullptr, binode_ptr<T> r = nullptr, RBColor cl = BLK) : val(x), lc(l), rc(r), parent(p), height(0), freq(0), color(cl), downblk(0) {}
     bool inline is_l()
     {
         return parent && parent->lc == this;

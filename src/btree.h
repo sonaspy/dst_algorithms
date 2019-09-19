@@ -13,15 +13,15 @@ class btree
 {
 protected:
     int _size, _order;
-    bnode<T> *_root, *_last;
-    unordered_set<bnode<T> *> _memoryOfNode;
+    bnode_ptr<T> _root, _last;
+    unordered_set<bnode_ptr<T>> _memoryOfNode;
 
-    void __overfSolution(bnode<T> *v)
+    void __overfSolution(bnode_ptr<T> v)
     {
         if (v->key.size() <= _order - 1)
             return;
         int s = _order / 2;
-        bnode<T> *u = new bnode<T>();
+        bnode_ptr<T> u = new bnode<T>();
 
         // right split [0 1 2 |<3>| 4 5]
         u->child.insert(u->child.begin(), v->child.begin() + s + 1, v->child.end());
@@ -35,7 +35,7 @@ protected:
             for (int j = 0; j < _order - s; j++)
                 u->child[j]->parent = u;
         }
-        bnode<T> *p = v->parent;
+        bnode_ptr<T> p = v->parent;
         if (!p)
         {
             p = new bnode<T>();
@@ -53,7 +53,7 @@ protected:
         __overfSolution(p);
     }
 
-    void __underfSolution(bnode<T> *v)
+    void __underfSolution(bnode_ptr<T> v)
     {
         //cout << "s-1\n";
         if (!v)
@@ -61,7 +61,7 @@ protected:
         if ((_order - 1) / 2 <= v->key.size())
             return;
         //cout << "s-2\n";
-        bnode<T> *p = v->parent;
+        bnode_ptr<T> p = v->parent;
         if (!p)
         {
             //cout << "s-3\n";
@@ -81,7 +81,7 @@ protected:
             ;
         if (0 < r)
         {
-            bnode<T> *ls = p->child[r - 1];
+            bnode_ptr<T> ls = p->child[r - 1];
             if ((_order - 1) / 2 < ls->key.size())
             {
                 v->key.insert(v->key.begin(), p->key[r - 1]);
@@ -97,7 +97,7 @@ protected:
         }
         if (r + 1 < p->child.size())
         {
-            bnode<T> *rs = p->child[r + 1];
+            bnode_ptr<T> rs = p->child[r + 1];
             if ((_order - 1) / 2 < rs->key.size())
             {
                 //cout << "s2\n";
@@ -114,7 +114,7 @@ protected:
         if (0 < r)
         {
             //cout << "s3\n";
-            bnode<T> *ls = p->child[r - 1];
+            bnode_ptr<T> ls = p->child[r - 1];
             ls->key.push_back(p->key[r - 1]);
             p->key.erase(p->key.begin() + r - 1);
             p->child.erase(p->child.begin() + r);
@@ -134,7 +134,7 @@ protected:
         else
         {
             //cout << "s4\n";
-            bnode<T> *rs = p->child[r + 1];
+            bnode_ptr<T> rs = p->child[r + 1];
             rs->key.insert(rs->key.begin(), p->key[r]);
             p->key.erase(p->key.begin() + r);
             p->child.erase(p->child.begin() + r);
@@ -158,7 +158,7 @@ protected:
         //cout << "end\n";
     }
 
-    inline void _output_node(bnode<T> *v)
+    inline void _output_node(bnode_ptr<T> v)
     {
         cout << " ( ";
         for (auto i : v->key)
@@ -166,7 +166,7 @@ protected:
         cout << ") ";
     }
 
-    void __inorder(bnode<T> *root)
+    void __inorder(bnode_ptr<T> root)
     {
         if (!root)
             return;
@@ -192,8 +192,8 @@ public:
     }
     inline void printTree()
     {
-        bnode<T> *v = _root;
-        queue<bnode<T> *> q, nexq;
+        bnode_ptr<T> v = _root;
+        queue<bnode_ptr<T>> q, nexq;
         q.push(v);
         int le = 1;
         while (q.size())
@@ -220,11 +220,11 @@ public:
     }
     inline int const order() { return this->_order; }
     inline int const size() { return this->_size; }
-    inline bnode<T> *root() { return this->_root; }
+    inline bnode_ptr<T> root() { return this->_root; }
     inline bool const empty() { return !size(); }
-    bnode<T> *search(const T &x)
+    bnode_ptr<T> search(const T &x)
     {
-        bnode<T> *v = _root;
+        bnode_ptr<T> v = _root;
         _last = nullptr;
         while (v)
         {
@@ -248,7 +248,7 @@ public:
     }
     bool insert(const T &x)
     {
-        bnode<T> *v = search(x);
+        bnode_ptr<T> v = search(x);
         if (v)
             return 0;
         int r = upper_bound(_last->key.begin(), _last->key.end(), x) - _last->key.begin();
@@ -260,13 +260,13 @@ public:
     }
     bool erase(const T &x)
     {
-        bnode<T> *v = search(x);
+        bnode_ptr<T> v = search(x);
         if (!v)
             return false;
         int r = lower_bound(v->key.begin(), v->key.end(), x) - v->key.begin();
         if (v->child.front())
         {
-            bnode<T> *u = v->child[r + 1];
+            bnode_ptr<T> u = v->child[r + 1];
             while (u->child[0])
                 u = u->child[0];
             v->key[r] = u->key[0];
