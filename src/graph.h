@@ -29,7 +29,7 @@ private:
     unordered_set<int> vset;
     unordered_set<edge *> eset;
     int _sum;
-    _set_union st;
+    __setunion st;
 
 public:
     spanningTree()
