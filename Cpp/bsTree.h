@@ -69,8 +69,8 @@ protected:
         }
         return opnv;
     }
-    //return is delnode's succ ，last is delnode's parent
-    static binode<T> *__erase_at(binode<T> *&opnv, binode<T> *&last)
+    //return node is replace's succ ，last is replace's parent
+    static binode<T> inline *__erase_at(binode<T> *&opnv, binode<T> *&last)
     {
         binode<T> *w = opnv, *succ = nullptr;
         if (!opnv->has_l())
