@@ -1,256 +1,85 @@
-The Total optimal WPL is -> 12819
-e
-freq is -> 167
-code is -> " 1011 "
-n
-freq is -> 158
-code is -> " 1001 "
+The Total optimal WPL is -> 230
 t
-freq is -> 129
-code is -> " 0101 "
-a
-freq is -> 127
-code is -> " 0100 "
-i
-freq is -> 121
-code is -> " 0010 "
-r
-freq is -> 109
-code is -> " 0000 "
-c
-freq is -> 104
-code is -> " 11111 "
-u
-freq is -> 101
-code is -> " 11101 "
-s
-freq is -> 93
-code is -> " 11011 "
-<
-freq is -> 86
-code is -> " 11001 "
+freq is -> 9
+code is -> " 111 "
+e
+freq is -> 6
+code is -> " 010 "
 o
-freq is -> 85
-code is -> " 11000 "
-l
-freq is -> 78
-code is -> " 10100 "
-;
-freq is -> 67
-code is -> " 01101 "
-"
-freq is -> 58
-code is -> " 00011 "
-d
-freq is -> 52
-code is -> " 111101 "
-(
-freq is -> 49
-code is -> " 111001 "
-)
-freq is -> 49
-code is -> " 111100 "
-b
-freq is -> 42
-code is -> " 101011 "
-ï¿½
-freq is -> 38
-code is -> " 100010 "
-ï¿½
-freq is -> 38
-code is -> " 100011 "
-.
-freq is -> 35
-code is -> " 011101 "
-h
-freq is -> 34
-code is -> " 011100 "
-'
-freq is -> 32
-code is -> " 011000 "
->
-freq is -> 30
-code is -> " 001100 "
-v
-freq is -> 29
-code is -> " 000101 "
-p
-freq is -> 23
-code is -> " 1101011 "
-/
-freq is -> 22
-code is -> " 1101001 "
-g
-freq is -> 21
-code is -> " 1101000 "
-w
-freq is -> 20
-code is -> " 1010100 "
-ï¿½
-freq is -> 20
-code is -> " 1010101 "
-:
-freq is -> 19
-code is -> " 1000011 "
-ï¿½
-freq is -> 18
-code is -> " 1000010 "
-ï¿½
-freq is -> 18
-code is -> " 1000001 "
-\
-freq is -> 18
-code is -> " 1000000 "
-ï¿½
-freq is -> 18
-code is -> " 0111101 "
-y
-freq is -> 17
-code is -> " 0110010 "
-f
-freq is -> 17
-code is -> " 0110011 "
-x
-freq is -> 16
-code is -> " 0011110 "
-k
-freq is -> 15
-code is -> " 0011010 "
-}
-freq is -> 12
-code is -> " 11100010 "
-m
-freq is -> 12
-code is -> " 11100011 "
-{
-freq is -> 12
-code is -> " 0001000 "
-?
-freq is -> 10
-code is -> " 11010100 "
-]
-freq is -> 9
-code is -> " 01111100 "
-3
-freq is -> 9
-code is -> " 01111111 "
-,
-freq is -> 9
-code is -> " 01111110 "
-[
-freq is -> 9
-code is -> " 01111101 "
-E
-freq is -> 8
-code is -> " 01111000 "
-q
-freq is -> 8
-code is -> " 00111010 "
-0
-freq is -> 8
-code is -> " 00111000 "
-=
-freq is -> 8
-code is -> " 00111001 "
-4
-freq is -> 6
-code is -> " 110101011 "
-5
-freq is -> 6
-code is -> " 110101010 "
-1
-freq is -> 6
-code is -> " 111000000 "
-6
-freq is -> 6
-code is -> " 00010011 "
-2
-freq is -> 6
-code is -> " 00010010 "
-R
 freq is -> 5
-code is -> " 011110011 "
-S
+code is -> " 000 "
+a
 freq is -> 4
-code is -> " 001111111 "
-T
-freq is -> 4
-code is -> " 001111100 "
-L
-freq is -> 4
-code is -> " 001101111 "
-&
-freq is -> 4
-code is -> " 011110010 "
-O
-freq is -> 4
-code is -> " 001111110 "
-*
+code is -> " 1000 "
+i
 freq is -> 3
-code is -> " 1110000100 "
-M
+code is -> " 0011 "
+n
 freq is -> 3
-code is -> " 1110000010 "
-U
+code is -> " 0110 "
+r
 freq is -> 3
-code is -> " 1110000101 "
-A
-freq is -> 3
-code is -> " 1110000110 "
-@
-freq is -> 3
-code is -> " 1110000111 "
-z
-freq is -> 3
-code is -> " 1110000011 "
-ï¿½
+code is -> " 0111 "
+m
 freq is -> 2
-code is -> " 0011111011 "
-H
+code is -> " 10010 "
+l
 freq is -> 2
-code is -> " 0011011101 "
-P
+code is -> " 11011 "
+f
 freq is -> 2
-code is -> " 0011011010 "
-%
+code is -> " 11000 "
+x
 freq is -> 2
-code is -> " 0011101111 "
-N
+code is -> " 10100 "
+u
 freq is -> 2
-code is -> " 0011011011 "
--
+code is -> " 0010 "
+d
 freq is -> 2
-code is -> " 0011101101 "
-|
-freq is -> 2
-code is -> " 0011101100 "
-W
-freq is -> 1
-code is -> " 00111110100 "
-_
-freq is -> 1
-code is -> " 00111011100 "
-9
-freq is -> 1
-code is -> " 00110111001 "
-#
-freq is -> 1
-code is -> " 00111110101 "
-+
-freq is -> 1
-code is -> " 00110111000 "
-C
-freq is -> 1
-code is -> " 00110110011 "
-B
-freq is -> 1
-code is -> " 00110110010 "
+code is -> " 10110 "
 F
 freq is -> 1
-code is -> " 00110110001 "
-G
+code is -> " 101011 "
+#
 freq is -> 1
-code is -> " 00110110000 "
-8
+code is -> " 101110 "
+L
 freq is -> 1
-code is -> " 00111011101 "
+code is -> " 101111 "
+A
+freq is -> 1
+code is -> " 100111 "
+=
+freq is -> 1
+code is -> " 110010 "
+p
+freq is -> 1
+code is -> " 110011 "
+c
+freq is -> 1
+code is -> " 110100 "
+s
+freq is -> 1
+code is -> " 110101 "
+*
+freq is -> 1
+code is -> " 100110 "
+z
+freq is -> 1
+code is -> " 101010 "
+ðŸŒ²  HUFFMAN TREE  ðŸŒ²
+                                                               ÿ                                                                 
+                                               /                               \                                                 
+                               ÿ                                                               ÿ                                 
+                       /               \                                               /               \                         
+               ÿ                               ÿ                               ÿ                               ÿ                 
+           /       \                       /       \                       /       \                       /       \             
+       o               ÿ               e               ÿ               ÿ               ÿ               ÿ               t         
+                     /   \                           /   \           /   \           /   \           /   \                       
+                   u       i                       n       r       a       ÿ       ÿ       ÿ       ÿ       ÿ                     
+                                                                          / \     / \     / \     / \     / \                    
+                                                                         m   ÿ   x   ÿ   d   ÿ   f   ÿ   ÿ   l                   
+                                                                            / \     / \     / \     / \ / \                      
+                                                                            * A     z F     # L     = p c s                      
+ðŸŒ²  HUFFMAN TREE  ðŸŒ²
