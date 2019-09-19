@@ -7,7 +7,11 @@ using namespace std;
 using namespace dsa;
 inline void quit()
 {
-    cout << "thanks for use\n";
+    cout << endl
+         << endl
+         << endl
+         << "sonaspy@outlook.com  💻  github.com/newguonx" << endl
+         << " 🚗 🚗 🚗 🚗 🚗 🚗 🚗 🚗 🚗    THANS FOR USE    💣 💣 💣 💣 💣 💣 💣 💣 💣\n";
     exit(0);
 }
 int main(int argc, char const *argv[])
@@ -16,7 +20,11 @@ int main(int argc, char const *argv[])
     //test();
     srand(time(NULL));
     int n, range, val;
-    string valtype, instruction, instruction;
+    string valtype, instruction;
+    cout << " 🚗 🚗 🚗 🚗 🚗 🚗 🚗 🚗 🚗    WELCOME TO THE RBTREE SAMPLE USE PROGRAM    💣 💣 💣 💣 💣 💣 💣 💣 💣\n"
+         << "sonaspy@outlook.com  💻  github.com/newguonx" << endl
+         << endl
+         << endl;
     while (cout << "input \"build\" or \"rebuild\"to build a rbtree, or \"quit\" to end it." << endl && cin >> instruction)
     {
         if (instruction[0] == 'q')
@@ -32,7 +40,7 @@ int main(int argc, char const *argv[])
                 vector<char> a(n);
                 generate(a.begin(), a.end(), [&]() { return rand() % 93 + 33; });
                 rbx.build(a);
-                cout << "build successful \n then you can input (1/2/3/4/5/6) 1.print 2.search 3.earse 4.insert 5.rebuild 6.quit\n";
+                cout << "build successful \nthen you can input (1/2/3/4/5/6) 1.print 2.search 3.earse 4.insert 5.rebuild 6.quit\n";
 
                 while (cin >> instruction)
                 {
@@ -111,7 +119,7 @@ int main(int argc, char const *argv[])
                 }
             }
         end:
-            1;
+            continue;
         }
     }
 

@@ -15,18 +15,20 @@ int main(int argc, char const *argv[])
     int b[SIZE], n = SIZE;
     generate(b, b + n, [&]() { return rand() % 100; });
     vector<int> a(b, b + n);
+    a.erase(unique(a.begin(), a.end()), a.end());
     string s;
-    iota(b, b + n, 1);
     clock_t startTime, endTime;
     startTime = clock();
 
-    bstree<int> ax;
+    rbtree<int> ax;
     ax.build(a);
     cout << ax.size() << endl;
+    //ax.printhorizon();
+    for (int i = 0; i < 1; i++)
+    {
+        cout << a[i] << endl;
+    }
     ax.printhorizon();
-    ax.erase(a[3]);
-    ax.printhorizon();
-
     endTime = clock();
     cout << "The run time is: " << (double)(endTime - startTime) / 1000 << "ms" << endl;
     return 0;

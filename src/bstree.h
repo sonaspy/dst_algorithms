@@ -69,32 +69,6 @@ protected:
         }
         return opnv;
     }
-    //return node is replace's succ ，last is replace's parent
-    static binode<T> inline *__erase_at(binode<T> *&opnv, binode<T> *&last)
-    {
-        binode<T> *w = opnv, *succ = nullptr;
-        if (!opnv->has_l())
-        {
-            opnv = opnv->rc;
-            succ = opnv;
-        }
-        else if (!opnv->has_r())
-        {
-            opnv = opnv->lc;
-            succ = opnv;
-        }
-        else
-        {
-            w = w->successor();
-            swap(opnv->val, w->val);
-            binode<T> *u = w->parent;
-            succ = w->rc;
-            u == opnv ? u->rc = succ : u->lc = succ;
-        }
-        last = w->parent;
-        __release(w);
-        return succ;
-    }
 
 public:
     ~bstree() { this->clear(); }
@@ -111,13 +85,13 @@ public:
     }
     bool erase(const T &x)
     {
-        binode<T> *&w = search(x);
-        if (!w)
-            return false;
-        __erase_at(w, _last);
-        this->__updateheightabove(_last);
-        this->_size--;
-        return true;
+        if (__erase(this->_root, x))
+        {
+            this->__update_status();
+            this->_size--;
+            return true;
+        };
+        return false;
     }
     bool insert(const T &x)
     {
