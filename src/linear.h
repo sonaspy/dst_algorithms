@@ -2,6 +2,7 @@
 // coding - utf_8
 #ifndef __LINEAR__
 #define __LINEAR__
+#include "functions.h"
 using namespace std;
 namespace dsa
 {
@@ -12,7 +13,6 @@ struct ListNode
     ListNode() : val(INT_MIN), freq(0), next(nullptr), pre(nullptr) {}
     ListNode(int v) : val(v), freq(0), next(nullptr), pre(nullptr) {}
 };
-
 class NQueen
 {
 public:
@@ -61,12 +61,6 @@ private:
     }
 };
 
-
-
-
-
-
-
 template <class T>
 bool list_move(T *lo, T *hi, int offset, bool left)
 {
@@ -104,7 +98,6 @@ T *bin_search(T *lo, T *hi, const T &val)
     }
     return hi;
 }
-
 
 bool isMatch(vector<int> &push_seq, vector<int> &pop_seq, int capacity)
 {
