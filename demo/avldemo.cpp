@@ -1,7 +1,7 @@
 // author - sonaspy@outlook.com
 // coding - utf_8
 
-#include "../cpp/dsa.h"
+#include "../src/dsa.h"
 
 #define SIZE 10
 using namespace std;

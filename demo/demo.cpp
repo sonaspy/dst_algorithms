@@ -2,7 +2,7 @@
 // coding - utf_8
 
 #include <iostream>
-#include "../cpp/dsa.h"
+#include "../src/dsa.h"
 #include <algorithm>
 #define test() freopen("in", "r", stdin)
 using namespace dsa;
