@@ -84,7 +84,6 @@ int main(int argc, char const *argv[])
                 generate(a.begin(), a.end(), [&]() { return rand() % range; });
                 rbx.build(a);
                 cout << "build successful \n then you can input (1/2/3/4/5/6) 1.print 2.search 3.earse 4.insert 5.rebuild 6.quit\n";
-                cin >> instruction;
                 while (cin >> instruction)
                 {
                     switch (instruction[0])
@@ -116,6 +115,7 @@ int main(int argc, char const *argv[])
                     default:
                         cout << "input legitimate instruction please" << endl;
                     }
+                    cout << " 1.print 2.search 3.earse 4.insert 5.rebuild 6.quit\n";
                 }
             }
         end:

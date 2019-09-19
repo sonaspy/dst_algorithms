@@ -24,27 +24,61 @@ protected:
     {
         binode_ptr<T> y = x->rc;
         x->rc = y->lc;
+        if (!y)
+            return;
         if (y->lc)
             y->lc->parent = x;
         y->parent = x->parent;
-        x->parent ? ((x->parent->lc == x) ? x->parent->lc = y : x->parent->rc = y) : this->_root = y;
+        x->isroot() ? (this->_root = y) : from_parent2(x) = y;
         y->lc = x;
         x->parent = y;
-        this->__updateheight(x);
-        this->__updateheight(y);
     }
     inline void __rotate_r(binode_ptr<T> x)
     {
         binode_ptr<T> y = x->lc;
         x->lc = y->rc;
+        if (!y)
+            return;
         if (y->rc)
             y->rc->parent = x;
         y->parent = x->parent;
-        x->parent ? ((x->parent->lc == x) ? x->parent->lc = y : x->parent->rc = y) : this->_root = y;
+        x->isroot() ? (this->_root = y) : from_parent2(x) = y;
         y->rc = x;
         x->parent = y;
-        this->__updateheight(x);
-        this->__updateheight(y);
+    }
+    binode_ptr<T> l_rotate(binode_ptr<T> p)
+    {
+        auto lr = p->rc;
+        p->rc = lr->lc;
+        if (lr->lc)
+            lr->lc->parent = p;
+        lr->parent = p->parent;
+        if (nullptr == p->parent)
+            this->_root = lr;
+        else if (p->parent->lc == p)
+            p->parent->lc = lr;
+        else
+            p->parent->rc = lr;
+        lr->lc = p;
+        p->parent = lr;
+        return lr;
+    }
+    binode_ptr<T> r_rotate(binode_ptr<T> p)
+    {
+        auto lc = p->lc;
+        p->lc = lc->rc;
+        if (lc->rc)
+            lc->rc->parent = p;
+        lc->parent = p->parent;
+        if (nullptr == p->parent)
+            this->_root = lc;
+        else if (p->parent->lc == p)
+            p->parent->lc = lc;
+        else
+            p->parent->rc = lc;
+        lc->rc = p;
+        p->parent = lc;
+        return lc;
     }
     void __double_red_solution(binode_ptr<T> opnv)
     {
@@ -79,76 +113,6 @@ protected:
     }
     void __double_blk_solution(binode_ptr<T> pp, binode_ptr<T> p)
     {
-        while ((nullptr == p || BLK == p->color) && p != this->_root)
-        {
-            if (pp->lc == p)
-            {
-                auto s = pp->rc;
-                if (s && RED == s->color)
-                {
-                    s->color = BLK;
-                    pp->color = RED;
-                    this->__rotate_l(pp);
-                    s = pp->rc;
-                }
-                if ((nullptr == s->lc || BLK == s->lc->color) && (nullptr == s->rc || BLK == s->rc->color))
-                {
-                    s->color = RED;
-                    p = pp;
-                    pp = p->parent;
-                }
-                else
-                {
-                    if (nullptr == s->rc || BLK == s->rc->color)
-                    {
-                        s->lc ? s->lc->color = BLK : 0;
-                        s->color = RED;
-                        this->__rotate_r(s);
-                        s = pp->rc;
-                    }
-
-                    s->color = pp->color;
-                    pp->color = BLK;
-                    s->rc->color = BLK;
-                    this->__rotate_l(pp);
-                    p = this->_root;
-                }
-            }
-            else
-            {
-                auto s = pp->lc;
-                if (s && RED == s->color)
-                {
-                    s->color = BLK;
-                    pp->color = RED;
-                    this->__rotate_r(pp);
-                    s = pp->lc;
-                }
-                if ((nullptr == s->lc || BLK == s->lc->color) && (nullptr == s->rc || BLK == s->rc->color))
-                {
-                    s->color = RED;
-                    p = pp;
-                    pp = p->parent;
-                }
-                else
-                {
-                    if (nullptr == s->lc || BLK == s->lc->color)
-                    {
-                        s->rc ? s->rc->color = BLK : 0;
-                        s->color = RED;
-                        this->__rotate_l(s);
-                        s = pp->lc;
-                    }
-
-                    s->color = pp->color;
-                    pp->color = BLK;
-                    s->lc->color = BLK;
-                    this->__rotate_r(pp);
-                    p = this->_root;
-                }
-            }
-        }
-        p->color = BLK;
     }
     void __isrbtree(binode_ptr<T> opnv)
     {
@@ -184,10 +148,10 @@ public:
         binode_ptr<T> &w = bstree<T>::search(val);
         if (!w)
             return 0;
-        binode_ptr<T> p = w, pp = p->parent, _nil = nullptr;
-        RBColor delcolor = p->color;
+        binode_ptr<T> p = w, pp = p->parent, fake_null = nullptr;
+        RBcolor delcolor = p->color;
         int pp_child_tag = (!pp || pp->lc == p) ? 1 : 2;
-        binode_ptr<T> &ref_p = (pp ? (pp_child_tag == 1 ? pp->lc : pp->rc) : this->_root);
+        binode_ptr<T> &ref_p = (pp ? (pp_child_tat == 1 ? pp->lc : pp->rc) : this->_root);
         if (p->lc && p->rc)
         {
             auto prev = p->lc, curr = prev;
@@ -234,18 +198,17 @@ public:
         {
             if (nullptr == p)
             {
-                _nil = p = new binode<T>();
+                fake_null = p = new binode<T>();
                 p->parent = pp;
                 1 == pp_child_tag ? pp->lc = p : pp->rc = p;
             }
             __double_blk_solution(pp, p);
-            if (_nil)
+            if (fake_null)
             {
-                _nil->is_l() ? _nil->parent->lc = nullptr : _nil->parent->rc = nullptr;
-                delete _nil;
+                fake_null->is_l() ? fake_null->parent->lc = nullptr : fake_null->parent->rc = nullptr;
+                delete fake_null;
             }
         }
-        this->_size--;
         return 1;
     }
     bool isrbtree()

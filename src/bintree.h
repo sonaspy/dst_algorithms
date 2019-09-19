@@ -390,6 +390,7 @@ public:
     {
         if (!this->_root)
             return;
+        __update_status();
         if (_ishuffman)
             cout << "🕵🏻‍   🌲  HUFFMAN TREE  🌲   🕵🏻‍" << endl;
         if (_isRBtree)

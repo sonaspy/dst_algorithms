@@ -275,7 +275,7 @@ public:
         v->key.erase(v->key.begin() + r);
         v->child.erase(v->child.begin() + 1 + r);
         _size--;
-        __underfSolution(v);
+        __underfSolution(v); // still bug
         return true;
     }
 };
