@@ -21,6 +21,94 @@ void output_vec(vector<T> &a)
     cout << endl;
 }
 
+template <class RandomIterator>
+void __reverse(RandomIterator lo, RandomIterator hi)
+{
+    if (lo < hi)
+        for (; lo < --hi; ++lo)
+            iter_swap(lo, hi);
+}
+// find median in 2 array
+template <class T>
+T M_search(T *lo1, T *hi1, T *lo2, T *hi2)
+{
+    T *m1, *m2;
+    while (lo1 < hi1 || lo2 < hi2)
+    {
+        m1 = lo1 + (hi1 - lo1) / 2;
+        m2 = lo2 + (hi2 - lo2) / 2;
+        if (*m1 == *m2)
+            return *m1;
+        if (*m1 < *m2)
+        {
+            lo1 = (hi1 - lo1) % 2 ? m1 + 1 : m1;
+            hi2 = m2;
+        }
+        else
+        {
+            lo2 = (hi2 - lo2) % 2 ? m2 + 1 : m2;
+            hi1 = m1;
+        }
+    }
+    return min(*lo1, *lo2);
+}
+inline int __gcd(int a, int b)
+{
+    while (b)
+    {
+        int c = a % b;
+        a = b;
+        b = c;
+    }
+    return a;
+}
+template <class RandomIterator>
+bool isparlindrome(RandomIterator lo, RandomIterator hi)
+{
+    if (lo < hi)
+        for (; lo < --hi; ++lo)
+            if (*lo != *hi)
+                return false;
+    return true;
+}
+double __polynomial(int n, double a[], double x)
+{
+    int i;
+    double p = a[n];
+    for (i = n; i; --i)
+        p = a[i - 1] + x * p;
+    return p;
+}
+
+void towersOfHanoi(int n, char x, char y, char z)
+{ // Move the top n disks from tower x to tower y.
+    // Use tower z for intermediate storage.
+    if (n > 0)
+    {
+        towersOfHanoi(n - 1, x, z, y);
+        std::cout << "Move top disk from tower " << x
+                  << " to top of tower " << y << std::endl;
+        towersOfHanoi(n - 1, z, y, x);
+    }
+}
+double __newpow(double x, int n)
+{
+    long long N = n;
+    if (N < 0)
+    {
+        x = 1 / x;
+        N = -N;
+    }
+    double ans = 1;
+    double cur = x;
+    for (long long i = N; i; i /= 2)
+    {
+        if ((i % 2) == 1)
+            ans *= cur;
+        cur *= cur;
+    }
+    return ans;
+}
 
 template <typename RandAccessor>
 static inline void __siftdown(RandAccessor base, int pos, int border)

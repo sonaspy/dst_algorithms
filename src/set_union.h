@@ -1,16 +1,16 @@
 
-#ifndef __SET_UNION__
-#define __SET_UNION__
+#ifndef __setunion__
+#define __setunion__
 #include <vector>
 using namespace std;
 namespace dsa
 {
-class _set_union
+class __setunion
 {
 public:
     int _size;
     vector<int> arr;
-    _set_union(int thesize = 1000)
+    __setunion(int thesize = 1000)
     {
         arr = vector<int>(thesize, -1);
     }
