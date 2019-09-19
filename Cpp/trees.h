@@ -43,6 +43,22 @@ template <typename T>
 class bintree;
 template <typename T>
 struct binode;
+template <typename T>
+struct __ischar
+{
+    operator bool()
+    {
+        return false;
+    }
+};
+template <>
+struct __ischar<char>
+{
+    operator bool()
+    {
+        return true;
+    }
+};
 
 template <typename T>
 static inline binode<T> *__getmax(binode<T> *opnv)

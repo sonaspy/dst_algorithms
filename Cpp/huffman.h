@@ -51,6 +51,7 @@ public:
     {
         _wpl = 0;
         _mode = 0;
+        this->_ishuffman = 1;
         binode<char> *v, *w, *root;
         for (auto &kv : mp)
         {
