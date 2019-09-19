@@ -11,20 +11,20 @@ template <typename T>
 class bstree : public bintree<T>
 {
 protected:
-    binode<T> *_last;
-    inline void __attAsL(binode<T> *&p, binode<T> *&lc)
+    binode_ptr<T> _last;
+    inline void __attAsL(binode_ptr<T> &p, binode_ptr<T> &lc)
     {
         p->lc = lc;
         if (lc)
             lc->parent = p;
     }
-    inline void __attAsR(binode<T> *&p, binode<T> *&rc)
+    inline void __attAsR(binode_ptr<T> &p, binode_ptr<T> &rc)
     {
         p->rc = rc;
         if (rc)
             rc->parent = p;
     }
-    bool __judge_avl(binode<T> *opnv, binode<T> *&p)
+    bool __judge_avl(binode_ptr<T> opnv, binode_ptr<T> &p)
     {
         if (!opnv)
             return true;
@@ -35,7 +35,7 @@ protected:
         f2 = __judge_avl(opnv->rc, p);
         return f1 && f2 & f;
     }
-    binode<T> *&__search(binode<T> *&opnv, const T &x)
+    binode_ptr<T> &__search(binode_ptr<T> &opnv, const T &x)
     {
         if (!opnv || x == opnv->val)
             return opnv;
@@ -43,7 +43,7 @@ protected:
         return __search(x < opnv->val ? opnv->lc : opnv->rc, x);
     }
 
-    binode<T> *__erase(binode<T> *&opnv, const T &x)
+    binode_ptr<T> __erase(binode_ptr<T> &opnv, const T &x)
     {
         if (!opnv)
             return nullptr;
@@ -53,7 +53,7 @@ protected:
             opnv->rc = __erase(opnv->rc, x);
         else
         {
-            binode<T> *tmp;
+            binode_ptr<T> tmp;
             if (opnv->lc && opnv->rc)
             {
                 tmp = opnv->successor();
@@ -80,7 +80,7 @@ public:
     }
     bool balanced()
     {
-        binode<T> *p = nullptr;
+        binode_ptr<T> p = nullptr;
         return __judge_avl(this->_root, p);
     }
     bool erase(const T &x)
@@ -95,7 +95,7 @@ public:
     }
     bool insert(const T &x)
     {
-        binode<T> *&w = search(x);
+        binode_ptr<T> &w = search(x);
         if (w)
             return false;
         w = new binode<T>(x, _last);
@@ -103,7 +103,7 @@ public:
         this->__updateheightabove(w);
         return true;
     }
-    binode<T> *&search(const T &x)
+    binode_ptr<T> &search(const T &x)
     {
         _last = nullptr;
         return __search(this->_root, x);
@@ -113,9 +113,9 @@ public:
         bintree<T>::clear();
         _last = nullptr;
     }
-    binode<T> *findLCA(const T &v1, const T &v2)
+    binode_ptr<T> findLCA(const T &v1, const T &v2)
     {
-        binode<T> *walk = this->_root;
+        binode_ptr<T> walk = this->_root;
         while (walk)
         {
             if (v1 < walk->val && v2 < walk->val)

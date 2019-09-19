@@ -21,12 +21,14 @@ int main(int argc, char const *argv[])
     startTime = clock();
 
     rbtree<int> ax;
+    cout << ax.root() << endl;
     ax.build(a);
     cout << ax.size() << endl;
-    //ax.printhorizon();
+    ax.printhorizon();
     for (int i = 0; i < 1; i++)
     {
         cout << a[i] << endl;
+        ax.erase(a[i]);
     }
     ax.printhorizon();
     endTime = clock();
