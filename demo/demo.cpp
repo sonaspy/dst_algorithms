@@ -7,21 +7,16 @@
 #define test() freopen("in", "r", stdin)
 using namespace dsa;
 using namespace std;
-struct _______node
-{
-    int x;
-};
-#define setrb(i) ((i) ? (i)->x = 1 : 0)
-int fun(int &c)
-{
-    return c;
+
+template<class T>
+void fun(){
+    cout << is_char<T>();
 }
 int main(int argc, char const *argv[])
 {
     /* code */
     //test();
     vector<int> a(100);
-    _______node *i = nullptr;
-    setrb(i);
+    fun<double>();
     return 0;
 }

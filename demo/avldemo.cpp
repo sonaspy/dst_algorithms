@@ -23,9 +23,9 @@ int main(int argc, char const *argv[])
     bstree<int> ax;
     ax.build(a);
     cout << ax.size() << endl;
-    ax.printTreeHorizon();
+    ax.printhorizon();
     ax.erase(a[3]);
-    ax.printTreeHorizon();
+    ax.printhorizon();
 
     endTime = clock();
     cout << "The run time is: " << (double)(endTime - startTime) / 1000 << "ms" << endl;

@@ -19,37 +19,6 @@ protected:
 #define set_red(opnv) (((opnv) ? (opnv->color = red) : 0))
 #define rb_color(opnv) (((opnv) ? (opnv->color) : blk))
 #define _downblk(opnv) (((opnv) ? (opnv->downblk) : 0))
-    bool _isRBtree;
-    void __print_horizon(binode<T> *opnv, int root_x, int root_y, int interval)
-    {
-        if (!opnv)
-            return;
-        int left_child = root_y - interval, right_child = root_y + interval;
-        string tp = to_string(opnv->val);
-        tp += opnv->color == red ? "🔴" : "⚫️";
-        if (tp.size() == 2)
-            tp.push_back(' ');
-        this->disp_buf[root_x][root_y] = tp;
-        if (opnv->lc)
-            this->disp_buf[root_x + 1][root_y - (interval + 1) / 2] = " / ";
-        if (opnv->rc)
-            this->disp_buf[root_x + 1][root_y + (interval + 1) / 2] = " \\ ";
-        __print_horizon(opnv->lc, root_x + 2, left_child, (interval >> 1));
-        __print_horizon(opnv->rc, root_x + 2, right_child, (interval >> 1));
-    }
-
-    static inline void __alterheight(binode<T> *&opnv)
-    {
-        opnv->height = max(_height(opnv->lc), _height(opnv->rc));
-        opnv->height += _blk(opnv) ? 1 : 0;
-    }
-    static inline bool _blk_altered(binode<T> *&opnv)
-    {
-        return _height(opnv->lc) == _height(opnv->rc) &&
-                       opnv->height == _red(opnv)
-                   ? _height(opnv->lc)
-                   : _height(opnv->lc) + 1;
-    }
     void __double_red_solution(binode<T> *opnv)
     {
         binode<T> *p, *g, *u;
@@ -167,14 +136,18 @@ protected:
         __isrbtree(opnv->lc);
         __isrbtree(opnv->rc);
         if (opnv->color == red && (rb_color(opnv->lc) == red || rb_color(opnv->rc) == red))
-            _isRBtree = 0;
+            this->_isRBtree = 0;
         if (_downblk(opnv->lc) != _downblk(opnv->rc))
-            _isRBtree = 0;
+            this->_isRBtree = 0;
         else
             opnv->downblk = opnv->color == blk ? _downblk(opnv->lc) : _downblk(opnv->lc);
     }
 
 public:
+    rbtree()
+    {
+        this->_isRBtree = 1;
+    }
     bool insert(const T &x)
     {
         binode<T> *&w = this->search(x);
@@ -184,27 +157,6 @@ public:
         this->_size++;
         __double_red_solution(w);
         return true;
-    }
-    void printrb()
-    {
-        if (!this->_root)
-            return;
-        printf("🌲\n");
-        if (this->_size > (1 << 8) - 1)
-        {
-            cout << " Too Many Node !\n";
-            return;
-        }
-        this->disp_buf = vector<vector<string>>(40, vector<string>(MAXCOL, string(3, ' ')));
-        __print_horizon(this->_root, 0, pow(2, this->_root->height) - 1, pow(2, this->_root->height - 1));
-        int n = this->_root->height * 2 + 1, i, j, breadth = pow(2, this->_root->height + 1) + 1;
-        for (i = 0; i < n; ++i)
-        {
-            for (j = 0; j < breadth; ++j)
-                cout << this->disp_buf[i][j];
-            cout << endl;
-        }
-        printf("🌲\n");
     }
     bool erase(const T &x)
     {
@@ -220,9 +172,9 @@ public:
     }
     bool isrbtree()
     {
-        _isRBtree = 1;
+        this->_isRBtree = 1;
         __isrbtree(this->_root);
-        return _isRBtree && this->_root->color == blk;
+        return this->_isRBtree && this->_root->color == blk;
     }
     void build(vector<T> &a)
     {

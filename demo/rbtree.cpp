@@ -3,7 +3,6 @@
 
 #include "../cpp/dsa.h"
 
-#define SIZE 15
 using namespace std;
 using namespace dsa;
 
@@ -12,22 +11,39 @@ int main(int argc, char const *argv[])
     /* code */
     //test();
     srand(time(NULL));
-    int b[SIZE], n = SIZE;
-    generate(b, b + n, [&]() { return rand() % 100; });
-    vector<int> a(b, b + n);
-    string s;
-    iota(b, b + n, 1);
-    clock_t startTime, endTime;
-    startTime = clock();
+    int n, range;
+    string valtype, instruction, prin;
 
-    rbtree<int> ax;
-    ax.build(a);
-    cout << ax.size() << endl;
-    ax.printrb();
-    ax.erase(ax.root()->val);
-    ax.printrb();
+    while (cin >> instruction && instruction[0] != 'q')
+    {
+        if (instruction[0] == 'b' || instruction[0] == 'r')
+        {
+            cin >> n >> valtype;
+            rbtree<char> rbxc;
+            rbtree<int> rbxi;
+            if (valtype[0] == 'c')
+            {
+                vector<char> a(n);
+                generate(a.begin(), a.end(), [&]() { return rand() % 93 + 33; });
+                rbxc.build(a);
+                cout << "need print out to terminal ? \n";
+                cin >> prin;
+                if (prin[0] == 'y')
+                    rbxc.printhorizon();
+            }
+            else
+            {
+                cin >> range;
+                vector<int> a(n);
+                generate(a.begin(), a.end(), [&]() { return rand() % range; });
+                rbxi.build(a);
+                cout << "need print out to terminal ? \n";
+                cin >> prin;
+                if (prin[0] == 'y')
+                    rbxi.printhorizon();
+            }
+        }
+    }
 
-    endTime = clock();
-    cout << "The run time is: " << (double)(endTime - startTime) / 1000 << "ms" << endl;
     return 0;
 }

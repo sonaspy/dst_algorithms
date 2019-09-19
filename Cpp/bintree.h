@@ -14,8 +14,9 @@ class bintree
 protected:
     binode<T> *_root, *tp1;
     deque<binode<T> *> q, nexq;
-    int _size;
-    bool isunique; // pre post build
+    int _size, _unitsize;
+    bool _isunique, _isRBtree, _ishuffman;
+    string _pointer2l, _pointer2r;
     vector<vector<string>> disp_buf;
     static inline void __updatedepth(binode<T> *&opnv) { opnv->depth = _depth(opnv->parent) + 1; }
     static inline void __updateheight(binode<T> *&opnv) { opnv->height = max(_height(opnv->lc), _height(opnv->rc)) + 1; }
@@ -65,33 +66,22 @@ protected:
     {
         if (!opnv)
             return;
-        int left_child = root_y - interval, right_child = root_y + interval;
-        string tp = to_string(opnv->val);
-        if (tp.size() == 1)
+        string tp;
+        if (__ischar<T>())
+            tp.push_back(opnv->val);
+        else
+            tp = to_string(opnv->val);
+        if (_isRBtree)
+            tp += opnv->color == red ? "🔴" : "⚫️";
+        while (tp.size() < _unitsize)
             tp.push_back(' ');
-        disp_buf[root_x][root_y] = tp;
+        this->disp_buf[root_x][root_y] = tp;
         if (opnv->lc)
-            disp_buf[root_x + 1][root_y - (interval + 1) / 2] = "/ ";
+            this->disp_buf[root_x + 1][root_y - (interval + 1) / 2] = _pointer2l;
         if (opnv->rc)
-            disp_buf[root_x + 1][root_y + (interval + 1) / 2] = " \\";
-        __print_horizon(opnv->lc, root_x + 2, left_child, (interval >> 1));
-        __print_horizon(opnv->rc, root_x + 2, right_child, (interval >> 1));
-    }
-    void __print_vertical(binode<T> *opnv, int root_x, int root_y, int interval)
-    { // root_y = 0;
-        if (!opnv)
-            return;
-        int left_child = root_x + interval, right_child = root_x - interval;
-        string tp = to_string(opnv->val);
-        while (tp.size() < 4)
-            tp.push_back(' ');
-        disp_buf[root_x][root_y] = tp;
-        if (opnv->lc)
-            disp_buf[root_x + (interval + 1) / 2][root_y + 1] = " \\  ";
-        if (opnv->rc)
-            disp_buf[root_x - (interval + 1) / 2][root_y + 1] = " /  ";
-        __print_vertical(opnv->lc, left_child, root_y + 2, (interval >> 1));
-        __print_vertical(opnv->rc, right_child, root_y + 2, (interval >> 1));
+            this->disp_buf[root_x + 1][root_y + (interval + 1) / 2] = _pointer2r;
+        __print_horizon(opnv->lc, root_x + 2, root_y - interval, (interval >> 1));
+        __print_horizon(opnv->rc, root_x + 2, root_y + interval, (interval >> 1));
     }
     binode<T> *__build_ip(int opnv, int lo, int hi, binode<T> *p)
     {
@@ -129,7 +119,7 @@ protected:
         {
             opnv->lc = __build_pp(leftOfpre + 1, rightOfpre, leftOfpost, rightOfpost - 1);
             // only one child, default choose left
-            isunique = 0;
+            _isunique = 0;
         }
         return opnv;
     }
@@ -180,7 +170,7 @@ protected:
         binode<T> *x;
         if (opnv->val == target)
         {
-            __del_allSub(opnv);
+            __eraseallSub(opnv);
             return;
         }
         this->q.push_back(opnv);
@@ -189,8 +179,8 @@ protected:
             x = this->q.front(), this->q.pop_front();
             if (x->val == target)
             {
-                __del_allSub(x->lc);
-                __del_allSub(x->rc);
+                __eraseallSub(x->lc);
+                __eraseallSub(x->rc);
                 x->lc = x->rc = nullptr;
                 continue;
             }
@@ -201,12 +191,12 @@ protected:
         }
         this->q.clear();
     }
-    void __del_allSub(binode<T> *opnv)
+    void __eraseallSub(binode<T> *opnv)
     {
         if (!opnv)
             return;
-        __del_allSub(opnv->lc);
-        __del_allSub(opnv->rc);
+        __eraseallSub(opnv->lc);
+        __eraseallSub(opnv->rc);
         __release(opnv);
     }
     bool __treeIdentical(binode<T> *T1, binode<T> *T2)
@@ -350,9 +340,11 @@ public:
     bintree()
     {
         this->_root = nullptr;
-        this->isunique = true;
+        this->_isunique = true;
         this->q.clear(), this->nexq.clear();
         this->_size = 0;
+        _isRBtree = 0;
+        _ishuffman = 0;
     }
     ~bintree()
     {
@@ -374,51 +366,44 @@ public:
         _root = tp1 = nullptr;
         q.clear(), nexq.clear();
         _size = 0;
-        isunique = 1;
+        _isunique = 1;
         disp_buf.clear();
     }
 
-    void printTreeHorizon()
+    void printhorizon()
     {
         if (!this->_root)
             return;
+        if (_ishuffman)
+            cout << "🕵🏻‍   🌲  HUFFMAN TREE  🌲   🕵🏻‍" << endl;
+        if (_isRBtree)
+            cout << "🎩   🌲  RBTREE  🌲   🎒" << endl;
         printf("🌲\n");
         if (this->_size > (1 << 8) - 1)
         {
-            cout << " Too Many Node !\n";
+            cout << " Too Many Node to print !\n";
             return;
         }
-        this->disp_buf = vector<vector<string>>(40, vector<string>(MAXCOL, string(2, ' ')));
+        _unitsize = __ischar<T>() ? 2 : to_string(__getmax(this->_root)->val).size();
+        if (_isRBtree)
+            _unitsize++;
+        _pointer2l = _pointer2r = string(_unitsize, ' ');
+        _pointer2l[_unitsize / 2] = '/';
+        _pointer2r[_unitsize / 2] = '\\';
+        this->disp_buf = vector<vector<string>>(40, vector<string>(MAXCOL, string(_unitsize, ' ')));
         __print_horizon(this->_root, 0, pow(2, this->_root->height) - 1, pow(2, this->_root->height - 1));
         int n = this->_root->height * 2 + 1, i, j, breadth = pow(2, this->_root->height + 1) + 1;
         for (i = 0; i < n; ++i)
         {
             for (j = 0; j < breadth; ++j)
-                cout << disp_buf[i][j];
+                cout << this->disp_buf[i][j];
             cout << endl;
         }
         printf("🌲\n");
-    }
-    void printTreeVertical()
-    {
-        if (!this->_root)
-            return;
-        if (this->_size > (1 << 15) - 1)
-        {
-            cout << " Too Many Node !\n";
-            return;
-        }
-        printf("🌲\n");
-        this->disp_buf = vector<vector<string>>(MAXROW, vector<string>(40, string(4, ' ')));
-        __print_vertical(this->_root, pow(2, this->_root->height) - 1, 0, pow(2, this->_root->height - 1));
-        int i, j, breadth = pow(2, this->_root->height + 1) + 1, n = this->_root->height * 2 + 1;
-        for (i = 0; i < breadth; ++i)
-        {
-            for (j = 0; j < n; ++j)
-                cout << disp_buf[i][j];
-            cout << endl;
-        }
-        printf("🌲\n");
+        if (_ishuffman)
+            cout << "🕵🏻‍   🌲  HUFFMAN TREE  🌲   🕵🏻‍" << endl;
+        if (_isRBtree)
+            cout << "🎩   🌲  RBTREE  🌲   🎒" << endl;
     }
     binode<T> *__buildcmp(int id, vector<int> &a)
     {
@@ -432,7 +417,7 @@ public:
     inline void build_cmp(vector<int> &a)
     {
         __update_root(__buildcmp(0, a));
-        bintree<T>::__update_status();
+        __update_status();
     }
     inline void build_pi(vector<int> &pr, vector<int> &in)
     {
@@ -451,7 +436,7 @@ public:
         if (!this->_root)
             return;
         __invert(this->_root);
-        bintree<T>::__update_status();
+        __update_status();
     }
     inline void earse_leaf()
     {
