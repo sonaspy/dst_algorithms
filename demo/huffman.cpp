@@ -1,7 +1,7 @@
 // author - sonaspy@outlook.com
 // coding - utf_8
 
-#include "../cpp/huffman.h"
+#include "../src/huffman.h"
 using namespace dsa;
 #include <fstream>
 vector<vector<char>> disp_buf;

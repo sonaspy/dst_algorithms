@@ -3,7 +3,7 @@
 
 #define SIZE 20
 
-#include "../cpp/dsa.h"
+#include "../src/dsa.h"
 #define test() freopen("in", "r", stdin)
 using namespace dsa;
 using namespace std;

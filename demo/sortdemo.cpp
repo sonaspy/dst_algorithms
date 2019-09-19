@@ -1,6 +1,6 @@
 // author - sonaspy@outlook.com
 // coding - utf_8
-#include "../cpp/dsa.h"
+#include "../src/dsa.h"
 
 #define SIZE 1
 #define test() freopen("in", "r", stdin)
