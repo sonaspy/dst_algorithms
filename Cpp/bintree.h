@@ -384,7 +384,7 @@ public:
             cout << " Too Many Node to print !\n";
             return;
         }
-        _unitsize = __ischar<T>() ? 2 : to_string(__getmax(this->_root)->val).size();
+        _unitsize = __ischar<T>() ? 1 : to_string(__getmax(this->_root)->val).size();
         if (_isRBtree)
             _unitsize++;
         _pointer2l = _pointer2r = string(_unitsize, ' ');
