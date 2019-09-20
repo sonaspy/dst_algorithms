@@ -8,7 +8,6 @@ using namespace std;
 namespace dsa
 {
 
-
 //[lo,hi)
 template <typename RandAccessor>
 static void heapsort_(RandAccessor lo, RandAccessor hi)
@@ -23,36 +22,37 @@ template <typename RandAccessor>
 static void bubblesort(RandAccessor lo, RandAccessor hi)
 { // Bubble largest element in a[0:n-1] to hi.
     RandAccessor i, k;
-    for (k = hi - 1; k > lo; k--)
+    bool swapped = 1;
+    for (k = hi - 1; swapped && k > lo; k--)
     {
-        bool swapped = 0;
+        swapped = 0;
         for (i = lo; i < k; i++)
+        {
             if (*i > *(i + 1))
             {
                 iter_swap(i, (i + 1));
                 swapped = 1;
             }
-        if (!swapped)
-            break;
+        }
     }
 }
 //[lo,hi)
 template <typename RandAccessor>
 static void doublebubblesort(RandAccessor lo, RandAccessor hi)
 { // Bubble largest element in a[0:n-1] to hi.
-    bool flag = true;
+    bool swapped = true;
     hi--;
     RandAccessor i;
-    while (lo < hi && flag)
+    while (lo < hi && swapped)
     {
-        flag = false;
+        swapped = false;
         for (i = lo; i < hi; ++i)
             if (*i > *(i + 1))
-                iter_swap(i, (i + 1)), flag = true;
+                iter_swap(i, i + 1), swapped = true;
         hi--;
         for (i = hi; i > lo; --i)
-            if (*i < *(i - 1))
-                iter_swap(i, (i - 1)), flag = true;
+            if (*(i - 1) > *i)
+                iter_swap(i, i - 1), swapped = true;
         lo++;
     }
 }
@@ -67,11 +67,34 @@ static void selectsort(RandAccessor lo, RandAccessor hi)
 }
 //[lo,hi)
 template <typename RandAccessor>
-static void insersort(RandAccessor lo, RandAccessor hi)
+static void inline insertsort_bin(RandAccessor lo, RandAccessor hi)
 { // [lo, hi)
-    if (lo != hi)
-        for (RandAccessor i = lo + 1; i != hi; ++i)
-            linear_insert(lo, i, *i);
+    if (lo < hi)
+        for (RandAccessor i = lo + 1; i < hi; ++i)
+            __linear_insert(lo, i, *i);
+}
+
+//[lo,hi)
+template <typename RandAccessor>
+static void inline insertsort(RandAccessor lo, RandAccessor hi)
+{ // [lo, hi)
+    if (lo < hi)
+    {
+        RandAccessor i, j;
+        for (i = lo + 1; i < hi; ++i)
+        {
+            int val = *i;
+            if (val < *lo)
+            {
+                copy_backward(lo, i, i + 1);
+                *lo = val;
+                continue;
+            }
+            for (j = i; j > lo && *(j - 1) > val; --j)
+                *j = *(j - 1);
+            *j = val;
+        }
+    }
 }
 
 const int Sedgewick[] = {929, 505, 209, 109, 41, 19, 5, 1, 0};
@@ -152,7 +175,7 @@ static void inline mergesort_(RandAccessor lo, RandAccessor hi)
     __merge_sort0(lo, hi, *lo);
 }
 
-#define CUTOFF 50
+
 template <typename RandAccessor>
 static inline void __median3(RandAccessor lo, RandAccessor hi)
 {
@@ -175,19 +198,22 @@ static RandAccessor __partition(RandAccessor lo, RandAccessor hi, const T &val)
     RandAccessor i = lo - 1, j = lo;
     for (; j < hi; j++)
         if (*j < pivot)
-        {
-            i++;
-            iter_swap(i, j);
-        }
+            iter_swap(++i, j);
     iter_swap(i + 1, hi);
     return i + 1;
 }
 //[lo,hi]
+#define CUTOFF 10
 template <typename RandAccessor>
 static void __quicksort(RandAccessor lo, RandAccessor hi)
 {
     if (lo < hi)
     {
+        if (hi - lo < CUTOFF)
+        {
+            insertsort_bin(lo, hi + 1);
+            return;
+        }
         RandAccessor p = __partition(lo, hi, *lo);
         __quicksort(lo, p - 1);
         __quicksort(p + 1, hi);
