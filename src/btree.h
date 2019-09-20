@@ -44,7 +44,7 @@ protected:
             v->parent = p;
         }
 
-        int r = upper_bound(p->key.begin(), p->key.end(), v->key[0]) - p->key.begin();
+        int r = __upper_bound(p->key.begin(), p->key.end(), v->key[0]) - p->key.begin();
         p->key.insert(p->key.begin() + r, *(v->key.begin() + s));
         v->key.erase(v->key.begin() + s);
         p->child.insert(p->child.begin() + r + 1, u);
@@ -228,7 +228,7 @@ public:
         _last = nullptr;
         while (v)
         {
-            auto it = lower_bound(v->key.begin(), v->key.end(), x);
+            auto it = __lower_bound(v->key.begin(), v->key.end(), x);
             int r = it - v->key.begin();
             if (it != v->key.end() && *it == x)
                 return v;
@@ -251,7 +251,7 @@ public:
         bnode_ptr<T> v = search(x);
         if (v)
             return 0;
-        int r = upper_bound(_last->key.begin(), _last->key.end(), x) - _last->key.begin();
+        int r = __upper_bound(_last->key.begin(), _last->key.end(), x) - _last->key.begin();
         _last->key.insert(_last->key.begin() + r, x);
         _last->child.insert(_last->child.begin() + r + 1, nullptr);
         _size++;
@@ -263,7 +263,7 @@ public:
         bnode_ptr<T> v = search(x);
         if (!v)
             return false;
-        int r = lower_bound(v->key.begin(), v->key.end(), x) - v->key.begin();
+        int r = __lower_bound(v->key.begin(), v->key.end(), x) - v->key.begin();
         if (v->child.front())
         {
             bnode_ptr<T> u = v->child[r + 1];
