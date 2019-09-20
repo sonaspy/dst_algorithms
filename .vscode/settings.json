@@ -75,7 +75,8 @@
 "indentRainbow.includedLanguages": [
   "python"
 ],
-"python.linting.pylintEnabled": false
+"python.linting.pylintEnabled": false,
+"C_Cpp.errorSquiggles": "Disabled"
 
 
 }

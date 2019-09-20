@@ -9,6 +9,7 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <numeric>
+using namespace std;
 namespace dsa
 {
 
@@ -213,14 +214,19 @@ RandAccessor __upper_bound(RandAccessor lo, RandAccessor hi, const T &val)
     }
     return lo;
 }
+
+// vector use , push_back rear val, then __linear_insert(a.begin(), a.end()-1, a.back());
 template <typename RandAccessor, typename T>
-static inline void linear_insert(RandAccessor lo, RandAccessor hi, const T val)
+inline void __linear_insert(RandAccessor lo, RandAccessor hi, const T val)
 { // [lo, hi]
-    if (val > *(hi - 1))
-        return;
-    RandAccessor pos = val < *lo ? lo : __upper_bound(lo, hi, val);
-    copy_backward(pos, hi, hi + 1);
-    *pos = val;
+    if (lo < hi)
+    {
+        if (val > *(hi - 1))
+            return;
+        RandAccessor pos = val < *lo ? lo : __upper_bound(lo, hi, val);
+        copy_backward(pos, hi, hi + 1);
+        *pos = val;
+    }
 }
 
 } // namespace dsa
