@@ -191,7 +191,7 @@ static inline void __median3(RandAccessor lo, RandAccessor hi)
 
 //Partition routine for quicksort [lo,hi]
 template <typename RandAccessor, typename T>
-static RandAccessor __partition(RandAccessor lo, RandAccessor hi, const T &val)
+static  RandAccessor __partition(RandAccessor lo, RandAccessor hi, const T &val)
 {
     __median3(lo, hi);
     T pivot = *hi;
@@ -310,8 +310,7 @@ static void tableSort(T *a, T *b)
 {
     int n = b - a;
     vector<int> table(n);
-    for (int i = 0; i < n; i++)
-        table[i] = i;
+    iota(table.begin(), table.end(), 0);
     for (int i = 1; i < n; i++)
     {
         int tmp = table[i];
@@ -322,18 +321,36 @@ static void tableSort(T *a, T *b)
     }
     for (int i = 0; i < n; i++)
     {
-        T val = a[i];
-        int j = i, last = i, next;
-        for (; table[j] != j; j = next)
+        if (table[i] != i)
         {
-            last = j;
-            next = table[j];
-            a[j] = a[table[j]];
-            table[j] = j;
+            T val = a[i];
+            int j = i, last = i, next;
+            for (; table[j] != j; j = next)
+            {
+                last = j;
+                next = table[j];
+                a[j] = a[table[j]];
+                table[j] = j;
+            }
+            a[last] = val;
         }
-        a[last] = val;
     }
 }
+/*
+for (int i = 0; i < SIZE; i++)
+    {
+        if (a[i] != i)
+        {
+            int start = i, j = a[i], tmp;
+            for (; j != start; j = tmp)
+            {
+                tmp = a[j];
+                a[j] = j;
+            }
+            a[i] = i;
+        }
+    }
+*/
 
 }; // namespace dsa
 
