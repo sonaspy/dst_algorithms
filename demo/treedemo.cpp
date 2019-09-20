@@ -3,7 +3,7 @@
 
 #include "../src/dsa.h"
 
-#define SIZE 100000
+#define SIZE 10000
 using namespace std;
 using namespace dsa;
 
@@ -20,15 +20,16 @@ int main(int argc, char const *argv[])
     clock_t startTime, endTime;
     startTime = clock();
 
-    btree<int> ax;
-    cout << ax.root() << endl;
+    avltree<int> ax;
     ax.build(a);
+    cout << ax.root() << endl;
     cout << ax.size() << endl;
-    for (int i = 0; i < 1; i++)
-    {
-        cout << a[i] << endl;
-        //ax.erase(a[i]);
-    }
+    cout << ax.balanced() << endl;
+    // for (int i = 0; i < 8000; i++)
+    // {
+    //     cout << a[i] << endl;
+    //     ax.erase(a[i]);
+    // }
     cout << ax.size() << endl;
     endTime = clock();
     cout << "The run time is: " << (double)(endTime - startTime) / 1000 << "ms" << endl;

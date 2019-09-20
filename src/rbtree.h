@@ -13,12 +13,12 @@ class rbtree : public avltree<T>
 {
     // in rbtree the memver 'height' is BLK height
 protected:
-#define _blk(opnv) ((!(opnv) || (opnv)->color == BLK))
-#define _red(opnv) (!_blk(opnv))
+#define is_blk(opnv) ((!(opnv) || (opnv)->color == BLK))
+#define is_red(opnv) (!is_blk(opnv))
 #define __setblk(opnv) (((opnv) ? (opnv->color = BLK) : 0))
 #define __setred(opnv) (((opnv) ? (opnv->color = RED) : 0))
-#define rb_color(opnv) (((opnv) ? (opnv->color) : BLK))
-#define _downblk(opnv) (((opnv) ? (opnv->downblk) : 0))
+#define __rbcolor(opnv) (((opnv) ? (opnv->color) : BLK))
+#define __downblk(opnv) (((opnv) ? (opnv->downblk) : 0))
 
     inline void __rotate_l(binode_ptr<T> x)
     {
@@ -27,7 +27,7 @@ protected:
         if (y->lc)
             y->lc->parent = x;
         y->parent = x->parent;
-        x->parent ? ((x->parent->lc == x) ? x->parent->lc = y : x->parent->rc = y) : this->_root = y;
+        x->isroot() ? this->_root = y : from_parent2(x) = y;
         y->lc = x;
         x->parent = y;
         this->__updateheight(x);
@@ -40,20 +40,20 @@ protected:
         if (y->rc)
             y->rc->parent = x;
         y->parent = x->parent;
-        x->parent ? ((x->parent->lc == x) ? x->parent->lc = y : x->parent->rc = y) : this->_root = y;
+        x->isroot() ? this->_root = y : from_parent2(x) = y;
         y->rc = x;
         x->parent = y;
         this->__updateheight(x);
         this->__updateheight(y);
     }
-    void __double_red_solution(binode_ptr<T> opnv)
+    void __doubleis_red_solution(binode_ptr<T> opnv)
     {
         binode_ptr<T> p, g, u;
-        while ((p = opnv->parent) && _red(p))
+        while ((p = opnv->parent) && is_red(p))
         {
             g = p->parent;
             u = opnv->uncle();
-            if (u && _red(u))
+            if (u && is_red(u))
             {
                 __setblk(u);
                 __setblk(p);
@@ -77,7 +77,7 @@ protected:
         }
         __setblk(this->_root);
     }
-    void __double_blk_solution(binode_ptr<T> pp, binode_ptr<T> p)
+    void __doubleis_blk_solution(binode_ptr<T> pp, binode_ptr<T> p)
     {
         while ((nullptr == p || BLK == p->color) && p != this->_root)
         {
@@ -156,12 +156,12 @@ protected:
             return;
         __isrbtree(opnv->lc);
         __isrbtree(opnv->rc);
-        if (opnv->color == RED && (rb_color(opnv->lc) == RED || rb_color(opnv->rc) == RED))
+        if (opnv->color == RED && (__rbcolor(opnv->lc) == RED || __rbcolor(opnv->rc) == RED))
             this->_isRBtree = 0;
-        if (_downblk(opnv->lc) != _downblk(opnv->rc))
+        if (__downblk(opnv->lc) != __downblk(opnv->rc))
             this->_isRBtree = 0;
         else
-            opnv->downblk = opnv->color == BLK ? _downblk(opnv->lc) : _downblk(opnv->lc);
+            opnv->downblk = opnv->color == BLK ? __downblk(opnv->lc) : __downblk(opnv->lc);
     }
 
 public:
@@ -176,7 +176,7 @@ public:
             return false;
         w = new binode<T>(x, this->_last, nullptr, nullptr, RED);
         this->_size++;
-        __double_red_solution(w);
+        __doubleis_red_solution(w);
         return true;
     }
     bool erase(const T &val)
@@ -238,7 +238,7 @@ public:
                 p->parent = pp;
                 1 == pp_child_tag ? pp->lc = p : pp->rc = p;
             }
-            __double_blk_solution(pp, p);
+            __doubleis_blk_solution(pp, p);
             if (_nil)
             {
                 _nil->is_l() ? _nil->parent->lc = nullptr : _nil->parent->rc = nullptr;

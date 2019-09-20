@@ -38,8 +38,6 @@ protected:
     inline void _zig(binode_ptr<T> &v)
     {
         binode_ptr<T> y = v->lc;
-        if (!y)
-            return;
         v->lc = y->rc;
         if (y->rc)
             y->rc->parent = v;
@@ -53,8 +51,6 @@ protected:
     inline void _zag(binode_ptr<T> &v)
     {
         binode_ptr<T> y = v->rc;
-        if (!y)
-            return;
         v->rc = y->lc;
         if (y->lc)
             y->lc->parent = v;
