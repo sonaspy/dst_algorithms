@@ -13,7 +13,7 @@
 using namespace std;
 namespace dsa
 {
-#define MAXCOL 1000
+#define MAXCOL 5000
 #define MAXROW 100000
 #define from_parent2(x) (((x)->is_l() ? (x)->parent->lc : (x)->parent->rc))
 #define nodeBalanced(x) ((-2 < _factor(x)) && (_factor(x) < 2))

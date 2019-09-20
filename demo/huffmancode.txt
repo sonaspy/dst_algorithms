@@ -1,85 +1,202 @@
-The Total optimal WPL is -> 230
-t
-freq is -> 9
-code is -> " 111 "
+The Total optimal WPL is -> 3291
 e
-freq is -> 6
-code is -> " 010 "
-o
-freq is -> 5
-code is -> " 000 "
-a
-freq is -> 4
-code is -> " 1000 "
-i
-freq is -> 3
-code is -> " 0011 "
+freq is -> 48
+code is -> " 1100 "
 n
-freq is -> 3
-code is -> " 0110 "
-r
-freq is -> 3
+freq is -> 41
+code is -> " 1000 "
+t
+freq is -> 37
 code is -> " 0111 "
-m
-freq is -> 2
-code is -> " 10010 "
-l
-freq is -> 2
+a
+freq is -> 36
+code is -> " 0110 "
+i
+freq is -> 35
+code is -> " 0101 "
+<
+freq is -> 31
+code is -> " 0010 "
+r
+freq is -> 28
+code is -> " 0000 "
+;
+freq is -> 26
+code is -> " 11111 "
+(
+freq is -> 25
+code is -> " 10111 "
+s
+freq is -> 25
+code is -> " 11100 "
+o
+freq is -> 25
 code is -> " 11011 "
-f
-freq is -> 2
-code is -> " 11000 "
-x
-freq is -> 2
+)
+freq is -> 25
+code is -> " 11010 "
+c
+freq is -> 23
+code is -> " 10101 "
+d
+freq is -> 22
 code is -> " 10100 "
 u
-freq is -> 2
-code is -> " 0010 "
-d
-freq is -> 2
-code is -> " 10110 "
-F
-freq is -> 1
-code is -> " 101011 "
-#
-freq is -> 1
-code is -> " 101110 "
-L
-freq is -> 1
-code is -> " 101111 "
-A
-freq is -> 1
-code is -> " 100111 "
-=
-freq is -> 1
-code is -> " 110010 "
-p
-freq is -> 1
-code is -> " 110011 "
-c
-freq is -> 1
-code is -> " 110100 "
-s
-freq is -> 1
-code is -> " 110101 "
-*
-freq is -> 1
+freq is -> 19
+code is -> " 01001 "
+.
+freq is -> 15
+code is -> " 00010 "
+m
+freq is -> 13
+code is -> " 111101 "
+l
+freq is -> 13
+code is -> " 111100 "
+0
+freq is -> 11
 code is -> " 100110 "
+/
+freq is -> 11
+code is -> " 101100 "
+b
+freq is -> 10
+code is -> " 100100 "
+,
+freq is -> 8
+code is -> " 010001 "
+g
+freq is -> 8
+code is -> " 001110 "
+x
+freq is -> 8
+code is -> " 000111 "
+T
+freq is -> 7
+code is -> " 1110111 "
+"
+freq is -> 6
+code is -> " 1011010 "
+h
+freq is -> 5
+code is -> " 1001010 "
+]
+freq is -> 5
+code is -> " 1001110 "
+[
+freq is -> 5
+code is -> " 1001011 "
++
+freq is -> 4
+code is -> " 0011011 "
+p
+freq is -> 4
+code is -> " 0011001 "
+=
+freq is -> 4
+code is -> " 0001101 "
+k
+freq is -> 4
+code is -> " 0001100 "
+I
+freq is -> 3
+code is -> " 11101011 "
+{
+freq is -> 3
+code is -> " 11101100 "
+}
+freq is -> 3
+code is -> " 11101010 "
+*
+freq is -> 3
+code is -> " 11101101 "
+f
+freq is -> 3
+code is -> " 10011110 "
+S
+freq is -> 3
+code is -> " 10011111 "
+Z
+freq is -> 3
+code is -> " 11101001 "
 z
+freq is -> 3
+code is -> " 11101000 "
+-
+freq is -> 3
+code is -> " 10110110 "
+E
+freq is -> 3
+code is -> " 10110111 "
+>
+freq is -> 2
+code is -> " 01000010 "
+_
+freq is -> 2
+code is -> " 00110001 "
+v
+freq is -> 2
+code is -> " 01000001 "
+1
+freq is -> 2
+code is -> " 00111100 "
+L
+freq is -> 2
+code is -> " 00110000 "
+8
+freq is -> 2
+code is -> " 01000000 "
+#
+freq is -> 2
+code is -> " 01000011 "
+U
 freq is -> 1
-code is -> " 101010 "
+code is -> " 001111101 "
+%
+freq is -> 1
+code is -> " 001111110 "
+4
+freq is -> 1
+code is -> " 001111011 "
+N
+freq is -> 1
+code is -> " 001101010 "
+5
+freq is -> 1
+code is -> " 001101011 "
+@
+freq is -> 1
+code is -> " 001111100 "
+&
+freq is -> 1
+code is -> " 001101001 "
+q
+freq is -> 1
+code is -> " 001101000 "
+:
+freq is -> 1
+code is -> " 001111010 "
+y
+freq is -> 1
+code is -> " 001111111 "
 ðŸŒ²  HUFFMAN TREE  ðŸŒ²
-                                                               ÿ                                                                 
-                                               /                               \                                                 
-                               ÿ                                                               ÿ                                 
-                       /               \                                               /               \                         
-               ÿ                               ÿ                               ÿ                               ÿ                 
-           /       \                       /       \                       /       \                       /       \             
-       o               ÿ               e               ÿ               ÿ               ÿ               ÿ               t         
-                     /   \                           /   \           /   \           /   \           /   \                       
-                   u       i                       n       r       a       ÿ       ÿ       ÿ       ÿ       ÿ                     
-                                                                          / \     / \     / \     / \     / \                    
-                                                                         m   ÿ   x   ÿ   d   ÿ   f   ÿ   ÿ   l                   
-                                                                            / \     / \     / \     / \ / \                      
-                                                                            * A     z F     # L     = p c s                      
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               ÿ                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+                                                                                                                                                                                                                                                                                                                                                                                               /                                                                                                                                                                                                                                                               \                                                                                                                                                                                                                                                                                                                                                                                                 
+                                                                                                                                                                                                                                                               ÿ                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               ÿ                                                                                                                                                                                                                                                                 
+                                                                                                                                                                                               /                                                                                                                               \                                                                                                                                                                                                                                                                                                                                                                                               /                                                                                                                               \                                                                                                                                                                                                 
+                                                                                                                               ÿ                                                                                                                                                                                                                                                               ÿ                                                                                                                                                                                                                                                               ÿ                                                                                                                                                                                                                                                               ÿ                                                                                                                                 
+                                                                                               /                                                               \                                                                                                                                                                                               /                                                               \                                                                                                                                                                                               /                                                               \                                                                                                                                                                                               /                                                               \                                                                                                 
+                                                               ÿ                                                                                                                               ÿ                                                                                                                               ÿ                                                                                                                               ÿ                                                                                                                               ÿ                                                                                                                               ÿ                                                                                                                               ÿ                                                                                                                               ÿ                                                                 
+                                               /                               \                                                                                               /                               \                                                                                               /                               \                                                                                               /                               \                                                                                               /                               \                                                                                               /                               \                                                                                               /                               \                                                                                               /                               \                                                 
+                               r                                                               ÿ                                                               <                                                               ÿ                                                               ÿ                                                               i                                                               a                                                               t                                                               n                                                               ÿ                                                               ÿ                                                               ÿ                                                               e                                                               ÿ                                                               ÿ                                                               ÿ                                 
+                                                                                       /               \                                                                                                               /               \                                               /               \                                                                                                                                                                                                                                                                                                               /               \                                               /               \                                               /               \                                                                                                               /               \                                               /               \                                               /               \                         
+                                                                               .                               ÿ                                                                                               ÿ                               ÿ                               ÿ                               u                                                                                                                                                                                                                                                                                               ÿ                               ÿ                               d                               c                               ÿ                               (                                                                                               )                               o                               s                               ÿ                               ÿ                               ;                 
+                                                                                                           /       \                                                                                       /       \                       /       \                       /       \                                                                                                                                                                                                                                                                                                                       /       \                       /       \                                                                                       /       \                                                                                                                                                                                                                       /       \                       /       \                                             
+                                                                                                       ÿ               x                                                                               ÿ               ÿ               g               ÿ               ÿ               ,                                                                                                                                                                                                                                                                                                               b               ÿ               0               ÿ                                                                               /               ÿ                                                                                                                                                                                                               ÿ               ÿ               l               m                                         
+                                                                                                     /   \                                                                                           /   \           /   \                           /   \           /   \                                                                                                                                                                                                                                                                                                                                           /   \                           /   \                                                                                           /   \                                                                                                                                                                                                           /   \           /   \                                                                       
+                                                                                                   k       =                                                                                       ÿ       p       ÿ       +                       ÿ       ÿ       ÿ       ÿ                                                                                                                                                                                                                                                                                                                                       h       [                       ]       ÿ                                                                                       "       ÿ                                                                                                                                                                                                       ÿ       ÿ       ÿ       T                                                                     
+                                                                                                                                                                                                  / \             / \                             / \     / \     / \     / \                                                                                                                                                                                                                                                                                                                                                                             / \                                                                                             / \                                                                                                                                                                                                     / \     / \     / \                                                                            
+                                                                                                                                                                                                 L   _           ÿ   ÿ                           1   ÿ   ÿ   ÿ   8   v   >   #                                                                                                                                                                                                                                                                                                                                                                           f   S                                                                                           -   E                                                                                                                                                                                                   z   Z   }   I   {   *                                                                           
+                                                                                                                                                                                                                / \ / \                             / \ / \ / \                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+                                                                                                                                                                                                                q & N 5                             : 4 @ U % y                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
 ðŸŒ²  HUFFMAN TREE  ðŸŒ²
