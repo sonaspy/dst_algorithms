@@ -3,7 +3,7 @@
 
 #include "../src/dsa.h"
 
-#define SIZE 500
+#define SIZE 100000
 using namespace std;
 using namespace dsa;
 
@@ -13,25 +13,23 @@ int main(int argc, char const *argv[])
     //test();
     srand(time(NULL));
     int b[SIZE], n = SIZE;
-    generate(b, b + n, [&]() { return rand() % 1000; });
+    generate(b, b + n, [&]() { return rand(); });
     vector<int> a(b, b + n);
     a.erase(unique(a.begin(), a.end()), a.end());
     string s;
     clock_t startTime, endTime;
     startTime = clock();
 
-    rbtree<int> ax;
+    btree<int> ax;
     cout << ax.root() << endl;
     ax.build(a);
     cout << ax.size() << endl;
-    for (int i = 0; i < 480; i++)
+    for (int i = 0; i < 1; i++)
     {
         cout << a[i] << endl;
-        ax.erase(a[i]);
+        //ax.erase(a[i]);
     }
     cout << ax.size() << endl;
-    ax.printhorizon();
-    cout << ax.isrbtree() << endl;
     endTime = clock();
     cout << "The run time is: " << (double)(endTime - startTime) / 1000 << "ms" << endl;
     return 0;
