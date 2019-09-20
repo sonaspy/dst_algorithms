@@ -195,14 +195,25 @@ public:
         bnode_ptr<T> v = _root;
         queue<bnode_ptr<T>> q, nexq;
         q.push(v);
-        int le = 1;
+        int le = 0, layer = 0, blank;
+        while (v)
+        {
+            v = v->child[0];
+            layer++;
+        }
         while (q.size())
         {
             printf("LeveL %d : ", le);
+            blank = pow(2, layer - le);
+            for (int i = 0; i < blank; i++)
+                cout << " ";
             while (q.size())
             {
                 v = q.front(), q.pop();
                 _output_node(v);
+                blank = pow(2, layer - le - 2);
+                for (int i = 0; i < blank; i++)
+                    cout << " ";
                 for (auto chi : v->child)
                     if (chi)
                         nexq.push(chi);

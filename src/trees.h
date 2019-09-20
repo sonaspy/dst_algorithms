@@ -45,7 +45,7 @@ struct bnode;
 template <typename T>
 using binode_ptr = struct binode<T> *;
 template <typename T>
-using bnode_ptr = struct bnode<T> *;
+using bnode_ptr = struct bnode_ptr<T>;
 
 template <typename T>
 struct __ischar
@@ -160,26 +160,14 @@ template <typename T>
 struct bnode
 {
     vector<T> key;
-    vector<bnode<T> *> child; // always more 1 item than key
-    bnode<T> *parent = nullptr;
+    vector<bnode_ptr<T>> child; // always more 1 item than key
+    bnode_ptr<T> prev, next;
+    bool isleaf;
     bnode()
     {
-        parent = nullptr;
-        child.push_back(nullptr);
-    }
-    bnode(const T &x, bnode *lc = nullptr, bnode *rc = nullptr)
-    {
-        parent = nullptr;
-        key.push_back(x);
-        child.resize(2);
-        child[0] = lc, child[1] = rc;
-        if (lc)
-            lc->parent = this;
-        if (rc)
-            rc->parent = this;
+        prev = next = nullptr;
     }
 };
 
 }; // namespace dsa
 #endif
-using namespace dsa;
