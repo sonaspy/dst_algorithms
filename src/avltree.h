@@ -20,13 +20,16 @@ public:
     }
     void erase(const T &x)
     {
+        if (bstree<T>::search(x) == nullptr)
+            return;
         __erase(this->_root, x);
-        bintree<T>::__update_status();
         this->_size--;
     }
     void insert(const T &x)
     {
-        __insert(this->_root, x, nullptr);
+        if (bstree<T>::search(x) != nullptr)
+            return;
+        __insert(this->_root, x);
     }
     inline void clear() { bstree<T>::clear(); }
     ~avltree()
@@ -39,11 +42,7 @@ protected:
     {
         binode_ptr<T> y = v->lc;
         v->lc = y->rc;
-        if (y->rc)
-            y->rc->parent = v;
         y->rc = v;
-        y->parent = v->parent;
-        v->parent = y;
         bintree<T>::__updateheight(v);
         bintree<T>::__updateheight(y);
         v = y;
@@ -52,11 +51,7 @@ protected:
     {
         binode_ptr<T> y = v->rc;
         v->rc = y->lc;
-        if (y->lc)
-            y->lc->parent = v;
         y->lc = v;
-        y->parent = v->parent;
-        v->parent = y;
         bintree<T>::__updateheight(v);
         bintree<T>::__updateheight(y);
         v = y;
@@ -71,75 +66,67 @@ protected:
         _zig(v->rc);
         _zag(v);
     }
-    void __insert(binode_ptr<T> &v, const T &x, binode_ptr<T> p)
+    void __insert(binode_ptr<T> &v, const T &x)
     {
         if (!v)
         {
             v = new binode<T>(x);
-            v->parent = p;
             this->_size++;
             return;
         }
         else if (x < v->val)
         {
-            __insert(v->lc, x, v);
-            bintree<T>::__updateheight(v);
+            __insert(v->lc, x);
             if (_factor(v) == 2)
-                _factor(v->lc) == 1 ? _zig(v) : _zigzag(v);
+                x < v->lc->val ? _zig(v) : _zigzag(v);
         }
         else if (x > v->val)
         {
-            __insert(v->rc, x, v);
-            bintree<T>::__updateheight(v);
+            __insert(v->rc, x);
             if (_factor(v) == -2)
-                _factor(v->rc) == -1 ? _zag(v) : _zagzig(v);
+                x > v->rc->val ? _zag(v) : _zagzig(v);
         }
+        bintree<T>::__updateheight(v);
     }
 
-    binode_ptr<T> __erase(binode_ptr<T> &v, const T &x)
+    void __erase(binode_ptr<T> &v, const T x)
     {
-        if (!v)
-            return nullptr;
-        if (x < v->val)
+        if (x == v->val)
         {
-            v->lc = __erase(v->lc, x);
-            bintree<T>::__updateheight(v);
-            if (_factor(v) == -2)
-                _factor(v->rc) == -1 ? _zag(v) : _zagzig(v);
-        }
-        else if (v->val < x)
-        {
-            v->rc = __erase(v->rc, x);
-            bintree<T>::__updateheight(v);
-            if (_factor(v) == 2)
-                (_factor(v->lc) == 1) ? _zig(v) : _zigzag(v);
-        }
-        else // find it
-        {
-            binode_ptr<T> tmp;
-            if (v->rc && v->lc)
+            if (v->lc && v->rc)
             {
-                if (_factor(v) > 0)
+                if (_factor(v) >= 0)
                 {
-                    tmp = v->precessor();
-                    v->val = tmp->val;
-                    v->lc = __erase(v->lc, tmp->val);
+                    v->val = v->precessor()->val;
+                    __erase(v->lc, v->val);
                 }
                 else
                 {
-                    tmp = v->successor();
-                    v->val = tmp->val;
-                    v->rc = __erase(v->rc, tmp->val);
+                    v->val = v->successor()->val;
+                    __erase(v->rc, v->val);
                 }
             }
             else
             {
-                tmp = v;
+                binode_ptr<T> tmp = v;
                 v = v->lc ? v->lc : v->rc;
                 __release(tmp);
             }
         }
-        return v;
+        else if (x < v->val)
+        {
+            __erase(v->lc, x);
+            if (_factor(v) == -2)
+                _factor(v->rc) <= 0 ? _zag(v) : _zagzig(v);
+        }
+        else if (v->val < x)
+        {
+            __erase(v->rc, x);
+            if (_factor(v) == 2)
+                _factor(v->lc) >= 0 ? _zig(v) : _zigzag(v);
+        }
+        if (v)
+            bintree<T>::__updateheight(v);
     }
 };
 
