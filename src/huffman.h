@@ -55,7 +55,7 @@ public:
         binode<char> *v, *w, *root;
         for (auto &kv : mp)
         {
-            v = new binode<char>(kv.first);
+            v = this->__newbinode(kv.first);
             v->freq = kv.second;
             _pq.push(v);
         }
@@ -63,7 +63,7 @@ public:
         {
             v = _pq.top(), _pq.pop();
             w = _pq.top(), _pq.pop();
-            root = new binode<char>(0xff, nullptr, v, w);
+            root = this->__newbinode(0xff, nullptr, v, w);
             v->parent = w->parent = root;
             root->freq = v->freq + w->freq;
             _wpl += root->freq;

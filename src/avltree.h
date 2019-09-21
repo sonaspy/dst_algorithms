@@ -70,7 +70,7 @@ protected:
     {
         if (!v)
         {
-            v = new binode<T>(x);
+            v = this->__newbinode(x);
             this->_size++;
             return;
         }
@@ -110,7 +110,7 @@ protected:
             {
                 binode_ptr<T> tmp = v;
                 v = v->lc ? v->lc : v->rc;
-                __release(tmp);
+                this->__release(tmp);
             }
         }
         else if (x < v->val)

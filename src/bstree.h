@@ -64,7 +64,7 @@ protected:
             {
                 tmp = opnv;
                 opnv = opnv->lc ? opnv->lc : opnv->rc;
-                __release(tmp);
+                this->__release(tmp);
             }
         }
         return opnv;
@@ -78,7 +78,7 @@ public:
             insert(i);
         this->__update_status();
     }
-    bool balanced()
+    bool avlbalanced()
     {
         binode_ptr<T> p = nullptr;
         return __judge_avl(this->_root, p);
@@ -98,7 +98,7 @@ public:
         binode_ptr<T> &w = search(x);
         if (w)
             return false;
-        w = new binode<T>(x, _last);
+        w = this->__newbinode(x, _last);
         this->_size++;
         this->__updateheightabove(w);
         return true;

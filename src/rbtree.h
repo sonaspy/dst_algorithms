@@ -174,7 +174,7 @@ public:
         binode_ptr<T> &w = this->search(x);
         if (w)
             return false;
-        w = new binode<T>(x, this->_last, nullptr, nullptr, RED);
+        w = this->__newbinode(x, this->_last, nullptr, nullptr, RED);
         this->_size++;
         __doubleis_red_solution(w);
         return true;
@@ -202,7 +202,7 @@ public:
                     curr->lc->parent = p;
                 pp = p, p = p->lc;
                 pp_child_tag = 1;
-                delete curr;
+                this->__release(curr);
             }
             else
             {
@@ -211,21 +211,21 @@ public:
                 p = prev->rc = curr->lc;
                 if (curr->lc)
                     curr->lc->parent = prev;
-                delete curr;
+                this->__release(curr);
             }
         }
         else if (p->lc)
         {
             ref_p = p->lc;
             p->lc->parent = pp;
-            delete p;
+            this->__release(p);
             p = ref_p;
         }
         else if (p->rc)
         {
             ref_p = p->rc;
             p->rc->parent = pp;
-            delete p;
+            this->__release(p);
             p = ref_p;
         }
         else
@@ -234,7 +234,7 @@ public:
         {
             if (nullptr == p)
             {
-                _nil = p = new binode<T>();
+                _nil = p = this->__newbinode();
                 p->parent = pp;
                 1 == pp_child_tag ? pp->lc = p : pp->rc = p;
             }
@@ -242,7 +242,7 @@ public:
             if (_nil)
             {
                 _nil->is_l() ? _nil->parent->lc = nullptr : _nil->parent->rc = nullptr;
-                delete _nil;
+                this->__release(_nil);
             }
         }
         this->_size--;

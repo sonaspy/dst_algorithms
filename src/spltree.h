@@ -72,7 +72,7 @@ public:
         if (!this->_root)
         {
             this->_size++;
-            this->_root = new binode<T>(x);
+            this->_root = this->__newbinode(x);
             return true;
         }
         binode_ptr<T> w = search(x), t;
@@ -82,7 +82,7 @@ public:
         t = this->_root;
         if (this->_root->val < x)
         {
-            t->parent = (this->_root = new binode<T>(x, nullptr, t, t->rc));
+            t->parent = (this->_root = this->__newbinode(x, nullptr, t, t->rc));
             if (t->has_r())
             {
                 t->rc->parent = this->_root;
@@ -91,7 +91,7 @@ public:
         }
         else
         {
-            t->parent = (this->_root = new binode<T>(x, nullptr, t->lc, t));
+            t->parent = (this->_root = this->__newbinode(x, nullptr, t->lc, t));
             if (t->has_l())
             {
                 t->lc->parent = this->_root;
@@ -131,7 +131,7 @@ public:
             this->_root->lc = lt;
             lt->parent = this->_root;
         }
-        __release(w);
+        this->__release(w);
         this->_size--;
         if (this->_root)
             bintree<T>::__updateheight(this->_root);

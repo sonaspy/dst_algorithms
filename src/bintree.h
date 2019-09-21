@@ -18,6 +18,25 @@ protected:
     bool _isunique, _isRBtree, _ishuffman;
     string _pointer2l, _pointer2r;
     vector<vector<string>> disp_buf;
+    unordered_set<binode_ptr<T>> __memofbinode;
+    inline binode_ptr<T> __newbinode(const T &x, binode_ptr<T> p = nullptr, binode_ptr<T> l = nullptr, binode_ptr<T> r = nullptr, RBColor cl = BLK)
+    {
+        binode_ptr<T> v = new binode<T>(x, p, l, r, cl);
+        __memofbinode.insert(v);
+        return v;
+    }
+    inline binode_ptr<T> __newbinode()
+    {
+        binode_ptr<T> v = new binode<T>();
+        __memofbinode.insert(v);
+        return v;
+    }
+    inline void __release(binode_ptr<T> &v)
+    {
+        __memofbinode.erase(v);
+        delete v;
+        v = nullptr;
+    }
     static inline void __updatedepth(binode_ptr<T> &opnv) { opnv->depth = _depth(opnv->parent) + 1; }
     static inline void __updateheight(binode_ptr<T> &opnv) { opnv->height = max(_height(opnv->lc), _height(opnv->rc)) + 1; }
     static inline void __updateheightabove(binode_ptr<T> opnv)
@@ -46,27 +65,12 @@ protected:
     {
         _root = opnv;
     }
-    inline void __freeallnodes()
-    {
-        q.clear();
-        if (_root)
-            q.push_back(_root);
-        while (q.size())
-        {
-            if (q.front()->lc)
-                q.push_back(q.front()->lc);
-            if (q.front()->rc)
-                q.push_back(q.front()->rc);
-            delete q.front();
-            q.pop_front();
-        }
-    }
     binode_ptr<T> __build_pi(int opnv, int lo, int hi, binode_ptr<T> p)
     {
         if (hi < lo)
             return nullptr;
         int i = lo;
-        binode_ptr<T> node = new binode<T>(preorder[opnv]);
+        binode_ptr<T> node = this->__newbinode(preorder[opnv]);
         hashtable[preorder[opnv]] = node;
         node->parent = p;
         __updatedepth(node);
@@ -103,7 +107,7 @@ protected:
         if (hi < lo)
             return nullptr;
         int i = lo;
-        binode_ptr<T> node = new binode<T>(postorder[opnv]);
+        binode_ptr<T> node = this->__newbinode(postorder[opnv]);
         hashtable[postorder[opnv]] = node;
         node->parent = p;
         __updatedepth(node);
@@ -118,7 +122,7 @@ protected:
     {
         if (leftOfpre > rightOfpre || leftOfpost > rightOfpost)
             return nullptr;
-        binode_ptr<T> opnv = new binode<T>(preorder[leftOfpre]);
+        binode_ptr<T> opnv =this->__newbinode(preorder[leftOfpre]);
         if (leftOfpre == rightOfpre)
             return opnv;
         int leftSubVal = preorder[leftOfpre + 1], i, sub_cnt;
@@ -154,7 +158,7 @@ protected:
         if (!opnv->lc && !opnv->rc)
         {
             if (p)
-                __release(opnv);
+                this->__release(opnv);
             return;
         }
         __earse_leaf(opnv->lc, opnv);
@@ -212,7 +216,7 @@ protected:
             return;
         __eraseallSub(opnv->lc);
         __eraseallSub(opnv->rc);
-        __release(opnv);
+        this->__release(opnv);
     }
     bool __treeIdentical(binode_ptr<T> T1, binode_ptr<T> T2)
     {
@@ -383,7 +387,9 @@ public:
         _size = 0;
         _isunique = 1;
         disp_buf.clear();
-        __freeallnodes();
+        for (auto &ptr : __memofbinode)
+            delete ptr;
+        __memofbinode.clear();
     }
 
     void printhorizon()
@@ -426,7 +432,7 @@ public:
     {
         if (a.size() - 1 < id)
             return nullptr;
-        binode_ptr<T> opnv = new binode<T>(a[id]);
+        binode_ptr<T> opnv = this->__newbinode(a[id]);
         opnv->lc = __buildcmp(id * 2 + 1, a);
         opnv->rc = __buildcmp(id * 2 + 2, a);
         return opnv;
