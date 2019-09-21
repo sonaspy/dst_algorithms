@@ -12,184 +12,283 @@ template <typename T>
 class btree
 {
 protected:
-    int _size, _order;
+    int _size, _order; // _order [2,512]
     bnode_ptr<T> _root, _last;
-    unordered_set<bnode_ptr<T>> _memoryOfNode;
-
-    void __overfSolution(bnode_ptr<T> v)
+    unordered_set<bnode_ptr<T>> __memoryofbnode;
+#define K_MAX (2 * _order - 1)
+#define K_MIN (_order - 1)
+#define C_MAX (2 * _order)
+#define C_MIN (_order)
+#define overflow(p) (((p)->key.size() == K_MAX))
+#define underflow(p) (((p)->key.size() == K_MIN))
+    inline bnode_ptr<T> __new_bnode(bool isleaf = true)
     {
-        if (v->key.size() <= _order - 1)
-            return;
-        int s = _order / 2;
-        bnode_ptr<T> u = new bnode<T>();
-
-        // right split [0 1 2 |<3>| 4 5]
-        u->child.insert(u->child.begin(), v->child.begin() + s + 1, v->child.end());
-        v->child.erase(v->child.begin() + s + 1, v->child.end());
-
-        u->key.insert(u->key.begin(), v->key.begin() + s + 1, v->key.begin() + _order);
-        v->key.erase(v->key.begin() + s + 1, v->key.begin() + _order);
-
-        if (v->child.front())
-        {
-            for (int j = 0; j < _order - s; j++)
-                u->child[j]->parent = u;
-        }
-        bnode_ptr<T> p = v->parent;
-        if (!p)
-        {
-            p = new bnode<T>();
-            _root = p;
-            p->child[0] = v;
-            v->parent = p;
-        }
-
-        int r = __upper_bound(p->key.begin(), p->key.end(), v->key[0]) - p->key.begin();
-        p->key.insert(p->key.begin() + r, *(v->key.begin() + s));
-        v->key.erase(v->key.begin() + s);
-        p->child.insert(p->child.begin() + r + 1, u);
-        u->parent = p;
-
-        __overfSolution(p);
+        bnode_ptr<T> v = new bnode<T>(isleaf);
+        v->child.resize(CHILD_MAX);
+        fill(v->child.begin(), v->child.end(), nullptr);
+        v->child.resize(0);
+        v->key.reserve(K_MAX);
+        __memoryofbnode.insert(v);
+        return v;
     }
-
-    void __underfSolution(bnode_ptr<T> v)
+    inline void __release(bnode_ptr<T> &v)
     {
-        //cout << "s-1\n";
-        if (!v)
+        __memoryofbnode.erase(v);
+        delete v;
+        v = nullptr;
+    }
+    inline void _output_node(bnode_ptr<T> v)
+    {
+        cout << " [ ";
+        for (auto i : v->key)
+            cout << i << " ";
+        cout << "(" << v->child.size() << ")";
+        cout << "] ";
+    }
+    void __inorder(bnode_ptr<T> _root)
+    {
+        if (!_root)
             return;
-        if ((_order - 1) / 2 <= v->key.size())
-            return;
-        //cout << "s-2\n";
-        bnode_ptr<T> p = v->parent;
-        if (!p)
+        int i;
+        for (i = 0; i < _root->key.size(); i++)
         {
-            //cout << "s-3\n";
-            if (v->key.empty() && v->child[0])
-            {
-                _root = v->child[0];
-                _root->parent = nullptr;
-                v->child[0] = nullptr;
-                _memoryOfNode.erase(v);
-                delete v;
-            }
-            return;
+            __inorder(_root->child[i]);
+            cout << _root->key[i] << " -> ";
         }
-        int r = -1;
-        //cout << "sp" << endl;
-        while (p->child[++r] != v)
-            ;
-        if (0 < r)
+        for (; i < _root->child.size(); i++)
+            __inorder(_root->child[i]);
+    }
+    void __nonfull_insert(bnode_ptr<T> v, const T &val)
+    {
+        int idx = __upper_bound(v->key.begin(), v->key.end(), val) - v->key.begin();
+        if (v->isleaf)
         {
-            bnode_ptr<T> ls = p->child[r - 1];
-            if ((_order - 1) / 2 < ls->key.size())
-            {
-                v->key.insert(v->key.begin(), p->key[r - 1]);
-                p->key[r - 1] = ls->key.back();
-                ls->key.pop_back();
-                v->child.insert(v->child.begin(), ls->child.back());
-                ls->child.pop_back();
-                if (v->child[0])
-                    v->child[0]->parent = v;
-                //cout << "s1" << endl;
-                return;
-            }
-        }
-        if (r + 1 < p->child.size())
-        {
-            bnode_ptr<T> rs = p->child[r + 1];
-            if ((_order - 1) / 2 < rs->key.size())
-            {
-                //cout << "s2\n";
-                v->key.insert(v->key.end(), p->key[r]);
-                p->key[r] = rs->key.front();
-                rs->key.erase(rs->key.begin());
-                v->child.push_back(rs->child.front());
-                rs->child.erase(rs->child.begin());
-                if (v->child.back())
-                    v->child.back()->parent = v;
-                return;
-            }
-        }
-        if (0 < r)
-        {
-            //cout << "s3\n";
-            bnode_ptr<T> ls = p->child[r - 1];
-            ls->key.push_back(p->key[r - 1]);
-            p->key.erase(p->key.begin() + r - 1);
-            p->child.erase(p->child.begin() + r);
-
-            ls->child.push_back(v->child.front());
-            v->child.erase(v->child.begin());
-            if (ls->child.back())
-                ls->child.back()->parent = ls;
-            ls->key.insert(ls->key.end(), v->key.begin(), v->key.end());
-            ls->child.insert(ls->child.end(), v->child.begin(), v->child.end());
-            for (auto &lsch : ls->child)
-                if (lsch)
-                    lsch->parent = ls;
-            _memoryOfNode.erase(v);
-            delete v;
+            v->key.insert(v->key.begin() + idx, val);
+            __resizechild(v);
         }
         else
         {
-            //cout << "s4\n";
-            bnode_ptr<T> rs = p->child[r + 1];
-            rs->key.insert(rs->key.begin(), p->key[r]);
-            p->key.erase(p->key.begin() + r);
-            p->child.erase(p->child.begin() + r);
-
-            rs->child.insert(rs->child.begin(), v->child.back());
-            v->child.pop_back();
-
-            if (rs->child.front())
-                rs->child.front()->parent = rs;
-            rs->key.insert(rs->key.begin(), v->key.begin(), v->key.end());
-            rs->child.insert(rs->child.begin(), v->child.begin(), v->child.end());
-
-            for (auto &rsch : rs->child)
-                if (rsch)
-                    rsch->parent = rs;
-
-            _memoryOfNode.erase(v);
-            delete v;
+            if (overflow(v->child[idx]))
+            {
+                __overfSolution(v, idx);
+                idx += (val > v->key[idx] ? 1 : 0);
+            }
+            __nonfull_insert(v->child[idx], val);
         }
-        __underfSolution(p);
-        //cout << "end\n";
     }
-
-    inline void _output_node(bnode_ptr<T> v)
+    void __overfSolution(bnode_ptr<T> p, int c_idx)
     {
-        cout << " ( ";
-        for (auto i : v->key)
-            cout << i << " ";
-        cout << ") ";
-    }
-
-    void __inorder(bnode_ptr<T> root)
-    {
-        if (!root)
-            return;
-        int i;
-        for (i = 0; i < root->key.size(); i++)
+        bnode_ptr<T> oldnode = p->child[c_idx];
+        bnode_ptr<T> node = __new_bnode(oldnode->isleaf);
+        node->key.resize(K_MIN);
+        __resizechild(node);
+        copy(oldnode->key.begin() + C_MIN, oldnode->key.begin() + C_MIN + K_MIN, node->key.begin());
+        if (!oldnode->isleaf)
         {
-            __inorder(root->child[i]);
-            cout << root->key[i] << " -> ";
+            node->child.resize(C_MIN);
+            copy(oldnode->child.begin() + C_MIN, oldnode->child.begin() + C_MIN * 2, node->child.begin());
         }
-        for (; i < root->child.size(); i++)
-            __inorder(root->child[i]);
+        p->key.insert(p->key.begin() + c_idx, oldnode->key[K_MIN]);
+        p->child.insert(p->child.begin() + c_idx + 1, node);
+        oldnode->key.resize(K_MIN);
+        __resizechild(oldnode);
+    }
+
+    inline void __resizechild(bnode_ptr<T> v) { v->child.resize(v->key.size() + 1); }
+
+    void __common_erase(bnode_ptr<T> v, const T &val)
+    {
+        if (!v)
+            return;
+        int _pos = __lower_bound(v->key.begin(), v->key.end(), val) - v->key.begin();
+        if (v->isleaf)
+        {
+            if (v->key[_pos] == val)
+            {
+                v->key.erase(v->key.begin() + _pos);
+                __resizechild(v);
+            }
+        }
+        else
+        {
+            bnode_ptr<T> rc = nullptr, p = nullptr, lc = v->child[_pos];
+            if (_pos < v->key.size())
+                rc = v->child[_pos + 1];
+            if (v->key[_pos] == val)
+            {
+                if (lc->key.size() > K_MIN)
+                {
+                    T k1 = lc->precessor();
+                    __common_erase(lc, k1);
+                    v->key[_pos] = k1;
+                }
+                else if (rc->key.size() > K_MIN)
+                {
+                    T k1 = rc->successor();
+                    __common_erase(rc, k1);
+                    v->key[_pos] = k1;
+                }
+                else
+                {
+                    __mergechild(v, _pos);
+                    __common_erase(lc, val);
+                }
+            }
+            else
+            {
+                if (_pos > 0)
+                    p = v->child[_pos - 1];
+                if (lc->key.size() == K_MIN)
+                {
+                    if (_pos > 0 && p->key.size() > K_MIN)
+                    {
+                        transfer2rc(v, _pos - 1, p, lc);
+                    }
+                    else if (_pos < v->key.size() && rc->key.size() > K_MIN)
+                    {
+                        transfer2lc(v, _pos, lc, rc);
+                    }
+                    else if (_pos > 0)
+                    {
+                        __mergechild(v, _pos - 1);
+                        lc = p;
+                    }
+                    else
+                    {
+                        __mergechild(v, _pos);
+                    }
+                }
+                __common_erase(lc, val);
+            }
+        }
+    }
+
+    inline void __mergechild(bnode_ptr<T> v, int i)
+    {
+        if (!v)
+            return;
+        bnode_ptr<T> lc = v->child[i], rc = v->child[i + 1];
+        if (!lc || !rc)
+            return;
+        lc->key.resize(K_MAX);
+        lc->key[K_MIN] = v->key[i];
+        copy(rc->key.begin(), rc->key.begin() + K_MAX - 1 - K_MIN, lc->key.begin() + K_MIN + 1);
+        __resizechild(lc);
+        if (!lc->isleaf)
+            copy(rc->child.begin(), rc->child.begin() + C_MAX - C_MIN, lc->child.begin() + C_MIN);
+        v->key.erase(v->key.begin() + i);
+        v->child.erase(v->child.begin() + i + 1);
+    }
+    inline void transfer2rc(bnode_ptr<T> x, int i, bnode_ptr<T> y, bnode_ptr<T> z)
+    {
+        if(!x || !y || !z)return;
+        z->key.insert(z->key.begin(), x->key[i]);
+        x->key[i] = y->key.back();
+        if (!z->isleaf)
+            z->child.insert(z->child.begin(), y->child.back());
+        y->key.resize(y->key.size() - 1);
+        __resizechild(y), __resizechild(z);
+    }
+    inline void transfer2lc(bnode_ptr<T> x, int i, bnode_ptr<T> y, bnode_ptr<T> z)
+    {
+        if (!x || !y || !z)
+            return;
+        y->key.resize(y->key.size() + 1);
+        __resizechild(y);
+        *(y->key.rbegin()) = x->key[i];
+        x->key[i] = z->key.front();
+        z->key.erase(z->key.begin());
+        if (!z->isleaf)
+        {
+            *(y->child.rbegin()) = z->child.front();
+            z->child.erase(z->child.begin());
+        }
+        __resizechild(z);
     }
 
 public:
-    btree<T>(int order = 3) : _order(order), _size(0)
+    btree<T>(int order = 3) : _order(order), _size(0), _root(nullptr)
     {
-        _root = new bnode<T>();
-        _memoryOfNode.insert(_root);
     }
     ~btree()
     {
         this->clear();
     }
+    inline int const order() { return this->_order; }
+    inline int const size() { return this->_size; }
+    inline bnode_ptr<T> root() { return this->_root; }
+    inline bool const empty() { return !size(); }
+    inline void const clear()
+    {
+        for (auto &ptr : __memoryofbnode)
+            delete ptr;
+        __memoryofbnode.clear();
+        _root = nullptr;
+        _size = 0;
+    }
+    bnode_ptr<T> search(const T &val)
+    {
+        bnode_ptr<T> v = _root;
+        _last = nullptr;
+        while (v)
+        {
+            auto it = __lower_bound(v->key.begin(), v->key.end(), val);
+            if (it != v->key.end() && *it == val)
+                return v;
+            _last = v, v = v->child[it - v->key.begin()];
+        }
+        return nullptr;
+    }
+    bool insert(const T &val)
+    {
+        bnode_ptr<T> v = search(val);
+        if (v)
+            return 0;
+        if (!_root)
+            _root = __new_bnode();
+        if (overflow(_root))
+        {
+            v = __new_bnode(false);
+            v->child.push_back(_root);
+            __overfSolution(v, 0);
+            _root = v;
+        }
+        __nonfull_insert(_root, val);
+        this->_size++;
+        return true;
+    }
+    bool erase(const T &val)
+    {
+        bnode_ptr<T> v = search(val);
+        if (!v)
+            return false;
+        if (_root->key.size() == 1)
+        {
+            if (_root->isleaf)
+            {
+                __release(_root);
+                return true;
+            }
+            bnode_ptr<T> lc = _root->child[0], rc = _root->child[1];
+            if (!lc || !rc)
+                return false;
+            if (lc->key.size() == K_MIN && rc->key.size() == K_MIN)
+            {
+                __mergechild(_root, 0);
+                __release(_root);
+                _root = lc;
+            }
+        }
+        __common_erase(_root, val);
+        _size--;
+        return true;
+    }
+    void build(vector<T> &a)
+    {
+        for (auto &val : a)
+            insert(val);
+    }
+
     inline void printTree()
     {
         bnode_ptr<T> v = _root;
@@ -223,71 +322,14 @@ public:
             swap(q, nexq);
         }
     }
-    inline void const clear()
-    {
-        for (auto &ptr : _memoryOfNode)
-            delete ptr;
-        _memoryOfNode.clear();
-    }
-    inline int const order() { return this->_order; }
-    inline int const size() { return this->_size; }
-    inline bnode_ptr<T> root() { return this->_root; }
-    inline bool const empty() { return !size(); }
-    bnode_ptr<T> search(const T &x)
-    {
-        bnode_ptr<T> v = _root;
-        _last = nullptr;
-        while (v)
-        {
-            auto it = __lower_bound(v->key.begin(), v->key.end(), x);
-            int r = it - v->key.begin();
-            if (it != v->key.end() && *it == x)
-                return v;
-            _last = v, v = v->child[r];
-        }
-        return nullptr;
-    }
     void inorder()
     {
         __inorder(this->_root);
         cout << "nullptr\n";
     }
-    void build(vector<T> &a)
+
+    void __underfSolution(bnode_ptr<T> v)
     {
-        for (auto &x : a)
-            insert(x);
-    }
-    bool insert(const T &x)
-    {
-        bnode_ptr<T> v = search(x);
-        if (v)
-            return 0;
-        int r = __upper_bound(_last->key.begin(), _last->key.end(), x) - _last->key.begin();
-        _last->key.insert(_last->key.begin() + r, x);
-        _last->child.insert(_last->child.begin() + r + 1, nullptr);
-        _size++;
-        __overfSolution(_last); // key size <= m - 1
-        return true;
-    }
-    bool erase(const T &x)
-    {
-        bnode_ptr<T> v = search(x);
-        if (!v)
-            return false;
-        int r = __lower_bound(v->key.begin(), v->key.end(), x) - v->key.begin();
-        if (v->child.front())
-        {
-            bnode_ptr<T> u = v->child[r + 1];
-            while (u->child[0])
-                u = u->child[0];
-            v->key[r] = u->key[0];
-            v = u, r = 0;
-        }
-        v->key.erase(v->key.begin() + r);
-        v->child.erase(v->child.begin() + 1 + r);
-        _size--;
-        __underfSolution(v); // still bug
-        return true;
     }
 };
 } // namespace dsa

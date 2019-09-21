@@ -15,10 +15,11 @@ int main(int argc, char const *argv[])
 {
     /* code */
     //test();
-    vector<int> a(10);
-    iota(a.begin(), a.end(), 0);
-    a.push_back(4);
-    __linear_insert(a.begin(), a.end() - 1, a.back());
+    vector<int> a, b(10, 10);
+    a.reserve(100);
+    copy(b.begin(), b.end(), a.begin());
+    //iota(a.begin(), a.end(), 0);
     output_vec(a);
+    cout << a[14];
     return 0;
 }

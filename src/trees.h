@@ -3,6 +3,7 @@
 
 #ifndef __NEW_TREE__
 #define __NEW_TREE__
+
 #include <vector>
 #include <unordered_map>
 #include <iostream>
@@ -11,6 +12,7 @@
 #include <queue>
 #include <stack>
 using namespace std;
+
 namespace dsa
 {
 #define MAXCOL 5000
@@ -20,7 +22,6 @@ namespace dsa
 #define _height(p) ((p != nullptr) ? (p)->height : -1)
 #define _depth(p) ((p != nullptr) ? (p)->depth : -1)
 #define _factor(p) ((_height(p->lc)) - (_height(p->rc)))
-#define __release(p) (delete (p), (p) = nullptr)
 
 enum RBColor
 {
@@ -45,7 +46,7 @@ struct bnode;
 template <typename T>
 using binode_ptr = struct binode<T> *;
 template <typename T>
-using bnode_ptr = struct bnode_ptr<T>;
+using bnode_ptr = struct bnode<T> *;
 
 template <typename T>
 struct __ischar
@@ -116,9 +117,7 @@ struct binode
     {
         return !rc && !lc;
     }
-    inline bool operator==(const binode *&bn) { return val == bn->val; }
-    inline bool operator<(const binode *&bn) { return val < bn->val; }
-    inline bool operator>(const binode *&bn) { return val > bn->val; }
+
     inline binode *successor()
     {
         return this->rc ? __getmin(this->rc) : nullptr;
@@ -154,6 +153,9 @@ struct binode
         }
         return cnt;
     }
+    inline bool operator==(const binode *&bn) { return val == bn->val; }
+    inline bool operator<(const binode *&bn) { return val < bn->val; }
+    inline bool operator>(const binode *&bn) { return val > bn->val; }
 };
 
 template <typename T>
@@ -161,11 +163,28 @@ struct bnode
 {
     vector<T> key;
     vector<bnode_ptr<T>> child; // always more 1 item than key
-    bnode_ptr<T> prev, next;
     bool isleaf;
-    bnode()
+    bnode(bool leaf = true)
     {
-        prev = next = nullptr;
+        isleaf = leaf;
+    }
+    T precessor()
+    {
+        bnode_ptr<T> x = this;
+        int i = key.size();
+        while (!x->isleaf)
+        {
+            x = x->child[i];
+            i = x->key.size();
+        }
+        return x->key.back();
+    }
+    T successor()
+    {
+        bnode_ptr<T> x = this;
+        while (!x->isleaf)
+            x = x->child.front();
+        return x->key.front();
     }
 };
 

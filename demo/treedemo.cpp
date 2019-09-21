@@ -23,13 +23,14 @@ int main(int argc, char const *argv[])
         int b[SIZE], n = SIZE;
         generate(b, b + n, [&]() { return rand() % 1000; });
         vector<int> a(b, b + n);
-        spltree<int> ax;
+        rbtree<int> ax;
         ax.build(a);
-        for (int i = 0; i < 990; i++)
+        for (int i = 0; i < 970; i++)
         {
             ax.erase(a[i]);
         }
-        ax.printhorizon();
+        if (!ax.isrbtree())
+            ax.printhorizon();
     }
     cout << c0 << " " << c << endl;
     endTime = clock();
