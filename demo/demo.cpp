@@ -11,15 +11,17 @@ struct node
 {
     int i;
 };
+
 int main(int argc, char const *argv[])
 {
     /* code */
     //test();
-    vector<int> a, b(10, 10);
-    a.reserve(100);
-    copy(b.begin(), b.end(), a.begin());
+    vector<int> a(10), b(10), c(100);
+    iota(a.begin(), a.end(), 1);
+    iota(b.begin(), b.end(), 5);
+
+    c.resize(cur);
     //iota(a.begin(), a.end(), 0);
-    output_vec(a);
-    cout << a[14];
+    output_vec(c);
     return 0;
 }
