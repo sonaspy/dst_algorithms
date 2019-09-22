@@ -25,8 +25,8 @@ protected:
     {
         bnode_ptr<T> v = new bnode<T>(isleaf);
         v->keysize = 0;
-        v->key.resize(K_MAX + 1);
-        v->child.resize(C_MAX + 1);
+        v->key.resize(K_MAX);
+        v->child.resize(C_MAX);
         fill(v->child.begin(), v->child.end(), nullptr);
         __memoryofbnode.insert(v);
         return v;
@@ -92,7 +92,7 @@ protected:
         p->child.pop_back();
         p->key.pop_back();
     }
-    void __common_erase(bnode_ptr<T> v, const T &val)
+    void __erase(bnode_ptr<T> v, const T &val)
     {
         int _pos = __lower_bound(v->key.begin(), v->key.begin() + v->keysize, val) - v->key.begin();
         if (v->isleaf)
@@ -114,19 +114,19 @@ protected:
                 if (lc->keysize > K_MIN)
                 {
                     T k1 = lc->precessor();
-                    __common_erase(lc, k1);
+                    __erase(lc, k1);
                     v->key[_pos] = k1;
                 }
                 else if (rc->keysize > K_MIN)
                 {
                     T k1 = rc->successor();
-                    __common_erase(rc, k1);
+                    __erase(rc, k1);
                     v->key[_pos] = k1;
                 }
                 else
                 {
                     __mergechild(v, _pos);
-                    __common_erase(lc, val);
+                    __erase(lc, val);
                 }
             }
             else
@@ -153,7 +153,7 @@ protected:
                         __mergechild(v, _pos);
                     }
                 }
-                __common_erase(lc, val);
+                __erase(lc, val);
             }
         }
     }
@@ -168,6 +168,7 @@ protected:
         v->key.erase(v->key.begin() + i);
         v->keysize--;
         v->child.erase(v->child.begin() + i + 1);
+
         v->key.resize(K_MAX);
         v->child.resize(C_MAX);
     }
@@ -195,12 +196,14 @@ protected:
 
         z->keysize--;
         z->key.erase(z->key.begin());
+
         z->key.resize(K_MAX);
 
         if (!z->isleaf)
         {
             y->child[y->keysize] = z->child[0];
             z->child.erase(z->child.begin());
+
             z->child.resize(C_MAX);
         }
     }
@@ -257,7 +260,7 @@ public:
         return true;
     }
     bool erase(const T &val)
-    { // sometimes bug occur
+    {
         bnode_ptr<T> v = search(val);
         if (!v)
             return false;
@@ -276,7 +279,7 @@ public:
                 _root = lc;
             }
         }
-        __common_erase(_root, val);
+        __erase(_root, val);
         _size--;
         return true;
     }
