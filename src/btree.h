@@ -24,9 +24,8 @@ protected:
     inline bnode_ptr<T> __new_bnode(bool isleaf = true)
     {
         bnode_ptr<T> v = new bnode<T>(isleaf);
-        v->child.resize(CHILD_MAX);
+        v->child.resize(C_MAX);
         fill(v->child.begin(), v->child.end(), nullptr);
-        v->child.resize(0);
         v->key.reserve(K_MAX);
         __memoryofbnode.insert(v);
         return v;
@@ -55,17 +54,14 @@ protected:
             __inorder(_root->child[i]);
             cout << _root->key[i] << " -> ";
         }
-        for (; i < _root->child.size(); i++)
+        for (; i < _root->key.size() + 1; i++)
             __inorder(_root->child[i]);
     }
     void __nonfull_insert(bnode_ptr<T> v, const T &val)
     {
         int idx = __upper_bound(v->key.begin(), v->key.end(), val) - v->key.begin();
         if (v->isleaf)
-        {
             v->key.insert(v->key.begin() + idx, val);
-            __resizechild(v);
-        }
         else
         {
             if (overflow(v->child[idx]))
@@ -81,34 +77,20 @@ protected:
         bnode_ptr<T> oldnode = p->child[c_idx];
         bnode_ptr<T> node = __new_bnode(oldnode->isleaf);
         node->key.resize(K_MIN);
-        __resizechild(node);
         copy(oldnode->key.begin() + C_MIN, oldnode->key.begin() + C_MIN + K_MIN, node->key.begin());
         if (!oldnode->isleaf)
-        {
-            node->child.resize(C_MIN);
             copy(oldnode->child.begin() + C_MIN, oldnode->child.begin() + C_MIN * 2, node->child.begin());
-        }
         p->key.insert(p->key.begin() + c_idx, oldnode->key[K_MIN]);
         p->child.insert(p->child.begin() + c_idx + 1, node);
         oldnode->key.resize(K_MIN);
-        __resizechild(oldnode);
     }
-
-    inline void __resizechild(bnode_ptr<T> &v)
-    {
-        v->child.resize(v->key.size() + 1);
-    }
-
     void __common_erase(bnode_ptr<T> v, const T &val)
     {
         int _pos = __lower_bound(v->key.begin(), v->key.end(), val) - v->key.begin();
         if (v->isleaf)
         {
             if (v->key[_pos] == val)
-            {
                 v->key.erase(v->key.begin() + _pos);
-                __resizechild(v);
-            }
         }
         else
         {
@@ -163,16 +145,12 @@ protected:
             }
         }
     }
-
     inline void __mergechild(bnode_ptr<T> v, int i)
     {
-        if (!v)
-            return;
         bnode_ptr<T> lc = v->child[i], rc = v->child[i + 1];
         lc->key.resize(K_MAX);
         lc->key[K_MIN] = v->key[i];
         copy(rc->key.begin(), rc->key.begin() + K_MAX - 1 - K_MIN, lc->key.begin() + K_MIN + 1);
-        __resizechild(lc);
         if (!lc->isleaf)
             copy(rc->child.begin(), rc->child.begin() + C_MAX - C_MIN, lc->child.begin() + C_MIN);
         v->key.erase(v->key.begin() + i);
@@ -183,23 +161,20 @@ protected:
         z->key.insert(z->key.begin(), x->key[i]);
         x->key[i] = y->key.back();
         if (!z->isleaf)
-            z->child.insert(z->child.begin(), y->child.back());
+            z->child.insert(z->child.begin(), y->child[y->key.size()]);
         y->key.resize(y->key.size() - 1);
-        __resizechild(y), __resizechild(z);
     }
     inline void transfer2lc(bnode_ptr<T> x, int i, bnode_ptr<T> y, bnode_ptr<T> z)
     {
         y->key.resize(y->key.size() + 1);
-        __resizechild(y);
         *(y->key.rbegin()) = x->key[i];
         x->key[i] = z->key.front();
         z->key.erase(z->key.begin());
         if (!z->isleaf)
         {
-            *(y->child.rbegin()) = z->child.front();
+            y->child[y->key.size()] = z->child[0];
             z->child.erase(z->child.begin());
         }
-        __resizechild(z);
     }
 
 public:
@@ -245,7 +220,7 @@ public:
         if (overflow(_root))
         {
             v = __new_bnode(false);
-            v->child.push_back(_root);
+            v->child[0] = _root;
             __overfSolution(v, 0);
             _root = v;
         }
@@ -266,9 +241,7 @@ public:
                 return true;
             }
             bnode_ptr<T> lc = _root->child[0], rc = _root->child[1];
-            if (!lc || !rc)
-                return false;
-            if (lc->key.size() == K_MIN && rc->key.size() == K_MIN)
+            if (underflow(lc) && underflow(rc))
             {
                 __mergechild(_root, 0);
                 __release(_root);

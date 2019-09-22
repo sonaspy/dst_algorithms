@@ -183,8 +183,8 @@ struct bnode
     {
         bnode_ptr<T> x = this;
         while (!x->isleaf)
-            x = x->child.front();
-        return x->key.front();
+            x = x->child[0];
+        return x->key[0];
     }
 };
 
