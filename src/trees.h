@@ -161,8 +161,9 @@ struct binode
 template <typename T>
 struct bnode
 {
+    int keysize;
     vector<T> key;
-    vector<bnode_ptr<T>> child; // always more 1 item than key
+    vector<bnode_ptr<T>> child;
     bool isleaf;
     bnode(bool leaf = true)
     {
@@ -171,13 +172,13 @@ struct bnode
     T precessor()
     {
         bnode_ptr<T> x = this;
-        int i = key.size();
+        int i = keysize;
         while (!x->isleaf)
         {
             x = x->child[i];
-            i = x->key.size();
+            i = x->keysize;
         }
-        return x->key.back();
+        return x->key[keysize - 1];
     }
     T successor()
     {
