@@ -24,9 +24,9 @@ protected:
     inline bnode_ptr<T> __new_bnode(bool isleaf = true)
     {
         bnode_ptr<T> v = new bnode<T>(isleaf);
+        v->key.reserve(K_MAX);
         v->child.resize(C_MAX);
         fill(v->child.begin(), v->child.end(), nullptr);
-        v->key.reserve(K_MAX);
         __memoryofbnode.insert(v);
         return v;
     }
@@ -83,6 +83,7 @@ protected:
         p->key.insert(p->key.begin() + c_idx, oldnode->key[K_MIN]);
         p->child.insert(p->child.begin() + c_idx + 1, node);
         oldnode->key.resize(K_MIN);
+        p->child.pop_back();
     }
     void __common_erase(bnode_ptr<T> v, const T &val)
     {
@@ -162,7 +163,7 @@ protected:
         x->key[i] = y->key.back();
         if (!z->isleaf)
             z->child.insert(z->child.begin(), y->child[y->key.size()]);
-        y->key.resize(y->key.size() - 1);
+        y->key.pop_back();
     }
     inline void transfer2lc(bnode_ptr<T> x, int i, bnode_ptr<T> y, bnode_ptr<T> z)
     {

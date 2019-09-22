@@ -22,6 +22,106 @@ void output_vec(vector<T> &a)
     cout << endl;
 }
 
+template <class RandAccessor>
+void __unique_merge(RandAccessor lo1, RandAccessor hi1, RandAccessor lo2, RandAccessor hi2, RandAccessor res)
+{
+    RandAccessor cur = res;
+    while (lo1 < hi1 && lo2 < hi2)
+    {
+        if (*lo1 < *lo2)
+        {
+            if (cur == res || *(cur - 1) != *lo1)
+                *(cur++) = *lo1;
+            lo1++;
+        }
+        else if (*lo2 < *lo1)
+        {
+            if (cur == res || *(cur - 1) != *lo2)
+                *(cur++) = *lo2;
+            lo2++;
+        }
+        else
+        {
+            if (cur == res || *(cur - 1) != *lo2)
+                *(cur++) = *lo1;
+            lo1++, lo2++;
+        }
+    }
+    while (lo1 < hi1)
+        *(cur++) = *(lo1++);
+    while (lo2 < hi2)
+        *(cur++) = *(lo2++);
+}
+
+template <class RandAccessor>
+bool array_move(RandAccessor lo, RandAccessor hi, int offset, bool left)
+{
+    if (lo < hi)
+    {
+        reverse(lo, hi);
+        if (left)
+        {
+            reverse(lo, hi - offset);
+            reverse(hi - offset, hi);
+        }
+        else
+        {
+            reverse(lo, lo + offset);
+            reverse(lo + offset, hi);
+        }
+        return true;
+    }
+    return false;
+}
+template <class RandAccessor>
+void unique_array(RandAccessor lo, RandAccessor hi)
+{
+    RandAccessor i = lo, j = lo + 1;
+    for (; j < hi; ++j)
+        if (*i != *j)
+            *(++i) = *j;
+}
+vector<int> twoSum(vector<int> &nums, int target)
+{
+    unordered_map<int, int> mapping;
+    unordered_set<int> st;
+    vector<int> result;
+    for (int i = 0; i < nums.size(); i++)
+    {
+        mapping[nums[i]] = 0;
+        st.insert(nums[i]);
+    }
+    for (int i = 0; i < nums.size(); i++)
+    {
+        const int gap = target - nums[i];
+        if (st.count(gap) && !mapping[gap] && !mapping[nums[i]])
+        {
+            result.push_back(nums[i]);
+            result.push_back(gap);
+            mapping[gap] = 1;
+            mapping[nums[i]] = 1;
+        }
+    }
+    return result;
+}
+
+template <class RandAccessor, class T>
+RandAccessor bin_search(RandAccessor lo, RandAccessor hi, const T &val)
+{
+    RandAccessor mid;
+    while (lo <= hi)
+    {
+        mid = lo + (hi - lo) / 2;
+        if (*mid < val)
+            lo = mid + 1;
+        else if (val < *mid)
+            hi = mid - 1;
+        else
+            return mid;
+    }
+    return hi;
+}
+
 template <class RandomIterator>
 void __reverse(RandomIterator lo, RandomIterator hi)
 {

@@ -20,11 +20,11 @@ int main(int argc, char const *argv[])
     int b[SIZE], n = SIZE;
     generate(b, b + n, [&]() { return rand(); });
     vector<int> a(b, b + n);
+    btree<int> ax(512);
+    ax.build(a);
     startTime = clock();
     // while (cin >> s && s != "q")
     // {
-    btree<int> ax(512);
-    ax.build(a);
     // cout << ax.size() << endl;
     // for (int i = 0; i < SIZE - 10; i++)
     // {
@@ -37,7 +37,7 @@ int main(int argc, char const *argv[])
     // cout << a[i] << " -> ";
     // cout << endl;
     // ax.inorder();
-    cout << ax.search(a[0]) << endl;
+    ax.search(a[0]) ;
     // }
     endTime = clock();
     cout << "The run time is: " << (double)(endTime - startTime) / 1000 << "ms" << endl;
