@@ -3,7 +3,7 @@
 
 #include "../src/dsa.h"
 
-#define SIZE 500
+#define SIZE 1000000
 using namespace std;
 using namespace dsa;
 
@@ -18,25 +18,25 @@ int main(int argc, char const *argv[])
     int nm = 1;
     int c = 0, c0 = 0;
     int b[SIZE], n = SIZE;
-    generate(b, b + n, [&]() { return rand() % 1000; });
+    generate(b, b + n, [&]() { return rand(); });
     vector<int> a(b, b + n);
-    a.erase(unique(a.begin(), a.end()), a.end());
     startTime = clock();
-    // for (int i = 0; i < 990; i++)
-    // {
-    //     ax.erase(a[i]);
-    // }
     // while (cin >> s && s != "q")
     // {
-    btree<int> ax(2);
+    btree<int> ax(512);
     ax.build(a);
     cout << ax.size() << endl;
     for (int i = 0; i < SIZE - 10; i++)
     {
         ax.erase(a[i]);
     }
-    ax.printTree();
     cout << ax.size() << endl;
+    //ax.printTree();
+    sort(a.begin() + SIZE - 10, a.end());
+    for (int i = SIZE - 10; i < SIZE; i++)
+        cout << a[i] << " -> ";
+    cout << endl;
+    ax.inorder();
     cout << ax.search(a[0]) << endl;
     // }
     endTime = clock();

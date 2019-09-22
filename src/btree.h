@@ -94,12 +94,13 @@ protected:
         __resizechild(oldnode);
     }
 
-    inline void __resizechild(bnode_ptr<T> v) { v->child.resize(v->key.size() + 1); }
+    inline void __resizechild(bnode_ptr<T> &v)
+    {
+        v->child.resize(v->key.size() + 1);
+    }
 
     void __common_erase(bnode_ptr<T> v, const T &val)
     {
-        if (!v)
-            return;
         int _pos = __lower_bound(v->key.begin(), v->key.end(), val) - v->key.begin();
         if (v->isleaf)
         {
@@ -168,8 +169,6 @@ protected:
         if (!v)
             return;
         bnode_ptr<T> lc = v->child[i], rc = v->child[i + 1];
-        if (!lc || !rc)
-            return;
         lc->key.resize(K_MAX);
         lc->key[K_MIN] = v->key[i];
         copy(rc->key.begin(), rc->key.begin() + K_MAX - 1 - K_MIN, lc->key.begin() + K_MIN + 1);
@@ -181,7 +180,6 @@ protected:
     }
     inline void transfer2rc(bnode_ptr<T> x, int i, bnode_ptr<T> y, bnode_ptr<T> z)
     {
-        if(!x || !y || !z)return;
         z->key.insert(z->key.begin(), x->key[i]);
         x->key[i] = y->key.back();
         if (!z->isleaf)
@@ -191,8 +189,6 @@ protected:
     }
     inline void transfer2lc(bnode_ptr<T> x, int i, bnode_ptr<T> y, bnode_ptr<T> z)
     {
-        if (!x || !y || !z)
-            return;
         y->key.resize(y->key.size() + 1);
         __resizechild(y);
         *(y->key.rbegin()) = x->key[i];
@@ -258,7 +254,7 @@ public:
         return true;
     }
     bool erase(const T &val)
-    {
+    { // sometimes bug occur
         bnode_ptr<T> v = search(val);
         if (!v)
             return false;
