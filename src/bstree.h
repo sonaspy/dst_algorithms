@@ -87,7 +87,6 @@ public:
     {
         if (__erase(this->_root, x))
         {
-            this->__update_status();
             this->_size--;
             return true;
         };

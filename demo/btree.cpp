@@ -25,18 +25,18 @@ int main(int argc, char const *argv[])
     // {
     btree<int> ax(512);
     ax.build(a);
+    // cout << ax.size() << endl;
+    // for (int i = 0; i < SIZE - 10; i++)
+    // {
+    //     ax.erase(a[i]);
+    // }
     cout << ax.size() << endl;
-    for (int i = 0; i < SIZE - 10; i++)
-    {
-        ax.erase(a[i]);
-    }
-    cout << ax.size() << endl;
-    //ax.printTree();
-    sort(a.begin() + SIZE - 10, a.end());
-    for (int i = SIZE - 10; i < SIZE; i++)
-        cout << a[i] << " -> ";
-    cout << endl;
-    ax.inorder();
+    // ax.printTree();
+    // sort(a.begin() + SIZE - 10, a.end());
+    // for (int i = SIZE - 10; i < SIZE; i++)
+    // cout << a[i] << " -> ";
+    // cout << endl;
+    // ax.inorder();
     cout << ax.search(a[0]) << endl;
     // }
     endTime = clock();
