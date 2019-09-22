@@ -22,69 +22,6 @@ struct ListNode
     ListNode(T v) : val(v), freq(0), next(nullptr), pre(nullptr) {}
 };
 
-class NQueen
-{
-public:
-    vector<vector<string>> solveNQueens(int n)
-    {
-        this->columns = vector<bool>(n, false);           // if there is a queen in this column.
-        this->main_diag = vector<bool>(2 * n - 1, false); // if there is a queen in this diag
-        this->vice_diag = vector<bool>(2 * n - 1, false); // if there is a queen in this diag
-        this->C = vector<int>(n, -1);                     // each row's queen put in which column
-        vector<vector<string>> res;
-        this->n = n;
-        dfs(res, 0);
-        return res;
-    }
-
-private:
-    vector<bool> columns, main_diag, vice_diag;
-    vector<int> C;
-    int n;
-    void dfs(vector<vector<string>> &res, int row)
-    {
-        if (row == n)
-        {
-            res.push_back(vector<string>());
-            for (int i = 0; i < n; i++)
-            {
-                string s(n, '.');
-                for (int j = 0; j < n; j++)
-                    if (j == C[i])
-                        s[j] = 'Q';
-                res.back().push_back(s);
-            }
-            return;
-        }
-        for (int j = 0; j < n; j++)
-        {
-            if (!columns[j] && !main_diag[row - j + n - 1] && !vice_diag[row + j])
-            {
-                C[row] = j;
-                columns[j] = main_diag[row - j + n - 1] = vice_diag[row + j] = true;
-                dfs(res, row + 1);
-                C[row] = -1;
-                columns[j] = main_diag[row - j + n - 1] = vice_diag[row + j] = false;
-            }
-        }
-    }
-};
-
-bool isMatch(vector<int> &push_seq, vector<int> &pop_seq, int capacity)
-{
-    int walk = 0;
-    stack<int> s;
-    for (int j = 0; j < push_seq.size(); j++)
-    {
-        s.push(push_seq[j]);
-        if (s.size() > capacity)
-            break;
-        while (s.size() && s.top() == pop_seq[walk])
-            s.pop(), walk++;
-    }
-    return walk == capacity;
-}
-
 template <typename T>
 class link_list
 {
@@ -501,6 +438,54 @@ bool bracketMatch(char *f)
     }
     return s.empty();
 }
+
+class NQueen
+{
+public:
+    vector<vector<string>> solveNQueens(int n)
+    {
+        this->columns = vector<bool>(n, false);           // if there is a queen in this column.
+        this->main_diag = vector<bool>(2 * n - 1, false); // if there is a queen in this diag
+        this->vice_diag = vector<bool>(2 * n - 1, false); // if there is a queen in this diag
+        this->C = vector<int>(n, -1);                     // each row's queen put in which column
+        vector<vector<string>> res;
+        this->n = n;
+        dfs(res, 0);
+        return res;
+    }
+
+private:
+    vector<bool> columns, main_diag, vice_diag;
+    vector<int> C;
+    int n;
+    void dfs(vector<vector<string>> &res, int row)
+    {
+        if (row == n)
+        {
+            res.push_back(vector<string>());
+            for (int i = 0; i < n; i++)
+            {
+                string s(n, '.');
+                for (int j = 0; j < n; j++)
+                    if (j == C[i])
+                        s[j] = 'Q';
+                res.back().push_back(s);
+            }
+            return;
+        }
+        for (int j = 0; j < n; j++)
+        {
+            if (!columns[j] && !main_diag[row - j + n - 1] && !vice_diag[row + j])
+            {
+                C[row] = j;
+                columns[j] = main_diag[row - j + n - 1] = vice_diag[row + j] = true;
+                dfs(res, row + 1);
+                C[row] = -1;
+                columns[j] = main_diag[row - j + n - 1] = vice_diag[row + j] = false;
+            }
+        }
+    }
+};
 
 // 后缀表达式O(N)
 // 中缀 -> 后缀
