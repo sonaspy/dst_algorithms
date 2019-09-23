@@ -16,6 +16,28 @@
             "externalConsole": false,
             "MIMode": "lldb",
             "preLaunchTask": "g++ build active file"
+        },
+        {
+            "name": "c++ debug",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${fileDirname}/${fileBasenameNoExtension}",
+            "preLaunchTask": "g++ build active file",
+            "internalConsoleOptions": "openOnSessionStart",
+            "logging": {
+                "moduleLoad": false,
+                "programOutput": true,
+                "trace": false
+            },
+            "showDisplayString": false,
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceRoot}",
+            "environment": [],
+            "externalConsole": true, // set true to enable keyboard input
+            "osx": {
+                "MIMode": "lldb"
+            }
         }
     ]
 }
