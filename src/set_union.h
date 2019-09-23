@@ -22,7 +22,7 @@ public:
     {
         return arr[id] == -1 ? id : arr[id] = find_root(arr[id]);
     }
-    inline bool same(int v1, int v2)
+    inline bool connected(int v1, int v2)
     {
         return find_root(v1) == find_root(v2);
     }

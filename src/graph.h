@@ -43,7 +43,7 @@ public:
     inline int vsize() { return vset.size(); }
     inline int esize() { return eset.size(); }
     inline int sum() { return _sum; }
-    bool overlap(int v1, int v2) { return st.same(v1, v2); }
+    bool overlap(int v1, int v2) { return st.connected(v1, v2); }
     bool exist(int v) { return vset.count(v); }
     inline bool empty() { return vset.empty(); }
     bool connected()

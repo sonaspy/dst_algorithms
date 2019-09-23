@@ -396,6 +396,68 @@ public:
     }
 };
 
+template <typename T>
+class _stack
+{
+protected:
+    vector<T> data;
+public:
+    _stack()
+    {
+    }
+    inline void empty()
+    {
+        return data.empty();
+    }
+    inline void push(const T &val)
+    {
+        data.push_back(val);
+    }
+    inline T top()
+    {
+        return data.back();
+    }
+    inline void pop()
+    {
+        data.pop_back();
+    }
+    inline int size()
+    {
+        return data.size();
+    }
+};
+template <typename T>
+class _queue
+{
+protected:
+    deque<T> data;
+
+public:
+    _queue()
+    {
+    }
+    inline void empty()
+    {
+        return data.empty();
+    }
+    inline void push(const T &val)
+    {
+        data.push_back(val);
+    }
+    inline T front()
+    {
+        return data.front();
+    }
+    inline void pop()
+    {
+        data.pop_front();
+    }
+    inline int size()
+    {
+        return data.size();
+    }
+};
+
 bool bracketMatch(char *f)
 {
     stack<char> s;
