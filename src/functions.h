@@ -207,6 +207,8 @@ double __newpow(double x, int n)
     return ans;
 }
 
+
+
 template <typename RandAccessor>
 static inline void __siftdown(RandAccessor base, int pos, int border)
 {
@@ -221,20 +223,7 @@ static inline void __siftdown(RandAccessor base, int pos, int border)
             break;
     }
 }
-bool isMatch(vector<int> &push_seq, vector<int> &pop_seq, int capacity)
-{
-    int walk = 0;
-    stack<int> s;
-    for (int j = 0; j < push_seq.size(); j++)
-    {
-        s.push(push_seq[j]);
-        if (s.size() > capacity)
-            break;
-        while (s.size() && s.top() == pop_seq[walk])
-            s.pop(), walk++;
-    }
-    return walk == capacity;
-}
+
 //[lo,hi)
 template <typename RandAccessor>
 static inline void __makeheap(RandAccessor lo, RandAccessor hi)
@@ -338,7 +327,20 @@ inline void __linear_insert(RandAccessor lo, RandAccessor hi, const T val)
         *pos = val;
     }
 }
-
+bool isMatch(vector<int> &push_seq, vector<int> &pop_seq, int capacity)
+{
+    int walk = 0;
+    stack<int> s;
+    for (int j = 0; j < push_seq.size(); j++)
+    {
+        s.push(push_seq[j]);
+        if (s.size() > capacity)
+            break;
+        while (s.size() && s.top() == pop_seq[walk])
+            s.pop(), walk++;
+    }
+    return walk == capacity;
+}
 } // namespace dsa
 
 #endif
