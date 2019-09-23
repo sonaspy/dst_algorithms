@@ -13,5 +13,5 @@
 #include "linear.h"
 #include "set_union.h"
 #include "graph.h"
-#include "pri_q.h"
+#include "priority_q.h"
 #endif
