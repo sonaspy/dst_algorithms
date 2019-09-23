@@ -2,7 +2,6 @@
 // coding - utf_8
 #ifndef __SPLAYTREE___
 #define __SPLAYTREE___
-
 namespace dsa
 {
 template <class T>

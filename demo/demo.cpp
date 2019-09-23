@@ -17,16 +17,10 @@ int main(int argc, char const *argv[])
     // iota(a.begin(), a.end(), 0);
     clock_t startTime, endTime;
     startTime = clock();
-
-    priority_q<int64_t> pq;
-    for (auto i : a)
-        pq.push(i);
-    while (pq.size())
-    {
-        cout << pq.top() << " ";
-        pq.pop();
-    }
-
+    string s = "0101011";
+    bitset<32> bs(s);
+    cout << bs.to_ulong() << endl;
+    cout << bs << endl;
     cout << endl;
     endTime = clock();
     cout << "The elapsed time is: " << (double)(endTime - startTime) / 1000 << "ms" << endl;

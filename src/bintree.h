@@ -4,7 +4,6 @@
 #ifndef __BINARYTREE__
 #define __BINARYTREE__
 
-#include "trees.h"
 namespace dsa
 {
 

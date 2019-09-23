@@ -4,7 +4,6 @@
 #ifndef __BTREE__
 #define __BTREE__
 
-#include "trees.h"
 namespace dsa
 {
 

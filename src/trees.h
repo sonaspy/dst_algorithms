@@ -6,6 +6,7 @@
 
 #include <vector>
 #include <unordered_map>
+#include <unordered_set>
 #include <iostream>
 #include <string>
 #include <deque>
@@ -15,7 +16,7 @@ using namespace std;
 
 namespace dsa
 {
-#define MAXCOL 5000
+#define MAXCOL 100000
 #define MAXROW 100000
 #define from_parent2(x) (((x)->is_l() ? (x)->parent->lc : (x)->parent->rc))
 #define nodeBalanced(x) ((-2 < _factor(x)) && (_factor(x) < 2))
@@ -190,4 +191,13 @@ struct bnode
 };
 
 }; // namespace dsa
+
+#include "bintree.h"
+#include "huffman.h"
+#include "bstree.h"
+#include "avltree.h"
+#include "spltree.h"
+#include "rbtree.h"
+#include "btree.h"
+
 #endif

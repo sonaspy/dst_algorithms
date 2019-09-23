@@ -4,14 +4,12 @@
 #ifndef __RB_TREE__
 #define __RB_TREE__
 
-#include "avltree.h"
 namespace dsa
 {
 
 template <typename T>
 class rbtree : public avltree<T>
 {
-    // in rbtree the memver 'height' is BLK height
 protected:
 #define is_blk(opnv) ((!(opnv) || (opnv)->color == BLK))
 #define is_red(opnv) (!is_blk(opnv))
