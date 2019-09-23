@@ -18,9 +18,9 @@ int main(int argc, char const *argv[])
     int nm = 1;
     int c = 0, c0 = 0;
     int b[SIZE], n = SIZE;
-    generate(b, b + n, [&]() { return rand(); });
+    generate(b, b + n, [&]() { return rand() % 1000; });
     vector<int> a(b, b + n);
-    btree<int> ax(512);
+    btree<int> ax(3);
     startTime = clock();
     // while (cin >> s && s != "q")
     // {
