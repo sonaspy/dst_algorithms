@@ -1,4 +1,4 @@
-// run time for stack classes
+// elapsed time for stack classes
 
 #include <iostream>
 #include<time.h>

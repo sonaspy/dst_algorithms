@@ -31,6 +31,6 @@ int main(int argc, char const *argv[])
     // ax.printTree();
     cout << ax.search(a[0]) << endl;
     endTime = clock();
-    cout << "The run time is: " << (double)(endTime - startTime) / 1000 << "ms" << endl;
+    cout << "The elapsed time is: " << (double)(endTime - startTime) / 1000 << "ms" << endl;
     return 0;
 }

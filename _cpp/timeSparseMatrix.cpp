@@ -1,4 +1,4 @@
-// run time using class sparseMatrix as well as linkedMatrix
+// elapsed time using class sparseMatrix as well as linkedMatrix
 
 #include <iostream>
 #include<time.h>

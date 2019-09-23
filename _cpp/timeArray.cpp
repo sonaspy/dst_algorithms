@@ -1,4 +1,4 @@
-// run time for simple square matrix add
+// elapsed time for simple square matrix add
 
 #include <iostream>
 #include<time.h>

@@ -1,4 +1,4 @@
-// run time for simple square matrix multiply
+// elapsed time for simple square matrix multiply
 
 #include <iostream>
 #include<time.h>

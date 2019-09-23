@@ -1,4 +1,4 @@
-// run time for add, multiply and transpose using class matrix
+// elapsed time for add, multiply and transpose using class matrix
 
 #include <iostream>
 #include<time.h>
