@@ -7,38 +7,39 @@ namespace dsa
 {
 class __setunion
 {
-public:
-    int _size;
-    vector<int> arr;
-    __setunion(int thesize = 1000)
+protected:
+    inline int __getRoot(int id)
     {
-        arr = vector<int>(thesize, -1);
+        return __union_arr[id] == -1 ? id : __union_arr[id] = __getRoot(__union_arr[id]);
+    }
+public:
+    vector<int> __union_arr;
+    __setunion(int n = 1000)
+    {
+        __union_arr = vector<int>(n, -1);
     }
     void clear()
     {
-        arr = vector<int>(9999, -1);
+        fill(__union_arr.begin(), __union_arr.end(), -1);
     }
-    inline int find_root(int id)
-    {
-        return arr[id] == -1 ? id : arr[id] = find_root(arr[id]);
-    }
+
     inline bool connected(int v1, int v2)
     {
-        return find_root(v1) == find_root(v2);
+        return __getRoot(v1) == __getRoot(v2);
     }
-    inline int size() { return _size; }
-    inline void resize(int c) { _size = c; }
+    inline int size() { return __union_arr.size(); }
+    inline void resize(int c) { __union_arr.resize(c); }
     inline void unite(int a, int b)
     {
-        int ra = find_root(a), rb = find_root(b);
+        int ra = __getRoot(a), rb = __getRoot(b);
         if (ra != rb)
-            arr[rb] = ra;
+            __union_arr[rb] = ra;
     }
     inline bool connected()
     {
         int cnt = 0;
         for (int i = 0; i < _size; i++)
-            if (arr[i] == -1)
+            if (__union_arr[i] == -1)
                 cnt++;
         return cnt == 1;
     }

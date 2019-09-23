@@ -50,7 +50,7 @@ template <typename T>
 using bnode_ptr = struct bnode<T> *;
 
 template <typename T>
-struct __ischar
+struct IS_CHAR
 {
     operator bool()
     {
@@ -58,7 +58,7 @@ struct __ischar
     }
 };
 template <>
-struct __ischar<char>
+struct IS_CHAR<char>
 {
     operator bool()
     {
