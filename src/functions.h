@@ -9,6 +9,7 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <numeric>
+#include <stack>
 using namespace std;
 namespace dsa
 {
@@ -81,25 +82,20 @@ void unique_array(RandAccessor lo, RandAccessor hi)
         if (*i != *j)
             *(++i) = *j;
 }
-vector<int> twoSum(vector<int> &nums, int target)
+vector<pair<int, int>> twoSum(vector<int> &nums, int target)
 {
     unordered_map<int, int> mapping;
-    unordered_set<int> st;
-    vector<int> result;
-    for (int i = 0; i < nums.size(); i++)
+    vector<pair<int, int>> result;
+    for (auto i : nums)
+        mapping[i] = 0;
+    for (auto i : nums)
     {
-        mapping[nums[i]] = 0;
-        st.insert(nums[i]);
-    }
-    for (int i = 0; i < nums.size(); i++)
-    {
-        const int gap = target - nums[i];
-        if (st.count(gap) && !mapping[gap] && !mapping[nums[i]])
+        const int gap = target - i;
+        if (mapping.count(gap) && !mapping[gap] && !mapping[i])
         {
-            result.push_back(nums[i]);
-            result.push_back(gap);
+            result.push_back(make_pair(i, gap));
             mapping[gap] = 1;
-            mapping[nums[i]] = 1;
+            mapping[i] = 1;
         }
     }
     return result;

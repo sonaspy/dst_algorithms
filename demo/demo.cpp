@@ -5,23 +5,20 @@
 #define test() freopen("in", "r", stdin)
 using namespace std;
 using namespace dsa;
-
-template <class T>
-struct node
-{
-    int i;
-};
-
+#define SIZE 1000000
 int main(int argc, char const *argv[])
 {
     /* code */
     //test();
-    vector<int> a(10), b(10), c(100);
-    iota(a.begin(), a.end(), 1);
-    iota(b.begin(), b.end(), 5);
-
-    c.resize(cur);
-    //iota(a.begin(), a.end(), 0);
-    output_vec(c);
+    //srand(time(NULL));
+    int b[SIZE];
+    //generate(b, b + SIZE, [&]() { return rand() % 100; });
+    vector<int> a(b, b + SIZE);
+    iota(a.begin(), a.end(), 0);
+    clock_t startTime, endTime;
+    startTime = clock();
+    __lower_bound(a.begin(), a.end(), rand() % 10000);
+    endTime = clock();
+    cout << "The elapsed time is: " << (double)(endTime - startTime) / 1000 << "ms" << endl;
     return 0;
 }
