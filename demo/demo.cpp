@@ -1,11 +1,10 @@
 // author -sonaspy@outlook.com
 // coding - utf_8
 
-#include "../src/functions.h"
+#include <bits/stdc++.h>
 #define test() freopen("in", "r", stdin)
 using namespace std;
-using namespace dsa;
-#define SIZE 1000000
+#define SIZE 100
 int main(int argc, char const *argv[])
 {
     /* code */
@@ -16,8 +15,9 @@ int main(int argc, char const *argv[])
     vector<int> a(b, b + SIZE);
     iota(a.begin(), a.end(), 0);
     clock_t startTime, endTime;
+    for (auto &i : a)
+        ;
     startTime = clock();
-    __lower_bound(a.begin(), a.end(), rand() % 10000);
     endTime = clock();
     cout << "The elapsed time is: " << (double)(endTime - startTime) / 1000 << "ms" << endl;
     return 0;

@@ -3,7 +3,7 @@
 
 #include "../src/dsa.h"
 
-#define SIZE 1000000
+#define SIZE 1000
 using namespace std;
 using namespace dsa;
 

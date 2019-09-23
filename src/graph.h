@@ -14,10 +14,10 @@ namespace dsa
 #define INF_VAL 1 << 30
 struct edge
 {
-    int w1, w2, w3, v1, v2, mark = 0;
-    edge(int w1) : w1(w1), w2(INF_VAL), w3(INF_VAL), v1(-1), v2(-1) {}
-    edge(int v1, int v2) : w1(INF_VAL), w2(INF_VAL), w3(INF_VAL), v1(v1), v2(v2) {}
-    edge(int w1, int v1, int v2) : w1(w1), w2(INF_VAL), w3(INF_VAL), v1(v1), v2(v2) {}
+    int w1, w2, w3, v1, v2, mark;
+    edge(int w1) : w1(w1), w2(INF_VAL), w3(INF_VAL), v1(-1), v2(-1), mark(0) {}
+    edge(int v1, int v2) : w1(INF_VAL), w2(INF_VAL), w3(INF_VAL), v1(v1), v2(v2), mark(0) {}
+    edge(int w1, int v1, int v2) : w1(w1), w2(INF_VAL), w3(INF_VAL), v1(v1), v2(v2), mark(0) {}
 };
 struct __cmp1
 {
