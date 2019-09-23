@@ -134,7 +134,7 @@ by deriving @Stack@ from @LinearList@, we have reduced the effort needed
 to code the class @Stack@.  Also, we have significantly improved our chances
 of obtaining a correct implementation as the methods for @LinearList@
 have already been tested and are known to be correct.  Unfortunately, this
-simplification has come at the cost of increased run time.  For example,
+simplification has come at the cost of increased elapsed time.  For example,
 to add an element to a stack, we first determine its @Length()@ and
 then invoke @Insert@ which checks if the insert is in range.  Following
 this, a \fBfor\fR loop overhead is paid to perform zero element moves.
@@ -151,7 +151,7 @@ class members @Print@ and @Search@.
 .uh "A Customized Definition of @Stack@"
 .br
 ?P{custom} gives the class definition for @Stack@ when we customize
-the @LinearList@ codes.  In a run time test which involved a \fBfor\fR
+the @LinearList@ codes.  In a elapsed time test which involved a \fBfor\fR
 with 100,000 stack add and delete operations, the code of
 ?P{stackclass} took 42% more time than did the customized code
 of ?P{custom}.  This improvement in performance has however also
@@ -213,7 +213,7 @@ This illustrates some of the
 tradeoffs involved between software reuse and program efficiency.
 Interestingly, if we develop the code for the class @Stack@ afresh
 (i.e., @Stack@ is not derived from @LinearList@ as in ?P{custom}),
-and perform the run time experiment described above, the new code runs
+and perform the elapsed time experiment described above, the new code runs
 13% faster than the customized code of ?P{custom}! 
 With improvement in compiler technology, one may expect this difference in
 performance to diminish.
@@ -229,7 +229,7 @@ top element in the stack (initialized to @- 1@), and an integer
 variable @MaxSize@ that gives the largest number of elements the
 stack can hold.
 .ip (b)
-Write a program to measure the run time of an alternating sequence of
+Write a program to measure the elapsed time of an alternating sequence of
 @n@ stack add and delete operations.  Measure the times needed
 by Programs ?p{stackclass}, ?p{custom}, and your code of part (a).
 .ip (c)
@@ -367,7 +367,7 @@ space exists to create a node of type @Node@.  This is done by
 invoking \fBnew\fR and then deleting the created node as we do not
 intend to use it.
 As in the case of the class @Stack@ (?P{stackclass}), we can improve the
-run time performance by customizing the code.  The customized code
+elapsed time performance by customizing the code.  The customized code
 is given in ?P{clstack}.
 .KF
 .hl
@@ -448,7 +448,7 @@ operations than did the customized code of ?P{clstack}.
 Obtain the code for the C++ class @LinkedStack@ without making use of the
 class @Chain@.
 .ip (b)
-Write a program to measure the run time of an alternating sequence of
+Write a program to measure the elapsed time of an alternating sequence of
 @n@ stack add and delete operations.  Measure the times needed
 by Programs ?p{lstackclass}, ?p{clstack}, and your code of part (a).
 .RE

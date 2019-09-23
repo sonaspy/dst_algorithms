@@ -35,6 +35,6 @@ int main(int argc, char const *argv[])
     }
 
     endTime = clock();
-    cout << "The run time is: " << (double)(endTime - startTime) / 1000 << "ms" << endl;
+    cout << "The elapsed time is: " << (double)(endTime - startTime) / 1000 << "ms" << endl;
     return 0;
 }

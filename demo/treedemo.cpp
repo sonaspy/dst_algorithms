@@ -25,6 +25,6 @@ int main(int argc, char const *argv[])
     startTime = clock();
     ax.search(a[0]);
     endTime = clock();
-    cout << "The run time is: " << (double)(endTime - startTime) / 1000 << "ms" << endl;
+    cout << "The elapsed time is: " << (double)(endTime - startTime) / 1000 << "ms" << endl;
     return 0;
 }

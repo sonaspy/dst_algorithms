@@ -1,4 +1,4 @@
-// run time for fast square matrix multiply
+// elapsed time for fast square matrix multiply
 // ikj order
 
 #include <iostream>

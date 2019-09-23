@@ -27,6 +27,6 @@ int main(int argc, char const *argv[])
     //cout << a[400] << endl;
     endTime = clock();
     cout << is_sorted(a.begin(), a.end()) << endl;
-    cout << "The run time is: " << (double)(endTime - startTime) / 1000 << "ms" << endl;
+    cout << "The elapsed time is: " << (double)(endTime - startTime) / 1000 << "ms" << endl;
     return 0;
 }
