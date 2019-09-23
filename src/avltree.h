@@ -4,7 +4,6 @@
 #ifndef __AVLTREE__
 #define __AVLTREE__
 
-#include "bstree.h"
 namespace dsa
 {
 

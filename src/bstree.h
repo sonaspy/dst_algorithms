@@ -4,7 +4,6 @@
 #ifndef __BSTREE__
 #define __BSTREE__
 
-#include "bintree.h"
 namespace dsa
 {
 template <typename T>

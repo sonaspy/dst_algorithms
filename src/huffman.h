@@ -3,7 +3,7 @@
 
 #ifndef __HUFFMAN__
 #define __HUFFMAN__
-#include "bintree.h"
+
 namespace dsa
 {
 
@@ -40,13 +40,17 @@ protected:
         if (v->is_r())
             _pattern.push_back(rightChar);
         if (v->is_leaf())
+        {
             pv.push_back(hfmkvnode(v, _pattern));
+            pfmp[v->val] = _pattern;
+        }
         __trav(v->lc, pv);
         __trav(v->rc, pv);
         _pattern.pop_back();
     }
 
 public:
+    PFCtable pfmp;
     huffman(FREQ_table &mp)
     {
         _wpl = 0;
