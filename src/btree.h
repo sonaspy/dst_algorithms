@@ -137,11 +137,11 @@ protected:
                 {
                     if (_pos > 0 && p->keysize > K_MIN)
                     {
-                        transfer2rc(v, _pos - 1, p, lc);
+                        __shift2rc(v, _pos - 1, p, lc);
                     }
                     else if (_pos < v->keysize && rc->keysize > K_MIN)
                     {
-                        transfer2lc(v, _pos, lc, rc);
+                        __shift2lc(v, _pos, lc, rc);
                     }
                     else if (_pos > 0)
                     {
@@ -173,7 +173,7 @@ protected:
         v->child.resize(C_MAX);
     }
 
-    inline void transfer2rc(bnode_ptr<T> x, int i, bnode_ptr<T> y, bnode_ptr<T> z)
+    inline void __shift2rc(bnode_ptr<T> x, int i, bnode_ptr<T> y, bnode_ptr<T> z)
     {
         z->key.insert(z->key.begin(), x->key[i]);
         z->keysize++;
@@ -188,7 +188,7 @@ protected:
         }
         y->keysize--;
     }
-    inline void transfer2lc(bnode_ptr<T> x, int i, bnode_ptr<T> y, bnode_ptr<T> z)
+    inline void __shift2lc(bnode_ptr<T> x, int i, bnode_ptr<T> y, bnode_ptr<T> z)
     {
         y->keysize++;
         y->key[y->keysize - 1] = x->key[i];
