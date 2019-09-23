@@ -85,7 +85,7 @@ protected:
         if (!opnv)
             return;
         string tp;
-        if (__ischar<T>())
+        if (IS_CHAR<T>())
             tp.push_back(opnv->val);
         else
             tp = to_string(opnv->val);
@@ -406,7 +406,7 @@ public:
             cout << " Too Many Node to print !\n";
             return;
         }
-        _unitsize = __ischar<T>() ? 1 : to_string(__getmax(this->_root)->val).size();
+        _unitsize = IS_CHAR<T>() ? 1 : to_string(__getmax(this->_root)->val).size();
         if (_isRBtree)
             _unitsize++;
         _pointer2l = _pointer2r = string(_unitsize, ' ');
