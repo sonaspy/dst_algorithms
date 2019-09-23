@@ -426,6 +426,7 @@ public:
             cout << "🕵🏻‍   🌲  HUFFMAN TREE  🌲   🕵🏻‍" << endl;
         if (_isRBtree)
             cout << "🎩   🌲  RBTREE  🌲   🎒" << endl;
+        disp_buf.clear();
     }
     binode_ptr<T> __buildcmp(int id, vector<int> &a)
     {

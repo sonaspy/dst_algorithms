@@ -1,7 +1,7 @@
 // author - sonaspy@outlook.com
 // coding - utf_8
 
-#include "../src/huffman.h"
+#include "../src/dsa.h"
 using namespace dsa;
 #include <fstream>
 vector<vector<char>> disp_buf;
@@ -20,7 +20,6 @@ void __print(binode<char> *opnv, int root_x, int root_y, int interval)
 }
 void printhfm(binode<char> *_root, ofstream &of)
 {
-    cout << "🌲  HUFFMAN TREE  🌲\n";
     of << "🌲  HUFFMAN TREE  🌲\n";
     disp_buf = vector<vector<char>>(40, vector<char>(MAXCOL, ' '));
     __print(_root, 0, pow(2, _root->height) - 1, pow(2, _root->height - 1));
@@ -28,22 +27,16 @@ void printhfm(binode<char> *_root, ofstream &of)
     for (i = 0; i < n; ++i)
     {
         for (j = 0; j < breadth; ++j)
-        {
-            cout << disp_buf[i][j];
             of << disp_buf[i][j];
-        }
         of << endl;
-        cout << endl;
     }
-    cout << "🌲  HUFFMAN TREE  🌲\n";
     of << "🌲  HUFFMAN TREE  🌲\n";
 }
-
 int main(int argc, char const *argv[])
 {
     /* code */
     //test();
-    string infname("in.txt"), smode, outfname("huffmancode.txt");
+    string infname("in.txt"), smode, outfname("hfm_result.txt"), cipher("hfm_raw_code.txt");
     FREQ_table mp;
     PFCvec pfvec;
     int mode = 0;
@@ -56,7 +49,7 @@ int main(int argc, char const *argv[])
     {
         smode = argv[1];
         if (smode != "0" || smode != "1")
-            mode = 0;
+            mode = 2;
         else
             mode = smode[1] - '0';
         infname = argv[2];
@@ -66,8 +59,9 @@ int main(int argc, char const *argv[])
 
     ifstream fin(infname);
     ofstream fout(outfname);
+    ofstream fout2(cipher);
     char c;
-    if (fin.fail() || fin.bad() || fout.fail() || fout.bad())
+    if (fin.fail() || fin.bad() || fout.fail() || fout.bad() || fout2.bad() || fout2.fail())
     {
         cout << "File Stream is Failed !\n";
         exit(0);
@@ -97,6 +91,12 @@ int main(int argc, char const *argv[])
     }
     printhfm(hfm.root(), fout);
     fout.close();
-
+    fin.open(infname);
+    while (fin >> c)
+    {
+        fout2 << hfm.pfmp[c] << " ";
+    }
+    fout2.close();
+    fin.close();
     return 0;
 }
