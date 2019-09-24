@@ -1,7 +1,7 @@
 
 // author - newguo@sonaspy.cn
 // coding - utf_8
-#include "./_Maze.h"
+#include "../src/maze.h"
 using namespace std;
 int main(int argc, char const *argv[])
 {
