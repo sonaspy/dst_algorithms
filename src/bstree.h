@@ -138,8 +138,7 @@ public:
             _node = theNode;
         }
         // dereferencing operators
-        reference operator*() const { return _node->val; }
-
+        binode_ptr<_Tp> operator*() const { return _node; }
         // pre increment
         iterator &operator++()
         {
@@ -162,9 +161,27 @@ public:
             ++(*this);
             return _old;
         }
+        // pre subtract
         iterator &operator--()
         {
+            binode_ptr<_Tp> p = _node->precessor();
+            if (p)
+                _node = p;
+            else
+            {
+                p = _node->parent;
+                while (p && p->val > _node->val)
+                    p = p->parent;
+                _node = p;
+            }
             return *this;
+        }
+        // post subtract
+        iterator operator--(int)
+        {
+            iterator _old = *this;
+            --(*this);
+            return _old;
         }
 
         // equality testing

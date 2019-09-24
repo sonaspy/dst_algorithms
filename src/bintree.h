@@ -253,31 +253,31 @@ protected:
         }
     }
     template <class _Function>
-    void __recur_pre(binode_ptr<_Tp> opnv, _Function f)
+    void __recur_pre(binode_ptr<_Tp> opnv, _Function _func)
     {
         if (!opnv)
             return;
-        f(opnv);
-        __recur_pre(opnv->lc, f);
-        __recur_pre(opnv->rc, f);
+        _func(opnv);
+        __recur_pre(opnv->lc, _func);
+        __recur_pre(opnv->rc, _func);
     }
     template <class _Function>
-    void __recur_in(binode_ptr<_Tp> opnv, _Function f)
+    void __recur_in(binode_ptr<_Tp> opnv, _Function _func)
     {
         if (!opnv)
             return;
-        __recur_in(opnv->lc, f);
-        f(opnv);
-        __recur_in(opnv->rc, f);
+        __recur_in(opnv->lc, _func);
+        _func(opnv);
+        __recur_in(opnv->rc, _func);
     }
     template <class _Function>
-    void __recur_post(binode_ptr<_Tp> opnv, _Function f)
+    void __recur_post(binode_ptr<_Tp> opnv, _Function _func)
     {
         if (!opnv)
             return;
-        __recur_post(opnv->lc, f);
-        __recur_post(opnv->rc, f);
-        f(opnv);
+        __recur_post(opnv->lc, _func);
+        __recur_post(opnv->rc, _func);
+        _func(opnv);
     }
 
     void __InThread(binode_ptr<_Tp> opnv, binode_ptr<_Tp> pre)
@@ -544,19 +544,19 @@ public:
         return true;
     }
     template <class _Function>
-    void intrav(_Function f)
+    void intrav(_Function _func)
     {
-        __recur_in(this->_root, f);
+        __recur_in(this->_root, _func);
     }
     template <class _Function>
-    void pretrav(_Function f)
+    void pretrav(_Function _func)
     {
-        __recur_pre(this->_root, f);
+        __recur_pre(this->_root, _func);
     }
     template <class _Function>
-    void posttrav(_Function f)
+    void posttrav(_Function _func)
     {
-        __recur_post(this->_root, f);
+        __recur_post(this->_root, _func);
     }
     void inTrav()
     {
@@ -639,20 +639,20 @@ public:
     }
 
     // T1 <-> T2  convertable, left <-> right;
-    bool Isomprphic(binode_ptr<_Tp> root1, binode_ptr<_Tp> root2)
+    bool Isomprphic(binode_ptr<_Tp> v1, binode_ptr<_Tp> v2)
     {
-        if (!root1 && !root2)
+        if (!v1 && !v2)
             return 1;
-        if ((!root1 && root2) || (!root2 && root1))
+        if ((!v1 && v2) || (!v2 && v1))
             return 0;
-        if (root1->val != root2->val)
+        if (v1->val != v2->val)
             return 0;
-        if (!root1->lc && !root2->lc)
-            return Isomprphic(root1->rc, root2->rc);
-        if (root1->lc && root2->lc && root1->lc->val == root2->lc->val)
-            return Isomprphic(root1->lc, root2->lc) && Isomprphic(root1->rc, root2->rc);
+        if (!v1->lc && !v2->lc)
+            return Isomprphic(v1->rc, v2->rc);
+        if (v1->lc && v2->lc && v1->lc->val == v2->lc->val)
+            return Isomprphic(v1->lc, v2->lc) && Isomprphic(v1->rc, v2->rc);
         else
-            return Isomprphic(root1->lc, root2->rc) && Isomprphic(root1->rc, root2->lc);
+            return Isomprphic(v1->lc, v2->rc) && Isomprphic(v1->rc, v2->lc);
     }
 };
 } // namespace dsa
