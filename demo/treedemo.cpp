@@ -20,7 +20,7 @@ int main(int argc, char const *argv[])
     int b[SIZE], n = SIZE;
     generate(b, b + n, [&]() { return rand() % 1000; });
     vector<int> a(b, b + n);
-    rbtree<int> ax;
+    avltree<int> ax;
     ax.build(a);
     auto it = ax.end();
     for (; *it; it--)

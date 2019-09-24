@@ -29,7 +29,7 @@ protected:
             return true;
         bool f1, f2, f;
         f1 = __judge_avl(opnv->lc, p);
-        f = nodeBalanced(opnv) && (p == nullptr || p->val < opnv->val);
+        f = avlbalanced(opnv) && (p == nullptr || p->val < opnv->val);
         p = opnv;
         f2 = __judge_avl(opnv->rc, p);
         return f1 && f2 & f;
@@ -106,6 +106,7 @@ public:
         _last = nullptr;
         return __search(this->_root, x);
     }
+    bool count(const _Tp &x) { return search(x) != nullptr; }
     inline void clear()
     {
         bintree<_Tp>::clear();
@@ -125,6 +126,8 @@ public:
         }
         return _walk;
     }
+
+    // class iterator
     class iterator
     {
     public:
@@ -196,7 +199,8 @@ public:
 
     protected:
         binode_ptr<_Tp> _node;
-    }; // end of iterator class
+    };
+    // end of iterator class
 
     iterator begin()
     {
