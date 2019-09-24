@@ -1,9 +1,23 @@
+// author - sonaspy@outlook.com
+// coding - utf_8
+
 // exception classes for various error types
 
 #ifndef myExceptions_
 #define myExceptions_
-#include <bits/stdc++.h>
-
+#include <iostream>
+#include <string>
+// try
+// {
+//     // code...
+//     illegalInputData d;
+//     throw d;
+//     //code...
+// }
+// catch (illegalInputData d)
+// {
+//     d.outputMessage();
+// }
 using namespace std;
 
 // illegal parameter value

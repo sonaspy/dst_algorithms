@@ -6,7 +6,7 @@
 namespace dsa
 {
 
-template <class _Tp, class _Compare = less<_Tp>>
+template <typename _Tp, typename _Compare = less<_Tp>>
 class priority_q
 {
 protected:
