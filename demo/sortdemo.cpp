@@ -13,7 +13,7 @@ int main(int argc, char const *argv[])
     /* code */
     // srand(time(NULL));
     int b[SIZE];
-    generate(b, b + SIZE, [&]() { return rand() % 10000; });
+    generate(b, b + SIZE, [&]() { return rand() % 1000; });
     vector<int> a(b, b + SIZE);
     // iota(a.begin(), a.end(), 0);
     a.erase(unique(a.begin(), a.end()), a.end());
@@ -22,10 +22,10 @@ int main(int argc, char const *argv[])
     clock_t startTime, endTime;
     startTime = clock();
     //cout << *kth_element(a.begin(), a.end(), 2000) << endl;
-    // quicksort(a.begin(), a.end());
+    insertsort(a.begin(), a.end());
     // output_vec(a);
     //cout << a[400] << endl;
-  
+
     endTime = clock();
     cout << is_sorted(a.begin(), a.end()) << endl;
     cout << "The elapsed time is: " << (double)(endTime - startTime) / 1000 << "ms" << endl;

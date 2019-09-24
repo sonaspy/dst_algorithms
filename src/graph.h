@@ -5,7 +5,7 @@
 #define __NEW_GRAPH__
 #include "set_union.h"
 #include "algorithms.h"
-
+#include <set>
 using namespace std;
 
 namespace dsa

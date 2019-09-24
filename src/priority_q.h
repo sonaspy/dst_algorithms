@@ -12,12 +12,10 @@ class priority_q
 protected:
     vector<_Tp> _containter;
     _Compare _comp;
-    int _size;
 
 public:
     priority_q()
     {
-        _size = 0;
     }
     inline void push(const _Tp &val)
     {
