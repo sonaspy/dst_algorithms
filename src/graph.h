@@ -4,7 +4,7 @@
 #ifndef __NEW_GRAPH__
 #define __NEW_GRAPH__
 #include "set_union.h"
-#include "functions.h"
+#include "algorithms.h"
 
 using namespace std;
 

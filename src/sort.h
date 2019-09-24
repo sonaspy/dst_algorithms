@@ -3,30 +3,30 @@
 
 #ifndef __NEW_SORT__
 #define __NEW_SORT__
-#include "functions.h"
+#include "algorithms.h"
 using namespace std;
 namespace dsa
 {
 
-//[lo,hi)
-template <typename RandAccessor>
-static void heapsort_(RandAccessor lo, RandAccessor hi)
+//[_first,_last)
+template <typename _RandomAccessIterator>
+static void heapSort(_RandomAccessIterator _first, _RandomAccessIterator _last)
 {
-    __makeheap(lo, hi);
-    for (int i = hi - lo; i > 1; --i)
-        __popheap(lo, lo + i);
+    makeheap(_first, _last);
+    for (int i = _last - _first; i > 1; --i)
+        popheap(_first, _first + i);
 }
 
-//[lo,hi)
-template <typename RandAccessor>
-static void bubblesort(RandAccessor lo, RandAccessor hi)
-{ // Bubble largest element in a[0:n-1] to hi.
-    RandAccessor i, k;
+//[_first,_last)
+template <typename _RandomAccessIterator>
+static void bubblesort(_RandomAccessIterator _first, _RandomAccessIterator _last)
+{ // Bubble largest element in a[0:n-1] to _last.
+    _RandomAccessIterator i, k;
     bool swapped = 1;
-    for (k = hi - 1; swapped && k > lo; k--)
+    for (k = _last - 1; swapped && k > _first; k--)
     {
         swapped = 0;
-        for (i = lo; i < k; i++)
+        for (i = _first; i < k; i++)
         {
             if (*i > *(i + 1))
             {
@@ -36,260 +36,253 @@ static void bubblesort(RandAccessor lo, RandAccessor hi)
         }
     }
 }
-//[lo,hi)
-template <typename RandAccessor>
-static void doublebubblesort(RandAccessor lo, RandAccessor hi)
-{ // Bubble largest element in a[0:n-1] to hi.
+//[_first,_last)
+template <typename _RandomAccessIterator>
+static void doublebubblesort(_RandomAccessIterator _first, _RandomAccessIterator _last)
+{ // Bubble largest element in a[0:n-1] to _last.
     bool swapped = true;
-    hi--;
-    RandAccessor i;
-    while (lo < hi && swapped)
+    _last--;
+    _RandomAccessIterator i;
+    while (_first < _last && swapped)
     {
         swapped = false;
-        for (i = lo; i < hi; ++i)
+        for (i = _first; i < _last; ++i)
             if (*i > *(i + 1))
                 iter_swap(i, i + 1), swapped = true;
-        hi--;
-        for (i = hi; i > lo; --i)
+        _last--;
+        for (i = _last; i > _first; --i)
             if (*(i - 1) > *i)
                 iter_swap(i, i - 1), swapped = true;
-        lo++;
+        _first++;
     }
 }
-//[lo,hi)
-template <typename RandAccessor>
-static void selectsort(RandAccessor lo, RandAccessor hi)
+//[_first,_last)
+template <typename _RandomAccessIterator>
+static void selectsort(_RandomAccessIterator _first, _RandomAccessIterator _last)
 { // Sort the n elements a[0:n-1].
 
-    RandAccessor i;
-    for (i = hi; i > lo + 1; i--)
-        iter_swap(max_element(lo, i), (i - 1));
+    _RandomAccessIterator i;
+    for (i = _last; i > _first + 1; i--)
+        iter_swap(max_element(_first, i), (i - 1));
 }
-//[lo,hi)
-template <typename RandAccessor>
-static void inline insertsort_bin(RandAccessor lo, RandAccessor hi)
-{ // [lo, hi)
-    if (lo < hi)
-        for (RandAccessor i = lo + 1; i < hi; ++i)
-            __linear_insert(lo, i, *i);
+//[_first,_last)
+template <typename _RandomAccessIterator>
+static void inline insertsort_bin(_RandomAccessIterator _first, _RandomAccessIterator _last)
+{ // [_first, _last)
+    if (_first < _last)
+        for (_RandomAccessIterator i = _first + 1; i < _last; ++i)
+            __linear_insert(_first, i, *i);
 }
 
-//[lo,hi)
-template <typename RandAccessor>
-static void inline insertsort(RandAccessor lo, RandAccessor hi)
-{ // [lo, hi)
-    if (lo < hi)
+//[_first,_last)
+template <typename _RandomAccessIterator, typename _Tp = typename iterator_traits<_RandomAccessIterator>::value_type>
+static void inline insertsort(_RandomAccessIterator _first, _RandomAccessIterator _last)
+{ // [_first, _last)
+    if (_first < _last)
     {
-        RandAccessor i, j;
-        for (i = lo + 1; i < hi; ++i)
+        _RandomAccessIterator i, j;
+        for (i = _first + 1; i < _last; ++i)
         {
-            int val = *i;
-            if (val < *lo)
+            _Tp _val = *i;
+            if (_val < *_first)
             {
-                copy_backward(lo, i, i + 1);
-                *lo = val;
+                copy_backward(_first, i, i + 1);
+                *_first = _val;
                 continue;
             }
-            for (j = i; j > lo && *(j - 1) > val; --j)
+            for (j = i; j > _first && *(j - 1) > _val; --j)
                 *j = *(j - 1);
-            *j = val;
+            *j = _val;
         }
     }
 }
 
 const int Sedgewick[] = {929, 505, 209, 109, 41, 19, 5, 1, 0};
-template <typename RandAccessor, typename T>
-static void __shellsort(RandAccessor lo, RandAccessor hi, const T &val)
+template <typename _RandomAccessIterator, typename _Tp = typename iterator_traits<_RandomAccessIterator>::value_type>
+static void shellsort(_RandomAccessIterator _first, _RandomAccessIterator _last, const _Tp &_val)
 {
-    int c, increment, n = hi - lo;
-    RandAccessor i, j;
+    int c, increment, n = _last - _first;
+    _RandomAccessIterator i, j;
     for (c = 0; n <= Sedgewick[c]; ++c)
         ;
     for (increment = Sedgewick[c]; increment > 0; increment = Sedgewick[++c])
-        for (i = lo + increment; i < hi; ++i)
+        for (i = _first + increment; i < _last; ++i)
         {
-            T tmp = *i;
-            for (j = i; lo + increment <= j && *(j - increment) > tmp; j -= increment)
+            _Tp tmp = *i;
+            for (j = i; _first + increment <= j && *(j - increment) > tmp; j -= increment)
                 *j = *(j - increment);
             *j = tmp;
         }
 }
-//[lo,hi)
-template <typename RandAccessor>
-static void shellsort(RandAccessor lo, RandAccessor hi)
-{
-    __shellsort(lo, hi, *lo);
-}
-//[lo,hi]
-template <typename RandAccessor, typename T>
-static inline void __merge(RandAccessor lo, RandAccessor mid, RandAccessor hi, const T &val)
+
+//[_first,_last]
+template <typename _RandomAccessIterator, typename _Tp = typename iterator_traits<_RandomAccessIterator>::value_type>
+static inline void __merge(_RandomAccessIterator _first, _RandomAccessIterator _mid, _RandomAccessIterator _last)
 {
     // a temporary array to store merged result
-    T merged[hi - lo + 1];
-    RandAccessor i = lo, j = mid + 1;
+    _Tp merged[_last - _first + 1];
+    _RandomAccessIterator i = _first, j = _mid + 1;
     int cur = 0;
-    while (i <= mid && j <= hi)
+    while (i <= _mid && j <= _last)
         merged[cur++] = (*i < *j ? *(i++) : *(j++));
-    while (i <= mid)
+    while (i <= _mid)
         merged[cur++] = *(i++);
-    while (j <= hi)
+    while (j <= _last)
         merged[cur++] = *(j++);
-    copy(merged, merged + cur, lo);
+    copy(merged, merged + cur, _first);
 }
 
-//[lo,hi]
-template <typename RandAccessor, typename T>
-static void __merge_sort(RandAccessor lo, RandAccessor hi, const T &val)
+//[_first,_last]
+template <typename _RandomAccessIterator>
+static void __merge_sort(_RandomAccessIterator _first, _RandomAccessIterator _last)
 {
-    if (lo < hi)
+    if (_first < _last)
     {
-        RandAccessor mid = lo + (hi - lo) / 2;
-        __merge_sort(lo, mid, val);
-        __merge_sort(mid + 1, hi, val);
-        __merge(lo, mid, hi, val);
+        _RandomAccessIterator _mid = _first + (_last - _first) / 2;
+        __merge_sort(_first, _mid);
+        __merge_sort(_mid + 1, _last);
+        __merge(_first, _mid, _last);
     }
 }
 
-template <typename RandAccessor, typename T>
-static void __merge_sort0(RandAccessor lo, RandAccessor hi, const T &val)
+template <typename _RandomAccessIterator>
+static void __merge_sort0(_RandomAccessIterator _first, _RandomAccessIterator _last)
 {
-    int len = 1, n = hi - lo;
+    int len = 1, n = _last - _first;
     while (len <= n)
     {
-        for (RandAccessor i = lo; i + len <= hi; i += len * 2)
+        for (_RandomAccessIterator i = _first; i + len <= _last; i += len * 2)
         {
-            RandAccessor mid = i + len - 1, right = i + 2 * len - 1;
-            right = right > hi - 1 ? hi - 1 : right;
-            __merge(i, mid, right, *lo);
+            _RandomAccessIterator _mid = i + len - 1, right = i + 2 * len - 1;
+            right = right > _last - 1 ? _last - 1 : right;
+            __merge(i, _mid, right);
         }
         len <<= 1;
     }
 }
 
-//[lo,hi)
-template <typename RandAccessor>
-static void inline mergesort_(RandAccessor lo, RandAccessor hi)
+//[_first,_last)
+template <typename _RandomAccessIterator>
+static void inline mergeSort(_RandomAccessIterator _first, _RandomAccessIterator _last)
 {
 
-    //if recursive hi-- ;__merge_sort(lo, hi, *lo);
-    __merge_sort0(lo, hi, *lo);
+    //if recursive _last-- ;__merge_sort(_first, _last);
+    __merge_sort0(_first, _last);
 }
 
-
-template <typename RandAccessor>
-static inline void __median3(RandAccessor lo, RandAccessor hi)
+template <typename _RandomAccessIterator>
+static inline void __median3(_RandomAccessIterator _first, _RandomAccessIterator _last)
 {
-    RandAccessor mid = lo + (hi - lo) / 2;
-    if (*lo > *mid)
-        iter_swap(lo, mid);
-    if (*lo > *hi)
-        iter_swap(lo, hi);
-    if (*mid > *hi)
-        iter_swap(mid, hi);
-    iter_swap(hi, mid);
+    _RandomAccessIterator _mid = _first + (_last - _first) / 2;
+    if (*_first > *_mid)
+        iter_swap(_first, _mid);
+    if (*_first > *_last)
+        iter_swap(_first, _last);
+    if (*_mid > *_last)
+        iter_swap(_mid, _last);
+    iter_swap(_last, _mid);
 }
 
-//Partition routine for quicksort [lo,hi]
-template <typename RandAccessor, typename T>
-static  RandAccessor __partition(RandAccessor lo, RandAccessor hi, const T &val)
+//Partition routine for quicksort [_first,_last]
+template <typename _RandomAccessIterator, typename _Tp = typename iterator_traits<_RandomAccessIterator>::value_type>
+static _RandomAccessIterator __partition(_RandomAccessIterator _first, _RandomAccessIterator _last)
 {
-    __median3(lo, hi);
-    T pivot = *hi;
-    RandAccessor i = lo - 1, j = lo;
-    for (; j < hi; j++)
+    __median3(_first, _last);
+    _Tp pivot = *_last;
+    _RandomAccessIterator i = _first - 1, j = _first;
+    for (; j < _last; j++)
         if (*j < pivot)
             iter_swap(++i, j);
-    iter_swap(i + 1, hi);
+    iter_swap(i + 1, _last);
     return i + 1;
 }
-//[lo,hi]
+//[_first,_last]
 #define CUTOFF 10
-template <typename RandAccessor>
-static void __quicksort(RandAccessor lo, RandAccessor hi)
+template <typename _RandomAccessIterator>
+static void __quicksort(_RandomAccessIterator _first, _RandomAccessIterator _last)
 {
-    if (lo < hi)
+    if (_first < _last)
     {
-        if (hi - lo < CUTOFF)
+        if (_last - _first < CUTOFF)
         {
-            insertsort_bin(lo, hi + 1);
+            insertsort_bin(_first, _last + 1);
             return;
         }
-        RandAccessor p = __partition(lo, hi, *lo);
-        __quicksort(lo, p - 1);
-        __quicksort(p + 1, hi);
+        _RandomAccessIterator p = __partition(_first, _last);
+        __quicksort(_first, p - 1);
+        __quicksort(p + 1, _last);
     }
 }
-
-//[lo,hi)
-template <typename RandAccessor>
-static void inline quicksort(RandAccessor lo, RandAccessor hi)
+//[_first,_last)
+template <typename _RandomAccessIterator>
+static void inline quicksort(_RandomAccessIterator _first, _RandomAccessIterator _last)
 {
-    hi--;
-    __quicksort(lo, hi);
+    _last--;
+    __quicksort(_first, _last);
 }
 
-//[lo,hi)
-template <typename RandAccessor>
-void qksort(RandAccessor lo, RandAccessor hi)
+//[_first,_last)
+template <typename _RandomAccessIterator>
+void qksort(_RandomAccessIterator _first, _RandomAccessIterator _last)
 {
-    if (lo >= hi)
+    if (_first >= _last)
         return;
-    RandAccessor mid = lo;
-    mid = partition(lo + 1, hi, bind2nd(less<int>(), *mid));
-    iter_swap(mid - 1, lo);
-    qksort(lo, mid - 1);
-    qksort(mid, hi);
+    _RandomAccessIterator _mid = _first;
+    _mid = partition(_first + 1, _last, bind2nd(less<int>(), *_mid));
+    iter_swap(_mid - 1, _first);
+    qksort(_first, _mid - 1);
+    qksort(_mid, _last);
 }
 
-//[lo,hi]
-template <typename RandAccessor>
-static RandAccessor __kth_element(RandAccessor lo, RandAccessor hi, int k)
+//[_first,_last]
+template <typename _RandomAccessIterator>
+static _RandomAccessIterator __kth_element(_RandomAccessIterator _first, _RandomAccessIterator _last, int k)
 {
-    RandAccessor p = __partition(lo, hi, *lo);
-    int r = p - lo;
+    _RandomAccessIterator p = __partition(_first, _last, *_first);
+    int r = p - _first;
     if (r == k)
         return p;
     else if (k < r)
-        return __kth_element(lo, p - 1, k);
+        return __kth_element(_first, p - 1, k);
     else
-        return __kth_element(p + 1, hi, k - (r + 1));
+        return __kth_element(p + 1, _last, k - (r + 1));
 }
-//[lo,hi)
-template <typename RandAccessor>
-static RandAccessor inline kth_element(RandAccessor lo, RandAccessor hi, int k)
+//[_first,_last)
+template <typename _RandomAccessIterator>
+static inline _RandomAccessIterator kth_element(_RandomAccessIterator _first, _RandomAccessIterator _last, int k)
 {
-    hi--;
-    return __kth_element(lo, hi, k);
+    _last--;
+    return __kth_element(_first, _last, k);
 }
 
-template <typename T>
-static void __partial_k_sort(T *lo, T *hi, int k)
+template <typename _Tp>
+static void __partial_k_sort(_Tp *_first, _Tp *_last, int k)
 {
     // k < size / 2  sort k max elem to bottom;
-    T *walk = hi;
-    if (k > hi - lo)
+    _Tp *walk = _last;
+    if (k > _last - _first)
         return;
-    __makeheap(lo, hi);
-    for (; hi - walk < k; walk--)
-        __popheap(lo, walk);
+    makeheap(_first, _last);
+    for (; _last - walk < k; walk--)
+        popheap(_first, walk);
 }
 
-template <typename T>
-static void __partial_k_sort2(T *lo, T *hi, int k)
+template <typename _Tp>
+static void __partial_k_sort2(_Tp *_first, _Tp *_last, int k)
 {
     // k > size / 2  sort k max elem to neck;
-    T *walk = lo + k;
-    if (k > hi - lo)
+    _Tp *walk = _first + k;
+    if (k > _last - _first)
         return;
-    make_heap(lo, lo + k, greater<int>());
-    for (; walk < hi; ++walk)
+    makeheap(_first, _first + k, greater<int>());
+    for (; walk < _last; ++walk)
     {
-        if (*walk > *lo)
+        if (*walk > *_first)
         {
-            //swap(*walk, *lo);
-            pop_heap(lo, lo + k, greater<int>());
-            swap(*walk, *(lo + k - 1));
-            push_heap(lo, lo + k, greater<int>());
+            //swap(*walk, *_first);
+            popheap(_first, _first + k, greater<int>());
+            swap(*walk, *(_first + k - 1));
+            pushheap(_first, _first + k, greater<int>());
         }
     }
 }
@@ -305,8 +298,8 @@ O(K + NlogK)
 
 */
 
-template <typename T>
-static void tableSort(T *a, T *b)
+template <typename _Tp>
+static void tableSort(_Tp *a, _Tp *b)
 {
     int n = b - a;
     vector<int> table(n);
@@ -323,7 +316,7 @@ static void tableSort(T *a, T *b)
     {
         if (table[i] != i)
         {
-            T val = a[i];
+            _Tp _val = a[i];
             int j = i, last = i, next;
             for (; table[j] != j; j = next)
             {
@@ -332,7 +325,7 @@ static void tableSort(T *a, T *b)
                 a[j] = a[table[j]];
                 table[j] = j;
             }
-            a[last] = val;
+            a[last] = _val;
         }
     }
 }
