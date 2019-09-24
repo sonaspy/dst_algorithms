@@ -119,15 +119,15 @@ struct binode
         return !rc && !lc;
     }
 
-    inline binode *successor()
+    inline binode_ptr<_Tp> successor()
     {
         return this->rc ? __getmin(this->rc) : nullptr;
     }
-    inline binode *precessor()
+    inline binode_ptr<_Tp> precessor()
     {
         return this->lc ? __getmax(this->lc) : nullptr;
     }
-    inline binode *uncle() { return this->parent->is_l() ? this->parent->parent->rc : this->parent->parent->lc; }
+    inline binode_ptr<_Tp> uncle() { return this->parent->is_l() ? this->parent->parent->rc : this->parent->parent->lc; }
 
     inline void insert_l(const _Tp &x)
     {

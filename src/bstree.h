@@ -125,6 +125,74 @@ public:
         }
         return _walk;
     }
+    class iterator
+    {
+    public:
+        // typedefs required by C++ for a forward iterator
+        typedef _Tp value_type;
+        typedef _Tp *pointer;
+        typedef _Tp &reference;
+        // constructor
+        iterator(binode_ptr<_Tp> theNode = nullptr)
+        {
+            _node = theNode;
+        }
+        // dereferencing operators
+        reference operator*() const { return _node->val; }
+
+        // pre increment
+        iterator &operator++()
+        {
+            binode_ptr<_Tp> p = _node->successor();
+            if (p)
+                _node = p;
+            else
+            {
+                p = _node->parent;
+                while (p && p->val < _node->val)
+                    p = p->parent;
+                _node = p;
+            }
+            return *this;
+        }
+        // post increment
+        iterator operator++(int)
+        {
+            iterator _old = *this;
+            ++(*this);
+            return _old;
+        }
+        iterator &operator--()
+        {
+            return *this;
+        }
+
+        // equality testing
+        bool operator!=(const iterator &_right) const
+        {
+            return _node != _right._node;
+        }
+        bool operator==(const iterator &_right) const
+        {
+            return _node == _right._node;
+        }
+
+    protected:
+        binode_ptr<_Tp> _node;
+    }; // end of iterator class
+
+    iterator begin()
+    {
+        binode_ptr<_Tp> p = __getmin(this->_root);
+        iterator it(p);
+        return it;
+    }
+    iterator end()
+    {
+        binode_ptr<_Tp> p = __getmax(this->_root);
+        iterator it(p);
+        return it;
+    }
 };
 } // namespace dsa
 #endif
