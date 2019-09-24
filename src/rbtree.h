@@ -25,7 +25,7 @@ protected:
         if (y->lc)
             y->lc->parent = x;
         y->parent = x->parent;
-        x->isroot() ? this->_root = y : from_parent2(x) = y;
+        x->isroot() ? this->_root = y : fromParent2(x) = y;
         y->lc = x;
         x->parent = y;
         this->__updateheight(x);
@@ -38,7 +38,7 @@ protected:
         if (y->rc)
             y->rc->parent = x;
         y->parent = x->parent;
-        x->isroot() ? this->_root = y : from_parent2(x) = y;
+        x->isroot() ? this->_root = y : fromParent2(x) = y;
         y->rc = x;
         x->parent = y;
         this->__updateheight(x);

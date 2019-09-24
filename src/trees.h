@@ -18,8 +18,8 @@ namespace dsa
 {
 #define MAXCOL 100000
 #define MAXROW 100000
-#define from_parent2(x) (((x)->is_l() ? (x)->parent->lc : (x)->parent->rc))
-#define nodeBalanced(x) ((-2 < _factor(x)) && (_factor(x) < 2))
+#define fromParent2(x) (((x)->is_l() ? (x)->parent->lc : (x)->parent->rc))
+#define avlbalanced(x) ((-2 < _factor(x)) && (_factor(x) < 2))
 #define _height(p) ((p != nullptr) ? (p)->height : -1)
 #define _depth(p) ((p != nullptr) ? (p)->depth : -1)
 #define _factor(p) ((_height(p->lc)) - (_height(p->rc)))
