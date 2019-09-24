@@ -20,7 +20,7 @@ static void heapSort(_RandomAccessIterator _first, _RandomAccessIterator _last)
 //[)
 template <typename _RandomAccessIterator>
 static void bubblesort(_RandomAccessIterator _first, _RandomAccessIterator _last)
-{ // Bubble largest element in a[0:n-1] to _last.
+{ // Bubble largest element in a[0:_size-1] to _last.
     _RandomAccessIterator i, k;
     bool swapped = 1;
     for (k = _last - 1; swapped && k > _first; k--)
@@ -39,27 +39,24 @@ static void bubblesort(_RandomAccessIterator _first, _RandomAccessIterator _last
 //[)
 template <typename _RandomAccessIterator>
 static void doublebubblesort(_RandomAccessIterator _first, _RandomAccessIterator _last)
-{ // Bubble largest element in a[0:n-1] to _last.
+{ // Bubble largest element in a[0:_size-1] to _last.
     bool swapped = true;
-    _last--;
     _RandomAccessIterator i;
-    while (_first < _last && swapped)
+    for (; _first < --_last && swapped; ++_first)
     {
         swapped = false;
         for (i = _first; i < _last; ++i)
             if (*i > *(i + 1))
                 iter_swap(i, i + 1), swapped = true;
-        _last--;
         for (i = _last; i > _first; --i)
             if (*(i - 1) > *i)
                 iter_swap(i, i - 1), swapped = true;
-        _first++;
     }
 }
 //[)
 template <typename _RandomAccessIterator>
 static void selectsort(_RandomAccessIterator _first, _RandomAccessIterator _last)
-{ // Sort the n elements a[0:n-1].
+{ // Sort the _size elements a[0:_size-1].
 
     _RandomAccessIterator i;
     for (i = _last; i > _first + 1; i--)
@@ -101,9 +98,9 @@ const int Sedgewick[] = {929, 505, 209, 109, 41, 19, 5, 1, 0};
 template <typename _RandomAccessIterator, typename _Tp = typename iterator_traits<_RandomAccessIterator>::value_type>
 static void shellsort(_RandomAccessIterator _first, _RandomAccessIterator _last, const _Tp &_val)
 {
-    int c, increment, n = _last - _first;
+    int c, increment, _size = _last - _first;
     _RandomAccessIterator i, j;
-    for (c = 0; n <= Sedgewick[c]; ++c)
+    for (c = 0; _size <= Sedgewick[c]; ++c)
         ;
     for (increment = Sedgewick[c]; increment > 0; increment = Sedgewick[++c])
         for (i = _first + increment; i < _last; ++i)
@@ -122,14 +119,14 @@ static inline void __merge(_RandomAccessIterator _first, _RandomAccessIterator _
     // a temporary array to store merged result
     _Tp merged[_last - _first + 1];
     _RandomAccessIterator i = _first, j = _mid + 1;
-    int cur = 0;
+    int _size = 0;
     while (i <= _mid && j <= _last)
-        merged[cur++] = (*i < *j ? *(i++) : *(j++));
+        merged[_size++] = (*i < *j ? *(i++) : *(j++));
     while (i <= _mid)
-        merged[cur++] = *(i++);
+        merged[_size++] = *(i++);
     while (j <= _last)
-        merged[cur++] = *(j++);
-    copy(merged, merged + cur, _first);
+        merged[_size++] = *(j++);
+    copy(merged, merged + _size, _first);
 }
 
 //[]
@@ -146,10 +143,10 @@ static void __merge_sort(_RandomAccessIterator _first, _RandomAccessIterator _la
 }
 
 template <typename _RandomAccessIterator>
-static void __merge_sort0(_RandomAccessIterator _first, _RandomAccessIterator _last)
+static void __merge_sort_nonrecur(_RandomAccessIterator _first, _RandomAccessIterator _last)
 {
-    int len = 1, n = _last - _first;
-    while (len <= n)
+    int len = 1, _size = _last - _first;
+    while (len <= _size)
     {
         for (_RandomAccessIterator i = _first; i + len <= _last; i += len * 2)
         {
@@ -166,8 +163,8 @@ template <typename _RandomAccessIterator>
 static void inline mergeSort(_RandomAccessIterator _first, _RandomAccessIterator _last)
 {
 
-    //if recursive _last-- ;__merge_sort(_first, _last);
-    __merge_sort0(_first, _last);
+    //__merge_sort(_first, --_last);
+    __merge_sort_nonrecur(_first, _last);
 }
 
 template <typename _RandomAccessIterator>
@@ -190,7 +187,7 @@ static _RandomAccessIterator __partition(_RandomAccessIterator _first, _RandomAc
     __median3(_first, _last);
     _Tp pivot = *_last;
     _RandomAccessIterator i = _first - 1, j = _first;
-    for (; j < _last; j++)
+    for (; j < _last; ++j)
         if (*j < pivot)
             iter_swap(++i, j);
     iter_swap(i + 1, _last);
@@ -205,7 +202,7 @@ static void __quicksort(_RandomAccessIterator _first, _RandomAccessIterator _las
     {
         if (_last - _first < CUTOFF)
         {
-            insertsort_bin(_first, _last + 1);
+            insertsort(_first, _last + 1);
             return;
         }
         _RandomAccessIterator p = __partition(_first, _last);
@@ -217,8 +214,7 @@ static void __quicksort(_RandomAccessIterator _first, _RandomAccessIterator _las
 template <typename _RandomAccessIterator>
 static void inline quicksort(_RandomAccessIterator _first, _RandomAccessIterator _last)
 {
-    _last--;
-    __quicksort(_first, _last);
+    __quicksort(_first, --_last);
 }
 
 //[)
@@ -251,8 +247,7 @@ static _RandomAccessIterator __kth_element(_RandomAccessIterator _first, _Random
 template <typename _RandomAccessIterator>
 static inline _RandomAccessIterator kth_element(_RandomAccessIterator _first, _RandomAccessIterator _last, int k)
 {
-    _last--;
-    return __kth_element(_first, _last, k);
+    return __kth_element(_first, --_last, k);
 }
 
 template <typename _Tp>
@@ -301,10 +296,10 @@ O(K + NlogK)
 template <typename _Tp>
 static void tableSort(_Tp *a, _Tp *b)
 {
-    int n = b - a;
-    vector<int> table(n);
+    int _size = b - a;
+    vector<int> table(_size);
     iota(table.begin(), table.end(), 0);
-    for (int i = 1; i < n; i++)
+    for (int i = 1; i < _size; i++)
     {
         int tmp = table[i];
         int j;
@@ -312,7 +307,7 @@ static void tableSort(_Tp *a, _Tp *b)
             table[j] = table[j - 1];
         table[j] = tmp;
     }
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < _size; i++)
     {
         if (table[i] != i)
         {

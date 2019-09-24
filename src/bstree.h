@@ -29,7 +29,7 @@ protected:
             return true;
         bool f1, f2, f;
         f1 = __judge_avl(opnv->lc, p);
-        f = avlbalanced(opnv) && (p == nullptr || p->val < opnv->val);
+        f = avlnodebalanced(opnv) && (p == nullptr || p->val < opnv->val);
         p = opnv;
         f2 = __judge_avl(opnv->rc, p);
         return f1 && f2 & f;
