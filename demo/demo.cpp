@@ -1,11 +1,13 @@
 // author -sonaspy@outlook.com
 // coding - utf_8
 
-#include <bits/stdc++.h>
+#include "../src/dsa.h"
 #define test() freopen("in", "r", stdin)
 using namespace std;
+using namespace dsa;
 
 #define SIZE 20
+
 int main(int argc, char const *argv[])
 {
     /* code */
@@ -17,12 +19,8 @@ int main(int argc, char const *argv[])
     // iota(a.begin(), a.end(), 0);
     clock_t startTime, endTime;
     startTime = clock();
-    ifstream fin("innn.txt");
-    if (fin.fail())
-    {
-        cout << "failed\n";
-    }
-    fin.close();
+    quicksort(a.begin(), a.end());
+
     endTime = clock();
     cout << "The elapsed time is: " << (double)(endTime - startTime) / 1000 << "ms" << endl;
     return 0;

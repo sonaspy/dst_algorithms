@@ -2,15 +2,16 @@
 // coding - utf_8
 #ifndef __HEAP__
 #define __HEAP__
-#include "functions.h"
+#include "algorithms.h"
 namespace dsa
 {
 
-template <typename T>
+template <class _Tp, class _Compare = less<_Tp>>
 class priority_q
 {
 protected:
-    vector<T> data;
+    vector<_Tp> _containter;
+    _Compare _comp;
     int _size;
 
 public:
@@ -18,27 +19,27 @@ public:
     {
         _size = 0;
     }
-    inline void push(const T &val)
+    inline void push(const _Tp &val)
     {
-        data.push_back(val);
-        __pushheap(data.begin(), data.end());
+        _containter.push_back(val);
+        __pushheap(_containter.begin(), _containter.end(), _comp);
     }
     inline void pop()
     {
-        __popheap(data.begin(), data.end());
-        data.pop_back();
+        __popheap(_containter.begin(), _containter.end(), _comp);
+        _containter.pop_back();
     }
-    inline T top() const
+    inline _Tp top() const
     {
-        return data.front();
+        return _containter.front();
     }
     inline int size() const
     {
-        return data.size();
+        return _containter.size();
     }
     inline bool empty() const
     {
-        return data.empty();
+        return _containter.empty();
     }
 };
 } // namespace dsa

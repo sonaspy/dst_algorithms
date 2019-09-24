@@ -12,8 +12,9 @@ protected:
     {
         return __union_arr[id] == -1 ? id : __union_arr[id] = __getRoot(__union_arr[id]);
     }
-public:
     vector<int> __union_arr;
+
+public:
     __setunion(int n = 1000)
     {
         __union_arr = vector<int>(n, -1);
@@ -38,7 +39,7 @@ public:
     inline bool connected()
     {
         int cnt = 0;
-        for (int i = 0; i < _size; i++)
+        for (int i = 0; i < __union_arr.size(); i++)
             if (__union_arr[i] == -1)
                 cnt++;
         return cnt == 1;

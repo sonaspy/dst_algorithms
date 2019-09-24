@@ -2,7 +2,7 @@
 #define __NEW_DSA__
 
 #include "exceptions.h"
-#include "functions.h"
+#include "algorithms.h"
 #include "trees.h"
 #include "sort.h"
 #include "linear.h"

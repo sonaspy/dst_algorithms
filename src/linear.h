@@ -2,7 +2,7 @@
 // coding - utf_8
 #ifndef __LINEAR__
 #define __LINEAR__
-#include "functions.h"
+#include "algorithms.h"
 using namespace std;
 namespace dsa
 {
