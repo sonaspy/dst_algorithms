@@ -162,7 +162,7 @@ struct binode
 template <typename _Tp>
 struct bnode
 {
-    int keysize;
+    int sizeOfkey;
     vector<_Tp> key;
     vector<bnode_ptr<_Tp>> child;
     bool isleaf;
@@ -173,13 +173,13 @@ struct bnode
     _Tp precessor()
     {
         bnode_ptr<_Tp> x = this;
-        int i = keysize;
+        int i = sizeOfkey;
         while (!x->isleaf)
         {
             x = x->child[i];
-            i = x->keysize;
+            i = x->sizeOfkey;
         }
-        return x->key[keysize - 1];
+        return x->key[sizeOfkey - 1];
     }
     _Tp successor()
     {
