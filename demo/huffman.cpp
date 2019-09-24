@@ -4,30 +4,30 @@
 #include "../src/dsa.h"
 using namespace dsa;
 #include <fstream>
-vector<vector<char>> disp_buf;
+vector<vector<char>> __display_buffer;
 void __print(binode<char> *opnv, int root_x, int root_y, int interval)
 {
     if (!opnv)
         return;
     int left_child = root_y - interval, right_child = root_y + interval;
-    disp_buf[root_x][root_y] = opnv->val;
+    __display_buffer[root_x][root_y] = opnv->val;
     if (opnv->lc)
-        disp_buf[root_x + 1][root_y - (interval + 1) / 2] = '/';
+        __display_buffer[root_x + 1][root_y - (interval + 1) / 2] = '/';
     if (opnv->rc)
-        disp_buf[root_x + 1][root_y + (interval + 1) / 2] = '\\';
+        __display_buffer[root_x + 1][root_y + (interval + 1) / 2] = '\\';
     __print(opnv->lc, root_x + 2, left_child, (interval >> 1));
     __print(opnv->rc, root_x + 2, right_child, (interval >> 1));
 }
 void printhfm(binode<char> *_root, ofstream &of)
 {
     of << "🌲  HUFFMAN TREE  🌲\n";
-    disp_buf = vector<vector<char>>(40, vector<char>(MAXCOL, ' '));
+    __display_buffer = vector<vector<char>>(40, vector<char>(MAXCOL, ' '));
     __print(_root, 0, pow(2, _root->height) - 1, pow(2, _root->height - 1));
     int n = _root->height * 2 + 1, i, j, breadth = pow(2, _root->height + 1) + 1;
     for (i = 0; i < n; ++i)
     {
         for (j = 0; j < breadth; ++j)
-            of << disp_buf[i][j];
+            of << __display_buffer[i][j];
         of << endl;
     }
     of << "🌲  HUFFMAN TREE  🌲\n";

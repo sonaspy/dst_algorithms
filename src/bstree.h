@@ -6,24 +6,24 @@
 
 namespace dsa
 {
-template <typename T>
-class bstree : public bintree<T>
+template <typename _Tp>
+class bstree : public bintree<_Tp>
 {
 protected:
-    binode_ptr<T> _last;
-    inline void __attAsL(binode_ptr<T> &p, binode_ptr<T> &lc)
+    binode_ptr<_Tp> _last;
+    inline void __attAsL(binode_ptr<_Tp> &p, binode_ptr<_Tp> &lc)
     {
         p->lc = lc;
         if (lc)
             lc->parent = p;
     }
-    inline void __attAsR(binode_ptr<T> &p, binode_ptr<T> &rc)
+    inline void __attAsR(binode_ptr<_Tp> &p, binode_ptr<_Tp> &rc)
     {
         p->rc = rc;
         if (rc)
             rc->parent = p;
     }
-    bool __judge_avl(binode_ptr<T> opnv, binode_ptr<T> &p)
+    bool __judge_avl(binode_ptr<_Tp> opnv, binode_ptr<_Tp> &p)
     {
         if (!opnv)
             return true;
@@ -34,7 +34,7 @@ protected:
         f2 = __judge_avl(opnv->rc, p);
         return f1 && f2 & f;
     }
-    binode_ptr<T> &__search(binode_ptr<T> &opnv, const T &x)
+    binode_ptr<_Tp> &__search(binode_ptr<_Tp> &opnv, const _Tp &x)
     {
         if (!opnv || x == opnv->val)
             return opnv;
@@ -42,7 +42,7 @@ protected:
         return __search(x < opnv->val ? opnv->lc : opnv->rc, x);
     }
 
-    binode_ptr<T> __erase(binode_ptr<T> &opnv, const T &x)
+    binode_ptr<_Tp> __erase(binode_ptr<_Tp> &opnv, const _Tp &x)
     {
         if (!opnv)
             return nullptr;
@@ -52,7 +52,7 @@ protected:
             opnv->rc = __erase(opnv->rc, x);
         else
         {
-            binode_ptr<T> tmp;
+            binode_ptr<_Tp> tmp;
             if (opnv->lc && opnv->rc)
             {
                 tmp = opnv->successor();
@@ -71,7 +71,7 @@ protected:
 
 public:
     ~bstree() { this->clear(); }
-    void build(vector<T> &a)
+    void build(vector<_Tp> &a)
     {
         for (auto &i : a)
             insert(i);
@@ -79,10 +79,10 @@ public:
     }
     bool avlbalanced()
     {
-        binode_ptr<T> p = nullptr;
+        binode_ptr<_Tp> p = nullptr;
         return __judge_avl(this->_root, p);
     }
-    bool erase(const T &x)
+    bool erase(const _Tp &x)
     {
         if (__erase(this->_root, x))
         {
@@ -91,9 +91,9 @@ public:
         };
         return false;
     }
-    bool insert(const T &x)
+    bool insert(const _Tp &x)
     {
-        binode_ptr<T> &w = search(x);
+        binode_ptr<_Tp> &w = search(x);
         if (w)
             return false;
         w = this->__newbinode(x, _last);
@@ -101,29 +101,29 @@ public:
         this->__updateheightabove(w);
         return true;
     }
-    binode_ptr<T> &search(const T &x)
+    binode_ptr<_Tp> &search(const _Tp &x)
     {
         _last = nullptr;
         return __search(this->_root, x);
     }
     inline void clear()
     {
-        bintree<T>::clear();
+        bintree<_Tp>::clear();
         _last = nullptr;
     }
-    binode_ptr<T> findLCA(const T &v1, const T &v2)
+    binode_ptr<_Tp> get_lca(const _Tp &v1, const _Tp &v2)
     {
-        binode_ptr<T> walk = this->_root;
-        while (walk)
+        binode_ptr<_Tp> _walk = this->_root;
+        while (_walk)
         {
-            if (v1 < walk->val && v2 < walk->val)
-                walk = walk->lc;
-            else if (walk->val < v1 && walk->val < v2)
-                walk = walk->rc;
+            if (v1 < _walk->val && v2 < _walk->val)
+                _walk = _walk->lc;
+            else if (_walk->val < v1 && _walk->val < v2)
+                _walk = _walk->rc;
             else
                 break;
         }
-        return walk;
+        return _walk;
     }
 };
 } // namespace dsa
