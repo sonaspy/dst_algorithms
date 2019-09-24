@@ -6,7 +6,7 @@
 #include "trees.h"
 #include "sort.h"
 #include "linear.h"
-#include "set_union.h"
+#include "union.h"
 #include "graph.h"
 #include "priority_q.h"
 #include "str.h"

@@ -3,7 +3,7 @@
 
 #ifndef __NEW_GRAPH__
 #define __NEW_GRAPH__
-#include "set_union.h"
+#include "union.h"
 #include "algorithms.h"
 #include <set>
 using namespace std;
@@ -29,7 +29,7 @@ private:
     unordered_set<int> vset;
     unordered_set<edge *> eset;
     int _sum;
-    __setunion st;
+    __Union st;
 
 public:
     spanningTree()

@@ -2,7 +2,7 @@
 // coding - utf_8
 #include "../src/dsa.h"
 
-#define SIZE 1000000
+#define SIZE 10000
 #define test() freopen("in", "r", stdin)
 
 using namespace std;
