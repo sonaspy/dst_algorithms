@@ -29,27 +29,27 @@ enum RBColor
     RED,
     BLK
 };
-template <typename T>
+template <typename _Tp>
 class rbtree;
-template <typename T>
+template <typename _Tp>
 class bstree;
-template <typename T>
+template <typename _Tp>
 class avltree;
-template <typename T>
+template <typename _Tp>
 class btree;
-template <typename T>
+template <typename _Tp>
 class bintree;
-template <typename T>
+template <typename _Tp>
 struct binode;
-template <typename T>
+template <typename _Tp>
 struct bnode;
 
-template <typename T>
-using binode_ptr = struct binode<T> *;
-template <typename T>
-using bnode_ptr = struct bnode<T> *;
+template <typename _Tp>
+using binode_ptr = struct binode<_Tp> *;
+template <typename _Tp>
+using bnode_ptr = struct bnode<_Tp> *;
 
-template <typename T>
+template <typename _Tp>
 struct IS_CHAR
 {
     operator bool()
@@ -66,30 +66,30 @@ struct IS_CHAR<char>
     }
 };
 
-template <typename T>
-static inline binode_ptr<T> __getmax(binode_ptr<T> opnv)
+template <typename _Tp>
+static inline binode_ptr<_Tp> __getmax(binode_ptr<_Tp> opnv)
 {
     while (opnv->rc)
         opnv = opnv->rc;
     return opnv;
 }
-template <typename T>
-static inline binode_ptr<T> __getmin(binode_ptr<T> opnv)
+template <typename _Tp>
+static inline binode_ptr<_Tp> __getmin(binode_ptr<_Tp> opnv)
 {
     while (opnv->lc)
         opnv = opnv->lc;
     return opnv;
 }
 
-template <typename T>
+template <typename _Tp>
 struct binode
 {
-    T val;
-    binode_ptr<T> lc, rc, parent;
+    _Tp val;
+    binode_ptr<_Tp> lc, rc, parent;
     int height, depth, ltag, rtag, freq, downblk;
     RBColor color;
     binode() : lc(nullptr), rc(nullptr), parent(nullptr), height(0), freq(0), color(BLK), downblk(0) {}
-    binode(const T &x, binode_ptr<T> p = nullptr, binode_ptr<T> l = nullptr, binode_ptr<T> r = nullptr, RBColor cl = BLK) : val(x), lc(l), rc(r), parent(p), height(0), freq(0), color(cl), downblk(0) {}
+    binode(const _Tp &x, binode_ptr<_Tp> p = nullptr, binode_ptr<_Tp> l = nullptr, binode_ptr<_Tp> r = nullptr, RBColor cl = BLK) : val(x), lc(l), rc(r), parent(p), height(0), freq(0), color(cl), downblk(0) {}
     bool inline is_l()
     {
         return parent && parent->lc == this;
@@ -129,11 +129,11 @@ struct binode
     }
     inline binode *uncle() { return this->parent->is_l() ? this->parent->parent->rc : this->parent->parent->lc; }
 
-    inline void insert_l(const T &x)
+    inline void insert_l(const _Tp &x)
     {
         lc = new binode(x, this);
     }
-    inline void insert_r(const T &x)
+    inline void insert_r(const _Tp &x)
     {
         rc = new binode(x, this);
     }
@@ -159,20 +159,20 @@ struct binode
     inline bool operator>(const binode *&bn) { return val > bn->val; }
 };
 
-template <typename T>
+template <typename _Tp>
 struct bnode
 {
     int keysize;
-    vector<T> key;
-    vector<bnode_ptr<T>> child;
+    vector<_Tp> key;
+    vector<bnode_ptr<_Tp>> child;
     bool isleaf;
     bnode(bool leaf = true)
     {
         isleaf = leaf;
     }
-    T precessor()
+    _Tp precessor()
     {
-        bnode_ptr<T> x = this;
+        bnode_ptr<_Tp> x = this;
         int i = keysize;
         while (!x->isleaf)
         {
@@ -181,9 +181,9 @@ struct bnode
         }
         return x->key[keysize - 1];
     }
-    T successor()
+    _Tp successor()
     {
-        bnode_ptr<T> x = this;
+        bnode_ptr<_Tp> x = this;
         while (!x->isleaf)
             x = x->child[0];
         return x->key[0];

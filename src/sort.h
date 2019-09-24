@@ -8,7 +8,7 @@ using namespace std;
 namespace dsa
 {
 
-//[_first,_last)
+//[)
 template <typename _RandomAccessIterator>
 static void heapSort(_RandomAccessIterator _first, _RandomAccessIterator _last)
 {
@@ -17,7 +17,7 @@ static void heapSort(_RandomAccessIterator _first, _RandomAccessIterator _last)
         popheap(_first, _first + i);
 }
 
-//[_first,_last)
+//[)
 template <typename _RandomAccessIterator>
 static void bubblesort(_RandomAccessIterator _first, _RandomAccessIterator _last)
 { // Bubble largest element in a[0:n-1] to _last.
@@ -36,7 +36,7 @@ static void bubblesort(_RandomAccessIterator _first, _RandomAccessIterator _last
         }
     }
 }
-//[_first,_last)
+//[)
 template <typename _RandomAccessIterator>
 static void doublebubblesort(_RandomAccessIterator _first, _RandomAccessIterator _last)
 { // Bubble largest element in a[0:n-1] to _last.
@@ -56,7 +56,7 @@ static void doublebubblesort(_RandomAccessIterator _first, _RandomAccessIterator
         _first++;
     }
 }
-//[_first,_last)
+//[)
 template <typename _RandomAccessIterator>
 static void selectsort(_RandomAccessIterator _first, _RandomAccessIterator _last)
 { // Sort the n elements a[0:n-1].
@@ -65,7 +65,7 @@ static void selectsort(_RandomAccessIterator _first, _RandomAccessIterator _last
     for (i = _last; i > _first + 1; i--)
         iter_swap(max_element(_first, i), (i - 1));
 }
-//[_first,_last)
+//[)
 template <typename _RandomAccessIterator>
 static void inline insertsort_bin(_RandomAccessIterator _first, _RandomAccessIterator _last)
 { // [_first, _last)
@@ -74,7 +74,7 @@ static void inline insertsort_bin(_RandomAccessIterator _first, _RandomAccessIte
             __linear_insert(_first, i, *i);
 }
 
-//[_first,_last)
+//[)
 template <typename _RandomAccessIterator, typename _Tp = typename iterator_traits<_RandomAccessIterator>::value_type>
 static void inline insertsort(_RandomAccessIterator _first, _RandomAccessIterator _last)
 { // [_first, _last)
@@ -115,7 +115,7 @@ static void shellsort(_RandomAccessIterator _first, _RandomAccessIterator _last,
         }
 }
 
-//[_first,_last]
+//[]
 template <typename _RandomAccessIterator, typename _Tp = typename iterator_traits<_RandomAccessIterator>::value_type>
 static inline void __merge(_RandomAccessIterator _first, _RandomAccessIterator _mid, _RandomAccessIterator _last)
 {
@@ -132,7 +132,7 @@ static inline void __merge(_RandomAccessIterator _first, _RandomAccessIterator _
     copy(merged, merged + cur, _first);
 }
 
-//[_first,_last]
+//[]
 template <typename _RandomAccessIterator>
 static void __merge_sort(_RandomAccessIterator _first, _RandomAccessIterator _last)
 {
@@ -161,7 +161,7 @@ static void __merge_sort0(_RandomAccessIterator _first, _RandomAccessIterator _l
     }
 }
 
-//[_first,_last)
+//[)
 template <typename _RandomAccessIterator>
 static void inline mergeSort(_RandomAccessIterator _first, _RandomAccessIterator _last)
 {
@@ -183,7 +183,7 @@ static inline void __median3(_RandomAccessIterator _first, _RandomAccessIterator
     iter_swap(_last, _mid);
 }
 
-//Partition routine for quicksort [_first,_last]
+//Partition routine for quicksort []
 template <typename _RandomAccessIterator, typename _Tp = typename iterator_traits<_RandomAccessIterator>::value_type>
 static _RandomAccessIterator __partition(_RandomAccessIterator _first, _RandomAccessIterator _last)
 {
@@ -196,7 +196,7 @@ static _RandomAccessIterator __partition(_RandomAccessIterator _first, _RandomAc
     iter_swap(i + 1, _last);
     return i + 1;
 }
-//[_first,_last]
+//[]
 #define CUTOFF 10
 template <typename _RandomAccessIterator>
 static void __quicksort(_RandomAccessIterator _first, _RandomAccessIterator _last)
@@ -213,7 +213,7 @@ static void __quicksort(_RandomAccessIterator _first, _RandomAccessIterator _las
         __quicksort(p + 1, _last);
     }
 }
-//[_first,_last)
+//[)
 template <typename _RandomAccessIterator>
 static void inline quicksort(_RandomAccessIterator _first, _RandomAccessIterator _last)
 {
@@ -221,7 +221,7 @@ static void inline quicksort(_RandomAccessIterator _first, _RandomAccessIterator
     __quicksort(_first, _last);
 }
 
-//[_first,_last)
+//[)
 template <typename _RandomAccessIterator>
 void qksort(_RandomAccessIterator _first, _RandomAccessIterator _last)
 {
@@ -234,7 +234,7 @@ void qksort(_RandomAccessIterator _first, _RandomAccessIterator _last)
     qksort(_mid, _last);
 }
 
-//[_first,_last]
+//[]
 template <typename _RandomAccessIterator>
 static _RandomAccessIterator __kth_element(_RandomAccessIterator _first, _RandomAccessIterator _last, int k)
 {
@@ -247,7 +247,7 @@ static _RandomAccessIterator __kth_element(_RandomAccessIterator _first, _Random
     else
         return __kth_element(p + 1, _last, k - (r + 1));
 }
-//[_first,_last)
+//[)
 template <typename _RandomAccessIterator>
 static inline _RandomAccessIterator kth_element(_RandomAccessIterator _first, _RandomAccessIterator _last, int k)
 {

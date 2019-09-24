@@ -7,8 +7,8 @@
 namespace dsa
 {
 
-template <typename T>
-class rbtree : public avltree<T>
+template <typename _Tp>
+class rbtree : public avltree<_Tp>
 {
 protected:
 #define is_blk(opnv) ((!(opnv) || (opnv)->color == BLK))
@@ -18,9 +18,9 @@ protected:
 #define __rbcolor(opnv) (((opnv) ? (opnv->color) : BLK))
 #define __downblk(opnv) (((opnv) ? (opnv->downblk) : 0))
 
-    inline void __rotate_l(binode_ptr<T> x)
+    inline void __rotate_l(binode_ptr<_Tp> x)
     {
-        binode_ptr<T> y = x->rc;
+        binode_ptr<_Tp> y = x->rc;
         x->rc = y->lc;
         if (y->lc)
             y->lc->parent = x;
@@ -31,9 +31,9 @@ protected:
         this->__updateheight(x);
         this->__updateheight(y);
     }
-    inline void __rotate_r(binode_ptr<T> x)
+    inline void __rotate_r(binode_ptr<_Tp> x)
     {
-        binode_ptr<T> y = x->lc;
+        binode_ptr<_Tp> y = x->lc;
         x->lc = y->rc;
         if (y->rc)
             y->rc->parent = x;
@@ -44,9 +44,9 @@ protected:
         this->__updateheight(x);
         this->__updateheight(y);
     }
-    void __doubleis_red_solution(binode_ptr<T> opnv)
+    void __doubleis_red_solution(binode_ptr<_Tp> opnv)
     {
-        binode_ptr<T> p, g, u;
+        binode_ptr<_Tp> p, g, u;
         while ((p = opnv->parent) && is_red(p))
         {
             g = p->parent;
@@ -75,7 +75,7 @@ protected:
         }
         __setblk(this->_root);
     }
-    void __doubleis_blk_solution(binode_ptr<T> pp, binode_ptr<T> p)
+    void __doubleis_blk_solution(binode_ptr<_Tp> pp, binode_ptr<_Tp> p)
     {
         while ((nullptr == p || BLK == p->color) && p != this->_root)
         {
@@ -148,7 +148,7 @@ protected:
         }
         p->color = BLK;
     }
-    void __isrbtree(binode_ptr<T> opnv)
+    void __isrbtree(binode_ptr<_Tp> opnv)
     {
         if (!opnv)
             return;
@@ -167,9 +167,9 @@ public:
     {
         this->_isRBtree = 1;
     }
-    bool insert(const T &x)
+    bool insert(const _Tp &x)
     {
-        binode_ptr<T> &w = this->search(x);
+        binode_ptr<_Tp> &w = this->search(x);
         if (w)
             return false;
         w = this->__newbinode(x, this->_last, nullptr, nullptr, RED);
@@ -177,15 +177,15 @@ public:
         __doubleis_red_solution(w);
         return true;
     }
-    bool erase(const T &val)
+    bool erase(const _Tp &val)
     {
-        binode_ptr<T> &w = bstree<T>::search(val);
+        binode_ptr<_Tp> &w = bstree<_Tp>::search(val);
         if (!w)
             return 0;
-        binode_ptr<T> p = w, pp = p->parent, _nil = nullptr;
+        binode_ptr<_Tp> p = w, pp = p->parent, _nil = nullptr;
         RBColor delcolor = p->color;
         int pp_child_tag = (!pp || pp->lc == p) ? 1 : 2;
-        binode_ptr<T> &ref_p = (pp ? (pp_child_tag == 1 ? pp->lc : pp->rc) : this->_root);
+        binode_ptr<_Tp> &ref_p = (pp ? (pp_child_tag == 1 ? pp->lc : pp->rc) : this->_root);
         if (p->lc && p->rc)
         {
             auto prev = p->lc, curr = prev;
@@ -252,11 +252,11 @@ public:
         __isrbtree(this->_root);
         return this->_isRBtree && this->_root->color == BLK;
     }
-    void build(vector<T> &a)
+    void build(vector<_Tp> &a)
     {
         for (auto &x : a)
             insert(x);
-        bintree<T>::__update_status();
+        bintree<_Tp>::__update_status();
     }
 };
 } // namespace dsa

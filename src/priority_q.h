@@ -1,7 +1,7 @@
 // author - sonaspy@outlook.com
 // coding - utf_8
-#ifndef __HEAP__
-#define __HEAP__
+#ifndef __PRIORITY_QUEUE__
+#define __PRIORITY_QUEUE__
 #include "algorithms.h"
 namespace dsa
 {

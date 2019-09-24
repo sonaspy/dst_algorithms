@@ -7,40 +7,40 @@ using namespace std;
 namespace dsa
 {
 
-template <typename T>
+template <typename _Tp>
 struct ListNode;
-template <typename T>
-using lnodeptr = struct ListNode<T> *;
+template <typename _Tp>
+using lnodeptr = struct ListNode<_Tp> *;
 
-template <typename T>
+template <typename _Tp>
 struct ListNode
 {
-    T val;
+    _Tp val;
     int freq;
-    lnodeptr<T> next, pre;
+    lnodeptr<_Tp> next, pre;
     ListNode() : val(INT_MIN), freq(0), next(nullptr), pre(nullptr) {}
-    ListNode(T v) : val(v), freq(0), next(nullptr), pre(nullptr) {}
+    ListNode(_Tp v) : val(v), freq(0), next(nullptr), pre(nullptr) {}
 };
 
-template <typename T>
+template <typename _Tp>
 class link_list
 {
 protected:
-    lnodeptr<T> _dummy;
-    unordered_set<lnodeptr<T>> __memoflnode;
-    inline lnodeptr<T> __newlnode(const T &val)
+    lnodeptr<_Tp> _dummy;
+    unordered_set<lnodeptr<_Tp>> __memoflnode;
+    inline lnodeptr<_Tp> __newlnode(const _Tp &val)
     {
-        lnodeptr<T> v = new ListNode<T>(val);
+        lnodeptr<_Tp> v = new ListNode<_Tp>(val);
         __memoflnode.insert(v);
         return v;
     }
-    inline lnodeptr<T> __newlnode()
+    inline lnodeptr<_Tp> __newlnode()
     {
-        lnodeptr<T> v = new ListNode<T>();
+        lnodeptr<_Tp> v = new ListNode<_Tp>();
         __memoflnode.insert(v);
         return v;
     }
-    inline void __release(lnodeptr<T> &v)
+    inline void __release(lnodeptr<_Tp> &v)
     {
         delete v;
         v = nullptr;
@@ -63,9 +63,9 @@ public:
             delete ptr;
         __memoflnode.clear();
     }
-    void __merge_list(lnodeptr<T> l2)
+    void __merge_list(lnodeptr<_Tp> l2)
     { // 2 increasing order list merge to a new increasing order list. in-place (rear insert)
-        lnodeptr<T> p = _dummy->next, q = l2->next, r;
+        lnodeptr<_Tp> p = _dummy->next, q = l2->next, r;
         _dummy->next = nullptr;
         delete l2;
         r = _dummy;
@@ -80,9 +80,9 @@ public:
 #define HEAD_INSERT(dum, __1st) \
     __1st->next = dum->next;    \
     dum->next = __1st
-    void __merge_list2(lnodeptr<T> l2)
+    void __merge_list2(lnodeptr<_Tp> l2)
     { // 2 increasing order list merge to a new decreasing order list. in-place (head insert)
-        lnodeptr<T> p = _dummy->next, q = l2->next, h;
+        lnodeptr<_Tp> p = _dummy->next, q = l2->next, h;
         _dummy->next = nullptr;
         delete l2;
         while (p && q)
@@ -103,7 +103,7 @@ public:
     }
     void __reverse_list()
     {
-        lnodeptr<T> walk, post;
+        lnodeptr<_Tp> walk, post;
         walk = _dummy->next;
         _dummy->next = NULL;
         while (walk)
@@ -115,7 +115,7 @@ public:
     }
     void unique_sorted_Linkedlist()
     {
-        lnodeptr<T> p = _dummy->next, d;
+        lnodeptr<_Tp> p = _dummy->next, d;
         if (!p)
             return;
         while (p->next)
@@ -130,13 +130,13 @@ public:
                 p = p->next;
         }
     }
-    void __erase0(lnodeptr<T> &v, const T &x)
+    void __erase0(lnodeptr<_Tp> &v, const _Tp &x)
     {
         if (!v)
             return;
         if (v->val == x)
         {
-            lnodeptr<T> p = v;
+            lnodeptr<_Tp> p = v;
             v = v->next;
             delete v;
             __erase0(v, x);
@@ -144,9 +144,9 @@ public:
         else
             __erase0(v->next, x);
     }
-    void __erase1(const T &x)
+    void __erase1(const _Tp &x)
     {
-        lnodeptr<T> p = _dummy->next, r = _dummy, q;
+        lnodeptr<_Tp> p = _dummy->next, r = _dummy, q;
         while (p)
         {
             if (p->val != x)
@@ -166,7 +166,7 @@ public:
     }
     void sort_linkedlist()
     { // insert
-        lnodeptr<T> walk = _dummy->next, pre, the_nex = walk->next;
+        lnodeptr<_Tp> walk = _dummy->next, pre, the_nex = walk->next;
         walk->next = nullptr;
         walk = the_nex;
         while (walk)
@@ -181,7 +181,7 @@ public:
     }
     void sort_linkedlist1()
     { // bubble
-        lnodeptr<T> pre, post;
+        lnodeptr<_Tp> pre, post;
         int flag;
         do
         {
@@ -200,9 +200,9 @@ public:
             }
         } while (flag);
     }
-    void __locate(const T &x)
+    void __locate(const _Tp &x)
     {
-        lnodeptr<T> p = _dummy->next, left;
+        lnodeptr<_Tp> p = _dummy->next, left;
         while (p && p->val != x)
             p = p->next;
         if (!p)
@@ -225,7 +225,7 @@ public:
     {
         if (!_dummy->next || !_dummy->next->next)
             return true;
-        lnodeptr<T> p = _dummy->next, walk = p->next;
+        lnodeptr<_Tp> p = _dummy->next, walk = p->next;
         while (walk)
         {
             if (walk->val > p->val)
@@ -236,9 +236,9 @@ public:
         return true;
     }
 
-    lnodeptr<T> kth_ultimate(int k)
+    lnodeptr<_Tp> kth_ultimate(int k)
     {
-        lnodeptr<T> r, l;
+        lnodeptr<_Tp> r, l;
         r = l = _dummy;
         while (--k && r)
             r = r->next;
@@ -254,7 +254,7 @@ public:
 
     void output()
     {
-        lnodeptr<T> p = _dummy->next;
+        lnodeptr<_Tp> p = _dummy->next;
         while (p)
         {
             cout << p->val << " -> ";
@@ -266,7 +266,7 @@ public:
     void build(vector<int> &a)
     {
         _dummy = __newlnode();
-        lnodeptr<T> p = _dummy;
+        lnodeptr<_Tp> p = _dummy;
         for (auto &val : a)
         {
             p->next = __newlnode(val);
@@ -275,9 +275,9 @@ public:
         }
     }
 
-    lnodeptr<T> find_common_p(lnodeptr<T> &l1, lnodeptr<T> &l2)
+    lnodeptr<_Tp> find_common_p(lnodeptr<_Tp> &l1, lnodeptr<_Tp> &l2)
     {
-        lnodeptr<T> thelong, theshort, p = l1, q = l2;
+        lnodeptr<_Tp> thelong, theshort, p = l1, q = l2;
         int len1 = 0, len2 = 0, step = 0;
         while (p)
             p = p->next, len1++;
@@ -396,11 +396,12 @@ public:
     }
 };
 
-template <typename T>
+template <typename _Tp>
 class _stack
 {
 protected:
-    vector<T> data;
+    vector<_Tp> data;
+
 public:
     _stack()
     {
@@ -409,11 +410,11 @@ public:
     {
         return data.empty();
     }
-    inline void push(const T &val)
+    inline void push(const _Tp &val)
     {
         data.push_back(val);
     }
-    inline T top()
+    inline _Tp top()
     {
         return data.back();
     }
@@ -426,11 +427,11 @@ public:
         return data.size();
     }
 };
-template <typename T>
+template <typename _Tp>
 class _queue
 {
 protected:
-    deque<T> data;
+    deque<_Tp> data;
 
 public:
     _queue()
@@ -440,11 +441,11 @@ public:
     {
         return data.empty();
     }
-    inline void push(const T &val)
+    inline void push(const _Tp &val)
     {
         data.push_back(val);
     }
-    inline T front()
+    inline _Tp front()
     {
         return data.front();
     }

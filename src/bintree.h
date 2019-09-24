@@ -7,38 +7,38 @@
 namespace dsa
 {
 
-template <typename T>
+template <typename _Tp>
 class bintree
 {
 protected:
-    binode_ptr<T> _root, tp1;
-    deque<binode_ptr<T>> q, nexq;
+    binode_ptr<_Tp> _root, tp1;
+    deque<binode_ptr<_Tp>> q, nexq;
     int _size, _unitsize;
     bool _isunique, _isRBtree, _ishuffman;
-    string _pointer2l, _pointer2r;
-    vector<vector<string>> disp_buf;
-    unordered_set<binode_ptr<T>> __memofbinode;
-    inline binode_ptr<T> __newbinode(const T &x, binode_ptr<T> p = nullptr, binode_ptr<T> l = nullptr, binode_ptr<T> r = nullptr, RBColor cl = BLK)
+    string _direct2l, _direct2r;
+    vector<vector<string>> __display_buffer;
+    unordered_set<binode_ptr<_Tp>> __memofbinode;
+    inline binode_ptr<_Tp> __newbinode(const _Tp &x, binode_ptr<_Tp> p = nullptr, binode_ptr<_Tp> l = nullptr, binode_ptr<_Tp> r = nullptr, RBColor cl = BLK)
     {
-        binode_ptr<T> v = new binode<T>(x, p, l, r, cl);
+        binode_ptr<_Tp> v = new binode<_Tp>(x, p, l, r, cl);
         __memofbinode.insert(v);
         return v;
     }
-    inline binode_ptr<T> __newbinode()
+    inline binode_ptr<_Tp> __newbinode()
     {
-        binode_ptr<T> v = new binode<T>();
+        binode_ptr<_Tp> v = new binode<_Tp>();
         __memofbinode.insert(v);
         return v;
     }
-    inline void __release(binode_ptr<T> &v)
+    inline void __release(binode_ptr<_Tp> &v)
     {
         __memofbinode.erase(v);
         delete v;
         v = nullptr;
     }
-    static inline void __updatedepth(binode_ptr<T> &opnv) { opnv->depth = _depth(opnv->parent) + 1; }
-    static inline void __updateheight(binode_ptr<T> &opnv) { opnv->height = max(_height(opnv->lc), _height(opnv->rc)) + 1; }
-    static inline void __updateheightabove(binode_ptr<T> opnv)
+    static inline void __updatedepth(binode_ptr<_Tp> &opnv) { opnv->depth = _depth(opnv->parent) + 1; }
+    static inline void __updateheight(binode_ptr<_Tp> &opnv) { opnv->height = max(_height(opnv->lc), _height(opnv->rc)) + 1; }
+    static inline void __updateheightabove(binode_ptr<_Tp> opnv)
     {
         while (opnv)
         {
@@ -46,7 +46,7 @@ protected:
             opnv = opnv->parent;
         }
     }
-    static void __update_member(binode_ptr<T> opnv, binode_ptr<T> p)
+    static void __update_member(binode_ptr<_Tp> opnv, binode_ptr<_Tp> p)
     {
         if (!opnv)
             return;
@@ -60,16 +60,16 @@ protected:
     {
         __update_member(_root, nullptr);
     }
-    inline void __update_root(binode_ptr<T> &opnv)
+    inline void __update_root(binode_ptr<_Tp> &opnv)
     {
         _root = opnv;
     }
-    binode_ptr<T> __build_pi(int opnv, int lo, int hi, binode_ptr<T> p)
+    binode_ptr<_Tp> __build_pi(int opnv, int lo, int hi, binode_ptr<_Tp> p)
     {
         if (hi < lo)
             return nullptr;
         int i = lo;
-        binode_ptr<T> node = this->__newbinode(preorder[opnv]);
+        binode_ptr<_Tp> node = this->__newbinode(preorder[opnv]);
         hashtable[preorder[opnv]] = node;
         node->parent = p;
         __updatedepth(node);
@@ -80,12 +80,12 @@ protected:
         __updateheight(node);
         return node;
     }
-    void __print_horizon(binode_ptr<T> opnv, int root_x, int root_y, int interval)
+    void __print_horizon(binode_ptr<_Tp> opnv, int root_x, int root_y, int interval)
     {
         if (!opnv)
             return;
         string tp;
-        if (IS_CHAR<T>())
+        if (IS_CHAR<_Tp>())
             tp.push_back(opnv->val);
         else
             tp = to_string(opnv->val);
@@ -93,20 +93,20 @@ protected:
             tp += opnv->color == RED ? "🔴" : "⚫️";
         while (tp.size() < _unitsize)
             tp.push_back(' ');
-        this->disp_buf[root_x][root_y] = tp;
+        this->__display_buffer[root_x][root_y] = tp;
         if (opnv->lc)
-            this->disp_buf[root_x + 1][root_y - (interval + 1) / 2] = _pointer2l;
+            this->__display_buffer[root_x + 1][root_y - (interval + 1) / 2] = _direct2l;
         if (opnv->rc)
-            this->disp_buf[root_x + 1][root_y + (interval + 1) / 2] = _pointer2r;
+            this->__display_buffer[root_x + 1][root_y + (interval + 1) / 2] = _direct2r;
         __print_horizon(opnv->lc, root_x + 2, root_y - interval, (interval >> 1));
         __print_horizon(opnv->rc, root_x + 2, root_y + interval, (interval >> 1));
     }
-    binode_ptr<T> __build_ip(int opnv, int lo, int hi, binode_ptr<T> p)
+    binode_ptr<_Tp> __build_ip(int opnv, int lo, int hi, binode_ptr<_Tp> p)
     {
         if (hi < lo)
             return nullptr;
         int i = lo;
-        binode_ptr<T> node = this->__newbinode(postorder[opnv]);
+        binode_ptr<_Tp> node = this->__newbinode(postorder[opnv]);
         hashtable[postorder[opnv]] = node;
         node->parent = p;
         __updatedepth(node);
@@ -117,11 +117,11 @@ protected:
         __updateheight(node);
         return node;
     }
-    binode_ptr<T> __build_pp(int leftOfpre, int rightOfpre, int leftOfpost, int rightOfpost)
+    binode_ptr<_Tp> __build_pp(int leftOfpre, int rightOfpre, int leftOfpost, int rightOfpost)
     {
         if (leftOfpre > rightOfpre || leftOfpost > rightOfpost)
             return nullptr;
-        binode_ptr<T> opnv =this->__newbinode(preorder[leftOfpre]);
+        binode_ptr<_Tp> opnv = this->__newbinode(preorder[leftOfpre]);
         if (leftOfpre == rightOfpre)
             return opnv;
         int leftSubVal = preorder[leftOfpre + 1], i, sub_cnt;
@@ -141,16 +141,16 @@ protected:
         }
         return opnv;
     }
-    binode_ptr<T> __invert(binode_ptr<T> opnv)
+    binode_ptr<_Tp> __invert(binode_ptr<_Tp> opnv)
     {
         if (!opnv)
             return nullptr;
-        binode_ptr<T> tmp = __invert(opnv->rc);
+        binode_ptr<_Tp> tmp = __invert(opnv->rc);
         opnv->rc = __invert(opnv->lc);
         opnv->lc = tmp;
         return opnv;
     }
-    void __earse_leaf(binode_ptr<T> &opnv, binode_ptr<T> p)
+    void __earse_leaf(binode_ptr<_Tp> &opnv, binode_ptr<_Tp> p)
     {
         if (!opnv)
             return;
@@ -183,9 +183,9 @@ protected:
         return cnt;
     }
 
-    void __del_targetSub(binode_ptr<T> opnv, int target)
+    void __del_targetSub(binode_ptr<_Tp> opnv, int target)
     {
-        binode_ptr<T> x;
+        binode_ptr<_Tp> x;
         if (opnv->val == target)
         {
             __eraseallSub(opnv);
@@ -209,7 +209,7 @@ protected:
         }
         this->q.clear();
     }
-    void __eraseallSub(binode_ptr<T> opnv)
+    void __eraseallSub(binode_ptr<_Tp> opnv)
     {
         if (!opnv)
             return;
@@ -217,7 +217,7 @@ protected:
         __eraseallSub(opnv->rc);
         this->__release(opnv);
     }
-    bool __treeIdentical(binode_ptr<T> T1, binode_ptr<T> T2)
+    bool __treeIdentical(binode_ptr<_Tp> T1, binode_ptr<_Tp> T2)
     {
         if (!T1 && !T2)
             return 1;
@@ -227,7 +227,7 @@ protected:
         bool rf = __treeIdentical(T1->rc, T2->rc);
         return lf && rf;
     }
-    bool __TreeSimilar(binode_ptr<T> T1, binode_ptr<T> T2)
+    bool __TreeSimilar(binode_ptr<_Tp> T1, binode_ptr<_Tp> T2)
     {
         if (!T1 && !T2)
             return 1;
@@ -253,7 +253,7 @@ protected:
         }
     }
     template <class _Function>
-    void __recur_pre(binode_ptr<T> opnv, _Function f)
+    void __recur_pre(binode_ptr<_Tp> opnv, _Function f)
     {
         if (!opnv)
             return;
@@ -262,7 +262,7 @@ protected:
         __recur_pre(opnv->rc, f);
     }
     template <class _Function>
-    void __recur_in(binode_ptr<T> opnv, _Function f)
+    void __recur_in(binode_ptr<_Tp> opnv, _Function f)
     {
         if (!opnv)
             return;
@@ -271,7 +271,7 @@ protected:
         __recur_in(opnv->rc, f);
     }
     template <class _Function>
-    void __recur_post(binode_ptr<T> opnv, _Function f)
+    void __recur_post(binode_ptr<_Tp> opnv, _Function f)
     {
         if (!opnv)
             return;
@@ -280,7 +280,7 @@ protected:
         f(opnv);
     }
 
-    void __InThread(binode_ptr<T> opnv, binode_ptr<T> pre)
+    void __InThread(binode_ptr<_Tp> opnv, binode_ptr<_Tp> pre)
     {
         if (opnv)
         {
@@ -353,8 +353,8 @@ protected:
     }
 
 public:
-    unordered_map<T, binode_ptr<T>> hashtable;
-    vector<T> preorder, inorder, postorder;
+    unordered_map<_Tp, binode_ptr<_Tp>> hashtable;
+    vector<_Tp> preorder, inorder, postorder;
     bintree()
     {
         this->_root = nullptr;
@@ -370,7 +370,7 @@ public:
     }
 
     inline bool const empty() const { return this->_root == nullptr; }
-    inline binode_ptr<T> root() { return this->_root; }
+    inline binode_ptr<_Tp> root() { return this->_root; }
     inline int size() const { return _size; }
     inline int diam() { return __diameter(); }
     inline int height() const
@@ -385,7 +385,7 @@ public:
         q.clear(), nexq.clear();
         _size = 0;
         _isunique = 1;
-        disp_buf.clear();
+        __display_buffer.clear();
         for (auto &ptr : __memofbinode)
             delete ptr;
         __memofbinode.clear();
@@ -406,19 +406,19 @@ public:
             cout << " Too Many Node to print !\n";
             return;
         }
-        _unitsize = IS_CHAR<T>() ? 1 : to_string(__getmax(this->_root)->val).size();
+        _unitsize = IS_CHAR<_Tp>() ? 1 : to_string(__getmax(this->_root)->val).size();
         if (_isRBtree)
             _unitsize++;
-        _pointer2l = _pointer2r = string(_unitsize, ' ');
-        _pointer2l[_unitsize / 2] = '/';
-        _pointer2r[_unitsize / 2] = '\\';
-        this->disp_buf = vector<vector<string>>(40, vector<string>(MAXCOL, string(_unitsize, ' ')));
+        _direct2l = _direct2r = string(_unitsize, ' ');
+        _direct2l[_unitsize / 2] = '/';
+        _direct2r[_unitsize / 2] = '\\';
+        this->__display_buffer = vector<vector<string>>(40, vector<string>(MAXCOL, string(_unitsize, ' ')));
         __print_horizon(this->_root, 0, pow(2, this->_root->height) - 1, pow(2, this->_root->height - 1));
         int n = this->_root->height * 2 + 1, i, j, breadth = pow(2, this->_root->height + 1) + 1;
         for (i = 0; i < n; ++i)
         {
             for (j = 0; j < breadth; ++j)
-                cout << this->disp_buf[i][j];
+                cout << this->__display_buffer[i][j];
             cout << endl;
         }
         printf("🌲\n");
@@ -426,13 +426,13 @@ public:
             cout << "🕵🏻‍   🌲  HUFFMAN TREE  🌲   🕵🏻‍" << endl;
         if (_isRBtree)
             cout << "🎩   🌲  RBTREE  🌲   🎒" << endl;
-        disp_buf.clear();
+        __display_buffer.clear();
     }
-    binode_ptr<T> __buildcmp(int id, vector<int> &a)
+    binode_ptr<_Tp> __buildcmp(int id, vector<int> &a)
     {
         if (a.size() - 1 < id)
             return nullptr;
-        binode_ptr<T> opnv = this->__newbinode(a[id]);
+        binode_ptr<_Tp> opnv = this->__newbinode(a[id]);
         opnv->lc = __buildcmp(id * 2 + 1, a);
         opnv->rc = __buildcmp(id * 2 + 2, a);
         return opnv;
@@ -475,11 +475,11 @@ public:
             return 0;
         return __leafcount();
     }
-    inline bool similar(bintree<T> T2)
+    inline bool similar(bintree<_Tp> T2)
     {
         return __TreeSimilar(this->_root, T2.root());
     }
-    inline bool identical(bintree<T> T2)
+    inline bool identical(bintree<_Tp> T2)
     {
         return __treeIdentical(this->_root, T2.root());
     }
@@ -489,14 +489,14 @@ public:
             return true;
         return __TreeSimilar(this->_root->lc, this->_root->rc);
     }
-    binode_ptr<T> convert2list()
+    binode_ptr<_Tp> convert2list()
     {
         if (!this->_root)
             return;
-        vector<binode_ptr<T>> ls;
-        intrav([&](binode_ptr<T> opnv) { ls.push_back(opnv); });
+        vector<binode_ptr<_Tp>> ls;
+        intrav([&](binode_ptr<_Tp> opnv) { ls.push_back(opnv); });
         auto p1 = ls.begin(), p2 = ls.begin() + 1;
-        binode_ptr<T> head = *p1;
+        binode_ptr<_Tp> head = *p1;
         for (; p2 != ls.end(); p1++, p2++)
         {
             (*p1)->lc = nullptr;
@@ -511,7 +511,7 @@ public:
         __tree2Infix(this->_root, 0, s);
         return s;
     }
-    void eraseSubOf(const T &x)
+    void eraseSubOf(const _Tp &x)
     {
         if (!this->_root)
             return;
@@ -525,7 +525,7 @@ public:
     {
         if (!this->_root)
             return true;
-        binode_ptr<T> opnv = this->_root;
+        binode_ptr<_Tp> opnv = this->_root;
         this->q.push_back(opnv);
         while (this->q.size())
         {
@@ -560,12 +560,12 @@ public:
     }
     void inTrav()
     {
-        vector<T> resSeq;
-        stack<binode_ptr<T>> s;
-        binode_ptr<T> opnv = this->_root;
+        vector<_Tp> resSeq;
+        stack<binode_ptr<_Tp>> s;
+        binode_ptr<_Tp> opnv = this->_root;
         if (!opnv)
             return;
-        binode_ptr<T> p = opnv;
+        binode_ptr<_Tp> p = opnv;
         while (s.size() || p)
         {
             while (p)
@@ -585,11 +585,11 @@ public:
     }
     void preTrav()
     {
-        vector<T> resSeq;
-        binode_ptr<T> opnv = this->_root;
+        vector<_Tp> resSeq;
+        binode_ptr<_Tp> opnv = this->_root;
         if (!opnv)
             return;
-        stack<binode_ptr<T>> s;
+        stack<binode_ptr<_Tp>> s;
         s.push(opnv);
         while (s.size())
         {
@@ -604,11 +604,11 @@ public:
     }
     void postTrav()
     {
-        vector<T> resSeq;
-        binode_ptr<T> opnv = this->_root;
+        vector<_Tp> resSeq;
+        binode_ptr<_Tp> opnv = this->_root;
         if (!opnv)
             return;
-        stack<pair<binode_ptr<T>, bool>> s;
+        stack<pair<binode_ptr<_Tp>, bool>> s;
         s.push(make_pair(opnv, false));
         bool isMyTurn;
         while (s.size())
@@ -627,11 +627,11 @@ public:
         }
         this->postorder = resSeq;
     }
-    binode_ptr<T> get_LCA(binode_ptr<T> p, binode_ptr<T> q)
+    binode_ptr<_Tp> get_lca(binode_ptr<_Tp> p, binode_ptr<_Tp> q)
     {
-        while (p->depth > q->depth)
+        while (p->height < q->height)
             p = p->parent;
-        while (q->depth > p->depth)
+        while (q->height < p->height)
             q = q->parent;
         while (p != q)
             p = p->parent, q = q->parent;
@@ -639,7 +639,7 @@ public:
     }
 
     // T1 <-> T2  convertable, left <-> right;
-    int Isomprphic(binode_ptr<T> root1, binode_ptr<T> root2)
+    bool Isomprphic(binode_ptr<_Tp> root1, binode_ptr<_Tp> root2)
     {
         if (!root1 && !root2)
             return 1;

@@ -4,15 +4,15 @@
 #define __SPLAYTREE___
 namespace dsa
 {
-template <class T>
-class spltree : public bstree<T>
+template <class _Tp>
+class spltree : public bstree<_Tp>
 {
 protected:
-    binode_ptr<T> __splay(binode_ptr<T> opnv)
+    binode_ptr<_Tp> __splay(binode_ptr<_Tp> opnv)
     {
         if (!opnv)
             return nullptr;
-        binode_ptr<T> p, g, gg;
+        binode_ptr<_Tp> p, g, gg;
         while (1)
         {
             if (!opnv->parent)
@@ -37,7 +37,7 @@ protected:
                 opnv->parent = nullptr;
             else
                 g == gg->lc ? this->__attAsL(gg, opnv) : this->__attAsR(gg, opnv);
-            bintree<T>::__updateheight(g), bintree<T>::__updateheight(p), bintree<T>::__updateheight(opnv);
+            bintree<_Tp>::__updateheight(g), bintree<_Tp>::__updateheight(p), bintree<_Tp>::__updateheight(opnv);
         }
         p = opnv->parent;
         if (p)
@@ -46,27 +46,27 @@ protected:
                 this->__attAsL(p, opnv->rc), this->__attAsR(opnv, p);
             else
                 this->__attAsR(p, opnv->lc), this->__attAsL(opnv, p);
-            bintree<T>::__updateheight(p), bintree<T>::__updateheight(opnv);
+            bintree<_Tp>::__updateheight(p), bintree<_Tp>::__updateheight(opnv);
         }
         opnv->parent = nullptr;
         return opnv;
     }
 
 public:
-    void build(vector<T> &a)
+    void build(vector<_Tp> &a)
     {
         for (auto data : a)
             insert(data);
         this->__update_status();
     }
-    binode_ptr<T> search(const T &e)
+    binode_ptr<_Tp> search(const _Tp &e)
     {
         this->_last = nullptr;
-        binode_ptr<T> p = this->__search(this->_root, e);
+        binode_ptr<_Tp> p = this->__search(this->_root, e);
         this->_root = __splay(p ? p : this->_last);
         return this->_root;
     }
-    bool insert(const T &x)
+    bool insert(const _Tp &x)
     {
         if (!this->_root)
         {
@@ -74,7 +74,7 @@ public:
             this->_root = this->__newbinode(x);
             return true;
         }
-        binode_ptr<T> w = search(x), t;
+        binode_ptr<_Tp> w = search(x), t;
         if (w->val == x)
             return false;
         this->_size++;
@@ -101,11 +101,11 @@ public:
         return true;
     }
 
-    bool erase(const T &x)
+    bool erase(const _Tp &x)
     {
         if (!this->_root || (x != search(x)->val))
             return 0;
-        binode_ptr<T> w = this->_root, t, lt;
+        binode_ptr<_Tp> w = this->_root, t, lt;
         if (!(this->_root->has_l()))
         {
             this->_root = this->_root->rc;
@@ -133,7 +133,7 @@ public:
         this->__release(w);
         this->_size--;
         if (this->_root)
-            bintree<T>::__updateheight(this->_root);
+            bintree<_Tp>::__updateheight(this->_root);
         return true;
     }
 };
