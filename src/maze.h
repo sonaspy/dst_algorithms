@@ -62,7 +62,7 @@ char getch();
 
 class Maze
 {
-  public:
+public:
     friend class PathOfMaze;
     friend class GameFrame;
     void createMaze();
@@ -78,7 +78,7 @@ class Maze
     }
     ~Maze() {}
 
-  private:
+private:
     static const int __max_x_size = 30;
     static const int __max_y_size = 45;
     bool __flag;
@@ -89,7 +89,7 @@ class Maze
 
 class PathOfMaze
 {
-  private:
+private:
     struct __Coordinate
     {
         int x,
@@ -99,7 +99,7 @@ class PathOfMaze
     };
     __Coordinate *__start_point;
 
-  public:
+public:
     friend class Maze;
     friend class GameFrame;
     PathOfMaze()
@@ -128,13 +128,13 @@ class PathOfMaze
 
 class GameFrame
 {
-  public:
+public:
     friend class PathOfMaze;
     friend class GameFrame;
     void game_entrance();
     void StartGame();
 
-  private:
+private:
     class Maze __maze_map;
 };
 
