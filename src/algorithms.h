@@ -5,7 +5,6 @@
 #define __FUNCTIONS__
 #include <vector>
 #include <iostream>
-#include <algorithm>
 #include <unordered_map>
 #include <unordered_set>
 #include <numeric>
@@ -296,19 +295,23 @@ static inline void popheap(_RandomAccessIterator _first, _RandomAccessIterator _
 }
 //heap
 
+
+
+
+
 // binary search
 template <typename _Tp, typename _RandomAccessIterator>
 _RandomAccessIterator __lower_bound(_RandomAccessIterator _first, _RandomAccessIterator _last, const _Tp &_val)
 {
     int _length = _last - _first, _half_len;
-    _RandomAccessIterator mid;
+    _RandomAccessIterator _mid;
     while (_length > 0)
     {
         _half_len = _length >> 1;
-        mid = _first + _half_len;
-        if (*mid < _val)
+        _mid = _first + _half_len;
+        if (*_mid < _val)
         {
-            _first = mid + 1;
+            _first = _mid + 1;
             _length -= _half_len + 1;
         }
         else
@@ -321,14 +324,14 @@ template <typename _Tp, typename _RandomAccessIterator>
 _RandomAccessIterator __upper_bound(_RandomAccessIterator _first, _RandomAccessIterator _last, const _Tp &_val)
 {
     int _length = _last - _first, _half_len;
-    _RandomAccessIterator mid;
+    _RandomAccessIterator _mid;
     while (_length > 0)
     {
         _half_len = _length >> 1;
-        mid = _first + _half_len;
-        if (*mid <= _val)
+        _mid = _first + _half_len;
+        if (*_mid <= _val)
         {
-            _first = mid + 1;
+            _first = _mid + 1;
             _length -= _half_len + 1;
         }
         else
@@ -340,16 +343,16 @@ _RandomAccessIterator __upper_bound(_RandomAccessIterator _first, _RandomAccessI
 template <class _RandomAccessIterator, class _Tp>
 _RandomAccessIterator bin_search(_RandomAccessIterator _first, _RandomAccessIterator _last, const _Tp &_val)
 {
-    _RandomAccessIterator mid;
+    _RandomAccessIterator _mid;
     while (_first <= _last)
     {
-        mid = _first + (_last - _first) / 2;
-        if (*mid < _val)
-            _first = mid + 1;
-        else if (_val < *mid)
-            _last = mid - 1;
+        _mid = _first + (_last - _first) / 2;
+        if (*_mid < _val)
+            _first = _mid + 1;
+        else if (_val < *_mid)
+            _last = _mid - 1;
         else
-            return mid;
+            return _mid;
     }
     return _last;
 }
@@ -358,7 +361,7 @@ _RandomAccessIterator bin_search(_RandomAccessIterator _first, _RandomAccessIter
 // vector use , push_back rear _val, then __linear_insert(a.begin(), a.end()-1, a.back());
 template <typename _RandomAccessIterator, typename _Tp>
 inline void __linear_insert(_RandomAccessIterator _first, _RandomAccessIterator _last, const _Tp _val)
-{ // [_first, _last]
+{ // [,]
     if (_first < _last)
     {
         if (_val > *(_last - 1))

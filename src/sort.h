@@ -13,8 +13,8 @@ template <typename _RandomAccessIterator>
 static void heapSort(_RandomAccessIterator _first, _RandomAccessIterator _last)
 {
     makeheap(_first, _last);
-    for (int i = _last - _first; i > 1; --i)
-        popheap(_first, _first + i);
+    for (_RandomAccessIterator walk = _last; walk > _first + 1; --walk)
+        popheap(_first, walk);
 }
 
 //[)
