@@ -1,11 +1,11 @@
 
-#ifndef __setunion__
-#define __setunion__
+#ifndef __Union__
+#define __Union__
 #include <vector>
 using namespace std;
 namespace dsa
 {
-class __setunion
+class __Union
 {
 protected:
     inline int __getRoot(int id)
@@ -15,7 +15,7 @@ protected:
     vector<int> __union_arr;
 
 public:
-    __setunion(int n = 1000)
+    __Union(int n = 1000)
     {
         __union_arr = vector<int>(n, -1);
     }
