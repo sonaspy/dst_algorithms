@@ -3,7 +3,7 @@
 
 #include "../src/dsa.h"
 
-#define SIZE 100
+#define SIZE 20
 using namespace std;
 using namespace dsa;
 
@@ -22,12 +22,12 @@ int main(int argc, char const *argv[])
     vector<int> a(b, b + n);
     rbtree<int> ax;
     ax.build(a);
-    auto it = ax.begin();
-    cout << *it << endl;
-    ax.intrav([](binode_ptr<int> p) { cout << p->val << "->"; });
+    auto it = ax.end();
+    for (; *it; it--)
+        cout << (*it)->val << "->";
     cout << endl;
-    it++;
-    cout << *it << endl;
+    ax.intrav([](binode_ptr<int> &p) { cout << p->val << "->"; });
+    cout << endl;
     startTime = clock();
     ax.search(a[0]);
     endTime = clock();
