@@ -9,4 +9,6 @@
 #include "set_union.h"
 #include "graph.h"
 #include "priority_q.h"
+#include "str.h"
+
 #endif

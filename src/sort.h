@@ -131,31 +131,28 @@ static inline void __merge(_RandomAccessIterator _first, _RandomAccessIterator _
 
 //[]
 template <typename _RandomAccessIterator>
-static void __merge_sort(_RandomAccessIterator _first, _RandomAccessIterator _last)
+static void __mergesort(_RandomAccessIterator _first, _RandomAccessIterator _last)
 {
     if (_first < _last)
     {
         _RandomAccessIterator _mid = _first + (_last - _first) / 2;
-        __merge_sort(_first, _mid);
-        __merge_sort(_mid + 1, _last);
+        __mergesort(_first, _mid);
+        __mergesort(_mid + 1, _last);
         __merge(_first, _mid, _last);
     }
 }
 
 template <typename _RandomAccessIterator>
-static void __merge_sort_nonrecur(_RandomAccessIterator _first, _RandomAccessIterator _last)
+static void __mergesort_non_recur(_RandomAccessIterator _first, _RandomAccessIterator _last)
 {
     int len = 1, _size = _last - _first;
-    while (len <= _size)
-    {
-        for (_RandomAccessIterator i = _first; i + len <= _last; i += len * 2)
+    for (; len < _size; len <<= 1)
+        for (_RandomAccessIterator lo = _first; lo + len < _last; lo += (len << 1))
         {
-            _RandomAccessIterator _mid = i + len - 1, right = i + 2 * len - 1;
-            right = right > _last - 1 ? _last - 1 : right;
-            __merge(i, _mid, right);
+            _RandomAccessIterator _mid = lo + len - 1, hi = lo + (len << 1) - 1;
+            hi = _last - 1 < hi ? _last - 1 : hi;
+            __merge(lo, _mid, hi);
         }
-        len <<= 1;
-    }
 }
 
 //[)
@@ -163,8 +160,8 @@ template <typename _RandomAccessIterator>
 static void inline mergeSort(_RandomAccessIterator _first, _RandomAccessIterator _last)
 {
 
-    //__merge_sort(_first, --_last);
-    __merge_sort_nonrecur(_first, _last);
+    //__mergesort(_first, --_last);
+    __mergesort_non_recur(_first, _last);
 }
 
 template <typename _RandomAccessIterator>
