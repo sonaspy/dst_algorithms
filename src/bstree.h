@@ -204,13 +204,13 @@ public:
 
     iterator begin()
     {
-        binode_ptr<_Tp> p = __getmin(this->_root);
+        binode_ptr<_Tp> p = this->_root->leftest();
         iterator it(p);
         return it;
     }
     iterator end()
     {
-        binode_ptr<_Tp> p = __getmax(this->_root);
+        binode_ptr<_Tp> p = this->_root->rightest();
         iterator it(p);
         return it;
     }

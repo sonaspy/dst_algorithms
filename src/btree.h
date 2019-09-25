@@ -36,14 +36,7 @@ protected:
         delete v;
         v = nullptr;
     }
-    inline void _output_node(bnode_ptr<_Tp> v)
-    {
-        cout << " [ ";
-        for (int i = 0; i < v->sizeOfkey; i++)
-            cout << v->key[i] << " ";
-        cout << "(" << v->sizeOfkey << ")";
-        cout << "] ";
-    }
+
     void __inorder(bnode_ptr<_Tp> _root)
     {
         if (!_root)
@@ -78,16 +71,22 @@ protected:
     }
     void __overfSolution(bnode_ptr<_Tp> p, int c_idx)
     {
-        bnode_ptr<_Tp> oldnode = p->child[c_idx];
-        bnode_ptr<_Tp> node = __new_bnode(oldnode->isleaf);
+        bnode_ptr<_Tp> obsolete = p->child[c_idx];
+        bnode_ptr<_Tp> node = __new_bnode(obsolete->isleaf);
+
         node->sizeOfkey = K_MIN;
-        copy(oldnode->key.begin() + C_MIN, oldnode->key.begin() + C_MIN + K_MIN, node->key.begin());
-        if (!oldnode->isleaf)
-            copy(oldnode->child.begin() + C_MIN, oldnode->child.begin() + C_MIN * 2, node->child.begin());
-        p->key.insert(p->key.begin() + c_idx, oldnode->key[K_MIN]);
+        copy(obsolete->key.begin() + C_MIN, obsolete->key.begin() + C_MIN + K_MIN, node->key.begin());
+
+        if (!obsolete->isleaf)
+            copy(obsolete->child.begin() + C_MIN, obsolete->child.begin() + C_MIN * 2, node->child.begin());
+
+        p->key.insert(p->key.begin() + c_idx, obsolete->key[K_MIN]);
         p->sizeOfkey++;
         p->child.insert(p->child.begin() + c_idx + 1, node);
-        oldnode->sizeOfkey = K_MIN;
+
+        obsolete->sizeOfkey = K_MIN;
+
+        // keep v's key and child in shape
         p->child.pop_back();
         p->key.pop_back();
     }
@@ -100,6 +99,7 @@ protected:
             {
                 v->key.erase(v->key.begin() + _pos);
                 v->sizeOfkey--;
+                // keep v's key and child in shape
                 v->key.resize(K_MAX);
             }
         }
@@ -112,13 +112,15 @@ protected:
             {
                 if (lc->sizeOfkey > K_MIN)
                 {
-                    _Tp k1 = lc->precessor();
+                    bnode_ptr<_Tp> tmp = lc->rightest();
+                    _Tp k1 = tmp->key[tmp->sizeOfkey - 1];
                     __erase(lc, k1);
                     v->key[_pos] = k1;
                 }
                 else if (rc->sizeOfkey > K_MIN)
                 {
-                    _Tp k1 = rc->successor();
+                    bnode_ptr<_Tp> tmp = rc->leftest();
+                    _Tp k1 = tmp->key[0];
                     __erase(rc, k1);
                     v->key[_pos] = k1;
                 }
@@ -167,7 +169,7 @@ protected:
         v->key.erase(v->key.begin() + i);
         v->sizeOfkey--;
         v->child.erase(v->child.begin() + i + 1);
-
+        // keep v's key and child in shape
         v->key.resize(K_MAX);
         v->child.resize(C_MAX);
     }
@@ -196,13 +198,14 @@ protected:
         z->sizeOfkey--;
         z->key.erase(z->key.begin());
 
+        // keep v's key and child in shape
         z->key.resize(K_MAX);
 
         if (!z->isleaf)
         {
             y->child[y->sizeOfkey] = z->child[0];
             z->child.erase(z->child.begin());
-
+            // keep v's key and child in shape
             z->child.resize(C_MAX);
         }
     }
@@ -300,7 +303,7 @@ public:
             while (q.size())
             {
                 v = q.front(), q.pop();
-                _output_node(v);
+                v->print_node();
                 for (auto chi : v->child)
                     if (chi)
                         nexq.push(chi);
@@ -314,10 +317,6 @@ public:
     {
         __inorder(this->_root);
         cout << "nullptr\n";
-    }
-
-    void __underfSolution(bnode_ptr<_Tp> v)
-    {
     }
 };
 } // namespace dsa
