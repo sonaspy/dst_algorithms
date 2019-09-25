@@ -1,8 +1,8 @@
 // author - sonaspy@outlook.com
 // coding - utf_8
 
-#ifndef __FUNCTIONS__
-#define __FUNCTIONS__
+#ifndef __ALGORITHMS__
+#define __ALGORITHMS__
 #include <vector>
 #include <iostream>
 #include <unordered_map>
@@ -293,11 +293,19 @@ static inline void popheap(_RandomAccessIterator _first, _RandomAccessIterator _
 {
     __popheap(_first, _last, _comp);
 }
+
+template <class _RandomAccessIterator>
+static inline void isheap(_RandomAccessIterator _first, _RandomAccessIterator _last)
+{
+    __isheap(_first, _last, less<typename iterator_traits<_RandomAccessIterator>::value_type>());
+}
+
+template <class _RandomAccessIterator, typename _Compare>
+static inline void isheap(_RandomAccessIterator _first, _RandomAccessIterator _last, _Compare _comp)
+{
+    __isheap(_first, _last, _comp);
+}
 //heap
-
-
-
-
 
 // binary search
 template <typename _Tp, typename _RandomAccessIterator>
