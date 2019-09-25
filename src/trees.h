@@ -67,21 +67,6 @@ struct IS_CHAR<char>
 };
 
 template <typename _Tp>
-static inline binode_ptr<_Tp> __getmax(binode_ptr<_Tp> opnv)
-{
-    while (opnv->rc)
-        opnv = opnv->rc;
-    return opnv;
-}
-template <typename _Tp>
-static inline binode_ptr<_Tp> __getmin(binode_ptr<_Tp> opnv)
-{
-    while (opnv->lc)
-        opnv = opnv->lc;
-    return opnv;
-}
-
-template <typename _Tp>
 struct binode
 {
     _Tp val;
@@ -118,14 +103,27 @@ struct binode
     {
         return !rc && !lc;
     }
-
+    inline binode_ptr<_Tp> leftest()
+    {
+        binode_ptr<_Tp> opnv = this;
+        while (opnv->lc)
+            opnv = opnv->lc;
+        return opnv;
+    }
+    inline binode_ptr<_Tp> rightest()
+    {
+        binode_ptr<_Tp> opnv = this;
+        while (opnv->rc)
+            opnv = opnv->rc;
+        return opnv;
+    }
     inline binode_ptr<_Tp> successor()
     {
-        return this->rc ? __getmin(this->rc) : nullptr;
+        return this->rc ? this->rc->leftest() : nullptr;
     }
     inline binode_ptr<_Tp> precessor()
     {
-        return this->lc ? __getmax(this->lc) : nullptr;
+        return this->lc ? this->lc->rightest() : nullptr;
     }
     inline binode_ptr<_Tp> uncle() { return this->parent->is_l() ? this->parent->parent->rc : this->parent->parent->lc; }
 
@@ -170,7 +168,15 @@ struct bnode
     {
         isleaf = leaf;
     }
-    _Tp precessor()
+    inline void print_node()
+    {
+        cout << " [ ";
+        for (int i = 0; i < this->sizeOfkey; i++)
+            cout << this->key[i] << " ";
+        cout << "(" << this->sizeOfkey << ")";
+        cout << "] ";
+    }
+    bnode_ptr<_Tp> rightest()
     {
         bnode_ptr<_Tp> x = this;
         int i = sizeOfkey;
@@ -179,14 +185,24 @@ struct bnode
             x = x->child[i];
             i = x->sizeOfkey;
         }
-        return x->key[sizeOfkey - 1];
+        return x;
     }
-    _Tp successor()
+    bnode_ptr<_Tp> leftest()
     {
         bnode_ptr<_Tp> x = this;
         while (!x->isleaf)
             x = x->child[0];
-        return x->key[0];
+        return x;
+    }
+    bnode_ptr<_Tp> precessor()
+    {
+        bnode_ptr<_Tp> x = child[0];
+        return x ? x->rightest() : nullptr;
+    }
+    bnode_ptr<_Tp> successor()
+    {
+        bnode_ptr<_Tp> x = child[sizeOfkey];
+        return x ? x->leftest() : nullptr;
     }
 };
 

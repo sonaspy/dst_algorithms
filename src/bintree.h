@@ -217,23 +217,39 @@ protected:
         __eraseallSub(opnv->rc);
         this->__release(opnv);
     }
-    bool __treeIdentical(binode_ptr<_Tp> T1, binode_ptr<_Tp> T2)
+    // v1 <-> v2  convertable, left <-> right;
+    bool __isomprphic(binode_ptr<_Tp> v1, binode_ptr<_Tp> v2)
     {
-        if (!T1 && !T2)
+        if (!v1 && !v2)
             return 1;
-        if (!T1 || !T2 || T1->val != T2->val)
+        if ((!v1 && v2) || (!v2 && v1))
             return 0;
-        bool lf = __treeIdentical(T1->lc, T2->lc);
-        bool rf = __treeIdentical(T1->rc, T2->rc);
+        if (v1->val != v2->val)
+            return 0;
+        if (!v1->lc && !v2->lc)
+            return __isomprphic(v1->rc, v2->rc);
+        if (v1->lc && v2->lc && v1->lc->val == v2->lc->val)
+            return __isomprphic(v1->lc, v2->lc) && __isomprphic(v1->rc, v2->rc);
+        else
+            return __isomprphic(v1->lc, v2->rc) && __isomprphic(v1->rc, v2->lc);
+    }
+    bool __treeIdentical(binode_ptr<_Tp> v1, binode_ptr<_Tp> v2)
+    {
+        if (!v1 && !v2)
+            return 1;
+        if (!v1 || !v2 || v1->val != v2->val)
+            return 0;
+        bool lf = __treeIdentical(v1->lc, v2->lc);
+        bool rf = __treeIdentical(v1->rc, v2->rc);
         return lf && rf;
     }
-    bool __TreeSimilar(binode_ptr<_Tp> T1, binode_ptr<_Tp> T2)
+    bool __TreeSimilar(binode_ptr<_Tp> v1, binode_ptr<_Tp> v2)
     {
-        if (!T1 && !T2)
+        if (!v1 && !v2)
             return 1;
-        if (!T1 || !T2) // if wanna test the two trees is identical , plus "|| T1->val != T2->val"
+        if (!v1 || !v2) // if wanna test the two trees is identical , plus "|| v1->val != v2->val"
             return 0;
-        return __TreeSimilar(T1->lc, T2->lc) && __TreeSimilar(T1->rc, T2->rc);
+        return __TreeSimilar(v1->lc, v2->lc) && __TreeSimilar(v1->rc, v2->rc);
     }
     void __tree2Infix(binode<string> *opnv, int depth, string &s)
     {
@@ -352,6 +368,16 @@ protected:
         return last + level - 1;
     }
 
+    binode_ptr<_Tp> __buildcmp(int id, vector<int> &a)
+    {
+        if (a.size() - 1 < id)
+            return nullptr;
+        binode_ptr<_Tp> opnv = this->__newbinode(a[id]);
+        opnv->lc = __buildcmp(id * 2 + 1, a);
+        opnv->rc = __buildcmp(id * 2 + 2, a);
+        return opnv;
+    }
+
 public:
     unordered_map<_Tp, binode_ptr<_Tp>> hashtable;
     vector<_Tp> preorder, inorder, postorder;
@@ -428,15 +454,6 @@ public:
             cout << "🎩   🌲  RBTREE  🌲   🎒" << endl;
         __display_buffer.clear();
     }
-    binode_ptr<_Tp> __buildcmp(int id, vector<int> &a)
-    {
-        if (a.size() - 1 < id)
-            return nullptr;
-        binode_ptr<_Tp> opnv = this->__newbinode(a[id]);
-        opnv->lc = __buildcmp(id * 2 + 1, a);
-        opnv->rc = __buildcmp(id * 2 + 2, a);
-        return opnv;
-    }
     inline void build_cmp(vector<int> &a)
     {
         __update_root(__buildcmp(0, a));
@@ -483,11 +500,15 @@ public:
     {
         return __treeIdentical(this->_root, T2.root());
     }
+    inline bool isompriphic(bintree<_Tp> T2)
+    {
+        return __isomprphic(_root, T2.root());
+    }
     inline bool symmetric()
     {
-        if (!this->_root)
+        if (!_root)
             return true;
-        return __TreeSimilar(this->_root->lc, this->_root->rc);
+        return __TreeSimilar(_root->lc, _root->rc);
     }
     binode_ptr<_Tp> convert2list()
     {
@@ -558,7 +579,7 @@ public:
     {
         __recur_post(this->_root, _func);
     }
-    void inTrav()
+    void generate_inorder()
     {
         vector<_Tp> resSeq;
         stack<binode_ptr<_Tp>> s;
@@ -583,7 +604,7 @@ public:
         }
         this->inorder = resSeq;
     }
-    void preTrav()
+    void generate_preorder()
     {
         vector<_Tp> resSeq;
         binode_ptr<_Tp> opnv = this->_root;
@@ -602,7 +623,7 @@ public:
         }
         this->preorder = resSeq;
     }
-    void postTrav()
+    void generate_postorder()
     {
         vector<_Tp> resSeq;
         binode_ptr<_Tp> opnv = this->_root;
@@ -637,23 +658,7 @@ public:
             p = p->parent, q = q->parent;
         return p;
     }
-
-    // T1 <-> T2  convertable, left <-> right;
-    bool Isomprphic(binode_ptr<_Tp> v1, binode_ptr<_Tp> v2)
-    {
-        if (!v1 && !v2)
-            return 1;
-        if ((!v1 && v2) || (!v2 && v1))
-            return 0;
-        if (v1->val != v2->val)
-            return 0;
-        if (!v1->lc && !v2->lc)
-            return Isomprphic(v1->rc, v2->rc);
-        if (v1->lc && v2->lc && v1->lc->val == v2->lc->val)
-            return Isomprphic(v1->lc, v2->lc) && Isomprphic(v1->rc, v2->rc);
-        else
-            return Isomprphic(v1->lc, v2->rc) && Isomprphic(v1->rc, v2->lc);
-    }
 };
+
 } // namespace dsa
 #endif

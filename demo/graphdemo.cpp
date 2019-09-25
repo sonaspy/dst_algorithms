@@ -1,7 +1,7 @@
 // author - sonaspy@outlook.com
 // coding - utf_8
 
-#define SIZE 20
+#define SIZE 100
 
 #include "../src/dsa.h"
 #define test() freopen("in", "r", stdin)
@@ -17,32 +17,18 @@ int main(int argc, char const *argv[])
     int n, m, a1, a2, d;
     n = SIZE;
     vector<vector<int>> g(n, vector<int>(n, INF_VAL));
-    //g[0][1] = 3, g[0][2] = 8, g[2][4] = 10, g[2][1] = 4, g[1][3] = 9, g[3][5] = 6, g[1][4] = 6, g[4][5] = 9;
-
-    //dg.init(g);
-
-    vector<int> ord;
-    // cout << "toporder : ";
-    // output_vec(ord);
+    // g[0][1] = 15, g[0][2] = 17, g[2][4] = 8, g[2][5] = 33, g[1][3] = 10,
+    // g[3][6] = g[4][6] = g[7][13] = g[11][13] = g[12][13] = 0,
+    // g[5][7] = 30, g[6][8] = 15, g[8][9] = 10, g[8][10] = 20,
+    // g[9][11] = 40, g[10][12] = 25, g[13][14] = 20;
 
     clock_t startTime, endTime;
     startTime = clock();
-    char tt, *ps;
-    while ((tt = getchar()) != '0')
-    {
-        dGraph dg;
-        dg.rand_init(n, 10, 11);
-        cout << "acyclic " << dg.acyclic() << endl;
-        cout << "num of edge is -> " << dg.esize() << endl;
-        cin >> a1;
-        while (a1 != -1)
-        {
-            dg.getCycle(a1);
-            cin >> a1;
-        }
-        //dg.get_keyaction();
-        //cout << dg.istoporder(ord) << endl;
-    }
+    dGraph dg;
+    dg.rand_acyclic_init(n, 4, 100);
+    cout << "acyclic " << dg.acyclic() << endl;
+    cout << "num of edge is -> " << dg.esize() << endl;
+    dg.get_keyaction();
 
     endTime = clock();
     cout << "The elapsed time is: " << (double)(endTime - startTime) / 1000 << "ms" << endl;
