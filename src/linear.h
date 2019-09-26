@@ -8,64 +8,91 @@ namespace dsa
 {
 
 template <typename _Tp>
-struct ListNode;
+struct listNode;
 template <typename _Tp>
-using lnodeptr = struct ListNode<_Tp> *;
+using lnode_ptr = struct listNode<_Tp> *;
 
 template <typename _Tp>
-struct ListNode
+struct listNode
 {
     _Tp val;
     int freq;
-    lnodeptr<_Tp> next, pre;
-    ListNode() : val(INT_MIN), freq(0), next(nullptr), pre(nullptr) {}
-    ListNode(_Tp v) : val(v), freq(0), next(nullptr), pre(nullptr) {}
+    lnode_ptr<_Tp> next, pre;
+    listNode() : val(INT_MIN), freq(0), next(nullptr), pre(nullptr) {}
+    listNode(_Tp v, lnode_ptr<_Tp> p = nullptr, lnode_ptr<_Tp> nex = nullptr) : val(v), freq(0), next(nex), pre(p) {}
 };
 
 template <typename _Tp>
 class link_list
 {
 protected:
-    lnodeptr<_Tp> _dummy;
-    unordered_set<lnodeptr<_Tp>> __memoflnode;
-    inline lnodeptr<_Tp> __newlnode(const _Tp &val)
+    int _size;
+
+#define __insert_head(dum, __1st) \
+    __1st->next = dum->next;      \
+    dum->next = __1st
+
+    lnode_ptr<_Tp> _dummy, _rear;
+    unordered_set<lnode_ptr<_Tp>> __memoflnode;
+    inline lnode_ptr<_Tp> __newlnode(const _Tp &val, lnode_ptr<_Tp> p = nullptr, lnode_ptr<_Tp> nex = nullptr)
     {
-        lnodeptr<_Tp> v = new ListNode<_Tp>(val);
+        lnode_ptr<_Tp> v = new listNode<_Tp>(val, p, nex);
         __memoflnode.insert(v);
+        _size++;
         return v;
     }
-    inline lnodeptr<_Tp> __newlnode()
+    inline lnode_ptr<_Tp> __newlnode()
     {
-        lnodeptr<_Tp> v = new ListNode<_Tp>();
+        lnode_ptr<_Tp> v = new listNode<_Tp>();
         __memoflnode.insert(v);
+        _size++;
         return v;
     }
-    inline void __release(lnodeptr<_Tp> &v)
+    inline void __release(lnode_ptr<_Tp> &v)
     {
+        __memoflnode.erase(v);
+        _size--;
         delete v;
         v = nullptr;
-        __memoflnode.erase(v);
     }
-
-public:
-    link_list()
+    void __erase0(lnode_ptr<_Tp> &v, const _Tp &x)
     {
-        _dummy = nullptr;
+        if (!v)
+            return;
+        if (v->val == x)
+        {
+            lnode_ptr<_Tp> p = v;
+            v = v->next;
+            delete v;
+            __erase0(v, x);
+        }
+        else
+            __erase0(v->next, x);
     }
-    ~link_list()
+    void __erase1(const _Tp &x)
     {
-        clear();
+        lnode_ptr<_Tp> p = _dummy->next, r = _dummy, tmp;
+        while (p)
+        {
+            if (p->val != x)
+            {
+                r->next = p;
+                r = p;
+                p = p->next;
+            }
+            else
+            {
+                tmp = p;
+                p = p->next;
+                __release(tmp);
+            }
+        }
+        r->next = nullptr;
+        __add_pre();
     }
-    void clear()
-    {
-        _dummy = nullptr;
-        for (auto &ptr : __memoflnode)
-            delete ptr;
-        __memoflnode.clear();
-    }
-    void __merge_list(lnodeptr<_Tp> l2)
+    void __merge_list(lnode_ptr<_Tp> l2)
     { // 2 increasing order list merge to a new increasing order list. in-place (rear insert)
-        lnodeptr<_Tp> p = _dummy->next, q = l2->next, r;
+        lnode_ptr<_Tp> p = _dummy->next, q = l2->next, r;
         _dummy->next = nullptr;
         delete l2;
         r = _dummy;
@@ -76,46 +103,106 @@ public:
         }
         r->next = p ? p : q;
     }
-
-#define HEAD_INSERT(dum, __1st) \
-    __1st->next = dum->next;    \
-    dum->next = __1st
-    void __merge_list2(lnodeptr<_Tp> l2)
+    void __merge_list2(lnode_ptr<_Tp> l2)
     { // 2 increasing order list merge to a new decreasing order list. in-place (head insert)
-        lnodeptr<_Tp> p = _dummy->next, q = l2->next, h;
+        lnode_ptr<_Tp> p = _dummy->next, q = l2->next, h;
         _dummy->next = nullptr;
         delete l2;
         while (p && q)
         {
             p->val <= q->val ? h = p, p = p->next : h = q, q = q->next;
-            HEAD_INSERT(_dummy, h);
+            __insert_head(_dummy, h);
         }
         while (p)
         {
             h = p, p = p->next;
-            HEAD_INSERT(_dummy, h);
+            __insert_head(_dummy, h);
         }
         while (q)
         {
             h = q, q = q->next;
-            HEAD_INSERT(_dummy, h);
+            __insert_head(_dummy, h);
         }
     }
-    void __reverse_list()
+    void __add_pre()
     {
-        lnodeptr<_Tp> walk, post;
-        walk = _dummy->next;
+        lnode_ptr<_Tp> _walk = _dummy->next, p = _dummy;
+        for (; _walk; _walk = _walk->next)
+            _walk->pre = p, p = _walk;
+    }
+
+public:
+    link_list()
+    {
+        _dummy = _rear = __newlnode();
+        _size = 0;
+    }
+    ~link_list()
+    {
+        clear();
+    }
+    inline int size() const { return _size; }
+    inline int empty() const { return _size == 0; }
+    void clear()
+    {
+        _dummy = nullptr;
+        for (auto &ptr : __memoflnode)
+            delete ptr;
+        __memoflnode.clear();
+        _size = 0;
+    }
+    void reverse()
+    {
+        lnode_ptr<_Tp> _walk, post;
+        _walk = _dummy->next;
         _dummy->next = NULL;
-        while (walk)
+        while (_walk)
         {
-            post = walk->next;
-            HEAD_INSERT(_dummy, walk);
-            walk = post;
+            post = _walk->next;
+            __insert_head(_dummy, _walk);
+            _walk = post;
+        }
+        __add_pre();
+    }
+    void erase_val(const _Tp &val)
+    {
+        __erase1(val);
+    }
+    void erase(int _pos)
+    {
+        if (_pos < _size)
+        {
+            lnode_ptr<_Tp> _walk = _dummy->next, p, post;
+            for (; _pos--; _walk = _walk->next)
+                ;
+            post = _walk->next;
+            p = _walk->pre;
+            p->next = post;
+            if (post)
+                post->pre = p;
+            else
+                _rear = p;
+            __release(_walk);
         }
     }
-    void unique_sorted_Linkedlist()
+    void insert(int _pos, const _Tp &val)
     {
-        lnodeptr<_Tp> p = _dummy->next, d;
+        if (_pos <= _size)
+        {
+            lnode_ptr<_Tp> _walk = _dummy->next, p = _dummy, v;
+            for (; _pos--; _walk = _walk->next)
+                p = _walk;
+            v = __newlnode(val, p, _walk);
+            p->next = v;
+            if (_walk)
+                _walk->pre = v;
+            else
+                _rear = v;
+        }
+    }
+    void unique()
+    {
+        lnode_ptr<_Tp> p = _dummy->next, d;
         if (!p)
             return;
         while (p->next)
@@ -129,59 +216,27 @@ public:
             else
                 p = p->next;
         }
+        __add_pre();
     }
-    void __erase0(lnodeptr<_Tp> &v, const _Tp &x)
+    void insertsort()
     {
-        if (!v)
-            return;
-        if (v->val == x)
+        lnode_ptr<_Tp> _walk = _dummy->next, pre, the_nex = _walk->next;
+        _walk->next = nullptr;
+        _walk = the_nex;
+        while (_walk)
         {
-            lnodeptr<_Tp> p = v;
-            v = v->next;
-            delete v;
-            __erase0(v, x);
-        }
-        else
-            __erase0(v->next, x);
-    }
-    void __erase1(const _Tp &x)
-    {
-        lnodeptr<_Tp> p = _dummy->next, r = _dummy, q;
-        while (p)
-        {
-            if (p->val != x)
-            {
-                r->next = p;
-                r = p;
-                p = p->next;
-            }
-            else
-            {
-                q = p;
-                p = p->next;
-                delete q;
-            }
-        }
-        r->next = nullptr;
-    }
-    void sort_linkedlist()
-    { // insert
-        lnodeptr<_Tp> walk = _dummy->next, pre, the_nex = walk->next;
-        walk->next = nullptr;
-        walk = the_nex;
-        while (walk)
-        {
-            the_nex = walk->next;
-            for (pre = _dummy; pre->next && pre->next->val <= walk->val; pre = pre->next)
+            the_nex = _walk->next;
+            for (pre = _dummy; pre->next && pre->next->val <= _walk->val; pre = pre->next)
                 ;
-            walk->next = pre->next;
-            pre->next = walk;
-            walk = the_nex;
+            _walk->next = pre->next;
+            pre->next = _walk;
+            _walk = the_nex;
         }
+        __add_pre();
     }
-    void sort_linkedlist1()
-    { // bubble
-        lnodeptr<_Tp> pre, post;
+    void bubblesort()
+    {
+        lnode_ptr<_Tp> pre, post;
         int flag;
         do
         {
@@ -199,10 +254,11 @@ public:
                 post = post->next;
             }
         } while (flag);
+        __add_pre();
     }
-    void __locate(const _Tp &x)
+    void locate(const _Tp &x)
     {
-        lnodeptr<_Tp> p = _dummy->next, left;
+        lnode_ptr<_Tp> p = _dummy->next, left;
         while (p && p->val != x)
             p = p->next;
         if (!p)
@@ -225,20 +281,20 @@ public:
     {
         if (!_dummy->next || !_dummy->next->next)
             return true;
-        lnodeptr<_Tp> p = _dummy->next, walk = p->next;
-        while (walk)
+        lnode_ptr<_Tp> p = _dummy->next, _walk = p->next;
+        while (_walk)
         {
-            if (walk->val > p->val)
+            if (_walk->val > p->val)
                 return false;
-            p = walk;
-            walk = walk->next;
+            p = _walk;
+            _walk = _walk->next;
         }
         return true;
     }
 
-    lnodeptr<_Tp> kth_ultimate(int k)
+    lnode_ptr<_Tp> kth_ultimate(int k)
     {
-        lnodeptr<_Tp> r, l;
+        lnode_ptr<_Tp> r, l;
         r = l = _dummy;
         while (--k && r)
             r = r->next;
@@ -251,10 +307,9 @@ public:
         }
         return l;
     }
-
-    void output()
+    void print()
     {
-        lnodeptr<_Tp> p = _dummy->next;
+        lnode_ptr<_Tp> p = _dummy->next;
         while (p)
         {
             cout << p->val << " -> ";
@@ -262,22 +317,20 @@ public:
         }
         cout << "nullptr" << endl;
     }
-
     void build(vector<int> &a)
     {
-        _dummy = __newlnode();
-        lnodeptr<_Tp> p = _dummy;
+        _rear = _dummy;
+        lnode_ptr<_Tp> p = _dummy;
         for (auto &val : a)
         {
-            p->next = __newlnode(val);
-            p->next->pre = p;
+            p->next = __newlnode(val, p);
             p = p->next;
+            _rear = p;
         }
     }
-
-    lnodeptr<_Tp> find_common_p(lnodeptr<_Tp> &l1, lnodeptr<_Tp> &l2)
+    lnode_ptr<_Tp> find_common_p(lnode_ptr<_Tp> &l1, lnode_ptr<_Tp> &l2)
     {
-        lnodeptr<_Tp> thelong, theshort, p = l1, q = l2;
+        lnode_ptr<_Tp> thelong, theshort, p = l1, q = l2;
         int len1 = 0, len2 = 0, step = 0;
         while (p)
             p = p->next, len1++;
@@ -292,7 +345,48 @@ public:
             thelong = thelong->next, theshort = theshort->next;
         return thelong;
     }
+    void push_back(const _Tp &val)
+    {
+        _rear->next = __newlnode(val, _rear);
+        _rear = _rear->next;
+    }
+    void push_front(const _Tp &val)
+    {
+        lnode_ptr<_Tp> v = __newlnode(val, _dummy);
+        v->next = _dummy->next;
+        _dummy->next = v;
+    }
+    void pop_front()
+    {
+        if (_size)
+        {
+            lnode_ptr<_Tp> tmp = _dummy->next;
+            _dummy->next = tmp->next;
+            if (_dummy->next)
+                _dummy->next->pre = _dummy;
+            __release(tmp);
+        }
+    }
+    void pop_back()
+    {
+        if (_size)
+        {
+            lnode_ptr<_Tp> tmp = _rear;
+            _rear = _rear->pre;
+            _rear->next = nullptr;
+            __release(tmp);
+        }
+    }
+    _Tp back()
+    {
+        return _rear->val;
+    }
+    _Tp front()
+    {
+        return _dummy->next->val;
+    }
 };
+
 class sk_queue
 {
 private:

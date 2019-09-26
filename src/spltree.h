@@ -70,14 +70,12 @@ public:
     {
         if (!this->_root)
         {
-            this->_size++;
             this->_root = this->__newbinode(x);
             return true;
         }
         binode_ptr<_Tp> w = search(x), t;
         if (w->val == x)
             return false;
-        this->_size++;
         t = this->_root;
         if (this->_root->val < x)
         {
@@ -131,7 +129,6 @@ public:
             lt->parent = this->_root;
         }
         this->__release(w);
-        this->_size--;
         if (this->_root)
             bintree<_Tp>::__updateheight(this->_root);
         return true;

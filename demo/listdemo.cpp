@@ -1,7 +1,7 @@
 // author - sonaspy@outlook.com
 // coding - utf_8
 
-#define SIZE 100
+#define SIZE 20
 #include "../src/dsa.h"
 
 #define test() freopen("in", "r", stdin)
@@ -13,12 +13,18 @@ int main(int argc, char const *argv[])
 {
     /* code */
     //test();
-    vector<int> a(20);
+    srand(time(NULL));
+    int b[SIZE];
+    // generate(b, b + SIZE, [&]() { return rand() % 10; });
+    vector<int> a(b, b + SIZE);
     iota(a.begin(), a.end(), 0);
     link_list<int> ls;
     ls.build(a);
-    ls.output();
-    ls.__locate(15), ls.__locate(16);
-    ls.output();
+    ls.print();
+    ls.erase(19);
+    ls.print();
+    ls.pop_front();
+    cout << ls.back() << endl;
+    cout << ls.front() << endl;
     return 0;
 }

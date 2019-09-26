@@ -173,17 +173,17 @@ public:
         if (w)
             return false;
         w = this->__newbinode(x, this->_last, nullptr, nullptr, RED);
-        this->_size++;
         __doubleis_red_solution(w);
         return true;
     }
     bool erase(const _Tp &val)
     {
+        int thesize = this->_size - 1;
         binode_ptr<_Tp> &w = bstree<_Tp>::search(val);
         if (!w)
             return 0;
         binode_ptr<_Tp> p = w, pp = p->parent, _nil = nullptr;
-        RBColor delcolor = p->color;
+        RBColor _del_color = p->color;
         int pp_child_tag = (!pp || pp->lc == p) ? 1 : 2;
         binode_ptr<_Tp> &ref_p = (pp ? (pp_child_tag == 1 ? pp->lc : pp->rc) : this->_root);
         if (p->lc && p->rc)
@@ -191,7 +191,7 @@ public:
             auto prev = p->lc, curr = prev;
             for (; curr && curr->rc; prev = curr, curr = curr->rc)
                 ;
-            delcolor = curr->color;
+            _del_color = curr->color;
             p->val = curr->val;
             if (curr == prev)
             {
@@ -228,7 +228,7 @@ public:
         }
         else
             p = ref_p = nullptr;
-        if (BLK == delcolor && pp)
+        if (BLK == _del_color && pp)
         {
             if (nullptr == p)
             {
@@ -243,7 +243,7 @@ public:
                 this->__release(_nil);
             }
         }
-        this->_size--;
+        this->_size = thesize;
         return 1;
     }
     bool isrbtree()
