@@ -11,17 +11,26 @@ struct student
     int id;
     int age;
     char name[20];
+    struct node
+    {
+        int i;
+    } n;
 };
 
 int main()
 {
-    int gender_offset, id_offset, age_offset, name_offset;
-    gender_offset = offsetof(struct student, gender);
-    id_offset = offsetof(struct student, id);
-    age_offset = offsetof(struct student, age);
-    name_offset = offsetof(struct student, name);
-    printf("gender_offset = %d\n", gender_offset);
-    printf("id_offset = %d\n", id_offset);
-    printf("age_offset = %d\n", age_offset);
-    printf("name_offset = %d\n", name_offset);
+
+    union {
+        int i[2];
+        int k;
+        int c;
+    } t, *s = &t;
+    char str[] = {'F', 'O', 'R', 'T', 'R', 'A', 'N', 0};
+
+    s->i[0] = 10;
+    s->i[1] = 20;
+    s->k = 30;
+    printf("%d\n", s->k);
+    printf("%d\n", s->i[0]);
+    printf("%d\n", s->c);
 }

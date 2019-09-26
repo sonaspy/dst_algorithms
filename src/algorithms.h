@@ -14,11 +14,14 @@ namespace dsa
 {
 
 template <typename _Tp>
-void output_vec(vector<_Tp> &a)
+void print_vector(vector<_Tp> &a)
 {
-    cout << a[0];
-    for (int i = 1; i < a.size(); i++)
-        cout << " -> " << a[i];
+    if (a.size())
+    {
+        cout << a[0];
+        for (int i = 1; i < a.size(); i++)
+            cout << " -> " << a[i];
+    }
     cout << endl;
 }
 
@@ -193,7 +196,7 @@ double __newpow(double x, int n)
 }
 
 // heap
-template <typename _RandomAccessIterator, typename _Compare>
+template <typename _RandomAccessIterator, typename _Tp = typename iterator_traits<_RandomAccessIterator>::value_type, typename _Compare>
 static inline void __siftdown(_RandomAccessIterator _base, int _pos, int _border, _Compare _comp)
 {
     int _up = _pos, _down = _pos * 2 + 1;
@@ -295,9 +298,9 @@ static inline void popheap(_RandomAccessIterator _first, _RandomAccessIterator _
 }
 
 template <class _RandomAccessIterator>
-static inline void isheap(_RandomAccessIterator _first, _RandomAccessIterator _last)
+static inline bool isheap(_RandomAccessIterator _first, _RandomAccessIterator _last)
 {
-    __isheap(_first, _last, less<typename iterator_traits<_RandomAccessIterator>::value_type>());
+   return  __isheap(_first, _last, less<typename iterator_traits<_RandomAccessIterator>::value_type>());
 }
 
 template <class _RandomAccessIterator, typename _Compare>

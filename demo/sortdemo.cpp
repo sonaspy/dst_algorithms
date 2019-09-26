@@ -2,7 +2,7 @@
 // coding - utf_8
 #include "../src/dsa.h"
 
-#define SIZE 10000
+#define SIZE 1000000
 #define test() freopen("in", "r", stdin)
 
 using namespace std;
@@ -11,9 +11,9 @@ using namespace dsa;
 int main(int argc, char const *argv[])
 {
     /* code */
-    srand(time(NULL));
+    // srand(time(NULL));
     int b[SIZE];
-    generate(b, b + SIZE, [&]() { return rand(); });
+    generate(b, b + SIZE, [&]() { return rand() % 100; });
     vector<int> a(b, b + SIZE);
     // iota(a.begin(), a.end(), 0);
 
@@ -22,13 +22,14 @@ int main(int argc, char const *argv[])
     clock_t startTime, endTime;
     startTime = clock();
     //cout << *kth_element(a.begin(), a.end(), 2000) << endl;
-    quicksort(a.begin(), a.end());
+    // quicksort(a.begin(), a.end());
     //a.erase(unique(a.begin(), a.end()), a.end());
-    //output_vec(a);
     //cout << a[400] << endl;
+    makeheap(a.begin(), a.end());
 
     endTime = clock();
-    cout << is_sorted(a.begin(), a.end()) << endl;
+    // print_vector(a);
+    cout << isheap(a.begin(), a.end()) << endl;
     cout << "The elapsed time is: " << (double)(endTime - startTime) / 1000 << "ms" << endl;
     return 0;
 }
