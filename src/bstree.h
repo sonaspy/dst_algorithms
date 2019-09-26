@@ -85,10 +85,7 @@ public:
     bool erase(const _Tp &x)
     {
         if (__erase(this->_root, x))
-        {
-            this->_size--;
             return true;
-        };
         return false;
     }
     bool insert(const _Tp &x)
@@ -97,7 +94,6 @@ public:
         if (w)
             return false;
         w = this->__newbinode(x, _last);
-        this->_size++;
         this->__updateheightabove(w);
         return true;
     }

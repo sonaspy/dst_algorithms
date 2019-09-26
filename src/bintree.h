@@ -22,12 +22,14 @@ protected:
     {
         binode_ptr<_Tp> v = new binode<_Tp>(x, p, l, r, cl);
         __memofbinode.insert(v);
+        this->_size++;
         return v;
     }
     inline binode_ptr<_Tp> __newbinode()
     {
         binode_ptr<_Tp> v = new binode<_Tp>();
         __memofbinode.insert(v);
+        this->_size++;
         return v;
     }
     inline void __release(binode_ptr<_Tp> &v)
@@ -35,6 +37,7 @@ protected:
         __memofbinode.erase(v);
         delete v;
         v = nullptr;
+        this->_size--;
     }
     static inline void __updatedepth(binode_ptr<_Tp> &opnv) { opnv->depth = _depth(opnv->parent) + 1; }
     static inline void __updateheight(binode_ptr<_Tp> &opnv) { opnv->height = max(_height(opnv->lc), _height(opnv->rc)) + 1; }
@@ -432,7 +435,7 @@ public:
             cout << " Too Many Node to print !\n";
             return;
         }
-        _unitsize = IS_CHAR<_Tp>() ? 1 : to_string(__getmax(this->_root)->val).size();
+        _unitsize = IS_CHAR<_Tp>() ? 1 : to_string(_root->rightest()->val).size();
         if (_isRBtree)
             _unitsize++;
         _direct2l = _direct2r = string(_unitsize, ' ');

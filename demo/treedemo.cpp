@@ -3,7 +3,7 @@
 
 #include "../src/dsa.h"
 
-#define SIZE 20
+#define SIZE 100
 using namespace std;
 using namespace dsa;
 
@@ -17,20 +17,18 @@ int main(int argc, char const *argv[])
     clock_t startTime, endTime;
     int nm = 10;
     int c = 0, c0 = 0;
-    int b[SIZE], n = SIZE;
-    generate(b, b + n, [&]() { return rand() % 1000; });
+    int b[SIZE] = {9, 8, 7, 2, 3, 5, 6, 4}, n = SIZE;
+    generate(b, b + n, [&]() { return rand(); });
     vector<int> a(b, b + n);
-    avltree<int> ax;
+    // iota(a.begin(), a.end(), 1);
+    rbtree<int> ax;
     ax.build(a);
-    auto it = ax.end();
-    for (; *it; it--)
-        cout << (*it)->val << "->";
-    cout << endl;
-    ax.intrav([](binode_ptr<int> &p) { cout << p->val << "->"; });
-    cout << endl;
-    startTime = clock();
-    ax.search(a[0]);
+    cout << ax.size() << endl;
+    for (int i = 0; i < SIZE - 10; i++)
+        ax.erase(a[i]);
+    cout << ax.size() << endl;
     endTime = clock();
+    // ax.printhorizon();
     cout << "The elapsed time is: " << (double)(endTime - startTime) / 1000 << "ms" << endl;
     return 0;
 }

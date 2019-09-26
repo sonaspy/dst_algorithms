@@ -22,7 +22,6 @@ public:
         if (bstree<T>::search(x) == nullptr)
             return;
         __erase(this->_root, x);
-        this->_size--;
     }
     void insert(const T &x)
     {
@@ -70,7 +69,6 @@ protected:
         if (!v)
         {
             v = this->__newbinode(x);
-            this->_size++;
             return;
         }
         else if (x < v->val)
