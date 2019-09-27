@@ -650,7 +650,7 @@ private:
 1.运算数 output
 2.左括号， push
 3.右括号， pop output, until reach '(', pop too.
-4.运算符 I.if pri(this) > pri(top),push. II.if <= ,pop output, then compare again, until push.
+4.运算符 I.if pri(this) > pri(top),push. else, pop output, then compare again, until push.
 5.'(' push之前pri最高， push后pri最低
 6.表达式处理完毕后 output rest in stack
 (before start, put a guard in stack ,pri = -1(lowest) );

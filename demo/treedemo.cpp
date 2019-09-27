@@ -3,7 +3,7 @@
 
 #include "../src/dsa.h"
 
-#define SIZE 100
+#define SIZE 20
 using namespace std;
 using namespace dsa;
 
@@ -18,15 +18,12 @@ int main(int argc, char const *argv[])
     int nm = 10;
     int c = 0, c0 = 0;
     int b[SIZE] = {9, 8, 7, 2, 3, 5, 6, 4}, n = SIZE;
-    generate(b, b + n, [&]() { return rand(); });
+    generate(b, b + n, [&]() { return rand() % 100; });
     vector<int> a(b, b + n);
     // iota(a.begin(), a.end(), 1);
-    rbtree<int> ax;
+    avltree<int> ax;
     ax.build(a);
-    cout << ax.size() << endl;
-    for (int i = 0; i < SIZE - 10; i++)
-        ax.erase(a[i]);
-    cout << ax.size() << endl;
+    cout << ax.avlbalanced() << endl;
     endTime = clock();
     // ax.printhorizon();
     cout << "The elapsed time is: " << (double)(endTime - startTime) / 1000 << "ms" << endl;
