@@ -398,5 +398,30 @@ bool isMatch(vector<int> &push_seq, vector<int> &pop_seq, int capacity)
     return walk == capacity;
 }
 } // namespace dsa
+template <typename _RandomAccessIterator, typename _Tp = typename iterator_traits<_RandomAccessIterator>::value_type>
+bool isBSTseq(_RandomAccessIterator _first, _RandomAccessIterator _last)
+{
+    _RandomAccessIterator i, j;
+    bool _less;
+    _Tp _val;
+    for (i = _first; i < _last - 1; ++i)
+    {
+        _less = *i < *(i + 1);
+        _val = *i;
+        if (_less)
+        {
+            for (j = i + 2; j < _last; ++j)
+                if (*i > *j)
+                    return false;
+        }
+        else
+        {
+            for (j = i + 2; j < _last; ++j)
+                if (*i < *j)
+                    return false;
+        }
+    }
+    return true;
+}
 
 #endif

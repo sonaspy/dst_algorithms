@@ -23,16 +23,14 @@ protected:
         if (rc)
             rc->parent = p;
     }
-    bool __judge_avl(binode_ptr<_Tp> opnv, binode_ptr<_Tp> &p)
+    bool __judge_avl(binode_ptr<_Tp> opnv, binode_ptr<_Tp> p)
     {
         if (!opnv)
             return true;
-        bool f1, f2, f;
+        bool f1, f2;
         f1 = __judge_avl(opnv->lc, p);
-        f = avlnodebalanced(opnv) && (p == nullptr || p->val < opnv->val);
-        p = opnv;
-        f2 = __judge_avl(opnv->rc, p);
-        return f1 && f2 & f;
+        f2 = __judge_avl(opnv->rc, opnv);
+        return f1 && f2 & avlnodebalanced(opnv) && (!p || p->val < opnv->val);
     }
     binode_ptr<_Tp> &__search(binode_ptr<_Tp> &opnv, const _Tp &x)
     {

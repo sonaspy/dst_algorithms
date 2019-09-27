@@ -135,7 +135,7 @@ int main(int argc, char const *argv[])
                     default:
                         cout << "input legitimate instruction please" << endl;
                     }
-                    cout << " 1.print 2.search 3.earse 4.insert 5.rebuild 6.quit\n";
+                    cout << " 1.print 2.search 3.earse 4.insert 5.rebuild 6.quit 7.insert vals\n";
                 }
             }
         end:

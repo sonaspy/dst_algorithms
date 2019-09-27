@@ -56,12 +56,31 @@ static void doublebubblesort(_RandomAccessIterator _first, _RandomAccessIterator
 //[)
 template <typename _RandomAccessIterator>
 static void selectsort(_RandomAccessIterator _first, _RandomAccessIterator _last)
-{ // Sort the _size elements a[0:_size-1].
+{
 
     _RandomAccessIterator i;
     for (i = _last; i > _first + 1; i--)
         iter_swap(max_element(_first, i), (i - 1));
 }
+
+//[)
+template <typename _RandomAccessIterator>
+static void doubleselectsort(_RandomAccessIterator _first, _RandomAccessIterator _last)
+{
+    _RandomAccessIterator j, __min, __max;
+    for (; _first < _last; ++_first)
+    {
+        __min = __max = _first;
+        for (j = _first + 1; j < _last; ++j)
+        {
+            __min = *j < *__min ? j : __min;
+            __max = *j > *__max ? j : __max;
+        }
+        iter_swap(__min, _first);
+        iter_swap(__max != _first ? __max : __min, --_last);
+    }
+}
+
 //[)
 template <typename _RandomAccessIterator>
 static void inline insertsort_bin(_RandomAccessIterator _first, _RandomAccessIterator _last)
