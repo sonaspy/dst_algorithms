@@ -25,22 +25,22 @@ int main(int argc, char const *argv[])
          << "sonaspy@outlook.com  💻  github.com/newguonx" << endl
          << endl
          << endl;
-    while (cout << "input \"build\" or \"rebuild\"to build a rbtree, or \"quit\" to end it." << endl && cin >> instruction)
+    while (cout << "input \"build\" or \"rebuild\"to build a avltree, or \"quit\" to end it." << endl && cin >> instruction)
     {
         if (instruction[0] == 'q')
             quit();
         else if (instruction[0] == 'b' || instruction[0] == 'r')
         {
-            cout << "input (size) and the (valtype) (only provide char or int) of rbtree" << endl;
+            cout << "input (size) and the (valtype) (only provide char or int) of avltree" << endl;
             cin >> n >> valtype;
 
             if (valtype[0] == 'c')
             {
-                rbtree<char> rbx;
+                avltree<char> avlx;
                 vector<char> a(n);
                 a.reserve(10);
                 generate(a.begin(), a.end(), [&]() { return rand() % 93 + 33; });
-                rbx.build(a);
+                avlx.build(a);
                 cout << "build successful \nthen you can input (1/2/3/4/5/6) 1.print 2.search 3.earse 4.insert 5.rebuild 6.quit 7.insert vals\n";
 
                 while (cin >> instruction)
@@ -48,22 +48,22 @@ int main(int argc, char const *argv[])
                     switch (instruction[0])
                     {
                     case '1':
-                        rbx.printhorizon();
+                        avlx.printhorizon();
                         break;
                     case '2':
                         cout << "which value you wanna search ? \n";
                         cin >> val;
-                        cout << rbx.search(val) << endl;
+                        cout << avlx.search(val) << endl;
                         break;
                     case '3':
                         cout << "which value you wanna erase ? \n";
                         cin >> val;
-                        cout << (rbx.erase(val) ? "erase successful" : "erase failed") << endl;
+                        cout << (avlx.erase(val) ? "erase successful" : "erase failed") << endl;
                         break;
                     case '4':
                         cout << "what value you wanna insert ? \n";
                         cin >> val;
-                        cout << (rbx.insert(val) ? "insert successful" : "insert failed") << endl;
+                        cout << (avlx.insert(val) ? "insert successful" : "insert failed") << endl;
                         break;
                     case '5':
                         goto end;
@@ -76,7 +76,7 @@ int main(int argc, char const *argv[])
                         for (int i = 0; i < nofvals; i++)
                         {
                             cin >> a[0];
-                            rbx.insert(a[0]);
+                            avlx.insert(a[0]);
                         }
                         cout << "insert successful" << endl;
                         break;
@@ -87,35 +87,35 @@ int main(int argc, char const *argv[])
             }
             else
             {
-                rbtree<int> rbx;
+                avltree<int> avlx;
                 cout << "input (max int val you wanted)" << endl;
                 cin >> range;
                 vector<int> a(n);
                 a.reserve(10);
                 generate(a.begin(), a.end(), [&]() { return rand() % range; });
-                rbx.build(a);
+                avlx.build(a);
                 cout << "build successful \n then you can input (1/2/3/4/5/6) 1.print 2.search 3.earse 4.insert 5.rebuild 6.quit 7.insert vals\n";
                 while (cin >> instruction)
                 {
                     switch (instruction[0])
                     {
                     case '1':
-                        rbx.printhorizon();
+                        avlx.printhorizon();
                         break;
                     case '2':
                         cout << "which value you wanna search ? \n";
                         cin >> val;
-                        cout << rbx.search(val) << endl;
+                        cout << avlx.search(val) << endl;
                         break;
                     case '3':
                         cout << "which value you wanna erase ? \n";
                         cin >> val;
-                        cout << (rbx.erase(val) ? "erase successful" : "erase failed") << endl;
+                        cout << (avlx.erase(val) ? "erase successful" : "erase failed") << endl;
                         break;
                     case '4':
                         cout << "what value you wanna insert ? \n";
                         cin >> val;
-                        cout << (rbx.insert(val) ? "insert successful" : "insert failed") << endl;
+                        cout << (avlx.insert(val) ? "insert successful" : "insert failed") << endl;
                         break;
                     case '5':
                         goto end;
@@ -128,7 +128,7 @@ int main(int argc, char const *argv[])
                         for (int i = 0; i < nofvals; i++)
                         {
                             cin >> a[0];
-                            rbx.insert(a[0]);
+                            avlx.insert(a[0]);
                         }
                         cout << "insert successful" << endl;
                         break;

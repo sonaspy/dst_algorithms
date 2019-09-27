@@ -6,15 +6,41 @@
 #include <string.h>
 #include <math.h>
 #include <stdlib.h>
+#include <time.h>
+
+int fun()
+{
+    printf("%d", 1);
+    return 1;
+}
+typedef int (*PF)();
+void fun2(PF pf)
+{
+    (*pf)();
+}
+int gcd(int a, int b)
+{
+    if (a <= 0 || b <= 0)
+        return -1;
+    if (a == b)
+        return a;
+    else if (b < a)
+        return gcd(a - b, b);
+    else
+        return gcd(b - a, a);
+}
+int _gcd(int a, int b)
+{
+    if (a % b == 0)
+        return b;
+    return _gcd(b, a % b);
+}
 
 int main(int argc, char const *argv[])
 {
     /* code */
-    int m = 10, n = 10;
-    char *pArray[] = {"How", "are", "you"};
-    int num = sizeof(pArray) / sizeof(char *);
-    printf("Total string numbers = %d\n", num);
-    int *p = (int *)malloc(m * n * sizeof(int));
-    int i = p[1 + 2];
+    srand(time(NULL));
+    int a = rand() % 100, b = rand() % 100;
+    printf("%d %d %d\n", a, b, _gcd(a, b));
     return 0;
 }
