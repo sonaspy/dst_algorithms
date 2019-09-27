@@ -17,17 +17,19 @@ public:
             insert(i);
         bintree<T>::__update_status();
     }
-    void erase(const T &x)
+    bool erase(const T &x)
     {
         if (bstree<T>::search(x) == nullptr)
-            return;
+            return false;
         __erase(this->_root, x);
+        return true;
     }
-    void insert(const T &x)
+    bool insert(const T &x)
     {
         if (bstree<T>::search(x) != nullptr)
-            return;
+            return false;
         __insert(this->_root, x);
+        return true;
     }
     inline void clear() { bstree<T>::clear(); }
     ~avltree()
