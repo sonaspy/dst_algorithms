@@ -71,7 +71,8 @@
     "thread": "cpp",
     "__functional_base_03": "cpp",
     "*.tcc": "cpp",
-    "array": "cpp"
+    "array": "cpp",
+    "random": "cpp"
 },
   "python.pythonPath": "/usr/local/opt/python/bin/python3.7",
 

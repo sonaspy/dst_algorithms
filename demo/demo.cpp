@@ -23,6 +23,7 @@ struct
     short a;
     float b;
 } v1;
+
 int main(int argc, char const *argv[])
 {
     /* code */
@@ -44,7 +45,7 @@ int main(int argc, char const *argv[])
     }
     print_vector(table);
     cout << v1.b << endl;
-
+    
     endTime = clock();
     cout << "The elapsed time is: " << (double)(endTime - startTime) / 1000 << "ms" << endl;
     return 0;
