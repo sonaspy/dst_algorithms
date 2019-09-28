@@ -521,39 +521,80 @@ public:
         return data.size();
     }
 };
+
+
 template <typename _Tp>
-class _queue
+class _deque
 {
 protected:
-    deque<_Tp> data;
-
+    vector<int> data;
+    int _rear, _front, _maxsize;
 public:
-    _queue()
+    _deque(int n = 100)
     {
+        _maxsize = n + 1;
+        data.resize(_maxsize);
+        _rear = _front = 0;
     }
-    inline void empty()
+    int size()
     {
-        return data.empty();
+        return (_rear - _front + _maxsize) % _maxsize;
     }
-    inline void push(const _Tp &val)
+    void resize(int n)
     {
-        data.push_back(val);
+        data.resize(n + 1);
+        _maxsize = n + 1;
     }
-    inline _Tp front()
+    void clear()
     {
-        return data.front();
+        _rear = _front = 0;
     }
-    inline void pop()
+    bool empty()
     {
-        data.pop_front();
+        return _rear == _front;
     }
-    inline int size()
+    bool full()
     {
-        return data.size();
+        return (_rear + 1) % _maxsize == _front;
+    }
+    void pop_back()
+    {
+        if (empty())
+            return;
+        _rear = (_rear - 1 + _maxsize) % _maxsize;
+    }
+    void pop_front()
+    {
+        if (empty())
+            return;
+        _front = (_front + 1) % _maxsize;
+    }
+    void push_back(const _Tp &val)
+    {
+        if (full())
+            return;
+        _rear = (_rear + 1) % _maxsize;
+        data[_rear] = val;
+    }
+    void push_front(const _Tp &val)
+    {
+        if (full())
+            return;
+        data[_front] = val;
+        _front = (_front - 1 + _maxsize) % _maxsize;
+    }
+    _Tp front()
+    {
+        return data[(_front + 1) % _maxsize];
+    }
+    _Tp back()
+    {
+        return data[_rear];
     }
 };
 
-bool bracketMatch(char *f)
+bool
+bracketMatch(char *f)
 {
     stack<char> s;
     char *p = f;

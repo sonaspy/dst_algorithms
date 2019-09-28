@@ -196,7 +196,7 @@ double __newpow(double x, int n)
 }
 
 // heap
-template <typename _RandomAccessIterator, typename _Tp = typename iterator_traits<_RandomAccessIterator>::value_type, typename _Compare>
+template <typename _RandomAccessIterator, typename _Compare>
 static inline void __siftdown(_RandomAccessIterator _base, int _pos, int _border, _Compare _comp)
 {
     int _up = _pos, _down = _pos * 2 + 1;
@@ -300,7 +300,7 @@ static inline void popheap(_RandomAccessIterator _first, _RandomAccessIterator _
 template <class _RandomAccessIterator>
 static inline bool isheap(_RandomAccessIterator _first, _RandomAccessIterator _last)
 {
-   return  __isheap(_first, _last, less<typename iterator_traits<_RandomAccessIterator>::value_type>());
+    return __isheap(_first, _last, less<typename iterator_traits<_RandomAccessIterator>::value_type>());
 }
 
 template <class _RandomAccessIterator, typename _Compare>
@@ -397,7 +397,7 @@ bool isMatch(vector<int> &push_seq, vector<int> &pop_seq, int capacity)
     }
     return walk == capacity;
 }
-} // namespace dsa
+
 template <typename _RandomAccessIterator, typename _Tp = typename iterator_traits<_RandomAccessIterator>::value_type>
 bool isBSTseq(_RandomAccessIterator _first, _RandomAccessIterator _last)
 {
@@ -423,5 +423,38 @@ bool isBSTseq(_RandomAccessIterator _first, _RandomAccessIterator _last)
     }
     return true;
 }
+
+template <typename _RandomAccessIterator, typename _Compare>
+pair<_RandomAccessIterator, _RandomAccessIterator> __lcs(_RandomAccessIterator _first, _RandomAccessIterator _last, _Compare _comp)
+{
+    pair<_RandomAccessIterator, _RandomAccessIterator> res = make_pair(_first, _first + 1);
+    _RandomAccessIterator i, j;
+    int _length, _maxlen = 1;
+    for (i = _first; i < _last - 1; i = j)
+    {
+        _length = 1;
+        for (j = i + 1; j < _last && _comp(*(j - 1), *j); ++j, ++_length)
+            ;
+        if (_maxlen < _length)
+        {
+            _maxlen = _length;
+            res = make_pair(i, j);
+        }
+    }
+    return res;
+}
+
+template <typename _RandomAccessIterator, typename _Compare>
+inline pair<_RandomAccessIterator, _RandomAccessIterator> lcs(_RandomAccessIterator _first, _RandomAccessIterator _last, _Compare _comp)
+{
+    return __lcs(_first, _last, _comp);
+}
+template <typename _RandomAccessIterator>
+inline pair<_RandomAccessIterator, _RandomAccessIterator> lcs(_RandomAccessIterator _first, _RandomAccessIterator _last)
+{
+    return __lcs(_first, _last, less<typename iterator_traits<_RandomAccessIterator>::value_type>());
+}
+
+} // namespace dsa
 
 #endif
