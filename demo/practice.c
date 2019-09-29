@@ -39,8 +39,7 @@ int _gcd(int a, int b)
 int main(int argc, char const *argv[])
 {
     /* code */
-    srand(time(NULL));
-    int a = rand() % 100, b = rand() % 100;
-    printf("%d %d %d\n", a, b, _gcd(a, b));
+    char c = '\x4c';
+    printf("%c", c);
     return 0;
 }
