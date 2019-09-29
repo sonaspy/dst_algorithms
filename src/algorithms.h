@@ -427,21 +427,20 @@ bool isBSTseq(_RandomAccessIterator _first, _RandomAccessIterator _last)
 template <typename _RandomAccessIterator, typename _Compare>
 pair<_RandomAccessIterator, _RandomAccessIterator> __lcs(_RandomAccessIterator _first, _RandomAccessIterator _last, _Compare _comp)
 {
-    pair<_RandomAccessIterator, _RandomAccessIterator> res = make_pair(_first, _first + 1);
+    auto _iter_pair = make_pair(_first, _first + 1);
     _RandomAccessIterator i, j;
-    int _length, _maxlen = 1;
+    int _maxlen = 1;
     for (i = _first; i < _last - 1; i = j)
     {
-        _length = 1;
-        for (j = i + 1; j < _last && _comp(*(j - 1), *j); ++j, ++_length)
+        for (j = i + 1; j < _last && _comp(*(j - 1), *j); ++j)
             ;
-        if (_maxlen < _length)
+        if (_maxlen < j - i)
         {
-            _maxlen = _length;
-            res = make_pair(i, j);
+            _iter_pair = make_pair(i, j);
+            _maxlen = j - i;
         }
     }
-    return res;
+    return _iter_pair;
 }
 
 template <typename _RandomAccessIterator, typename _Compare>
