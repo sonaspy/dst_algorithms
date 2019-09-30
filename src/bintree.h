@@ -398,7 +398,7 @@ public:
         this->clear();
     }
 
-    inline bool const empty() const { return this->_root == nullptr; }
+    inline bool const empty() const { return _root == nullptr; }
     inline binode_ptr<_Tp> root() { return this->_root; }
     inline int size() const { return _size; }
     inline int diam() { return __diameter(); }
@@ -457,7 +457,7 @@ public:
             cout << "🎩   🌲  RBTREE  🌲   🎒" << endl;
         __display_buffer.clear();
     }
-    inline void build_cmp(vector<int> &a)
+    inline void build(vector<int> &a)
     {
         __update_root(__buildcmp(0, a));
         __update_status();
@@ -660,6 +660,24 @@ public:
         while (p != q)
             p = p->parent, q = q->parent;
         return p;
+    }
+    bool insert(const _Tp &val)
+    {
+        if (_root)
+            _root->leftest()->lc = __newbinode(val);
+        else
+            _root = __newbinode(val);
+        return true;
+    }
+    bool erase(const _Tp &val)
+    {
+        return false;
+    }
+    bool count(const _Tp &val)
+    {
+        int c = 0;
+        intrav([&](binode_ptr<_Tp> v, int c) {if(v->val == val)c++; });
+        return c;
     }
 };
 

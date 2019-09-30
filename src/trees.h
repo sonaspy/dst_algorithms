@@ -206,6 +206,20 @@ struct bnode
     }
 };
 
+template <typename _Tp>
+class trees
+{
+public:
+    virtual ~trees() {}
+    virtual bool insert(const _Tp &val) = 0;
+    virtual bool erase(const _Tp &val) = 0;
+    virtual bool count(const _Tp &val) = 0;
+    virtual void build(vector<_Tp> &a) = 0;
+    virtual int size() = 0;
+    virtual int empty() = 0;
+    virtual void clear() = 0;
+};
+
 }; // namespace dsa
 
 #include "bintree.h"
