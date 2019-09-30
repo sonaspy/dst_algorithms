@@ -67,17 +67,17 @@ static void selectsort(_RandomAccessIterator _first, _RandomAccessIterator _last
 template <typename _RandomAccessIterator>
 static void doubleselectsort(_RandomAccessIterator _first, _RandomAccessIterator _last)
 {
-    _RandomAccessIterator j, __min, __max;
-    for (; _first < _last; ++_first)
+    _RandomAccessIterator _walk, _min_pos, _max_pos;
+    for (; _first < --_last; ++_first)
     {
-        __min = __max = _first;
-        for (j = _first + 1; j < _last; ++j)
+        _min_pos = _max_pos = _first;
+        for (_walk = _first + 1; _walk < _last + 1; ++_walk)
         {
-            __min = *j < *__min ? j : __min;
-            __max = *j > *__max ? j : __max;
+            _min_pos = *_walk < *_min_pos ? _walk : _min_pos;
+            _max_pos = *_walk > *_max_pos ? _walk : _max_pos;
         }
-        iter_swap(__min, _first);
-        iter_swap(__max != _first ? __max : __min, --_last);
+        iter_swap(_min_pos, _first);
+        iter_swap(_max_pos != _first ? _max_pos : _min_pos, _last);
     }
 }
 

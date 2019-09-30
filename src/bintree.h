@@ -63,7 +63,7 @@ protected:
     {
         __update_member(_root, nullptr);
     }
-    inline void __update_root(binode_ptr<_Tp> &opnv)
+    inline void __update_root(binode_ptr<_Tp> opnv)
     {
         _root = opnv;
     }

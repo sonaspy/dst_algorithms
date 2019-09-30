@@ -40,6 +40,6 @@ int main(int argc, char const *argv[])
 {
     /* code */
     char c = '\x4c';
-    printf("%c", c);
+    int i = abs(1);
     return 0;
 }
