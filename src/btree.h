@@ -221,7 +221,7 @@ public:
     inline int const order() { return this->_order; }
     inline int const size() { return this->_size; }
     inline bnode_ptr<_Tp> root() { return this->_root; }
-    inline bool const empty() { return !size(); }
+    inline bool const empty() const { return _root == nullptr; }
     inline void const clear()
     {
         for (auto &ptr : __memoryofbnode)
@@ -229,6 +229,10 @@ public:
         __memoryofbnode.clear();
         _root = nullptr;
         _size = 0;
+    }
+    bool count(const _Tp &val)
+    {
+        return search(val) != nullptr;
     }
     bnode_ptr<_Tp> search(const _Tp &val)
     {
