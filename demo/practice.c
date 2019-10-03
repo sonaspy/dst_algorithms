@@ -34,12 +34,12 @@ int _gcd(int a, int b)
     if (a % b == 0)
         return b;
     return _gcd(b, a % b);
+
 }
 
 int main(int argc, char const *argv[])
 {
     /* code */
-    char c = '\x4c';
-    int i = abs(1);
+
     return 0;
 }
