@@ -113,15 +113,15 @@ static void inline insertsort(_RandomAccessIterator _first, _RandomAccessIterato
     }
 }
 
-const int Sedgewick[] = {929, 505, 209, 109, 41, 19, 5, 1, 0};
+const int __Sedgewick[] = {929, 505, 209, 109, 41, 19, 5, 1, 0};
 template <typename _RandomAccessIterator, typename _Tp = typename iterator_traits<_RandomAccessIterator>::value_type>
 static void shellsort(_RandomAccessIterator _first, _RandomAccessIterator _last, const _Tp &_val)
 {
     int c, increment, _size = _last - _first;
     _RandomAccessIterator i, j;
-    for (c = 0; _size <= Sedgewick[c]; ++c)
+    for (c = 0; _size <= __Sedgewick[c]; ++c)
         ;
-    for (increment = Sedgewick[c]; increment > 0; increment = Sedgewick[++c])
+    for (increment = __Sedgewick[c]; increment > 0; increment = __Sedgewick[++c])
         for (i = _first + increment; i < _last; ++i)
         {
             _Tp tmp = *i;
