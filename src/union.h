@@ -12,6 +12,7 @@ protected:
     {
         return __union_arr[id] < 0 ? id : __union_arr[id] = __getRoot(__union_arr[id]);
     }
+
 public:
     vector<int> __union_arr;
     __Union(int n = 1000)
