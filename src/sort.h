@@ -124,10 +124,10 @@ static void shellsort(_RandomAccessIterator _first, _RandomAccessIterator _last,
     for (increment = __Sedgewick[c]; increment > 0; increment = __Sedgewick[++c])
         for (i = _first + increment; i < _last; ++i)
         {
-            _Tp tmp = *i;
-            for (j = i; _first + increment <= j && *(j - increment) > tmp; j -= increment)
+            _Tp _tmp = *i;
+            for (j = i; _first + increment <= j && *(j - increment) > _tmp; j -= increment)
                 *j = *(j - increment);
-            *j = tmp;
+            *j = _tmp;
         }
 }
 
@@ -183,6 +183,7 @@ static void inline mergeSort(_RandomAccessIterator _first, _RandomAccessIterator
     __mergesort_non_recur(_first, _last);
 }
 
+// []
 template <typename _RandomAccessIterator>
 static inline void __median3(_RandomAccessIterator _first, _RandomAccessIterator _last)
 {
@@ -195,8 +196,7 @@ static inline void __median3(_RandomAccessIterator _first, _RandomAccessIterator
         iter_swap(_mid, _last);
     iter_swap(_last, _mid);
 }
-
-//Partition routine for quicksort []
+//[]
 template <typename _RandomAccessIterator, typename _Tp = typename iterator_traits<_RandomAccessIterator>::value_type>
 static _RandomAccessIterator __partition(_RandomAccessIterator _first, _RandomAccessIterator _last)
 {
@@ -209,6 +209,7 @@ static _RandomAccessIterator __partition(_RandomAccessIterator _first, _RandomAc
     iter_swap(i + 1, _last);
     return i + 1;
 }
+
 //[]
 #define CUTOFF 10
 template <typename _RandomAccessIterator>
@@ -226,11 +227,33 @@ static void __quicksort(_RandomAccessIterator _first, _RandomAccessIterator _las
         __quicksort(p + 1, _last);
     }
 }
+template <typename _RandomAccessIterator>
+static void __quicksort_nonrecur(_RandomAccessIterator _first, _RandomAccessIterator _last)
+{
+    typedef pair<_RandomAccessIterator, _RandomAccessIterator> __record;
+    if (_first < _last)
+    {
+        stack<__record> _s;
+        __record _tmp;
+        _RandomAccessIterator p;
+        _s.push(make_pair(_first, _last));
+        while (_s.size())
+        {
+            _tmp = _s.top(), _s.pop();
+            p = __partition(_tmp.first, _tmp.second);
+            if (_tmp.first < p)
+                _s.push(make_pair(_tmp.first, p - 1));
+            if (p < _tmp.second)
+                _s.push(make_pair(p + 1, _tmp.second));
+        }
+    }
+}
 //[)
 template <typename _RandomAccessIterator>
 static void inline quicksort(_RandomAccessIterator _first, _RandomAccessIterator _last)
 {
     __quicksort(_first, --_last);
+    // __quicksort_nonrecur(_first, --_last);
 }
 
 //[)
@@ -251,13 +274,13 @@ template <typename _RandomAccessIterator>
 static _RandomAccessIterator __kth_element(_RandomAccessIterator _first, _RandomAccessIterator _last, int k)
 {
     _RandomAccessIterator p = __partition(_first, _last, *_first);
-    int r = p - _first;
-    if (r == k)
+    int rank = p - _first;
+    if (rank == k)
         return p;
-    else if (k < r)
+    else if (k < rank)
         return __kth_element(_first, p - 1, k);
     else
-        return __kth_element(p + 1, _last, k - (r + 1));
+        return __kth_element(p + 1, _last, k - (rank + 1));
 }
 //[)
 template <typename _RandomAccessIterator>
@@ -317,11 +340,11 @@ static void tableSort(_Tp *a, _Tp *b)
     iota(table.begin(), table.end(), 0);
     for (int i = 1; i < _size; i++)
     {
-        int tmp = table[i];
+        int _tmp = table[i];
         int j;
-        for (j = i; 1 <= j && a[tmp] < a[table[j - 1]]; j -= 1)
+        for (j = i; 1 <= j && a[_tmp] < a[table[j - 1]]; j -= 1)
             table[j] = table[j - 1];
-        table[j] = tmp;
+        table[j] = _tmp;
     }
     for (int i = 0; i < _size; i++)
     {
@@ -345,10 +368,10 @@ for (int i = 0; i < SIZE; i++)
     {
         if (a[i] != i)
         {
-            int start = i, j = a[i], tmp;
-            for (; j != start; j = tmp)
+            int start = i, j = a[i], _tmp;
+            for (; j != start; j = _tmp)
             {
-                tmp = a[j];
+                _tmp = a[j];
                 a[j] = j;
             }
             a[i] = i;
