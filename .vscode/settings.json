@@ -72,7 +72,11 @@
     "__functional_base_03": "cpp",
     "*.tcc": "cpp",
     "array": "cpp",
-    "random": "cpp"
+    "random": "cpp",
+    "__functional_03": "cpp",
+    "memory_resource": "cpp",
+    "future": "cpp",
+    "scoped_allocator": "cpp"
 },
   "python.pythonPath": "/usr/local/opt/python/bin/python3.7",
 
