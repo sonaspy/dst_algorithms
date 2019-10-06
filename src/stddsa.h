@@ -2,7 +2,9 @@
 #define __NEW_DSA__
 
 #include "dst_config.h"
-#include "exceptions.h"
+#include "type_traits.h"
+#include "dst_construct.h"
+#include "pair.h"
 #include "algorithms.h"
 #include "trees.h"
 #include "sort.h"
@@ -11,5 +13,4 @@
 #include "graph.h"
 #include "priority_q.h"
 #include "str.h"
-
 #endif
