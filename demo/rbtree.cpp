@@ -1,7 +1,7 @@
 // author - sonaspy@outlook.com
 // coding - utf_8
 
-#include "../src/dsa.h"
+#include "../src/stddsa.h"
 
 using namespace std;
 using namespace dsa;

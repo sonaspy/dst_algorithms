@@ -10,8 +10,7 @@
 #include <numeric>
 #include <stack>
 using namespace std;
-namespace dsa
-{
+__DST_BEGIN_NAMESPACE
 
 template <typename _Tp>
 void print_vector(vector<_Tp> &a)
@@ -454,6 +453,6 @@ inline pair<_RandomAccessIterator, _RandomAccessIterator> lcs(_RandomAccessItera
     return __lcs(_first, _last, less<typename iterator_traits<_RandomAccessIterator>::value_type>());
 }
 
-} // namespace dsa
+__DST_END_NAMESPACE
 
 #endif

@@ -1,7 +1,7 @@
 // author - sonaspy@outlook.com
 // coding - utf_8
 
-#include "../src/dsa.h"
+#include "../src/stddsa.h"
 #include <random>
 #define SIZE 100
 
