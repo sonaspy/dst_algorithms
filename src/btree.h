@@ -4,8 +4,7 @@
 #ifndef __BTREE__
 #define __BTREE__
 
-namespace dsa
-{
+__DST_BEGIN_NAMESPACE
 
 template <typename _Tp>
 class btree
@@ -323,5 +322,9 @@ public:
         cout << "nullptr\n";
     }
 };
-} // namespace dsa
+
+
+
+__DST_END_NAMESPACE
+
 #endif
