@@ -103,4 +103,3 @@ inline void destroy(_ForwardIterator __first, _ForwardIterator __last)
 __DST_END_NAMESPACE
 
 #endif /* ___DST_INTERNAL_CONSTRUCT_H */
-

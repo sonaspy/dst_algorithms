@@ -6,6 +6,7 @@
 #ifndef ___DST_FUNCTION_H
 #include "function.h"
 #endif
+
 #include <stddef.h>
 
 #ifdef __DST_USE_NEW_IOSTREAMS
