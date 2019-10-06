@@ -391,6 +391,3 @@ __DST_TEMPLATE_NULL struct _Is_integer<unsigned long long>
 
 #endif /* __TYPE_TRAITS_H */
 
-// Local Variables:
-// mode:C++
-// End:

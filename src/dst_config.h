@@ -81,14 +81,6 @@
 #endif
 #endif
 
-/*
- * Jochen Schlick '1999  - added new #defines (__DST)_UITHREADS (for 
- *                         providing SCO / Solaris / UI thread support)
- *                       - added the necessary defines for the SCO UDK 7 
- *                         compiler (and its template friend behavior)
- *                       - all UDK7 specific DST changes are based on the 
- *                         macro __USLC__ being defined
- */
 // SCO UDK 7 compiler (UnixWare 7x, OSR 5, UnixWare 2x)
 #if defined(__USLC__)
 #define __DST_HAS_WCHAR_T
@@ -419,6 +411,4 @@ typedef int bool;
 
 #endif /* __DST_CONFIG_H */
 
-// Local Variables:
-// mode:C++
-// End:
+
