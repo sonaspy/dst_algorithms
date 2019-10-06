@@ -104,6 +104,3 @@ __DST_END_NAMESPACE
 
 #endif /* ___DST_INTERNAL_CONSTRUCT_H */
 
-// Local Variables:
-// mode:C++
-// End:
