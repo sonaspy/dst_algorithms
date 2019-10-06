@@ -227,6 +227,7 @@ static void __quicksort(_RandomAccessIterator _first, _RandomAccessIterator _las
         __quicksort(p + 1, _last);
     }
 }
+
 template <typename _RandomAccessIterator>
 static void __quicksort_nonrecur(_RandomAccessIterator _first, _RandomAccessIterator _last)
 {
