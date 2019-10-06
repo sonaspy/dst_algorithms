@@ -981,7 +981,7 @@ inline bool operator==(const istream_iterator<_Tp, _Distance> &__x,
 {
     return (__x._M_stream == __y._M_stream &&
             __x._M_end_marker == __y._M_end_marker) ||
-           __x._M_end_marker == false && __y._M_end_marker == false;
+           (__x._M_end_marker == false && __y._M_end_marker == false);
 }
 
 #ifdef __DST_FUNCTION_TMPL_PARTIAL_ORDER

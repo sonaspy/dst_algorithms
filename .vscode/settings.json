@@ -76,7 +76,13 @@
     "__functional_03": "cpp",
     "memory_resource": "cpp",
     "future": "cpp",
-    "scoped_allocator": "cpp"
+    "scoped_allocator": "cpp",
+    "forward_list": "cpp",
+    "list": "cpp",
+    "regex": "cpp",
+    "set": "cpp",
+    "hashtable": "cpp",
+    "valarray": "cpp"
 },
   "python.pythonPath": "/usr/local/opt/python/bin/python3.7",
 
