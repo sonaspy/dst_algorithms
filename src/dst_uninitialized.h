@@ -13,188 +13,149 @@ __DST_BEGIN_NAMESPACE
 // Valid if copy construction is equivalent to assignment, and if the
 //  destructor is trivial.
 template <class _InputIter, class _ForwardIter>
-inline _ForwardIter
-__uninitialized_copy_aux(_InputIter __first, _InputIter __last,
-                         _ForwardIter __result,
-                         __true_type)
+inline _ForwardIter __uninitialized_copy_aux(_InputIter _first, _InputIter _last, _ForwardIter __result, __true_type)
 {
-    return copy(__first, __last, __result);
+    return copy(_first, _last, __result);
 }
 
 template <class _InputIter, class _ForwardIter>
-_ForwardIter
-__uninitialized_copy_aux(_InputIter __first, _InputIter __last,
-                         _ForwardIter __result,
-                         __false_type)
+_ForwardIter __uninitialized_copy_aux(_InputIter _first, _InputIter _last, _ForwardIter __result, __false_type)
 {
     _ForwardIter __cur = __result;
     __DST_TRY
     {
-        for (; __first != __last; ++__first, ++__cur)
-            _Construct(&*__cur, *__first);
+        for (; _first != _last; ++_first, ++__cur)
+            _Construct(&*__cur, *_first);
         return __cur;
     }
     __DST_UNWIND(_Destroy(__result, __cur));
 }
 
 template <class _InputIter, class _ForwardIter, class _Tp>
-inline _ForwardIter
-__uninitialized_copy(_InputIter __first, _InputIter __last,
-                     _ForwardIter __result, _Tp *)
+inline _ForwardIter __uninitialized_copy(_InputIter _first, _InputIter _last, _ForwardIter __result, _Tp *)
 {
     typedef typename __type_traits<_Tp>::is_POD_type _Is_POD;
-    return __uninitialized_copy_aux(__first, __last, __result, _Is_POD());
+    return __uninitialized_copy_aux(_first, _last, __result, _Is_POD());
 }
 
 template <class _InputIter, class _ForwardIter>
-inline _ForwardIter
-uninitialized_copy(_InputIter __first, _InputIter __last,
-                   _ForwardIter __result)
+inline _ForwardIter uninitialized_copy(_InputIter _first, _InputIter _last, _ForwardIter __result)
 {
-    return __uninitialized_copy(__first, __last, __result,
-                                __VALUE_TYPE(__result));
+    return __uninitialized_copy(_first, _last, __result, __VALUE_TYPE(__result));
 }
 
-inline char *uninitialized_copy(const char *__first, const char *__last,
-                                char *__result)
+inline char *uninitialized_copy(const char *_first, const char *_last, char *__result)
 {
-    memmove(__result, __first, __last - __first);
-    return __result + (__last - __first);
+    memmove(__result, _first, _last - _first);
+    return __result + (_last - _first);
 }
 
-inline wchar_t *
-uninitialized_copy(const wchar_t *__first, const wchar_t *__last,
-                   wchar_t *__result)
+inline wchar_t *uninitialized_copy(const wchar_t *_first, const wchar_t *_last, wchar_t *__result)
 {
-    memmove(__result, __first, sizeof(wchar_t) * (__last - __first));
-    return __result + (__last - __first);
+    memmove(__result, _first, sizeof(wchar_t) * (_last - _first));
+    return __result + (_last - _first);
 }
 
 // uninitialized_copy_n (not part of the C++ standard)
 
 template <class _InputIter, class _Size, class _ForwardIter>
-pair<_InputIter, _ForwardIter>
-__uninitialized_copy_n(_InputIter __first, _Size __count,
-                       _ForwardIter __result,
-                       input_iterator_tag)
+pair<_InputIter, _ForwardIter> __uninitialized_copy_n(_InputIter _first, _Size __count, _ForwardIter __result, input_iterator_tag)
 {
     _ForwardIter __cur = __result;
     __DST_TRY
     {
-        for (; __count > 0; --__count, ++__first, ++__cur)
-            _Construct(&*__cur, *__first);
-        return pair<_InputIter, _ForwardIter>(__first, __cur);
+        for (; __count > 0; --__count, ++_first, ++__cur)
+            _Construct(&*__cur, *_first);
+        return pair<_InputIter, _ForwardIter>(_first, __cur);
     }
     __DST_UNWIND(_Destroy(__result, __cur));
 }
 
 template <class _RandomAccessIter, class _Size, class _ForwardIter>
 inline pair<_RandomAccessIter, _ForwardIter>
-__uninitialized_copy_n(_RandomAccessIter __first, _Size __count,
-                       _ForwardIter __result,
-                       random_access_iterator_tag)
+__uninitialized_copy_n(_RandomAccessIter _first, _Size __count, _ForwardIter __result, random_access_iterator_tag)
 {
-    _RandomAccessIter __last = __first + __count;
-    return pair<_RandomAccessIter, _ForwardIter>(
-        __last,
-        uninitialized_copy(__first, __last, __result));
+    _RandomAccessIter _last = _first + __count;
+    return pair<_RandomAccessIter, _ForwardIter>(_last, uninitialized_copy(_first, _last, __result));
 }
 
 template <class _InputIter, class _Size, class _ForwardIter>
-inline pair<_InputIter, _ForwardIter>
-__uninitialized_copy_n(_InputIter __first, _Size __count,
-                       _ForwardIter __result)
+inline pair<_InputIter, _ForwardIter> __uninitialized_copy_n(_InputIter _first, _Size __count, _ForwardIter __result)
 {
-    return __uninitialized_copy_n(__first, __count, __result,
-                                  __ITERATOR_CATEGORY(__first));
+    return __uninitialized_copy_n(_first, __count, __result, __ITERATOR_CATEGORY(_first));
 }
 
 template <class _InputIter, class _Size, class _ForwardIter>
-inline pair<_InputIter, _ForwardIter>
-uninitialized_copy_n(_InputIter __first, _Size __count,
-                     _ForwardIter __result)
+inline pair<_InputIter, _ForwardIter> uninitialized_copy_n(_InputIter _first, _Size __count, _ForwardIter __result)
 {
-    return __uninitialized_copy_n(__first, __count, __result,
-                                  __ITERATOR_CATEGORY(__first));
+    return __uninitialized_copy_n(_first, __count, __result, __ITERATOR_CATEGORY(_first));
 }
 
 // Valid if copy construction is equivalent to assignment, and if the
 // destructor is trivial.
 template <class _ForwardIter, class _Tp>
-inline void
-__uninitialized_fill_aux(_ForwardIter __first, _ForwardIter __last,
-                         const _Tp &__x, __true_type)
+inline void __uninitialized_fill_aux(_ForwardIter _first, _ForwardIter _last, const _Tp &__x, __true_type)
 {
-    fill(__first, __last, __x);
+    fill(_first, _last, __x);
 }
 
 template <class _ForwardIter, class _Tp>
-void __uninitialized_fill_aux(_ForwardIter __first, _ForwardIter __last,
-                              const _Tp &__x, __false_type)
+void __uninitialized_fill_aux(_ForwardIter _first, _ForwardIter _last, const _Tp &__x, __false_type)
 {
-    _ForwardIter __cur = __first;
+    _ForwardIter __cur = _first;
     __DST_TRY
     {
-        for (; __cur != __last; ++__cur)
+        for (; __cur != _last; ++__cur)
             _Construct(&*__cur, __x);
     }
-    __DST_UNWIND(_Destroy(__first, __cur));
+    __DST_UNWIND(_Destroy(_first, __cur));
 }
 
 template <class _ForwardIter, class _Tp, class _Tp1>
-inline void __uninitialized_fill(_ForwardIter __first,
-                                 _ForwardIter __last, const _Tp &__x, _Tp1 *)
+inline void __uninitialized_fill(_ForwardIter _first, _ForwardIter _last, const _Tp &__x, _Tp1 *)
 {
     typedef typename __type_traits<_Tp1>::is_POD_type _Is_POD;
-    __uninitialized_fill_aux(__first, __last, __x, _Is_POD());
+    __uninitialized_fill_aux(_first, _last, __x, _Is_POD());
 }
 
 template <class _ForwardIter, class _Tp>
-inline void uninitialized_fill(_ForwardIter __first,
-                               _ForwardIter __last,
-                               const _Tp &__x)
+inline void uninitialized_fill(_ForwardIter _first, _ForwardIter _last, const _Tp &__x)
 {
-    __uninitialized_fill(__first, __last, __x, __VALUE_TYPE(__first));
+    __uninitialized_fill(_first, _last, __x, __VALUE_TYPE(_first));
 }
 
 // Valid if copy construction is equivalent to assignment, and if the
 //  destructor is trivial.
 template <class _ForwardIter, class _Size, class _Tp>
-inline _ForwardIter
-__uninitialized_fill_n_aux(_ForwardIter __first, _Size __n,
-                           const _Tp &__x, __true_type)
+inline _ForwardIter __uninitialized_fill_n_aux(_ForwardIter _first, _Size __n, const _Tp &__x, __true_type)
 {
-    return fill_n(__first, __n, __x);
+    return fill_n(_first, __n, __x);
 }
 
 template <class _ForwardIter, class _Size, class _Tp>
-_ForwardIter
-__uninitialized_fill_n_aux(_ForwardIter __first, _Size __n,
-                           const _Tp &__x, __false_type)
+_ForwardIter __uninitialized_fill_n_aux(_ForwardIter _first, _Size __n, const _Tp &__x, __false_type)
 {
-    _ForwardIter __cur = __first;
+    _ForwardIter __cur = _first;
     __DST_TRY
     {
         for (; __n > 0; --__n, ++__cur)
             _Construct(&*__cur, __x);
         return __cur;
     }
-    __DST_UNWIND(_Destroy(__first, __cur));
+    __DST_UNWIND(_Destroy(_first, __cur));
 }
 
 template <class _ForwardIter, class _Size, class _Tp, class _Tp1>
-inline _ForwardIter
-__uninitialized_fill_n(_ForwardIter __first, _Size __n, const _Tp &__x, _Tp1 *)
+inline _ForwardIter __uninitialized_fill_n(_ForwardIter _first, _Size __n, const _Tp &__x, _Tp1 *)
 {
     typedef typename __type_traits<_Tp1>::is_POD_type _Is_POD;
-    return __uninitialized_fill_n_aux(__first, __n, __x, _Is_POD());
+    return __uninitialized_fill_n_aux(_first, __n, __x, _Is_POD());
 }
 
 template <class _ForwardIter, class _Size, class _Tp>
-inline _ForwardIter
-uninitialized_fill_n(_ForwardIter __first, _Size __n, const _Tp &__x)
+inline _ForwardIter uninitialized_fill_n(_ForwardIter _first, _Size __n, const _Tp &__x)
 {
-    return __uninitialized_fill_n(__first, __n, __x, __VALUE_TYPE(__first));
+    return __uninitialized_fill_n(_first, __n, __x, __VALUE_TYPE(_first));
 }
 
 // Extensions: __uninitialized_copy_copy, __uninitialized_copy_fill,
@@ -207,9 +168,7 @@ uninitialized_fill_n(_ForwardIter __first, _Size __n, const _Tp &__x)
 
 template <class _InputIter1, class _InputIter2, class _ForwardIter>
 inline _ForwardIter
-__uninitialized_copy_copy(_InputIter1 __first1, _InputIter1 __last1,
-                          _InputIter2 __first2, _InputIter2 __last2,
-                          _ForwardIter __result)
+__uninitialized_copy_copy(_InputIter1 __first1, _InputIter1 __last1, _InputIter2 __first2, _InputIter2 __last2, _ForwardIter __result)
 {
     _ForwardIter __mid = uninitialized_copy(__first1, __last1, __result);
     __DST_TRY
@@ -224,14 +183,12 @@ __uninitialized_copy_copy(_InputIter1 __first1, _InputIter1 __last1,
 //  [mid, mid + (last - first)).
 template <class _ForwardIter, class _Tp, class _InputIter>
 inline _ForwardIter
-__uninitialized_fill_copy(_ForwardIter __result, _ForwardIter __mid,
-                          const _Tp &__x,
-                          _InputIter __first, _InputIter __last)
+__uninitialized_fill_copy(_ForwardIter __result, _ForwardIter __mid, const _Tp &__x, _InputIter _first, _InputIter _last)
 {
     uninitialized_fill(__result, __mid, __x);
     __DST_TRY
     {
-        return uninitialized_copy(__first, __last, __mid);
+        return uninitialized_copy(_first, _last, __mid);
     }
     __DST_UNWIND(_Destroy(__result, __mid));
 }
@@ -241,9 +198,7 @@ __uninitialized_fill_copy(_ForwardIter __result, _ForwardIter __mid,
 //  fills [first2 + (last1 - first1), last2) with x.
 template <class _InputIter, class _ForwardIter, class _Tp>
 inline void
-__uninitialized_copy_fill(_InputIter __first1, _InputIter __last1,
-                          _ForwardIter __first2, _ForwardIter __last2,
-                          const _Tp &__x)
+__uninitialized_copy_fill(_InputIter __first1, _InputIter __last1, _ForwardIter __first2, _ForwardIter __last2, const _Tp &__x)
 {
     _ForwardIter __mid2 = uninitialized_copy(__first1, __last1, __first2);
     __DST_TRY

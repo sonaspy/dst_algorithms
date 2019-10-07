@@ -544,7 +544,7 @@ class mem_fun_t : public unary_function<_Tp *, _Ret>
 {
 public:
     explicit mem_fun_t(_Ret (_Tp::*__pf)()) : _M_f(__pf) {}
-    _Ret operator()(_Tp *__p) const { return (__p->*_M_f)(); }
+    _Ret operator()(_Tp *_p) const { return (_p->*_M_f)(); }
 
 private:
     _Ret (_Tp::*_M_f)();
@@ -555,7 +555,7 @@ class const_mem_fun_t : public unary_function<const _Tp *, _Ret>
 {
 public:
     explicit const_mem_fun_t(_Ret (_Tp::*__pf)() const) : _M_f(__pf) {}
-    _Ret operator()(const _Tp *__p) const { return (__p->*_M_f)(); }
+    _Ret operator()(const _Tp *_p) const { return (_p->*_M_f)(); }
 
 private:
     _Ret (_Tp::*_M_f)() const;
@@ -588,7 +588,7 @@ class mem_fun1_t : public binary_function<_Tp *, _Arg, _Ret>
 {
 public:
     explicit mem_fun1_t(_Ret (_Tp::*__pf)(_Arg)) : _M_f(__pf) {}
-    _Ret operator()(_Tp *__p, _Arg __x) const { return (__p->*_M_f)(__x); }
+    _Ret operator()(_Tp *_p, _Arg __x) const { return (_p->*_M_f)(__x); }
 
 private:
     _Ret (_Tp::*_M_f)(_Arg);
@@ -599,9 +599,9 @@ class const_mem_fun1_t : public binary_function<const _Tp *, _Arg, _Ret>
 {
 public:
     explicit const_mem_fun1_t(_Ret (_Tp::*__pf)(_Arg) const) : _M_f(__pf) {}
-    _Ret operator()(const _Tp *__p, _Arg __x) const
+    _Ret operator()(const _Tp *_p, _Arg __x) const
     {
-        return (__p->*_M_f)(__x);
+        return (_p->*_M_f)(__x);
     }
 
 private:
@@ -637,7 +637,7 @@ class mem_fun_t<void, _Tp> : public unary_function<_Tp *, void>
 {
 public:
     explicit mem_fun_t(void (_Tp::*__pf)()) : _M_f(__pf) {}
-    void operator()(_Tp *__p) const { (__p->*_M_f)(); }
+    void operator()(_Tp *_p) const { (_p->*_M_f)(); }
 
 private:
     void (_Tp::*_M_f)();
@@ -648,7 +648,7 @@ class const_mem_fun_t<void, _Tp> : public unary_function<const _Tp *, void>
 {
 public:
     explicit const_mem_fun_t(void (_Tp::*__pf)() const) : _M_f(__pf) {}
-    void operator()(const _Tp *__p) const { (__p->*_M_f)(); }
+    void operator()(const _Tp *_p) const { (_p->*_M_f)(); }
 
 private:
     void (_Tp::*_M_f)() const;
@@ -681,7 +681,7 @@ class mem_fun1_t<void, _Tp, _Arg> : public binary_function<_Tp *, _Arg, void>
 {
 public:
     explicit mem_fun1_t(void (_Tp::*__pf)(_Arg)) : _M_f(__pf) {}
-    void operator()(_Tp *__p, _Arg __x) const { (__p->*_M_f)(__x); }
+    void operator()(_Tp *_p, _Arg __x) const { (_p->*_M_f)(__x); }
 
 private:
     void (_Tp::*_M_f)(_Arg);
@@ -693,7 +693,7 @@ class const_mem_fun1_t<void, _Tp, _Arg>
 {
 public:
     explicit const_mem_fun1_t(void (_Tp::*__pf)(_Arg) const) : _M_f(__pf) {}
-    void operator()(const _Tp *__p, _Arg __x) const { (__p->*_M_f)(__x); }
+    void operator()(const _Tp *_p, _Arg __x) const { (_p->*_M_f)(__x); }
 
 private:
     void (_Tp::*_M_f)(_Arg) const;

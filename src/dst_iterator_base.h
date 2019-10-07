@@ -281,43 +281,43 @@ inline ptrdiff_t *distance_type(const _Tp *) { return (ptrdiff_t *)(0); }
 #endif /* __DST_CLASS_PARTIAL_SPECIALIZATION */
 
 template <class _InputIterator, class _Distance>
-inline void __distance(_InputIterator __first, _InputIterator __last,
+inline void __distance(_InputIterator _first, _InputIterator _last,
                        _Distance &__n, input_iterator_tag)
 {
-    while (__first != __last)
+    while (_first != _last)
     {
-        ++__first;
+        ++_first;
         ++__n;
     }
 }
 
 template <class _RandomAccessIterator, class _Distance>
-inline void __distance(_RandomAccessIterator __first,
-                       _RandomAccessIterator __last,
+inline void __distance(_RandomAccessIterator _first,
+                       _RandomAccessIterator _last,
                        _Distance &__n, random_access_iterator_tag)
 {
     __DST_REQUIRES(_RandomAccessIterator, _RandomAccessIterator);
-    __n += __last - __first;
+    __n += _last - _first;
 }
 
 template <class _InputIterator, class _Distance>
-inline void distance(_InputIterator __first,
-                     _InputIterator __last, _Distance &__n)
+inline void distance(_InputIterator _first,
+                     _InputIterator _last, _Distance &__n)
 {
     __DST_REQUIRES(_InputIterator, _InputIterator);
-    __distance(__first, __last, __n, iterator_category(__first));
+    __distance(_first, _last, __n, iterator_category(_first));
 }
 
 #ifdef __DST_CLASS_PARTIAL_SPECIALIZATION
 
 template <class _InputIterator>
 inline typename iterator_traits<_InputIterator>::difference_type
-__distance(_InputIterator __first, _InputIterator __last, input_iterator_tag)
+__distance(_InputIterator _first, _InputIterator _last, input_iterator_tag)
 {
     typename iterator_traits<_InputIterator>::difference_type __n = 0;
-    while (__first != __last)
+    while (_first != _last)
     {
-        ++__first;
+        ++_first;
         ++__n;
     }
     return __n;
@@ -325,21 +325,21 @@ __distance(_InputIterator __first, _InputIterator __last, input_iterator_tag)
 
 template <class _RandomAccessIterator>
 inline typename iterator_traits<_RandomAccessIterator>::difference_type
-__distance(_RandomAccessIterator __first, _RandomAccessIterator __last,
+__distance(_RandomAccessIterator _first, _RandomAccessIterator _last,
            random_access_iterator_tag)
 {
     __DST_REQUIRES(_RandomAccessIterator, _RandomAccessIterator);
-    return __last - __first;
+    return _last - _first;
 }
 
 template <class _InputIterator>
 inline typename iterator_traits<_InputIterator>::difference_type
-distance(_InputIterator __first, _InputIterator __last)
+distance(_InputIterator _first, _InputIterator _last)
 {
     typedef typename iterator_traits<_InputIterator>::iterator_category
         _Category;
     __DST_REQUIRES(_InputIterator, _InputIterator);
-    return __distance(__first, __last, _Category());
+    return __distance(_first, _last, _Category());
 }
 
 #endif /* __DST_CLASS_PARTIAL_SPECIALIZATION */

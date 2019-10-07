@@ -116,18 +116,18 @@ struct _Refcount_Base
 // possibly concurrent updates use _Atomic_swap.
 // In some cases the operation is emulated with a lock.
 #ifdef __DST__THREADS
-inline unsigned long _Atomic_swap(unsigned long *__p, unsigned long __q)
+inline unsigned long _Atomic_swap(unsigned long *_p, unsigned long __q)
 {
 #if __mips < 3 || !(defined(_ABIN32) || defined(_ABI64))
-    return test_and_set(__p, __q);
+    return test_and_set(_p, __q);
 #else
-    return __test_and_set(__p, (unsigned long)__q);
+    return __test_and_set(_p, (unsigned long)__q);
 #endif
 }
 #elif defined(__DST_WIN32THREADS)
-inline unsigned long _Atomic_swap(unsigned long *__p, unsigned long __q)
+inline unsigned long _Atomic_swap(unsigned long *_p, unsigned long __q)
 {
-    return (unsigned long)InterlockedExchange((LPLONG)__p, (LONG)__q);
+    return (unsigned long)InterlockedExchange((LPLONG)_p, (LONG)__q);
 }
 #elif defined(__DST_PTHREADS)
 // We use a template here only to get a unique initialized instance.
@@ -144,11 +144,11 @@ pthread_mutex_t
 // This should be portable, but performance is expected
 // to be quite awful.  This really needs platform specific
 // code.
-inline unsigned long _Atomic_swap(unsigned long *__p, unsigned long __q)
+inline unsigned long _Atomic_swap(unsigned long *_p, unsigned long __q)
 {
     pthread_mutex_lock(&_Swap_lock_struct<0>::_S_swap_lock);
-    unsigned long __result = *__p;
-    *__p = __q;
+    unsigned long __result = *_p;
+    *_p = __q;
     pthread_mutex_unlock(&_Swap_lock_struct<0>::_S_swap_lock);
     return __result;
 }
@@ -167,11 +167,11 @@ mutex_t
 // This should be portable, but performance is expected
 // to be quite awful.  This really needs platform specific
 // code.
-inline unsigned long _Atomic_swap(unsigned long *__p, unsigned long __q)
+inline unsigned long _Atomic_swap(unsigned long *_p, unsigned long __q)
 {
     mutex_lock(&_Swap_lock_struct<0>::_S_swap_lock);
-    unsigned long __result = *__p;
-    *__p = __q;
+    unsigned long __result = *_p;
+    *_p = __q;
     mutex_unlock(&_Swap_lock_struct<0>::_S_swap_lock);
     return __result;
 }
@@ -196,19 +196,19 @@ __DECLARE_INSTANCE(mutex_t, _Swap_lock_struct<__dummy>::_S_swap_lock,
 // This should be portable, but performance is expected
 // to be quite awful.  This really needs platform specific
 // code.
-inline unsigned long _Atomic_swap(unsigned long *__p, unsigned long __q)
+inline unsigned long _Atomic_swap(unsigned long *_p, unsigned long __q)
 {
     mutex_lock(&_Swap_lock_struct<0>::_S_swap_lock);
-    unsigned long __result = *__p;
-    *__p = __q;
+    unsigned long __result = *_p;
+    *_p = __q;
     mutex_unlock(&_Swap_lock_struct<0>::_S_swap_lock);
     return __result;
 }
 #else
-static inline unsigned long _Atomic_swap(unsigned long *__p, unsigned long __q)
+static inline unsigned long _Atomic_swap(unsigned long *_p, unsigned long __q)
 {
-    unsigned long __result = *__p;
-    *__p = __q;
+    unsigned long __result = *_p;
+    *_p = __q;
     return __result;
 }
 #endif
@@ -238,14 +238,14 @@ struct _DST_mutex_spin
     // Low if we suspect uniprocessor, high for multiprocessor.
 
     static unsigned __max;
-    static unsigned __last;
+    static unsigned _last;
 };
 
 template <int __inst>
 unsigned _DST_mutex_spin<__inst>::__max = _DST_mutex_spin<__inst>::__low_max;
 
 template <int __inst>
-unsigned _DST_mutex_spin<__inst>::__last = 0;
+unsigned _DST_mutex_spin<__inst>::_last = 0;
 
 struct _DST_mutex_lock
 {
@@ -283,7 +283,7 @@ struct _DST_mutex_lock
             return;
         }
         unsigned __my_spin_max = _DST_mutex_spin<0>::__max;
-        unsigned __my_last_spins = _DST_mutex_spin<0>::__last;
+        unsigned __my_last_spins = _DST_mutex_spin<0>::_last;
         volatile unsigned __junk = 17; // Value doesn't matter.
         unsigned __i;
         for (__i = 0; __i < __my_spin_max; __i++)
@@ -302,7 +302,7 @@ struct _DST_mutex_lock
                 // Spinning worked.  Thus we're probably not being scheduled
                 // against the other process with which we were contending.
                 // Thus it makes sense to spin longer the next time.
-                _DST_mutex_spin<0>::__last = __i;
+                _DST_mutex_spin<0>::_last = __i;
                 _DST_mutex_spin<0>::__max = _DST_mutex_spin<0>::__high_max;
                 return;
             }

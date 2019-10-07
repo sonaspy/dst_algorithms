@@ -25,9 +25,9 @@ public:
 
     explicit back_insert_iterator(_Container &__x) : container(&__x) {}
     back_insert_iterator<_Container> &
-    operator=(const typename _Container::value_type &__value)
+    operator=(const typename _Container::value_type &_value)
     {
-        container->push_back(__value);
+        container->push_back(_value);
         return *this;
     }
     back_insert_iterator<_Container> &operator*() { return *this; }
@@ -68,9 +68,9 @@ public:
 
     explicit front_insert_iterator(_Container &__x) : container(&__x) {}
     front_insert_iterator<_Container> &
-    operator=(const typename _Container::value_type &__value)
+    operator=(const typename _Container::value_type &_value)
     {
-        container->push_front(__value);
+        container->push_front(_value);
         return *this;
     }
     front_insert_iterator<_Container> &operator*() { return *this; }
@@ -113,9 +113,9 @@ public:
     insert_iterator(_Container &__x, typename _Container::iterator __i)
         : container(&__x), iter(__i) {}
     insert_iterator<_Container> &
-    operator=(const typename _Container::value_type &__value)
+    operator=(const typename _Container::value_type &_value)
     {
-        iter = container->insert(iter, __value);
+        iter = container->insert(iter, _value);
         ++iter;
         return *this;
     }
@@ -717,9 +717,9 @@ public:
     ostream_iterator(ostream_type &__s) : _M_stream(&__s), _M_string(0) {}
     ostream_iterator(ostream_type &__s, const _CharT *__c)
         : _M_stream(&__s), _M_string(__c) {}
-    ostream_iterator<_Tp> &operator=(const _Tp &__value)
+    ostream_iterator<_Tp> &operator=(const _Tp &_value)
     {
-        *_M_stream << __value;
+        *_M_stream << _value;
         if (_M_string)
             *_M_stream << _M_string;
         return *this;
@@ -752,7 +752,7 @@ public:
     typedef basic_istream<_CharT, _Traits> istream_type;
 
 public:
-    istreambuf_iterator(streambuf_type *__p = 0) { this->_M_init(__p); }
+    istreambuf_iterator(streambuf_type *_p = 0) { this->_M_init(_p); }
     istreambuf_iterator(istream_type &__is) { this->_M_init(__is.rdbuf()); }
 
     char_type operator*() const
@@ -782,10 +782,10 @@ public:
     }
 
 private:
-    void _M_init(streambuf_type *__p)
+    void _M_init(streambuf_type *_p)
     {
-        _M_buf = __p;
-        _M_eof = !__p;
+        _M_buf = _p;
+        _M_eof = !_p;
         _M_is_initialized = _M_eof;
     }
 
@@ -1012,9 +1012,9 @@ public:
     ostream_iterator(ostream &__s) : _M_stream(&__s), _M_string(0) {}
     ostream_iterator(ostream &__s, const char *__c)
         : _M_stream(&__s), _M_string(__c) {}
-    ostream_iterator<_Tp> &operator=(const _Tp &__value)
+    ostream_iterator<_Tp> &operator=(const _Tp &_value)
     {
-        *_M_stream << __value;
+        *_M_stream << _value;
         if (_M_string)
             *_M_stream << _M_string;
         return *this;

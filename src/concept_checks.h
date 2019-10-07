@@ -19,14 +19,14 @@
 #define __DST_UNARY_FUNCTION_CHECK(__func, __ret, __arg) do {} while(0)
 #define __DST_CLASS_UNARY_FUNCTION_CHECK(__func, __ret, __arg) \
   static int  __##__func##__ret##__arg##_unary_function_check
-#define __DST_BINARY_FUNCTION_CHECK(__func, __ret, __first, __second) \
+#define __DST_BINARY_FUNCTION_CHECK(__func, __ret, _first, __second) \
   do {} while(0)
-#define __DST_CLASS_BINARY_FUNCTION_CHECK(__func, __ret, __first, __second) \
-  static int  __##__func##__ret##__first##__second##_binary_function_check
-#define __DST_REQUIRES_BINARY_OP(__opname, __ret, __first, __second) \
+#define __DST_CLASS_BINARY_FUNCTION_CHECK(__func, __ret, _first, __second) \
+  static int  __##__func##__ret##_first##__second##_binary_function_check
+#define __DST_REQUIRES_BINARY_OP(__opname, __ret, _first, __second) \
   do {} while(0)
-#define __DST_CLASS_REQUIRES_BINARY_OP(__opname, __ret, __first, __second) \
-  static int __##__opname##__ret##__first##__second##_require_binary_op
+#define __DST_CLASS_REQUIRES_BINARY_OP(__opname, __ret, _first, __second) \
+  static int __##__opname##__ret##_first##__second##_require_binary_op
 
 #else /* __DST_USE_CONCEPT_CHECKS */
 
@@ -86,20 +86,20 @@ do { \
   __x = __x; } while (0)
 
 
-#define __DST_BINARY_FUNCTION_CHECK(__func, __ret, __first, __second) \
+#define __DST_BINARY_FUNCTION_CHECK(__func, __ret, _first, __second) \
 do { \
-  __ret (*__x)( __func&, const __first&, const __second& ) = \
+  __ret (*__x)( __func&, const _first&, const __second& ) = \
      _DST_BINARY_FUNCTION_ERROR< \
-  __func, __ret, __first, __second>::__binary_function_requirement_violation; \
+  __func, __ret, _first, __second>::__binary_function_requirement_violation; \
   __x = __x; } while (0)
 
 
-#define __DST_REQUIRES_BINARY_OP(__opname, __ret, __first, __second) \
+#define __DST_REQUIRES_BINARY_OP(__opname, __ret, _first, __second) \
     do { \
-  __ret (*__x)( __first&, __second& ) = _DST_BINARY##__opname##_ERROR< \
-    __ret, __first, __second>::__binary_operator_requirement_violation; \
-  __ret (*__y)( const __first&, const __second& ) = \
-    _DST_BINARY##__opname##_ERROR< __ret, __first, __second>:: \
+  __ret (*__x)( _first&, __second& ) = _DST_BINARY##__opname##_ERROR< \
+    __ret, _first, __second>::__binary_operator_requirement_violation; \
+  __ret (*__y)( const _first&, const __second& ) = \
+    _DST_BINARY##__opname##_ERROR< __ret, _first, __second>:: \
       __const_binary_operator_requirement_violation; \
   __y = __y; __x = __x; } while (0)
 
@@ -110,8 +110,8 @@ do { \
 #define __DST_CLASS_REQUIRES_SAME_TYPE(__type_x, __type_y)
 #define __DST_CLASS_GENERATOR_CHECK(__func, __ret)
 #define __DST_CLASS_UNARY_FUNCTION_CHECK(__func, __ret, __arg)
-#define __DST_CLASS_BINARY_FUNCTION_CHECK(__func, __ret, __first, __second)
-#define __DST_CLASS_REQUIRES_BINARY_OP(__opname, __ret, __first, __second)
+#define __DST_CLASS_BINARY_FUNCTION_CHECK(__func, __ret, _first, __second)
+#define __DST_CLASS_REQUIRES_BINARY_OP(__opname, __ret, _first, __second)
 
 #else
 
@@ -161,26 +161,26 @@ do { \
   __dummy_ptr_##__func##__ret##__arg##_unary_check
 
 
-#define __DST_CLASS_BINARY_FUNCTION_CHECK(__func, __ret, __first, __second) \
-  typedef __ret (* __f_##__func##__ret##__first##__second##_binary_check)( __func&, const __first&,\
+#define __DST_CLASS_BINARY_FUNCTION_CHECK(__func, __ret, _first, __second) \
+  typedef __ret (* __f_##__func##__ret##_first##__second##_binary_check)( __func&, const _first&,\
                                                     const __second& ); \
-  template <__f_##__func##__ret##__first##__second##_binary_check _Tp1> \
-  struct __dummy_struct_##__func##__ret##__first##__second##_binary_check { }; \
-  static __dummy_struct_##__func##__ret##__first##__second##_binary_check< \
-    _DST_BINARY_FUNCTION_ERROR<__func, __ret, __first, __second>:: \
+  template <__f_##__func##__ret##_first##__second##_binary_check _Tp1> \
+  struct __dummy_struct_##__func##__ret##_first##__second##_binary_check { }; \
+  static __dummy_struct_##__func##__ret##_first##__second##_binary_check< \
+    _DST_BINARY_FUNCTION_ERROR<__func, __ret, _first, __second>:: \
   __binary_function_requirement_violation>  \
-  __dummy_ptr_##__func##__ret##__first##__second##_binary_check
+  __dummy_ptr_##__func##__ret##_first##__second##_binary_check
 
 
-#define __DST_CLASS_REQUIRES_BINARY_OP(__opname, __ret, __first, __second) \
-  typedef __ret (* __f_##__func##__ret##__first##__second##_binary_op)(const __first&, \
+#define __DST_CLASS_REQUIRES_BINARY_OP(__opname, __ret, _first, __second) \
+  typedef __ret (* __f_##__func##__ret##_first##__second##_binary_op)(const _first&, \
                                                     const __second& ); \
-  template <__f_##__func##__ret##__first##__second##_binary_op _Tp1> \
-  struct __dummy_struct_##__func##__ret##__first##__second##_binary_op { }; \
-  static __dummy_struct_##__func##__ret##__first##__second##_binary_op< \
-    _DST_BINARY##__opname##_ERROR<__ret, __first, __second>:: \
+  template <__f_##__func##__ret##_first##__second##_binary_op _Tp1> \
+  struct __dummy_struct_##__func##__ret##_first##__second##_binary_op { }; \
+  static __dummy_struct_##__func##__ret##_first##__second##_binary_op< \
+    _DST_BINARY##__opname##_ERROR<__ret, _first, __second>:: \
   __binary_operator_requirement_violation>  \
-  __dummy_ptr_##__func##__ret##__first##__second##_binary_op
+  __dummy_ptr_##__func##__ret##_first##__second##_binary_op
 
 #endif
 
@@ -261,9 +261,9 @@ template <class _Func, class _Ret, class _First, class _Second>
 struct _DST_BINARY_FUNCTION_ERROR {
   static _Ret
   __binary_function_requirement_violation(_Func& __f,
-                                          const _First& __first, 
+                                          const _First& _first, 
                                           const _Second& __second) {
-    return __f(__first, __second);
+    return __f(_first, __second);
   }
 };
 
@@ -271,9 +271,9 @@ template <class _Func, class _First, class _Second>
 struct _DST_BINARY_FUNCTION_ERROR<_Func, void, _First, _Second> {
   static void
   __binary_function_requirement_violation(_Func& __f,
-                                          const _First& __first, 
+                                          const _First& _first, 
                                           const _Second& __second) {
-    __f(__first, __second);
+    __f(_first, __second);
   }
 };
 
@@ -282,14 +282,14 @@ struct _DST_BINARY_FUNCTION_ERROR<_Func, void, _First, _Second> {
 template <class _Ret, class _First, class _Second> \
 struct _DST_BINARY##_NAME##_ERROR { \
   static _Ret \
-  __const_binary_operator_requirement_violation(const _First& __first,  \
+  __const_binary_operator_requirement_violation(const _First& _first,  \
                                                 const _Second& __second) { \
-    return __first _OP __second; \
+    return _first _OP __second; \
   } \
   static _Ret \
-  __binary_operator_requirement_violation(_First& __first,  \
+  __binary_operator_requirement_violation(_First& _first,  \
                                           _Second& __second) { \
-    return __first _OP __second; \
+    return _first _OP __second; \
   } \
 }
 

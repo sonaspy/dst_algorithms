@@ -21,7 +21,7 @@ struct pair
 
 #ifdef __DST_MEMBER_TEMPLATES
     template <class _U1, class _U2>
-    pair(const pair<_U1, _U2> &__p) : first(__p.first), second(__p.second)
+    pair(const pair<_U1, _U2> &_p) : first(_p.first), second(_p.second)
     {
     }
 #endif

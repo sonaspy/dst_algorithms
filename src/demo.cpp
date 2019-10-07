@@ -3,7 +3,6 @@
 
 #define SIZE 100
 #include "alloc.h"
-#include <iostream>
 #define test() freopen("in", "r", stdin)
 void f()
 {
@@ -19,6 +18,6 @@ int main(int argc, char const *argv[])
     printf("%p\n", f);
     printf("%p\n", &___FUNCCCCC);
     printf("%ld\n", __null);
-
+    
     return 0;
 }
