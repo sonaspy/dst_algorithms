@@ -2,43 +2,24 @@
 // coding - utf_8
 
 #define SIZE 100
-#include <bits/stdc++.h>
+#include "alloc.h"
+#include <iostream>
 #define test() freopen("in", "r", stdin)
-
-using namespace std;
-typedef int ElementType;
-ElementType Qselect(ElementType A[], int K, int Left, int Right)
+void f()
 {
-    ElementType Pivot = A[Left];
-    int L = Left, R = Right + 1;
-
-    while (1)
-    {
-        while (A[++L] < Pivot)
-            ;
-        while (A[--R] > Pivot)
-            ;
-        if (L < R)
-            iter_swap(&A[L], &A[R]);
-        else
-            break;
-    }
-    iter_swap(&A[Left], &A[R]);
-    if (K < (L - Left))
-        return Qselect(A, K, Left, R - 1);
-    else if (K > (L - Left))
-        return Qselect(A, K - (L - Left), R + 1, Right);
-    else
-        return Pivot;
 }
+void (*___FUNCCCCC)();
+using namespace std;
+
 int main(int argc, char const *argv[])
 {
     /* code */
     //test();
-    int b[SIZE];
-    iota(b, b + SIZE, 1);
-    unsigned seed = chrono::system_clock::now().time_since_epoch().count();
-    shuffle(b, b + SIZE, default_random_engine(seed));
-    cout << Qselect(b, 10, 0, SIZE - 1);
+    ___FUNCCCCC = f;
+    printf("%p\n", f);
+    printf("%p\n", &___FUNCCCCC);
+    printf("%ld\n", __null);
+    __default_alloc_template<0, 1> dfall;
+    void *p = dfall.allocate(10);
     return 0;
 }
