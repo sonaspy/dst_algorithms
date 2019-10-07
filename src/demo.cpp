@@ -39,5 +39,6 @@ int main(int argc, char const *argv[])
     iota(b, b + SIZE, 1);
     unsigned seed = chrono::system_clock::now().time_since_epoch().count();
     shuffle(b, b + SIZE, default_random_engine(seed));
+    cout << Qselect(b, 10, 0, SIZE - 1);
     return 0;
 }
