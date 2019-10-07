@@ -17,25 +17,30 @@ protected:
     bool _isunique, _isRBtree, _ishuffman;
     string _direct2l, _direct2r;
     vector<vector<string>> __display_buffer;
-    unordered_set<binode_ptr<_Tp>> __memofbinode;
+    unordered_set<binode_ptr<_Tp>> __memory_pool;
+    allocator<binode<_Tp>> __bintree_alloc;
+    const int __SIZEOF_BINODE = (sizeof(struct binode<_Tp>));
     inline binode_ptr<_Tp> __newbinode(const _Tp &x, binode_ptr<_Tp> p = nullptr, binode_ptr<_Tp> l = nullptr, binode_ptr<_Tp> r = nullptr, RBColor cl = BLK)
     {
-        binode_ptr<_Tp> v = new binode<_Tp>(x, p, l, r, cl);
-        __memofbinode.insert(v);
+        binode_ptr<_Tp> v = __bintree_alloc.allocate(__SIZEOF_BINODE);
+        __bintree_alloc.construct(v, x, p, l, r, cl);
+        __memory_pool.insert(v);
         this->_size++;
         return v;
     }
     inline binode_ptr<_Tp> __newbinode()
     {
-        binode_ptr<_Tp> v = new binode<_Tp>();
-        __memofbinode.insert(v);
+        binode_ptr<_Tp> v = __bintree_alloc.allocate(__SIZEOF_BINODE);
+        __bintree_alloc.construct(v);
+        __memory_pool.insert(v);
         this->_size++;
         return v;
     }
     inline void __release(binode_ptr<_Tp> &v)
     {
-        __memofbinode.erase(v);
-        delete v;
+        __memory_pool.erase(v);
+        __bintree_alloc.destroy(v);
+        __bintree_alloc.deallocate(v);
         v = nullptr;
         this->_size--;
     }
@@ -415,9 +420,9 @@ public:
         _size = 0;
         _isunique = 1;
         __display_buffer.clear();
-        for (auto &ptr : __memofbinode)
+        for (auto &ptr : __memory_pool)
             delete ptr;
-        __memofbinode.clear();
+        __memory_pool.clear();
     }
 
     void printhorizon()

@@ -12,27 +12,28 @@ class btree
 protected:
     int _size, _order; // _order [2,512]
     bnode_ptr<_Tp> _root, _last;
-    unordered_set<bnode_ptr<_Tp>> __memoryofbnode;
+    unordered_set<bnode_ptr<_Tp>> __memory_pool;
+    allocator<bnode<_Tp>> __btree_alloc;
+    const int __SIZEOF_BNODE = ((sizeof(struct bnode<_Tp>)));
 #define K_MAX (2 * _order - 1)
 #define K_MIN (_order - 1)
 #define C_MAX (2 * _order)
 #define C_MIN (_order)
 #define overflow(p) (((p)->sizeOfkey == K_MAX))
 #define underflow(p) (((p)->sizeOfkey == K_MIN))
+
     inline bnode_ptr<_Tp> __new_bnode(bool isleaf = true)
     {
-        bnode_ptr<_Tp> v = new bnode<_Tp>(isleaf);
-        v->sizeOfkey = 0;
-        v->key.resize(K_MAX);
-        v->child.resize(C_MAX);
-        fill(v->child.begin(), v->child.end(), nullptr);
-        __memoryofbnode.insert(v);
+        bnode_ptr<_Tp> v = __btree_alloc.allocate(__SIZEOF_BNODE);
+        __btree_alloc.construct(v, K_MAX, C_MAX, isleaf);
+        __memory_pool.insert(v);
         return v;
     }
     inline void __release(bnode_ptr<_Tp> &v)
     {
-        __memoryofbnode.erase(v);
-        delete v;
+        __memory_pool.erase(v);
+        __btree_alloc.destroy(v);
+        __btree_alloc.deallocate(v);
         v = nullptr;
     }
 
@@ -223,9 +224,9 @@ public:
     inline bool const empty() const { return _root == nullptr; }
     inline void const clear()
     {
-        for (auto &ptr : __memoryofbnode)
+        for (auto &ptr : __memory_pool)
             delete ptr;
-        __memoryofbnode.clear();
+        __memory_pool.clear();
         _root = nullptr;
         _size = 0;
     }

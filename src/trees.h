@@ -155,6 +155,7 @@ struct binode
     inline bool operator==(const binode *&bn) { return val == bn->val; }
     inline bool operator<(const binode *&bn) { return val < bn->val; }
     inline bool operator>(const binode *&bn) { return val > bn->val; }
+    ~binode() {}
 };
 
 template <typename _Tp>
@@ -164,9 +165,13 @@ struct bnode
     vector<_Tp> key;
     vector<bnode_ptr<_Tp>> child;
     bool isleaf;
-    bnode(bool leaf = true)
+    bnode(int _kmax, int _cmax, bool leaf = true)
     {
         isleaf = leaf;
+        sizeOfkey = 0;
+        key.resize(_kmax);
+        child.resize(_cmax);
+        fill(child.begin(), child.end(), nullptr);
     }
     inline void print_node()
     {
@@ -204,6 +209,10 @@ struct bnode
         bnode_ptr<_Tp> x = child[sizeOfkey];
         return x ? x->leftest() : nullptr;
     }
+    ~bnode(){
+        child.clear();
+        key.clear();
+    }
 };
 
 template <typename _Tp>
@@ -219,6 +228,7 @@ public:
     virtual int empty() = 0;
     virtual void clear() = 0;
 };
+
 
 }; // namespace dsa
 
