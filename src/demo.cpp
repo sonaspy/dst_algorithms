@@ -19,7 +19,6 @@ int main(int argc, char const *argv[])
     printf("%p\n", f);
     printf("%p\n", &___FUNCCCCC);
     printf("%ld\n", __null);
-    __default_alloc_template<0, 1> dfall;
-    void *p = dfall.allocate(10);
+
     return 0;
 }
