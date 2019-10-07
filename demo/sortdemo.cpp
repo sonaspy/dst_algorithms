@@ -41,10 +41,11 @@ int main(int argc, char const *argv[])
     clock_t startTime, endTime;
     // a.erase(unique(a.begin(), a.end()), a.end());
     startTime = clock();
-    quicksort(a.begin(), a.end());
+
+    cout << *kth_element(a.begin(), a.end(), 0) << endl;
 
     endTime = clock();
-    cout << is_sorted(a.begin(), a.end()) << endl;
+
     cout << "The elapsed time is: " << (double)(endTime - startTime) / 1000 << "ms" << endl;
     return 0;
 }
