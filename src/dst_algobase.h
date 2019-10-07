@@ -703,5 +703,3 @@ int lexicographical_compare_3way(_InputIter1 __first1, _InputIter1 __last1,
 __DST_END_NAMESPACE
 
 #endif /* ___DST_INTERNAL_ALGOBASE_H */
-
-
