@@ -2,12 +2,16 @@
 // coding - utf_8
 
 #define SIZE 100
-#include <iostream>
-#include "stddsa.h"
 
+#include "alloc.h"
+#include "algobase.h"
+#include "defalloc.h"
+#include "char_traits.h"
+#include "type_traits.h"
+#include "concept_checks.h"
+#include "iterator.h"
 #define test() freopen("in", "r", stdin)
 
-using namespace std;
 using namespace dsa;
 
 int main(int argc, char const *argv[])

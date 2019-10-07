@@ -22,16 +22,14 @@ int main(int argc, char const *argv[])
     clock_t startTime, endTime;
     //bt.printTree();
     startTime = clock();
-    cout << bt.size() << endl;
-    cout << bt.root()->key.size() << endl;
-    cout << bt.root()->child.size() << endl;
+    cout << bt.root() << endl;
     string s;
-    int key1 = 100, key2 = 800, c;
+    int key1 = 100, key2 = 102, c;
     char cc;
 
-    for (int i = key1; i <= key2; i++)
+    for (int i = key1; i <= key1; i++)
     {
-        bt.search(i);
+        cout << bt.search(i) << endl;
     }
 
     endTime = clock();

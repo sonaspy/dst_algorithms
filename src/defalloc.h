@@ -11,7 +11,7 @@
 template <class T>
 inline T *allocate(ptrdiff_t size, T *)
 {
-    set_new_handler(0);
+    std::set_new_handler(0);
     T *tmp = (T *)(::operator new((size_t)(size * sizeof(T))));
     if (tmp == 0)
     {
@@ -58,6 +58,7 @@ public:
     }
 };
 
+template <>
 class allocator<void>
 {
 public:
