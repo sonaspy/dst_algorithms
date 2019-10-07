@@ -274,7 +274,7 @@ void qksort(_RandomAccessIterator _first, _RandomAccessIterator _last)
 template <typename _RandomAccessIterator>
 static _RandomAccessIterator __kth_element(_RandomAccessIterator _first, _RandomAccessIterator _last, int k)
 {
-    _RandomAccessIterator p = __partition(_first, _last, *_first);
+    _RandomAccessIterator p = __partition(_first, _last);
     int rank = p - _first;
     if (rank == k)
         return p;
