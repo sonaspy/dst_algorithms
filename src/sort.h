@@ -106,7 +106,7 @@ static void inline insertsort(_RandomAccessIterator _first, _RandomAccessIterato
                 *_first = _val;
                 continue;
             }
-            for (j = i; j > _first && *(j - 1) > _val; --j)
+            for (j = i; _first < j && *(j - 1) > _val; --j)
                 *j = *(j - 1);
             *j = _val;
         }

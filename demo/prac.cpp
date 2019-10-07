@@ -7,13 +7,6 @@
 #define test() freopen("in", "r", stdin)
 
 using namespace std;
-int fun(int n)
-{
-    if (n < 5)
-        return n;
-    else
-        return fun(n / 5) * 10 + n % 5;
-};
 
 int fact(int n)
 {
@@ -50,10 +43,6 @@ int main(int argc, char const *argv[])
     //test();
     srand(time(NULL));
 
-    int i = 200;
-    i = -i;
-    cout << i << endl;
-
-    cout << sinx(i);
+    cout << char(*("sadad" + 2) + 2);
     return 0;
 }
