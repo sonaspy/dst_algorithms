@@ -112,24 +112,24 @@ inline const _Tp &max(const _Tp &__a, const _Tp &__b, _Compare __comp)
 // a for loop with an explicit count.
 
 template <class _InputIter, class _OutputIter, class _Distance>
-inline _OutputIter __copy(_InputIter __first, _InputIter __last,
+inline _OutputIter __copy(_InputIter _first, _InputIter _last,
                           _OutputIter __result,
                           input_iterator_tag, _Distance *)
 {
-    for (; __first != __last; ++__result, ++__first)
-        *__result = *__first;
+    for (; _first != _last; ++__result, ++_first)
+        *__result = *_first;
     return __result;
 }
 
 template <class _RandomAccessIter, class _OutputIter, class _Distance>
 inline _OutputIter
-__copy(_RandomAccessIter __first, _RandomAccessIter __last,
+__copy(_RandomAccessIter _first, _RandomAccessIter _last,
        _OutputIter __result, random_access_iterator_tag, _Distance *)
 {
-    for (_Distance __n = __last - __first; __n > 0; --__n)
+    for (_Distance __n = _last - _first; __n > 0; --__n)
     {
-        *__result = *__first;
-        ++__first;
+        *__result = *_first;
+        ++_first;
         ++__result;
     }
     return __result;
@@ -137,66 +137,66 @@ __copy(_RandomAccessIter __first, _RandomAccessIter __last,
 
 template <class _Tp>
 inline _Tp *
-__copy_trivial(const _Tp *__first, const _Tp *__last, _Tp *__result)
+__copy_trivial(const _Tp *_first, const _Tp *_last, _Tp *__result)
 {
-    memmove(__result, __first, sizeof(_Tp) * (__last - __first));
-    return __result + (__last - __first);
+    memmove(__result, _first, sizeof(_Tp) * (_last - _first));
+    return __result + (_last - _first);
 }
 
 #if defined(__DST_FUNCTION_TMPL_PARTIAL_ORDER)
 
 template <class _InputIter, class _OutputIter>
-inline _OutputIter __copy_aux2(_InputIter __first, _InputIter __last,
+inline _OutputIter __copy_aux2(_InputIter _first, _InputIter _last,
                                _OutputIter __result, __false_type)
 {
-    return __copy(__first, __last, __result,
-                  __ITERATOR_CATEGORY(__first),
-                  __DISTANCE_TYPE(__first));
+    return __copy(_first, _last, __result,
+                  __ITERATOR_CATEGORY(_first),
+                  __DISTANCE_TYPE(_first));
 }
 
 template <class _InputIter, class _OutputIter>
-inline _OutputIter __copy_aux2(_InputIter __first, _InputIter __last,
+inline _OutputIter __copy_aux2(_InputIter _first, _InputIter _last,
                                _OutputIter __result, __true_type)
 {
-    return __copy(__first, __last, __result,
-                  __ITERATOR_CATEGORY(__first),
-                  __DISTANCE_TYPE(__first));
+    return __copy(_first, _last, __result,
+                  __ITERATOR_CATEGORY(_first),
+                  __DISTANCE_TYPE(_first));
 }
 
 #ifndef __USLC__
 
 template <class _Tp>
-inline _Tp *__copy_aux2(_Tp *__first, _Tp *__last, _Tp *__result,
+inline _Tp *__copy_aux2(_Tp *_first, _Tp *_last, _Tp *__result,
                         __true_type)
 {
-    return __copy_trivial(__first, __last, __result);
+    return __copy_trivial(_first, _last, __result);
 }
 
 #endif /* __USLC__ */
 
 template <class _Tp>
-inline _Tp *__copy_aux2(const _Tp *__first, const _Tp *__last, _Tp *__result,
+inline _Tp *__copy_aux2(const _Tp *_first, const _Tp *_last, _Tp *__result,
                         __true_type)
 {
-    return __copy_trivial(__first, __last, __result);
+    return __copy_trivial(_first, _last, __result);
 }
 
 template <class _InputIter, class _OutputIter, class _Tp>
-inline _OutputIter __copy_aux(_InputIter __first, _InputIter __last,
+inline _OutputIter __copy_aux(_InputIter _first, _InputIter _last,
                               _OutputIter __result, _Tp *)
 {
     typedef typename __type_traits<_Tp>::has_trivial_assignment_operator
         _Trivial;
-    return __copy_aux2(__first, __last, __result, _Trivial());
+    return __copy_aux2(_first, _last, __result, _Trivial());
 }
 
 template <class _InputIter, class _OutputIter>
-inline _OutputIter copy(_InputIter __first, _InputIter __last,
+inline _OutputIter copy(_InputIter _first, _InputIter _last,
                         _OutputIter __result)
 {
     __DST_REQUIRES(_InputIter, _InputIterator);
     __DST_REQUIRES(_OutputIter, _OutputIterator);
-    return __copy_aux(__first, __last, __result, __VALUE_TYPE(__first));
+    return __copy_aux(_first, _last, __result, __VALUE_TYPE(_first));
 }
 
 // Hack for compilers that don't have partial ordering of function templates
@@ -206,35 +206,35 @@ inline _OutputIter copy(_InputIter __first, _InputIter __last,
 template <class _InputIter, class _OutputIter, class _BoolType>
 struct __copy_dispatch
 {
-    static _OutputIter copy(_InputIter __first, _InputIter __last,
+    static _OutputIter copy(_InputIter _first, _InputIter _last,
                             _OutputIter __result)
     {
         typedef typename iterator_traits<_InputIter>::iterator_category _Category;
         typedef typename iterator_traits<_InputIter>::difference_type _Distance;
-        return __copy(__first, __last, __result, _Category(), (_Distance *)0);
+        return __copy(_first, _last, __result, _Category(), (_Distance *)0);
     }
 };
 
 template <class _Tp>
 struct __copy_dispatch<_Tp *, _Tp *, __true_type>
 {
-    static _Tp *copy(const _Tp *__first, const _Tp *__last, _Tp *__result)
+    static _Tp *copy(const _Tp *_first, const _Tp *_last, _Tp *__result)
     {
-        return __copy_trivial(__first, __last, __result);
+        return __copy_trivial(_first, _last, __result);
     }
 };
 
 template <class _Tp>
 struct __copy_dispatch<const _Tp *, _Tp *, __true_type>
 {
-    static _Tp *copy(const _Tp *__first, const _Tp *__last, _Tp *__result)
+    static _Tp *copy(const _Tp *_first, const _Tp *_last, _Tp *__result)
     {
-        return __copy_trivial(__first, __last, __result);
+        return __copy_trivial(_first, _last, __result);
     }
 };
 
 template <class _InputIter, class _OutputIter>
-inline _OutputIter copy(_InputIter __first, _InputIter __last,
+inline _OutputIter copy(_InputIter _first, _InputIter _last,
                         _OutputIter __result)
 {
     __DST_REQUIRES(_InputIter, _InputIterator);
@@ -242,7 +242,7 @@ inline _OutputIter copy(_InputIter __first, _InputIter __last,
     typedef typename iterator_traits<_InputIter>::value_type _Tp;
     typedef typename __type_traits<_Tp>::has_trivial_assignment_operator
         _Trivial;
-    return __copy_dispatch<_InputIter, _OutputIter, _Trivial>::copy(__first, __last, __result);
+    return __copy_dispatch<_InputIter, _OutputIter, _Trivial>::copy(_first, _last, __result);
 }
 
 // Fallback for compilers with neither partial ordering nor partial
@@ -251,19 +251,19 @@ inline _OutputIter copy(_InputIter __first, _InputIter __last,
 #else /* __DST_CLASS_PARTIAL_SPECIALIZATION */
 
 template <class _InputIter, class _OutputIter>
-inline _OutputIter copy(_InputIter __first, _InputIter __last,
+inline _OutputIter copy(_InputIter _first, _InputIter _last,
                         _OutputIter __result)
 {
-    return __copy(__first, __last, __result,
-                  __ITERATOR_CATEGORY(__first),
-                  __DISTANCE_TYPE(__first));
+    return __copy(_first, _last, __result,
+                  __ITERATOR_CATEGORY(_first),
+                  __DISTANCE_TYPE(_first));
 }
 
 #define ___DST_DECLARE_COPY_TRIVIAL(_Tp)                                   \
-    inline _Tp *copy(const _Tp *__first, const _Tp *__last, _Tp *__result) \
+    inline _Tp *copy(const _Tp *_first, const _Tp *_last, _Tp *__result) \
     {                                                                      \
-        memmove(__result, __first, sizeof(_Tp) * (__last - __first));      \
-        return __result + (__last - __first);                              \
+        memmove(__result, _first, sizeof(_Tp) * (_last - _first));      \
+        return __result + (_last - _first);                              \
     }
 
 ___DST_DECLARE_COPY_TRIVIAL(char)
@@ -292,28 +292,27 @@ ___DST_DECLARE_COPY_TRIVIAL(long double)
 //--------------------------------------------------
 // copy_backward
 
-template <class _BidirectionalIter1, class _BidirectionalIter2,
-          class _Distance>
-inline _BidirectionalIter2 __copy_backward(_BidirectionalIter1 __first,
-                                           _BidirectionalIter1 __last,
+template <class _BidirectionalIter1, class _BidirectionalIter2, class _Distance>
+inline _BidirectionalIter2 __copy_backward(_BidirectionalIter1 _first,
+                                           _BidirectionalIter1 _last,
                                            _BidirectionalIter2 __result,
                                            bidirectional_iterator_tag,
                                            _Distance *)
 {
-    while (__first != __last)
-        *--__result = *--__last;
+    while (_first != _last)
+        *--__result = *--_last;
     return __result;
 }
 
 template <class _RandomAccessIter, class _BidirectionalIter, class _Distance>
-inline _BidirectionalIter __copy_backward(_RandomAccessIter __first,
-                                          _RandomAccessIter __last,
+inline _BidirectionalIter __copy_backward(_RandomAccessIter _first,
+                                          _RandomAccessIter _last,
                                           _BidirectionalIter __result,
                                           random_access_iterator_tag,
                                           _Distance *)
 {
-    for (_Distance __n = __last - __first; __n > 0; --__n)
-        *--__result = *--__last;
+    for (_Distance __n = _last - _first; __n > 0; --__n)
+        *--__result = *--_last;
     return __result;
 }
 
@@ -333,21 +332,21 @@ struct __copy_backward_dispatch
     typedef typename iterator_traits<_BidirectionalIter1>::difference_type
         _Distance;
 
-    static _BidirectionalIter2 copy(_BidirectionalIter1 __first,
-                                    _BidirectionalIter1 __last,
+    static _BidirectionalIter2 copy(_BidirectionalIter1 _first,
+                                    _BidirectionalIter1 _last,
                                     _BidirectionalIter2 __result)
     {
-        return __copy_backward(__first, __last, __result, _Cat(), (_Distance *)0);
+        return __copy_backward(_first, _last, __result, _Cat(), (_Distance *)0);
     }
 };
 
 template <class _Tp>
 struct __copy_backward_dispatch<_Tp *, _Tp *, __true_type>
 {
-    static _Tp *copy(const _Tp *__first, const _Tp *__last, _Tp *__result)
+    static _Tp *copy(const _Tp *_first, const _Tp *_last, _Tp *__result)
     {
-        const ptrdiff_t _Num = __last - __first;
-        memmove(__result - _Num, __first, sizeof(_Tp) * _Num);
+        const ptrdiff_t _Num = _last - _first;
+        memmove(__result - _Num, _first, sizeof(_Tp) * _Num);
         return __result - _Num;
     }
 };
@@ -355,14 +354,14 @@ struct __copy_backward_dispatch<_Tp *, _Tp *, __true_type>
 template <class _Tp>
 struct __copy_backward_dispatch<const _Tp *, _Tp *, __true_type>
 {
-    static _Tp *copy(const _Tp *__first, const _Tp *__last, _Tp *__result)
+    static _Tp *copy(const _Tp *_first, const _Tp *_last, _Tp *__result)
     {
-        return __copy_backward_dispatch<_Tp *, _Tp *, __true_type>::copy(__first, __last, __result);
+        return __copy_backward_dispatch<_Tp *, _Tp *, __true_type>::copy(_first, _last, __result);
     }
 };
 
 template <class _BI1, class _BI2>
-inline _BI2 copy_backward(_BI1 __first, _BI1 __last, _BI2 __result)
+inline _BI2 copy_backward(_BI1 _first, _BI1 _last, _BI2 __result)
 {
     __DST_REQUIRES(_BI1, _BidirectionalIterator);
     __DST_REQUIRES(_BI2, _Mutable_BidirectionalIterator);
@@ -370,17 +369,17 @@ inline _BI2 copy_backward(_BI1 __first, _BI1 __last, _BI2 __result)
                       typename iterator_traits<_BI2>::value_type);
     typedef typename __type_traits<typename iterator_traits<_BI2>::value_type>::has_trivial_assignment_operator
         _Trivial;
-    return __copy_backward_dispatch<_BI1, _BI2, _Trivial>::copy(__first, __last, __result);
+    return __copy_backward_dispatch<_BI1, _BI2, _Trivial>::copy(_first, _last, __result);
 }
 
 #else /* __DST_CLASS_PARTIAL_SPECIALIZATION */
 
 template <class _BI1, class _BI2>
-inline _BI2 copy_backward(_BI1 __first, _BI1 __last, _BI2 __result)
+inline _BI2 copy_backward(_BI1 _first, _BI1 _last, _BI2 __result)
 {
-    return __copy_backward(__first, __last, __result,
-                           __ITERATOR_CATEGORY(__first),
-                           __DISTANCE_TYPE(__first));
+    return __copy_backward(_first, _last, __result,
+                           __ITERATOR_CATEGORY(_first),
+                           __DISTANCE_TYPE(_first));
 }
 
 #endif /* __DST_CLASS_PARTIAL_SPECIALIZATION */
@@ -389,111 +388,111 @@ inline _BI2 copy_backward(_BI1 __first, _BI1 __last, _BI2 __result)
 // copy_n (not part of the C++ standard)
 
 template <class _InputIter, class _Size, class _OutputIter>
-pair<_InputIter, _OutputIter> __copy_n(_InputIter __first, _Size __count,
+pair<_InputIter, _OutputIter> __copy_n(_InputIter _first, _Size __count,
                                        _OutputIter __result,
                                        input_iterator_tag)
 {
     for (; __count > 0; --__count)
     {
-        *__result = *__first;
-        ++__first;
+        *__result = *_first;
+        ++_first;
         ++__result;
     }
-    return pair<_InputIter, _OutputIter>(__first, __result);
+    return pair<_InputIter, _OutputIter>(_first, __result);
 }
 
 template <class _RAIter, class _Size, class _OutputIter>
 inline pair<_RAIter, _OutputIter>
-__copy_n(_RAIter __first, _Size __count,
+__copy_n(_RAIter _first, _Size __count,
          _OutputIter __result,
          random_access_iterator_tag)
 {
-    _RAIter __last = __first + __count;
-    return pair<_RAIter, _OutputIter>(__last, copy(__first, __last, __result));
+    _RAIter _last = _first + __count;
+    return pair<_RAIter, _OutputIter>(_last, copy(_first, _last, __result));
 }
 
 template <class _InputIter, class _Size, class _OutputIter>
 inline pair<_InputIter, _OutputIter>
-__copy_n(_InputIter __first, _Size __count, _OutputIter __result)
+__copy_n(_InputIter _first, _Size __count, _OutputIter __result)
 {
-    return __copy_n(__first, __count, __result,
-                    __ITERATOR_CATEGORY(__first));
+    return __copy_n(_first, __count, __result,
+                    __ITERATOR_CATEGORY(_first));
 }
 
 template <class _InputIter, class _Size, class _OutputIter>
 inline pair<_InputIter, _OutputIter>
-copy_n(_InputIter __first, _Size __count, _OutputIter __result)
+copy_n(_InputIter _first, _Size __count, _OutputIter __result)
 {
     __DST_REQUIRES(_InputIter, _InputIterator);
     __DST_REQUIRES(_OutputIter, _OutputIterator);
-    return __copy_n(__first, __count, __result);
+    return __copy_n(_first, __count, __result);
 }
 
 //--------------------------------------------------
 // fill and fill_n
 
 template <class _ForwardIter, class _Tp>
-void fill(_ForwardIter __first, _ForwardIter __last, const _Tp &__value)
+void fill(_ForwardIter _first, _ForwardIter _last, const _Tp &_value)
 {
     __DST_REQUIRES(_ForwardIter, _Mutable_ForwardIterator);
-    for (; __first != __last; ++__first)
-        *__first = __value;
+    for (; _first != _last; ++_first)
+        *_first = _value;
 }
 
 template <class _OutputIter, class _Size, class _Tp>
-_OutputIter fill_n(_OutputIter __first, _Size __n, const _Tp &__value)
+_OutputIter fill_n(_OutputIter _first, _Size __n, const _Tp &_value)
 {
     __DST_REQUIRES(_OutputIter, _OutputIterator);
-    for (; __n > 0; --__n, ++__first)
-        *__first = __value;
-    return __first;
+    for (; __n > 0; --__n, ++_first)
+        *_first = _value;
+    return _first;
 }
 
 // Specialization: for one-byte types we can use memset.
 
-inline void fill(unsigned char *__first, unsigned char *__last,
+inline void fill(unsigned char *_first, unsigned char *_last,
                  const unsigned char &__c)
 {
     unsigned char __tmp = __c;
-    memset(__first, __tmp, __last - __first);
+    memset(_first, __tmp, _last - _first);
 }
 
-inline void fill(signed char *__first, signed char *__last,
+inline void fill(signed char *_first, signed char *_last,
                  const signed char &__c)
 {
     signed char __tmp = __c;
-    memset(__first, static_cast<unsigned char>(__tmp), __last - __first);
+    memset(_first, static_cast<unsigned char>(__tmp), _last - _first);
 }
 
-inline void fill(char *__first, char *__last, const char &__c)
+inline void fill(char *_first, char *_last, const char &__c)
 {
     char __tmp = __c;
-    memset(__first, static_cast<unsigned char>(__tmp), __last - __first);
+    memset(_first, static_cast<unsigned char>(__tmp), _last - _first);
 }
 
 #ifdef __DST_FUNCTION_TMPL_PARTIAL_ORDER
 
 template <class _Size>
-inline unsigned char *fill_n(unsigned char *__first, _Size __n,
+inline unsigned char *fill_n(unsigned char *_first, _Size __n,
                              const unsigned char &__c)
 {
-    fill(__first, __first + __n, __c);
-    return __first + __n;
+    fill(_first, _first + __n, __c);
+    return _first + __n;
 }
 
 template <class _Size>
-inline signed char *fill_n(char *__first, _Size __n,
+inline signed char *fill_n(char *_first, _Size __n,
                            const signed char &__c)
 {
-    fill(__first, __first + __n, __c);
-    return __first + __n;
+    fill(_first, _first + __n, __c);
+    return _first + __n;
 }
 
 template <class _Size>
-inline char *fill_n(char *__first, _Size __n, const char &__c)
+inline char *fill_n(char *_first, _Size __n, const char &__c)
 {
-    fill(__first, __first + __n, __c);
-    return __first + __n;
+    fill(_first, _first + __n, __c);
+    return _first + __n;
 }
 
 #endif /* __DST_FUNCTION_TMPL_PARTIAL_ORDER */

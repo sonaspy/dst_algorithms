@@ -20,28 +20,28 @@ __DST_BEGIN_NAMESPACE
 // Internal names
 
 template <class _T1, class _T2>
-inline void _Construct(_T1 *__p, const _T2 &__value)
+inline void _Construct(_T1 *_p, const _T2 &_value)
 {
-    new ((void *)__p) _T1(__value);
+    new ((void *)_p) _T1(_value);
 }
 
 template <class _T1>
-inline void _Construct(_T1 *__p)
+inline void _Construct(_T1 *_p)
 {
-    new ((void *)__p) _T1();
+    new ((void *)_p) _T1();
 }
 
 template <class _Tp>
-inline void _Destroy(_Tp *__pointer)
+inline void _Destroy(_Tp *_pointer)
 {
-    __pointer->~_Tp();
+    _pointer->~_Tp();
 }
 
 template <class _ForwardIterator>
-void __destroy_aux(_ForwardIterator __first, _ForwardIterator __last, __false_type)
+void __destroy_aux(_ForwardIterator _first, _ForwardIterator _last, __false_type)
 {
-    for (; __first != __last; ++__first)
-        destroy(&*__first);
+    for (; _first != _last; ++_first)
+        destroy(&*_first);
 }
 
 template <class _ForwardIterator>
@@ -49,17 +49,17 @@ inline void __destroy_aux(_ForwardIterator, _ForwardIterator, __true_type) {}
 
 template <class _ForwardIterator, class _Tp>
 inline void
-__destroy(_ForwardIterator __first, _ForwardIterator __last, _Tp *)
+__destroy(_ForwardIterator _first, _ForwardIterator _last, _Tp *)
 {
     typedef typename __type_traits<_Tp>::has_trivial_destructor
         _Trivial_destructor;
-    __destroy_aux(__first, __last, _Trivial_destructor());
+    __destroy_aux(_first, _last, _Trivial_destructor());
 }
 
 template <class _ForwardIterator>
-inline void _Destroy(_ForwardIterator __first, _ForwardIterator __last)
+inline void _Destroy(_ForwardIterator _first, _ForwardIterator _last)
 {
-    __destroy(__first, __last, __VALUE_TYPE(__first));
+    __destroy(_first, _last, __VALUE_TYPE(_first));
 }
 
 inline void _Destroy(char *, char *) {}
@@ -77,27 +77,27 @@ inline void _Destroy(wchar_t *, wchar_t *)
 // Old names from the HP DST.
 
 template <class _T1, class _T2>
-inline void construct(_T1 *__p, const _T2 &__value)
+inline void construct(_T1 *_p, const _T2 &_value)
 {
-    _Construct(__p, __value);
+    _Construct(_p, _value);
 }
 
 template <class _T1>
-inline void construct(_T1 *__p)
+inline void construct(_T1 *_p)
 {
-    _Construct(__p);
+    _Construct(_p);
 }
 
 template <class _Tp>
-inline void destroy(_Tp *__pointer)
+inline void destroy(_Tp *_pointer)
 {
-    _Destroy(__pointer);
+    _Destroy(_pointer);
 }
 
 template <class _ForwardIterator>
-inline void destroy(_ForwardIterator __first, _ForwardIterator __last)
+inline void destroy(_ForwardIterator _first, _ForwardIterator _last)
 {
-    _Destroy(__first, __last);
+    _Destroy(_first, _last);
 }
 
 __DST_END_NAMESPACE

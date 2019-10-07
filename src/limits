@@ -5,8 +5,8 @@
  * for the MIPS and ia32 architectures.
  */
 
-#ifndef __SGI_CPP_LIMITS
-#define __SGI_CPP_LIMITS
+#ifndef ___CPP_LIMITS
+#define ___CPP_LIMITS
 
 #include <limits.h>
 #include <float.h>
@@ -553,4 +553,4 @@ _Define_float(infinity)
 
                                     __DST_END_NAMESPACE
 
-#endif /* __SGI_CPP_LIMITS */
+#endif /* ___CPP_LIMITS */
