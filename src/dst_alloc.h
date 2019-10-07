@@ -171,7 +171,7 @@ void *__malloc_alloc_template<__inst>::_S_oom_malloc(size_t _n)
         (*__my_malloc_handler)();
         _result = malloc(_n);
         if (_result)
-            return (_result);
+            return _result;
     }
 }
 
@@ -188,7 +188,7 @@ void *__malloc_alloc_template<__inst>::_S_oom_realloc(void *_p, size_t _n)
         (*__my_malloc_handler)();
         _result = realloc(_p, _n);
         if (_result)
-            return (_result);
+            return _result;
     }
 }
 
@@ -226,7 +226,6 @@ public:
 template <class _Alloc>
 class debug_alloc
 {
-
 private:
     enum
     {
@@ -329,16 +328,17 @@ private:
     enum
     {
         _NFREELISTS = 16
-    }; // _MAX_BYTES/_ALIGN
+    };                                              // _MAX_BYTES/_ALIGN
 #endif
     static inline size_t _S_round_up(size_t _bytes) // Adjust to multiples of 8 bytes
     {
         return (((_bytes) + (size_t)_ALIGN - 1) & ~((size_t)_ALIGN - 1));
     }
 
+    // One thing two usage
     __PRIVATE : union _Obj {
         union _Obj *_Next_free_list_link;
-        char _M_client_data[1];
+        char __free_client_data[1];
     };
 
 private:
@@ -358,7 +358,7 @@ private:
 
     // Allocates a chunk for nobjs of size size.  nobjs may be reduced
     // if it is inconvenient to allocate the requested number.
-    static char *_S_chunk_alloc(size_t __size, int &_nobjs);
+    static char *_S_chunk_alloc(size_t _size, int &_nobjs);
 
     // Chunk allocation state.
     static char *_S_start_free;
@@ -435,7 +435,6 @@ public:
     }
 
     static void *reallocate(void *_p, size_t _old_sz, size_t _new_sz);
-
 };
 
 typedef __default_alloc_template<__NODE_ALLOCATOR_THREADS, 0> alloc;
@@ -460,74 +459,68 @@ inline bool operator!=(const __default_alloc_template<__threads, __inst> &, cons
 // We assume that size is properly aligned.
 // We hold the allocation lock.
 template <bool __threads, int __inst>
-char *__default_alloc_template<__threads, __inst>::_S_chunk_alloc(size_t __size, int &_nobjs)
+char *__default_alloc_template<__threads, __inst>::_S_chunk_alloc(size_t _size, int &_nobjs)
 {
     char *_result;
-    size_t __total_bytes = __size * _nobjs;
+    size_t _total_bytes = _size * _nobjs;
     size_t _bytes_left = _S_end_free - _S_start_free;
 
-    if (_bytes_left >= __total_bytes)
+    if (_total_bytes <= _bytes_left) // Meet the demand
     {
         _result = _S_start_free;
-        _S_start_free += __total_bytes;
-        return (_result);
+        _S_start_free += _total_bytes;
+        return _result;
     }
-    else if (_bytes_left >= __size)
+    else if (_size <= _bytes_left) // Not meet the demand, But enough to supply a whole block
     {
-        _nobjs = (int)(_bytes_left / __size);
-        __total_bytes = __size * _nobjs;
+        _nobjs = (int)(_bytes_left / _size);
+        _total_bytes = _size * _nobjs;
         _result = _S_start_free;
-        _S_start_free += __total_bytes;
-        return (_result);
+        _S_start_free += _total_bytes;
+        return _result;
     }
-    else
-    {
-        size_t _bytes_to_get =
-            2 * __total_bytes + _S_round_up(_S_heap_size >> 4);
-        // Try to make use of the left-over piece.
-        if (_bytes_left > 0)
-        {
-            _Obj *__DST_VOLATILE *_my_free_list =
-                _S_free_list + _S_freelist_index(_bytes_left);
 
-            ((_Obj *)_S_start_free)->_Next_free_list_link = *_my_free_list;
-            *_my_free_list = (_Obj *)_S_start_free;
-        }
-        _S_start_free = (char *)malloc(_bytes_to_get);
-        if (0 == _S_start_free)
-        {
-            size_t _i;
-            _Obj *__DST_VOLATILE *_my_free_list;
-            _Obj *_p;
-            // Try to make do with what we have.  That can't
-            // hurt.  We do not try smaller requests, since that tends
-            // to result in disaster on multi-process machines.
-            for (_i = __size;
-                 _i <= (size_t)_MAX_BYTES;
-                 _i += (size_t)_ALIGN)
-            {
-                _my_free_list = _S_free_list + _S_freelist_index(_i);
-                _p = *_my_free_list;
-                if (0 != _p)
-                {
-                    *_my_free_list = _p->_Next_free_list_link;
-                    _S_start_free = (char *)_p;
-                    _S_end_free = _S_start_free + _i;
-                    return (_S_chunk_alloc(__size, _nobjs));
-                    // Any leftover piece will eventually make it to the
-                    // right free list.
-                }
-            }
-            _S_end_free = 0; // In case of exception.
-            _S_start_free = (char *)malloc_alloc::allocate(_bytes_to_get);
-            // This should either throw an
-            // exception or remedy the situation.  Thus we assume it
-            // succeeded.
-        }
-        _S_heap_size += _bytes_to_get;
-        _S_end_free = _S_start_free + _bytes_to_get;
-        return (_S_chunk_alloc(__size, _nobjs));
+    size_t _bytes_to_get = 2 * _total_bytes + _S_round_up(_S_heap_size >> 4);
+
+    if (_bytes_left > 0)
+    {
+        // Try to make use of the left-over piece.
+        _Obj *__DST_VOLATILE *_my_free_list = _S_free_list + _S_freelist_index(_bytes_left);
+
+        ((_Obj *)_S_start_free)->_Next_free_list_link = *_my_free_list;
+        *_my_free_list = (_Obj *)_S_start_free;
     }
+
+    _S_start_free = (char *)malloc(_bytes_to_get);
+
+    if (__null == _S_start_free)
+    {
+        size_t _i;
+        _Obj *__DST_VOLATILE *_my_free_list;
+        _Obj *_p;
+
+        // Try to make do with what we have. That can't hurt.  We do not try smaller requests,
+        // since that tends to result in disaster on multi-process machines.
+        for (_i = _size; _i <= (size_t)_MAX_BYTES; _i += (size_t)_ALIGN)
+        {
+            _my_free_list = _S_free_list + _S_freelist_index(_i);
+            _p = *_my_free_list;
+            if (__null != _p)
+            {
+                *_my_free_list = _p->_Next_free_list_link;
+                _S_start_free = (char *)_p;
+                _S_end_free = _S_start_free + _i;
+                return (_S_chunk_alloc(_size, _nobjs));
+                // Any leftover piece will eventually make it to the right free list.
+            }
+        }
+        _S_end_free = __null; // In case of exception.
+        _S_start_free = (char *)malloc_alloc::allocate(_bytes_to_get);
+        // This should either throw an exception or remedy the situation. Thus we assume it succeeded.
+    }
+    _S_heap_size += _bytes_to_get;
+    _S_end_free = _S_start_free + _bytes_to_get;
+    return (_S_chunk_alloc(_size, _nobjs));
 }
 
 /* Returns an object of size _n, and optionally adds to size _n free list.*/
@@ -585,7 +578,7 @@ void *__default_alloc_template<threads, inst>::reallocate(void *_p, size_t _old_
     __copy_sz = _new_sz > _old_sz ? _old_sz : _new_sz;
     memcpy(_result, _p, __copy_sz);
     deallocate(_p, _old_sz);
-    return (_result);
+    return _result;
 }
 
 #ifdef __DST_THREADS
@@ -679,7 +672,7 @@ public:
     _Tp *allocate(size_type _n, const void * = 0)
     {
         return _n != 0 ? static_cast<_Tp *>(_Alloc::allocate(_n * sizeof(_Tp)))
-                        : 0;
+                       : 0;
     }
 
     // _p is not permitted to be a null pointer.
