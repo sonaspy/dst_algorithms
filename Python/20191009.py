@@ -1,4 +1,4 @@
-# author - sonaspy@outlook.com
+# author - sonaspy@outlook.com / New Guo
 # coding - utf_8
 from random import *
 
