@@ -12,14 +12,14 @@
 using namespace std;
 __DST_BEGIN_NAMESPACE
 
-template <typename _Tp>
-void print_vector(vector<_Tp> &a)
+template <class _RandomAccessIterator>
+void print_vector(_RandomAccessIterator _first, _RandomAccessIterator _last)
 {
-    if (a.size())
+    if (_first < _last)
     {
-        cout << a[0];
-        for (int i = 1; i < a.size(); i++)
-            cout << " -> " << a[i];
+        cout << *(_first);
+        for (auto i = _first + 1; i < _last; i++)
+            cout << " -> " << *i;
     }
     cout << endl;
 }

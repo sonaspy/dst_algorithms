@@ -2,7 +2,7 @@
 // coding - utf_8
 #include "../src/stddsa.h"
 #include <random>
-#define SIZE 100000
+#define SIZE 20
 #define test() freopen("in", "r", stdin)
 
 using namespace std;
@@ -32,8 +32,8 @@ int main(int argc, char const *argv[])
     /* code */
     // srand(time(NULL));
     int b[SIZE], n;
-    // generate(b, b + SIZE, [&]() { return rand() % 20 - 10; });
     vector<int> a(b, b + SIZE);
+    generate(b, b + SIZE, [&]() { return rand() % 100; });
     iota(a.begin(), a.end(), 0);
 
     unsigned seed = chrono::system_clock::now().time_since_epoch().count();
@@ -41,9 +41,8 @@ int main(int argc, char const *argv[])
     clock_t startTime, endTime;
     // a.erase(unique(a.begin(), a.end()), a.end());
     startTime = clock();
-
-    cout << *kth_element(a.begin(), a.end(), 0) << endl;
-
+    quicksort(b, b + SIZE);
+    print_vctor(b, b + SIZE);
     endTime = clock();
 
     cout << "The elapsed time is: " << (double)(endTime - startTime) / 1000 << "ms" << endl;

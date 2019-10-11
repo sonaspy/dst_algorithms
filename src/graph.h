@@ -519,7 +519,7 @@ protected:
         tmppath.push_back(v1);
         if (v1 == v2 && tmppath.size() > 1)
         {
-            print_vector(tmppath);
+            print_vector(tmppath.begin(), tmppath.end());
             vis[v1] = 0;
             tmppath.pop_back();
             return;
@@ -606,7 +606,7 @@ public:
         }
         for (int i = 0; i < rescost.size(); i++)
         {
-            print_vector(_key_path[i]);
+            print_vector(_key_path[i].begin(), _key_path[i].end());
             printf("The No.%d Key Actions' Path Length Is -> %d\n", i + 1, rescost[i]);
         }
     }

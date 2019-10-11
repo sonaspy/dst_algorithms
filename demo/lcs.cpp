@@ -22,7 +22,6 @@ int main(int argc, char const *argv[])
     // reverse(a.begin(), a.end());
     unsigned seed = chrono::system_clock::now().time_since_epoch().count();
     shuffle(a.begin(), a.end(), default_random_engine(seed));
-    // print_vector(a);
     _deque<int> dq;
     for (int i = 0; i < SIZE; i++)
         dq.push_back(i);
