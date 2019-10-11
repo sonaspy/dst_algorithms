@@ -291,12 +291,12 @@ template <class _Arg, class _Result>
 class pointer_to_unary_function : public unary_function<_Arg, _Result>
 {
 protected:
-    _Result (*_M_ptr)(_Arg);
+    _Result (*__ptr_)(_Arg);
 
 public:
     pointer_to_unary_function() {}
-    explicit pointer_to_unary_function(_Result (*__x)(_Arg)) : _M_ptr(__x) {}
-    _Result operator()(_Arg __x) const { return _M_ptr(__x); }
+    explicit pointer_to_unary_function(_Result (*__x)(_Arg)) : __ptr_(__x) {}
+    _Result operator()(_Arg __x) const { return __ptr_(__x); }
 };
 
 template <class _Arg, class _Result>
@@ -309,15 +309,15 @@ template <class _Arg1, class _Arg2, class _Result>
 class pointer_to_binary_function : public binary_function<_Arg1, _Arg2, _Result>
 {
 protected:
-    _Result (*_M_ptr)(_Arg1, _Arg2);
+    _Result (*__ptr_)(_Arg1, _Arg2);
 
 public:
     pointer_to_binary_function() {}
     explicit pointer_to_binary_function(_Result (*__x)(_Arg1, _Arg2))
-        : _M_ptr(__x) {}
+        : __ptr_(__x) {}
     _Result operator()(_Arg1 __x, _Arg2 __y) const
     {
-        return _M_ptr(__x, __y);
+        return __ptr_(__x, __y);
     }
 };
 

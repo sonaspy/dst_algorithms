@@ -27,10 +27,9 @@ protected:
     {
         if (!opnv)
             return true;
-        bool f1, f2;
-        f1 = __judge_avl(opnv->lc, p);
-        f2 = __judge_avl(opnv->rc, opnv);
-        return f1 && f2 & avlnodebalanced(opnv) && (!p || p->val < opnv->val);
+        bool f = __judge_avl(opnv->lc, p) && avlnodebalanced(opnv) && (!p || p->val < opnv->val);
+        p = opnv;
+        return f && __judge_avl(opnv->rc, p);
     }
     binode_ptr<_Tp> &__search(binode_ptr<_Tp> &opnv, const _Tp &x)
     {
@@ -135,7 +134,8 @@ public:
             _node = theNode;
         }
         // dereferencing operators
-        binode_ptr<_Tp> operator*() const { return _node; }
+        _Tp &operator*() const { return *_node; }
+        binode_ptr<_Tp> operator->() const { return _node; }
         // pre increment
         iterator &operator++()
         {

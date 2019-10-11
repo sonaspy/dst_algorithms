@@ -522,11 +522,11 @@ public:
     {
         if (!this->_root)
             return;
-        vector<binode_ptr<_Tp>> ls;
-        intrav([&](binode_ptr<_Tp> opnv) { ls.push_back(opnv); });
-        auto p1 = ls.begin(), p2 = ls.begin() + 1;
+        vector<binode_ptr<_Tp>> __node_list;
+        intrav([&](binode_ptr<_Tp> opnv) { __node_list.push_back(opnv); });
+        auto p1 = __node_list.begin(), p2 = __node_list.begin() + 1;
         binode_ptr<_Tp> head = *p1;
-        for (; p2 != ls.end(); p1++, p2++)
+        for (; p2 != __node_list.end(); p1++, p2++)
         {
             (*p1)->lc = nullptr;
             (*p1)->rc = (*p2);

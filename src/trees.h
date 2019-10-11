@@ -209,7 +209,8 @@ struct bnode
         bnode_ptr<_Tp> x = child[sizeOfkey];
         return x ? x->leftest() : nullptr;
     }
-    ~bnode(){
+    ~bnode()
+    {
         child.clear();
         key.clear();
     }
@@ -228,7 +229,6 @@ public:
     virtual int empty() = 0;
     virtual void clear() = 0;
 };
-
 
 }; // namespace dsa
 
