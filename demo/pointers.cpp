@@ -26,5 +26,9 @@ int main(int argc, char const *argv[])
     fun2(pf);
     printf("%p\n", pf);
     printf("%p\n", &pf);
+    int a[4][4] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16};
+    int(*p)[4];
+    p = a;
+    cout << *(*(p + 2) + 2);
     return 0;
 }
