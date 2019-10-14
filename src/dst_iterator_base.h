@@ -137,38 +137,32 @@ struct iterator_traits<const _Tp *>
 // We introduce internal names for these functions.
 
 template <class _Iter>
-inline typename iterator_traits<_Iter>::iterator_category
-__iterator_category(const _Iter &)
+inline typename iterator_traits<_Iter>::iterator_category __iterator_category(const _Iter &)
 {
     typedef typename iterator_traits<_Iter>::iterator_category _Category;
     return _Category();
 }
 
 template <class _Iter>
-inline typename iterator_traits<_Iter>::difference_type *
-__distance_type(const _Iter &)
+inline typename iterator_traits<_Iter>::difference_type *__distance_type(const _Iter &)
 {
     return static_cast<typename iterator_traits<_Iter>::difference_type *>(0);
 }
 
 template <class _Iter>
-inline typename iterator_traits<_Iter>::value_type *
-__value_type(const _Iter &)
+inline typename iterator_traits<_Iter>::value_type *__value_type(const _Iter &)
 {
     return static_cast<typename iterator_traits<_Iter>::value_type *>(0);
 }
 
 template <class _Iter>
-inline typename iterator_traits<_Iter>::iterator_category
-iterator_category(const _Iter &__i) { return __iterator_category(__i); }
+inline typename iterator_traits<_Iter>::iterator_category iterator_category(const _Iter &__i) { return __iterator_category(__i); }
 
 template <class _Iter>
-inline typename iterator_traits<_Iter>::difference_type *
-distance_type(const _Iter &__i) { return __distance_type(__i); }
+inline typename iterator_traits<_Iter>::difference_type *distance_type(const _Iter &__i) { return __distance_type(__i); }
 
 template <class _Iter>
-inline typename iterator_traits<_Iter>::value_type *
-value_type(const _Iter &__i) { return __value_type(__i); }
+inline typename iterator_traits<_Iter>::value_type *value_type(const _Iter &__i) { return __value_type(__i); }
 
 #define __ITERATOR_CATEGORY(__i) __iterator_category(__i)
 #define __DISTANCE_TYPE(__i) __distance_type(__i)
@@ -281,8 +275,7 @@ inline ptrdiff_t *distance_type(const _Tp *) { return (ptrdiff_t *)(0); }
 #endif /* __DST_CLASS_PARTIAL_SPECIALIZATION */
 
 template <class _InputIterator, class _Distance>
-inline void __distance(_InputIterator _first, _InputIterator _last,
-                       _Distance &__n, input_iterator_tag)
+inline void __distance(_InputIterator _first, _InputIterator _last, _Distance &__n, input_iterator_tag)
 {
     while (_first != _last)
     {
@@ -292,17 +285,14 @@ inline void __distance(_InputIterator _first, _InputIterator _last,
 }
 
 template <class _RandomAccessIterator, class _Distance>
-inline void __distance(_RandomAccessIterator _first,
-                       _RandomAccessIterator _last,
-                       _Distance &__n, random_access_iterator_tag)
+inline void __distance(_RandomAccessIterator _first, _RandomAccessIterator _last, _Distance &__n, random_access_iterator_tag)
 {
     __DST_REQUIRES(_RandomAccessIterator, _RandomAccessIterator);
     __n += _last - _first;
 }
 
 template <class _InputIterator, class _Distance>
-inline void distance(_InputIterator _first,
-                     _InputIterator _last, _Distance &__n)
+inline void distance(_InputIterator _first, _InputIterator _last, _Distance &__n)
 {
     __DST_REQUIRES(_InputIterator, _InputIterator);
     __distance(_first, _last, __n, iterator_category(_first));
@@ -325,8 +315,7 @@ __distance(_InputIterator _first, _InputIterator _last, input_iterator_tag)
 
 template <class _RandomAccessIterator>
 inline typename iterator_traits<_RandomAccessIterator>::difference_type
-__distance(_RandomAccessIterator _first, _RandomAccessIterator _last,
-           random_access_iterator_tag)
+__distance(_RandomAccessIterator _first, _RandomAccessIterator _last, random_access_iterator_tag)
 {
     __DST_REQUIRES(_RandomAccessIterator, _RandomAccessIterator);
     return _last - _first;
@@ -356,8 +345,7 @@ inline void __advance(_InputIter &__i, _Distance __n, input_iterator_tag)
 #endif
 
 template <class _BidirectionalIterator, class _Distance>
-inline void __advance(_BidirectionalIterator &__i, _Distance __n,
-                      bidirectional_iterator_tag)
+inline void __advance(_BidirectionalIterator &__i, _Distance __n, bidirectional_iterator_tag)
 {
     __DST_REQUIRES(_BidirectionalIterator, _BidirectionalIterator);
     if (__n >= 0)
@@ -373,8 +361,7 @@ inline void __advance(_BidirectionalIterator &__i, _Distance __n,
 #endif
 
 template <class _RandomAccessIterator, class _Distance>
-inline void __advance(_RandomAccessIterator &__i, _Distance __n,
-                      random_access_iterator_tag)
+inline void __advance(_RandomAccessIterator &__i, _Distance __n, random_access_iterator_tag)
 {
     __DST_REQUIRES(_RandomAccessIterator, _RandomAccessIterator);
     __i += __n;

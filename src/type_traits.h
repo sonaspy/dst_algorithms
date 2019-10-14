@@ -51,10 +51,11 @@ struct __type_traits
 {
     typedef __true_type this_dummy_member_must_be_first;
     /* Do not remove this member. It informs a compiler which
-                      automatically specializes __type_traits that this
-                      __type_traits template is special. It just makes sure that
-                      things work if an implementation is using a template
-                      called __type_traits for something unrelated. */
+        automatically specializes __type_traits that this
+        __type_traits template is special. It just makes sure that
+        things work if an implementation is using a template
+        called __type_traits for something unrelated. 
+    */
 
     /* The following restrictions should be observed for the sake of
       compilers which automatically produce type specific specializations 
@@ -64,7 +65,8 @@ struct __type_traits
           - You must not rename members without making the corresponding
             name change in the compiler
           - Members you add will be treated like regular members unless
-            you add the appropriate support in the compiler. */
+            you add the appropriate support in the compiler.
+     */
 
     typedef __false_type has_trivial_default_constructor;
     typedef __false_type has_trivial_copy_constructor;
