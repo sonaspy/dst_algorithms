@@ -12,16 +12,36 @@
 using namespace std;
 __DST_BEGIN_NAMESPACE
 
+// template <class _Tp>
+// void swap(_Tp &a, _Tp &b)
+// {
+//     _Tp _tmp = a;
+//     a = b;
+//     b = _tmp;
+// }
+// template <class _Iterator>
+// void iter_swap(_Iterator &a, _Iterator &b)
+// {
+//     swap(*a, *b);
+// }
+template <class _RandomAccessIterator>
+void __reverse(_RandomAccessIterator _first, _RandomAccessIterator _last)
+{
+    if (_first < _last)
+        for (; _first < --_last; ++_first)
+            iter_swap(_first, _last);
+}
+
 template <class _RandomAccessIterator>
 void print_vector(_RandomAccessIterator _first, _RandomAccessIterator _last)
 {
     if (_first < _last)
     {
-        cout << *(_first);
+        std::cout << *(_first);
         for (auto i = _first + 1; i < _last; i++)
-            cout << " -> " << *i;
+            std::cout << " -> " << *i;
     }
-    cout << endl;
+    std::cout << endl;
 }
 
 template <class _RandomAccessIterator>
@@ -60,16 +80,16 @@ bool array_move(_RandomAccessIterator _first, _RandomAccessIterator _last, int _
 {
     if (_first < _last)
     {
-        reverse(_first, _last);
+        __reverse(_first, _last);
         if (_is_left)
         {
-            reverse(_first, _last - _offset);
-            reverse(_last - _offset, _last);
+            __reverse(_first, _last - _offset);
+            __reverse(_last - _offset, _last);
         }
         else
         {
-            reverse(_first, _first + _offset);
-            reverse(_first + _offset, _last);
+            __reverse(_first, _first + _offset);
+            __reverse(_first + _offset, _last);
         }
         return true;
     }
@@ -102,13 +122,6 @@ vector<pair<int, int>> twoSum(vector<int> &nums, int target)
     return result;
 }
 
-template <class _RandomAccessIterator>
-void __reverse(_RandomAccessIterator _first, _RandomAccessIterator _last)
-{
-    if (_first < _last)
-        for (; _first < --_last; ++_first)
-            iter_swap(_first, _last);
-}
 // find median in 2 array
 template <class _RandomAccessIterator, class _Tp = typename iterator_traits<_RandomAccessIterator>::value_type>
 _Tp median_search(_RandomAccessIterator _first1, _RandomAccessIterator _last1, _RandomAccessIterator _first2, _RandomAccessIterator _last2)
@@ -171,7 +184,7 @@ void towersOfHanoi(int n, char x, char y, char z)
     {
         towersOfHanoi(n - 1, x, z, y);
         std::cout << "Move top disk from tower " << x
-                  << " to top of tower " << y << std::endl;
+                       << " to top of tower " << y << std::endl;
         towersOfHanoi(n - 1, z, y, x);
     }
 }

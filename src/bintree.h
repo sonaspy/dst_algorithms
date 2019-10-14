@@ -173,10 +173,10 @@ protected:
     }
     int __leafcount()
     {
-        if (!this->_root)
+        if (!_root)
             return -1;
         int cnt = 0;
-        this->q.push_back(this->_root);
+        this->q.push_back(_root);
         while (this->q.size())
         {
             tp1 = this->q.front(), this->q.pop_front();
@@ -355,7 +355,7 @@ protected:
     }
     int __diameter()
     {
-        q.push_back(this->_root);
+        q.push_back(_root);
         int level = 0, last = 0;
         while (q.size())
         {
@@ -391,7 +391,7 @@ public:
     vector<_Tp> preorder, inorder, postorder;
     bintree()
     {
-        this->_root = nullptr;
+        _root = nullptr;
         this->_isunique = true;
         this->q.clear(), this->nexq.clear();
         this->_size = 0;
@@ -404,7 +404,7 @@ public:
     }
 
     inline bool const empty() const { return _root == nullptr; }
-    inline binode_ptr<_Tp> root() { return this->_root; }
+    inline binode_ptr<_Tp> root() { return _root; }
     inline int size() const { return _size; }
     inline int diam() { return __diameter(); }
     inline int height() const
@@ -427,7 +427,7 @@ public:
 
     void printhorizon()
     {
-        if (!this->_root)
+        if (!_root)
             return;
         __update_status();
         if (_ishuffman)
@@ -447,8 +447,8 @@ public:
         _direct2l[_unitsize / 2] = '/';
         _direct2r[_unitsize / 2] = '\\';
         this->__display_buffer = vector<vector<string>>(40, vector<string>(MAXCOL, string(_unitsize, ' ')));
-        __print_horizon(this->_root, 0, pow(2, this->_root->height) - 1, pow(2, this->_root->height - 1));
-        int n = this->_root->height * 2 + 1, i, j, breadth = pow(2, this->_root->height + 1) + 1;
+        __print_horizon(_root, 0, pow(2, _root->height) - 1, pow(2, _root->height - 1));
+        int n = _root->height * 2 + 1, i, j, breadth = pow(2, _root->height + 1) + 1;
         for (i = 0; i < n; ++i)
         {
             for (j = 0; j < breadth; ++j)
@@ -481,9 +481,9 @@ public:
     }
     inline void invert()
     {
-        if (!this->_root)
+        if (!_root)
             return;
-        __invert(this->_root);
+        __invert(_root);
         __update_status();
     }
     inline void earse_leaf()
@@ -496,17 +496,17 @@ public:
     }
     inline int leafsize()
     {
-        if (!this->_root)
+        if (!_root)
             return 0;
         return __leafcount();
     }
     inline bool similar(bintree<_Tp> T2)
     {
-        return __TreeSimilar(this->_root, T2.root());
+        return __TreeSimilar(_root, T2.root());
     }
     inline bool identical(bintree<_Tp> T2)
     {
-        return __treeIdentical(this->_root, T2.root());
+        return __treeIdentical(_root, T2.root());
     }
     inline bool isompriphic(bintree<_Tp> T2)
     {
@@ -520,7 +520,7 @@ public:
     }
     binode_ptr<_Tp> convert2list()
     {
-        if (!this->_root)
+        if (!_root)
             return;
         vector<binode_ptr<_Tp>> __node_list;
         intrav([&](binode_ptr<_Tp> opnv) { __node_list.push_back(opnv); });
@@ -537,24 +537,24 @@ public:
     string tree2infix()
     {
         string s;
-        __tree2Infix(this->_root, 0, s);
+        __tree2Infix(_root, 0, s);
         return s;
     }
     void eraseSubOf(const _Tp &x)
     {
-        if (!this->_root)
+        if (!_root)
             return;
-        __del_targetSub(this->_root, x);
+        __del_targetSub(_root, x);
     }
     double infixval()
     {
-        return __infix_val(this->_root);
+        return __infix_val(_root);
     }
     bool iscmp()
     {
-        if (!this->_root)
+        if (!_root)
             return true;
-        binode_ptr<_Tp> opnv = this->_root;
+        binode_ptr<_Tp> opnv = _root;
         this->q.push_back(opnv);
         while (this->q.size())
         {
@@ -575,23 +575,23 @@ public:
     template <class _Function>
     void intrav(_Function _func)
     {
-        __recur_in(this->_root, _func);
+        __recur_in(_root, _func);
     }
     template <class _Function>
     void pretrav(_Function _func)
     {
-        __recur_pre(this->_root, _func);
+        __recur_pre(_root, _func);
     }
     template <class _Function>
     void posttrav(_Function _func)
     {
-        __recur_post(this->_root, _func);
+        __recur_post(_root, _func);
     }
     void generate_inorder()
     {
         vector<_Tp> resSeq;
         stack<binode_ptr<_Tp>> s;
-        binode_ptr<_Tp> opnv = this->_root;
+        binode_ptr<_Tp> opnv = _root;
         if (!opnv)
             return;
         binode_ptr<_Tp> p = opnv;
@@ -615,7 +615,7 @@ public:
     void generate_preorder()
     {
         vector<_Tp> resSeq;
-        binode_ptr<_Tp> opnv = this->_root;
+        binode_ptr<_Tp> opnv = _root;
         if (!opnv)
             return;
         stack<binode_ptr<_Tp>> s;
@@ -634,7 +634,7 @@ public:
     void generate_postorder()
     {
         vector<_Tp> resSeq;
-        binode_ptr<_Tp> opnv = this->_root;
+        binode_ptr<_Tp> opnv = _root;
         if (!opnv)
             return;
         stack<pair<binode_ptr<_Tp>, bool>> s;
