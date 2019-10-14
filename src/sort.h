@@ -4,9 +4,8 @@
 #ifndef __NEW_SORT__
 #define __NEW_SORT__
 #include "algorithms.h"
-using namespace std;
-namespace dsa
-{
+
+__DST_BEGIN_NAMESPACE
 
 //[)
 template <typename _RandomAccessIterator>
@@ -106,7 +105,7 @@ static void inline insertsort(_RandomAccessIterator _first, _RandomAccessIterato
                 *_first = _val;
                 continue;
             }
-            for (j = i; _first < j && *(j - 1) > _val; --j)
+            for (j = i; _first<j &&*(j - 1)> _val; --j)
                 *j = *(j - 1);
             *j = _val;
         }
@@ -179,7 +178,7 @@ template <typename _RandomAccessIterator>
 static void inline mergeSort(_RandomAccessIterator _first, _RandomAccessIterator _last)
 {
 
-    //__mergesort(_first, --_last);
+    // __mergesort(_first, --_last);
     __mergesort_non_recur(_first, _last);
 }
 
@@ -257,18 +256,18 @@ static void inline quicksort(_RandomAccessIterator _first, _RandomAccessIterator
     // __quicksort_nonrecur(_first, --_last);
 }
 
-//[)
-template <typename _RandomAccessIterator>
-void qksort(_RandomAccessIterator _first, _RandomAccessIterator _last)
-{
-    if (_first >= _last)
-        return;
-    _RandomAccessIterator _mid = _first;
-    _mid = partition(_first + 1, _last, bind2nd(less<int>(), *_mid));
-    iter_swap(_mid - 1, _first);
-    qksort(_first, _mid - 1);
-    qksort(_mid, _last);
-}
+// //[)
+// template <typename _RandomAccessIterator>
+// void qksort(_RandomAccessIterator _first, _RandomAccessIterator _last)
+// {
+//     if (_first >= _last)
+//         return;
+//     _RandomAccessIterator _mid = _first;
+//     _mid = partition(_first + 1, _last, bind2nd(less<int>(), *_mid));
+//     iter_swap(_mid - 1, _first);
+//     qksort(_first, _mid - 1);
+//     qksort(_mid, _last);
+// }
 
 //[]
 template <typename _RandomAccessIterator>
@@ -378,10 +377,65 @@ for (int i = 0; i < SIZE; i++)
             a[i] = i;
         }
     }
+
+int MissingMax(int a[], int n)
+{
+    int i, j, max, missing = -1;
+
+    for (i = 0; i < n; i++)
+    {
+        max = i;
+        for (j = i + 1; j < n; j++)
+        {
+            if (a[j] > a[max])
+                max = j;
+        }
+        iter_swap(a + i, a + max);
+        if (a[i] == missing)
+            missing--;
+    }
+    return missing;
+}
 */
 
-}; // namespace dsa
+inline int __get_digit(int num, int id)
+{
+    int _res = 0;
+    for (int i = 0; i <= id; ++i)
+    {
+        _res = num % 10;
+        num /= 10;
+    }
+    return _res;
+}
 
-// namespace dsa
+template <typename _RandomAccessIterator>
+void radix_sort(_RandomAccessIterator _first, _RandomAccessIterator _last)
+{
+    int _max_digit = to_string(*max_element(_first, _last)).size(), _radix = 10;
+    std::vector<int> _container, _bucket[_radix];
+    _container.reserve(_last - _first);
+    for (_RandomAccessIterator i = _first; i != _last; ++i)
+        _container.push_back(*i);
+    for (int dig = 0; dig < _max_digit; dig++)
+    {
+        for (auto &number : _container)
+        {
+            _bucket[__get_digit(number, dig)].push_back(number);
+        }
+        _container.clear();
+        for (int i = 0; i < _radix; ++i)
+        {
+            _container.insert(_container.end(), _bucket[i].begin(), _bucket[i].end());
+            _bucket[i].clear();
+        }
+    }
+    for (auto &number : _container)
+    {
+        *(_first++) = number;
+    }
+}
+
+__DST_END_NAMESPACE
 
 #endif
