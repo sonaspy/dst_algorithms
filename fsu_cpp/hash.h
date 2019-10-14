@@ -1,5 +1,4 @@
 // functions to convert from type K to nonnegative integer
-// derived from similar classes in SGI STL
 
 
 #ifndef hash_
