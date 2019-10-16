@@ -1,3 +1,6 @@
+# author - sonaspy@outlook.com
+# coding - utf_8
+
 import json
 import requests
 from requests.exceptions import RequestException
