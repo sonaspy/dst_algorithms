@@ -847,7 +847,7 @@ inline bool operator!=(const debug_alloc<_Alloc> &,
 }
 #endif /* __DST_FUNCTION_TMPL_PARTIAL_ORDER */
 
-// Another allocator adaptor: _Alloc_traits.  This serves two
+// Another allocator adaptor: __alloc_traits.  This serves two
 // purposes.  First, make it possible to write containers that can use
 // either -style allocators or standard-conforming allocator.
 // Second, provide a mechanism so that containers can query whether or
@@ -855,7 +855,7 @@ inline bool operator!=(const debug_alloc<_Alloc> &,
 // can avoid wasting a word of memory to store an empty object.
 
 // This adaptor uses partial specialization.  The general case of
-// _Alloc_traits<_Tp, _Alloc> assumes that _Alloc is a
+// __alloc_traits<_Tp, _Alloc> assumes that _Alloc is a
 // standard-conforming allocator, possibly with non-equal instances
 // and non-static members.  (It still behaves correctly even if _Alloc
 // has static member and if all instances are equal.  Refinements
@@ -863,10 +863,10 @@ inline bool operator!=(const debug_alloc<_Alloc> &,
 
 // There are always two members: allocator_type, which is a standard-
 // conforming allocator type for allocating objects of type _Tp, and
-// _S_instanceless, a static const member of type bool.  If
-// _S_instanceless is true, this means that there is no difference
+// __s_instanceless, a static const member of type bool.  If
+// __s_instanceless is true, this means that there is no difference
 // between any two instances of type allocator_type.  Furthermore, if
-// _S_instanceless is true, then _Alloc_traits has one additional
+// __s_instanceless is true, then __alloc_traits has one additional
 // member: _Alloc_type.  This type encapsulates allocation and
 // deallocation of objects of type _Tp through a static interface; it
 // has two member functions, whose signatures are
@@ -876,22 +876,22 @@ inline bool operator!=(const debug_alloc<_Alloc> &,
 // The fully general version.
 
 template <class _Tp, class _Allocator>
-struct _Alloc_traits
+struct __alloc_traits
 {
-    static const bool _S_instanceless = false;
+    static const bool __s_instanceless = false;
     typedef typename _Allocator::__DST_TEMPLATE rebind<_Tp>::other
         allocator_type;
 };
 
 template <class _Tp, class _Allocator>
-const bool _Alloc_traits<_Tp, _Allocator>::_S_instanceless;
+const bool __alloc_traits<_Tp, _Allocator>::__s_instanceless;
 
 // The version for the default allocator.
 
 template <class _Tp, class _Tp1>
-struct _Alloc_traits<_Tp, allocator<_Tp1>>
+struct __alloc_traits<_Tp, allocator<_Tp1>>
 {
-    static const bool _S_instanceless = true;
+    static const bool __s_instanceless = true;
     typedef simple_alloc<_Tp, alloc> _Alloc_type;
     typedef allocator<_Tp> allocator_type;
 };
@@ -899,17 +899,17 @@ struct _Alloc_traits<_Tp, allocator<_Tp1>>
 // Versions for the predefined -style allocators.
 
 template <class _Tp, int __inst>
-struct _Alloc_traits<_Tp, __malloc_alloc_template<__inst>>
+struct __alloc_traits<_Tp, __malloc_alloc_template<__inst>>
 {
-    static const bool _S_instanceless = true;
+    static const bool __s_instanceless = true;
     typedef simple_alloc<_Tp, __malloc_alloc_template<__inst>> _Alloc_type;
     typedef __allocator<_Tp, __malloc_alloc_template<__inst>> allocator_type;
 };
 
 template <class _Tp, bool __threads, int __inst>
-struct _Alloc_traits<_Tp, __default_alloc_template<__threads, __inst>>
+struct __alloc_traits<_Tp, __default_alloc_template<__threads, __inst>>
 {
-    static const bool _S_instanceless = true;
+    static const bool __s_instanceless = true;
     typedef simple_alloc<_Tp, __default_alloc_template<__threads, __inst>>
         _Alloc_type;
     typedef __allocator<_Tp, __default_alloc_template<__threads, __inst>>
@@ -917,9 +917,9 @@ struct _Alloc_traits<_Tp, __default_alloc_template<__threads, __inst>>
 };
 
 template <class _Tp, class _Alloc>
-struct _Alloc_traits<_Tp, debug_alloc<_Alloc>>
+struct __alloc_traits<_Tp, debug_alloc<_Alloc>>
 {
-    static const bool _S_instanceless = true;
+    static const bool __s_instanceless = true;
     typedef simple_alloc<_Tp, debug_alloc<_Alloc>> _Alloc_type;
     typedef __allocator<_Tp, debug_alloc<_Alloc>> allocator_type;
 };
@@ -928,20 +928,20 @@ struct _Alloc_traits<_Tp, debug_alloc<_Alloc>>
 // -style allocators.
 
 template <class _Tp, class _Tp1, int __inst>
-struct _Alloc_traits<_Tp,
+struct __alloc_traits<_Tp,
                      __allocator<_Tp1, __malloc_alloc_template<__inst>>>
 {
-    static const bool _S_instanceless = true;
+    static const bool __s_instanceless = true;
     typedef simple_alloc<_Tp, __malloc_alloc_template<__inst>> _Alloc_type;
     typedef __allocator<_Tp, __malloc_alloc_template<__inst>> allocator_type;
 };
 
 template <class _Tp, class _Tp1, bool __thr, int __inst>
-struct _Alloc_traits<_Tp,
+struct __alloc_traits<_Tp,
                      __allocator<_Tp1,
                                  __default_alloc_template<__thr, __inst>>>
 {
-    static const bool _S_instanceless = true;
+    static const bool __s_instanceless = true;
     typedef simple_alloc<_Tp, __default_alloc_template<__thr, __inst>>
         _Alloc_type;
     typedef __allocator<_Tp, __default_alloc_template<__thr, __inst>>
@@ -949,9 +949,9 @@ struct _Alloc_traits<_Tp,
 };
 
 template <class _Tp, class _Tp1, class _Alloc>
-struct _Alloc_traits<_Tp, __allocator<_Tp1, debug_alloc<_Alloc>>>
+struct __alloc_traits<_Tp, __allocator<_Tp1, debug_alloc<_Alloc>>>
 {
-    static const bool _S_instanceless = true;
+    static const bool __s_instanceless = true;
     typedef simple_alloc<_Tp, debug_alloc<_Alloc>> _Alloc_type;
     typedef __allocator<_Tp, debug_alloc<_Alloc>> allocator_type;
 };
