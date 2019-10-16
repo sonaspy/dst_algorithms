@@ -501,16 +501,12 @@ inline char *fill_n(char *_first, _Size __n, const char &__c)
 // equal and mismatch
 
 template <class _InputIter1, class _InputIter2>
-pair<_InputIter1, _InputIter2> mismatch(_InputIter1 __first1,
-                                        _InputIter1 __last1,
-                                        _InputIter2 __first2)
+pair<_InputIter1, _InputIter2> mismatch(_InputIter1 __first1, _InputIter1 __last1, _InputIter2 __first2)
 {
     __DST_REQUIRES(_InputIter1, _InputIterator);
     __DST_REQUIRES(_InputIter2, _InputIterator);
-    __DST_REQUIRES(typename iterator_traits<_InputIter1>::value_type,
-                   _EqualityComparable);
-    __DST_REQUIRES(typename iterator_traits<_InputIter2>::value_type,
-                   _EqualityComparable);
+    __DST_REQUIRES(typename iterator_traits<_InputIter1>::value_type, _EqualityComparable);
+    __DST_REQUIRES(typename iterator_traits<_InputIter2>::value_type, _EqualityComparable);
     while (__first1 != __last1 && *__first1 == *__first2)
     {
         ++__first1;
@@ -520,10 +516,7 @@ pair<_InputIter1, _InputIter2> mismatch(_InputIter1 __first1,
 }
 
 template <class _InputIter1, class _InputIter2, class _BinaryPredicate>
-pair<_InputIter1, _InputIter2> mismatch(_InputIter1 __first1,
-                                        _InputIter1 __last1,
-                                        _InputIter2 __first2,
-                                        _BinaryPredicate __binary_pred)
+pair<_InputIter1, _InputIter2> mismatch(_InputIter1 __first1, _InputIter1 __last1, _InputIter2 __first2, _BinaryPredicate __binary_pred)
 {
     __DST_REQUIRES(_InputIter1, _InputIterator);
     __DST_REQUIRES(_InputIter2, _InputIterator);
@@ -536,15 +529,12 @@ pair<_InputIter1, _InputIter2> mismatch(_InputIter1 __first1,
 }
 
 template <class _InputIter1, class _InputIter2>
-inline bool equal(_InputIter1 __first1, _InputIter1 __last1,
-                  _InputIter2 __first2)
+inline bool equal(_InputIter1 __first1, _InputIter1 __last1, _InputIter2 __first2)
 {
     __DST_REQUIRES(_InputIter1, _InputIterator);
     __DST_REQUIRES(_InputIter2, _InputIterator);
-    __DST_REQUIRES(typename iterator_traits<_InputIter1>::value_type,
-                   _EqualityComparable);
-    __DST_REQUIRES(typename iterator_traits<_InputIter2>::value_type,
-                   _EqualityComparable);
+    __DST_REQUIRES(typename iterator_traits<_InputIter1>::value_type, _EqualityComparable);
+    __DST_REQUIRES(typename iterator_traits<_InputIter2>::value_type, _EqualityComparable);
     for (; __first1 != __last1; ++__first1, ++__first2)
         if (*__first1 != *__first2)
             return false;
@@ -552,8 +542,7 @@ inline bool equal(_InputIter1 __first1, _InputIter1 __last1,
 }
 
 template <class _InputIter1, class _InputIter2, class _BinaryPredicate>
-inline bool equal(_InputIter1 __first1, _InputIter1 __last1,
-                  _InputIter2 __first2, _BinaryPredicate __binary_pred)
+inline bool equal(_InputIter1 __first1, _InputIter1 __last1, _InputIter2 __first2, _BinaryPredicate __binary_pred)
 {
     __DST_REQUIRES(_InputIter1, _InputIterator);
     __DST_REQUIRES(_InputIter2, _InputIterator);
@@ -568,15 +557,12 @@ inline bool equal(_InputIter1 __first1, _InputIter1 __last1,
 // (the latter is not part of the C++ standard.)
 
 template <class _InputIter1, class _InputIter2>
-bool lexicographical_compare(_InputIter1 __first1, _InputIter1 __last1,
-                             _InputIter2 __first2, _InputIter2 __last2)
+bool lexicographical_compare(_InputIter1 __first1, _InputIter1 __last1, _InputIter2 __first2, _InputIter2 __last2)
 {
     __DST_REQUIRES(_InputIter1, _InputIterator);
     __DST_REQUIRES(_InputIter2, _InputIterator);
-    __DST_REQUIRES(typename iterator_traits<_InputIter1>::value_type,
-                   _LessThanComparable);
-    __DST_REQUIRES(typename iterator_traits<_InputIter2>::value_type,
-                   _LessThanComparable);
+    __DST_REQUIRES(typename iterator_traits<_InputIter1>::value_type, _LessThanComparable);
+    __DST_REQUIRES(typename iterator_traits<_InputIter2>::value_type, _LessThanComparable);
     for (; __first1 != __last1 && __first2 != __last2; ++__first1, ++__first2)
     {
         if (*__first1 < *__first2)
@@ -588,9 +574,7 @@ bool lexicographical_compare(_InputIter1 __first1, _InputIter1 __last1,
 }
 
 template <class _InputIter1, class _InputIter2, class _Compare>
-bool lexicographical_compare(_InputIter1 __first1, _InputIter1 __last1,
-                             _InputIter2 __first2, _InputIter2 __last2,
-                             _Compare __comp)
+bool lexicographical_compare(_InputIter1 __first1, _InputIter1 __last1, _InputIter2 __first2, _InputIter2 __last2, _Compare __comp)
 {
     __DST_REQUIRES(_InputIter1, _InputIterator);
     __DST_REQUIRES(_InputIter2, _InputIterator);
@@ -605,10 +589,8 @@ bool lexicographical_compare(_InputIter1 __first1, _InputIter1 __last1,
 }
 
 inline bool
-lexicographical_compare(const unsigned char *__first1,
-                        const unsigned char *__last1,
-                        const unsigned char *__first2,
-                        const unsigned char *__last2)
+lexicographical_compare(const unsigned char *__first1, const unsigned char *__last1,
+                        const unsigned char *__first2, const unsigned char *__last2)
 {
     const size_t __len1 = __last1 - __first1;
     const size_t __len2 = __last2 - __first2;
@@ -616,25 +598,19 @@ lexicographical_compare(const unsigned char *__first1,
     return __result != 0 ? __result < 0 : __len1 < __len2;
 }
 
-inline bool lexicographical_compare(const char *__first1, const char *__last1,
-                                    const char *__first2, const char *__last2)
+inline bool lexicographical_compare(const char *__first1, const char *__last1, const char *__first2, const char *__last2)
 {
 #if CHAR_MAX == SCHAR_MAX
-    return lexicographical_compare((const signed char *)__first1,
-                                   (const signed char *)__last1,
-                                   (const signed char *)__first2,
-                                   (const signed char *)__last2);
+    return lexicographical_compare((const signed char *)__first1, (const signed char *)__last1,
+                                   (const signed char *)__first2, (const signed char *)__last2);
 #else  /* CHAR_MAX == SCHAR_MAX */
-    return lexicographical_compare((const unsigned char *)__first1,
-                                   (const unsigned char *)__last1,
-                                   (const unsigned char *)__first2,
-                                   (const unsigned char *)__last2);
+    return lexicographical_compare((const unsigned char *)__first1, (const unsigned char *)__last1,
+                                   (const unsigned char *)__first2, (const unsigned char *)__last2);
 #endif /* CHAR_MAX == SCHAR_MAX */
 }
 
 template <class _InputIter1, class _InputIter2>
-int __lexicographical_compare_3way(_InputIter1 __first1, _InputIter1 __last1,
-                                   _InputIter2 __first2, _InputIter2 __last2)
+int __lexicographical_compare_3way(_InputIter1 __first1, _InputIter1 __last1, _InputIter2 __first2, _InputIter2 __last2)
 {
     while (__first1 != __last1 && __first2 != __last2)
     {
@@ -656,21 +632,16 @@ int __lexicographical_compare_3way(_InputIter1 __first1, _InputIter1 __last1,
 }
 
 inline int
-__lexicographical_compare_3way(const unsigned char *__first1,
-                               const unsigned char *__last1,
-                               const unsigned char *__first2,
-                               const unsigned char *__last2)
+__lexicographical_compare_3way(const unsigned char *__first1, const unsigned char *__last1,
+                               const unsigned char *__first2, const unsigned char *__last2)
 {
     const ptrdiff_t __len1 = __last1 - __first1;
     const ptrdiff_t __len2 = __last2 - __first2;
     const int __result = memcmp(__first1, __first2, min(__len1, __len2));
-    return __result != 0 ? __result
-                         : (__len1 == __len2 ? 0 : (__len1 < __len2 ? -1 : 1));
+    return __result != 0 ? __result : (__len1 == __len2 ? 0 : (__len1 < __len2 ? -1 : 1));
 }
 
-inline int
-__lexicographical_compare_3way(const char *__first1, const char *__last1,
-                               const char *__first2, const char *__last2)
+inline int __lexicographical_compare_3way(const char *__first1, const char *__last1, const char *__first2, const char *__last2)
 {
 #if CHAR_MAX == SCHAR_MAX
     return __lexicographical_compare_3way(
@@ -679,23 +650,18 @@ __lexicographical_compare_3way(const char *__first1, const char *__last1,
         (const signed char *)__first2,
         (const signed char *)__last2);
 #else
-    return __lexicographical_compare_3way((const unsigned char *)__first1,
-                                          (const unsigned char *)__last1,
-                                          (const unsigned char *)__first2,
-                                          (const unsigned char *)__last2);
+    return __lexicographical_compare_3way((const unsigned char *)__first1, (const unsigned char *)__last1,
+                                          (const unsigned char *)__first2, (const unsigned char *)__last2);
 #endif
 }
 
 template <class _InputIter1, class _InputIter2>
-int lexicographical_compare_3way(_InputIter1 __first1, _InputIter1 __last1,
-                                 _InputIter2 __first2, _InputIter2 __last2)
+int lexicographical_compare_3way(_InputIter1 __first1, _InputIter1 __last1, _InputIter2 __first2, _InputIter2 __last2)
 {
     __DST_REQUIRES(_InputIter1, _InputIterator);
     __DST_REQUIRES(_InputIter2, _InputIterator);
-    __DST_REQUIRES(typename iterator_traits<_InputIter1>::value_type,
-                   _LessThanComparable);
-    __DST_REQUIRES(typename iterator_traits<_InputIter2>::value_type,
-                   _LessThanComparable);
+    __DST_REQUIRES(typename iterator_traits<_InputIter1>::value_type, _LessThanComparable);
+    __DST_REQUIRES(typename iterator_traits<_InputIter2>::value_type, _LessThanComparable);
     return __lexicographical_compare_3way(__first1, __last1, __first2, __last2);
 }
 
