@@ -755,8 +755,7 @@ void vector<_Tp, _Alloc>::__m_insert_aux(iterator __position)
 }
 
 template <class _Tp, class _Alloc>
-void vector<_Tp, _Alloc>::__m_fill_insert(iterator __position, size_type __n,
-                                          const _Tp &__x)
+void vector<_Tp, _Alloc>::__m_fill_insert(iterator __position, size_type __n, const _Tp &__x)
 {
     if (__n != 0)
     {
@@ -879,9 +878,7 @@ void vector<_Tp, _Alloc>::__m_range_insert(iterator __position,
 #else /* __DST_MEMBER_TEMPLATES */
 
 template <class _Tp, class _Alloc>
-void vector<_Tp, _Alloc>::insert(iterator __position,
-                                 const_iterator __first,
-                                 const_iterator __last)
+void vector<_Tp, _Alloc>::insert(iterator __position,  const_iterator __first,  const_iterator __last)
 {
     if (__first != __last)
     {
