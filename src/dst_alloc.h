@@ -928,8 +928,7 @@ struct __alloc_traits<_Tp, debug_alloc<_Alloc>>
 // -style allocators.
 
 template <class _Tp, class _Tp1, int __inst>
-struct __alloc_traits<_Tp,
-                     __allocator<_Tp1, __malloc_alloc_template<__inst>>>
+struct __alloc_traits<_Tp, __allocator<_Tp1, __malloc_alloc_template<__inst>>>
 {
     static const bool __s_instanceless = true;
     typedef simple_alloc<_Tp, __malloc_alloc_template<__inst>> _Alloc_type;
@@ -937,9 +936,7 @@ struct __alloc_traits<_Tp,
 };
 
 template <class _Tp, class _Tp1, bool __thr, int __inst>
-struct __alloc_traits<_Tp,
-                     __allocator<_Tp1,
-                                 __default_alloc_template<__thr, __inst>>>
+struct __alloc_traits<_Tp, __allocator<_Tp1, __default_alloc_template<__thr, __inst>>>
 {
     static const bool __s_instanceless = true;
     typedef simple_alloc<_Tp, __default_alloc_template<__thr, __inst>>
