@@ -6,20 +6,23 @@
 #define test() freopen("in", "r", stdin)
 using namespace std;
 
+class cl1
+{
+public:
+    int m1, m2;
+};
+
+class cl2 : public cl1
+{
+    int fun() { return m1; }
+};
+
 int main(int argc, char const *argv[])
 {
     /* code */
     //test();
-    vector<int> v, a;
-    string s, s1;
+
     clock_t startTime, endTime;
-    __wrap_iter<int *> it;
-    for (int i = 0; i < SIZE; i++)
-    {
-        v.push_back(i);
-    }
-    v.erase(v.begin(), v.end());
-    endTime = clock();
 
     cout << "The elapsed time is: " << (double)(endTime - startTime) / 1000 << "ms" << endl;
 

@@ -10,59 +10,59 @@ __DST_BEGIN_NAMESPACE
 #pragma set woff 1375
 #endif
 
-struct _List_node_base
+struct __list_pointer
 {
-    _List_node_base *_M_next;
-    _List_node_base *_M_prev;
+    __list_pointer *__m_next;
+    __list_pointer *__m_prev;
 };
 
 template <class _Tp>
-struct _List_node : public _List_node_base
+struct __list_node : public __list_pointer
 {
-    _Tp _M_data;
+    _Tp __m_data;
 };
 
-struct _List_iterator_base
+struct __list_iterator_base
 {
     typedef size_t size_type;
     typedef ptrdiff_t difference_type;
     typedef bidirectional_iterator_tag iterator_category;
 
-    _List_node_base *_M_node;
+    __list_pointer *__m_node;
 
-    _List_iterator_base(_List_node_base *__x) : _M_node(__x) {}
-    _List_iterator_base() {}
+    __list_iterator_base(__list_pointer *__x) : __m_node(__x) {}
+    __list_iterator_base() {}
 
-    void _M_incr() { _M_node = _M_node->_M_next; }
-    void _M_decr() { _M_node = _M_node->_M_prev; }
+    void __m_incr() { __m_node = __m_node->__m_next; }
+    void __m_decr() { __m_node = __m_node->__m_prev; }
 
-    bool operator==(const _List_iterator_base &__x) const
+    bool operator==(const __list_iterator_base &__x) const
     {
-        return _M_node == __x._M_node;
+        return __m_node == __x.__m_node;
     }
-    bool operator!=(const _List_iterator_base &__x) const
+    bool operator!=(const __list_iterator_base &__x) const
     {
-        return _M_node != __x._M_node;
+        return __m_node != __x.__m_node;
     }
 };
 
 template <class _Tp, class _Ref, class _Ptr>
-struct _List_iterator : public _List_iterator_base
+struct __list_iterator : public __list_iterator_base
 {
-    typedef _List_iterator<_Tp, _Tp &, _Tp *> iterator;
-    typedef _List_iterator<_Tp, const _Tp &, const _Tp *> const_iterator;
-    typedef _List_iterator<_Tp, _Ref, _Ptr> _Self;
+    typedef __list_iterator<_Tp, _Tp &, _Tp *> iterator;
+    typedef __list_iterator<_Tp, const _Tp &, const _Tp *> const_iterator;
+    typedef __list_iterator<_Tp, _Ref, _Ptr> __self;
 
     typedef _Tp value_type;
     typedef _Ptr pointer;
     typedef _Ref reference;
-    typedef _List_node<_Tp> _Node;
+    typedef __list_node<_Tp> __node;
 
-    _List_iterator(_Node *__x) : _List_iterator_base(__x) {}
-    _List_iterator() {}
-    _List_iterator(const iterator &__x) : _List_iterator_base(__x._M_node) {}
+    __list_iterator(__node *__x) : __list_iterator_base(__x) {}
+    __list_iterator() {}
+    __list_iterator(const iterator &__x) : __list_iterator_base(__x.__m_node) {}
 
-    reference operator*() const { return ((_Node *)_M_node)->_M_data; }
+    reference operator*() const { return ((__node *)__m_node)->__m_data; }
 
 #ifndef ___DST_NO_ARROW_OPERATOR
     pointer operator->() const
@@ -71,26 +71,26 @@ struct _List_iterator : public _List_iterator_base
     }
 #endif /* ___DST_NO_ARROW_OPERATOR */
 
-    _Self &operator++()
+    __self &operator++()
     {
-        this->_M_incr();
+        this->__m_incr();
         return *this;
     }
-    _Self operator++(int)
+    __self operator++(int)
     {
-        _Self __tmp = *this;
-        this->_M_incr();
+        __self __tmp = *this;
+        this->__m_incr();
         return __tmp;
     }
-    _Self &operator--()
+    __self &operator--()
     {
-        this->_M_decr();
+        this->__m_decr();
         return *this;
     }
-    _Self operator--(int)
+    __self operator--(int)
     {
-        _Self __tmp = *this;
-        this->_M_decr();
+        __self __tmp = *this;
+        this->__m_decr();
         return __tmp;
     }
 };
@@ -98,20 +98,20 @@ struct _List_iterator : public _List_iterator_base
 #ifndef __DST_CLASS_PARTIAL_SPECIALIZATION
 
 inline bidirectional_iterator_tag
-iterator_category(const _List_iterator_base &)
+iterator_category(const __list_iterator_base &)
 {
     return bidirectional_iterator_tag();
 }
 
 template <class _Tp, class _Ref, class _Ptr>
 inline _Tp *
-value_type(const _List_iterator<_Tp, _Ref, _Ptr> &)
+value_type(const __list_iterator<_Tp, _Ref, _Ptr> &)
 {
     return 0;
 }
 
 inline ptrdiff_t *
-distance_type(const _List_iterator_base &)
+distance_type(const __list_iterator_base &)
 {
     return 0;
 }
@@ -129,74 +129,70 @@ distance_type(const _List_iterator_base &)
 
 // Base for general standard-conforming allocators.
 template <class _Tp, class _Allocator, bool _IsStatic>
-class _List_alloc_base
+class __list_alloc_base
 {
 public:
     typedef typename _Alloc_traits<_Tp, _Allocator>::allocator_type
         allocator_type;
     allocator_type get_allocator() const { return _Node_allocator; }
 
-    _List_alloc_base(const allocator_type &__a) : _Node_allocator(__a) {}
+    __list_alloc_base(const allocator_type &__a) : _Node_allocator(__a) {}
 
 protected:
-    _List_node<_Tp> *_M_get_node()
+    __list_node<_Tp> *__m_get_node()
     {
         return _Node_allocator.allocate(1);
     }
-    void _M_put_node(_List_node<_Tp> *__p)
+    void __m_put_node(__list_node<_Tp> *__p)
     {
         _Node_allocator.deallocate(__p, 1);
     }
 
 protected:
-    typename _Alloc_traits<_List_node<_Tp>, _Allocator>::allocator_type
+    typename _Alloc_traits<__list_node<_Tp>, _Allocator>::allocator_type
         _Node_allocator;
-    _List_node<_Tp> *_M_node;
+    __list_node<_Tp> *__m_node;
 };
 
 // Specialization for instanceless allocators.
 
 template <class _Tp, class _Allocator>
-class _List_alloc_base<_Tp, _Allocator, true>
+class __list_alloc_base<_Tp, _Allocator, true>
 {
 public:
     typedef typename _Alloc_traits<_Tp, _Allocator>::allocator_type
         allocator_type;
     allocator_type get_allocator() const { return allocator_type(); }
 
-    _List_alloc_base(const allocator_type &) {}
+    __list_alloc_base(const allocator_type &) {}
 
 protected:
-    typedef typename _Alloc_traits<_List_node<_Tp>, _Allocator>::_Alloc_type
+    typedef typename _Alloc_traits<__list_node<_Tp>, _Allocator>::_Alloc_type
         _Alloc_type;
-    _List_node<_Tp> *_M_get_node() { return _Alloc_type::allocate(1); }
-    void _M_put_node(_List_node<_Tp> *__p) { _Alloc_type::deallocate(__p, 1); }
+    __list_node<_Tp> *__m_get_node() { return _Alloc_type::allocate(1); }
+    void __m_put_node(__list_node<_Tp> *__p) { _Alloc_type::deallocate(__p, 1); }
 
 protected:
-    _List_node<_Tp> *_M_node;
+    __list_node<_Tp> *__m_node;
 };
 
 template <class _Tp, class _Alloc>
-class _List_base
-    : public _List_alloc_base<_Tp, _Alloc,
-                              _Alloc_traits<_Tp, _Alloc>::_S_instanceless>
+class __list_base : public __list_alloc_base<_Tp, _Alloc, _Alloc_traits<_Tp, _Alloc>::_S_instanceless>
 {
 public:
-    typedef _List_alloc_base<_Tp, _Alloc,
-                             _Alloc_traits<_Tp, _Alloc>::_S_instanceless>
-        _Base;
-    typedef typename _Base::allocator_type allocator_type;
+    typedef __list_alloc_base<_Tp, _Alloc, _Alloc_traits<_Tp, _Alloc>::_S_instanceless> __base;
+    typedef typename __base::allocator_type allocator_type;
 
-    _List_base(const allocator_type &__a) : _Base(__a)
+    __list_base(const allocator_type &__a) : __base(__a)
     {
-        _M_node = _M_get_node();
-        _M_node->_M_next = _M_node;
-        _M_node->_M_prev = _M_node;
+        __m_node = __m_get_node();
+        __m_node->__m_next = __m_node;
+        __m_node->__m_prev = __m_node;
     }
-    ~_List_base()
+    ~__list_base()
     {
         clear();
-        _M_put_node(_M_node);
+        __m_put_node(__m_node);
     }
 
     void clear();
@@ -205,60 +201,60 @@ public:
 #else /* __DST_USE_DSA_ALLOCATORS */
 
 template <class _Tp, class _Alloc>
-class _List_base
+class __list_base
 {
 public:
     typedef _Alloc allocator_type;
     allocator_type get_allocator() const { return allocator_type(); }
 
-    _List_base(const allocator_type &)
+    __list_base(const allocator_type &)
     {
-        _M_node = _M_get_node();
-        _M_node->_M_next = _M_node;
-        _M_node->_M_prev = _M_node;
+        __m_node = __m_get_node();
+        __m_node->__m_next = __m_node;
+        __m_node->__m_prev = __m_node;
     }
-    ~_List_base()
+    ~__list_base()
     {
         clear();
-        _M_put_node(_M_node);
+        __m_put_node(__m_node);
     }
 
     void clear();
 
 protected:
-    typedef simple_alloc<_List_node<_Tp>, _Alloc> _Alloc_type;
-    _List_node<_Tp> *_M_get_node() { return _Alloc_type::allocate(1); }
-    void _M_put_node(_List_node<_Tp> *__p) { _Alloc_type::deallocate(__p, 1); }
+    typedef simple_alloc<__list_node<_Tp>, _Alloc> _Alloc_type;
+    __list_node<_Tp> *__m_get_node() { return _Alloc_type::allocate(1); }
+    void __m_put_node(__list_node<_Tp> *__p) { _Alloc_type::deallocate(__p, 1); }
 
 protected:
-    _List_node<_Tp> *_M_node;
+    __list_node<_Tp> *__m_node;
 };
 
 #endif /* __DST_USE_DSA_ALLOCATORS */
 
 template <class _Tp, class _Alloc>
-void _List_base<_Tp, _Alloc>::clear()
+void __list_base<_Tp, _Alloc>::clear()
 {
-    _List_node<_Tp> *__cur = (_List_node<_Tp> *)_M_node->_M_next;
-    while (__cur != _M_node)
+    __list_node<_Tp> *__cur = (__list_node<_Tp> *)__m_node->__m_next;
+    while (__cur != __m_node)
     {
-        _List_node<_Tp> *__tmp = __cur;
-        __cur = (_List_node<_Tp> *)__cur->_M_next;
-        _Destroy(&__tmp->_M_data);
-        _M_put_node(__tmp);
+        __list_node<_Tp> *__tmp = __cur;
+        __cur = (__list_node<_Tp> *)__cur->__m_next;
+        __destory(&__tmp->__m_data);
+        __m_put_node(__tmp);
     }
-    _M_node->_M_next = _M_node;
-    _M_node->_M_prev = _M_node;
+    __m_node->__m_next = __m_node;
+    __m_node->__m_prev = __m_node;
 }
 
 template <class _Tp, class _Alloc = __DST_DEFAULT_ALLOCATOR(_Tp)>
-class list : protected _List_base<_Tp, _Alloc>
+class list : protected __list_base<_Tp, _Alloc>
 {
     // requirements:
 
     __DST_CLASS_REQUIRES(_Tp, _Assignable);
 
-    typedef _List_base<_Tp, _Alloc> _Base;
+    typedef __list_base<_Tp, _Alloc> __base;
 
 protected:
     typedef void *_Void_pointer;
@@ -269,16 +265,16 @@ public:
     typedef const value_type *const_pointer;
     typedef value_type &reference;
     typedef const value_type &const_reference;
-    typedef _List_node<_Tp> _Node;
+    typedef __list_node<_Tp> __node;
     typedef size_t size_type;
     typedef ptrdiff_t difference_type;
 
-    typedef typename _Base::allocator_type allocator_type;
-    allocator_type get_allocator() const { return _Base::get_allocator(); }
+    typedef typename __base::allocator_type allocator_type;
+    allocator_type get_allocator() const { return __base::get_allocator(); }
 
 public:
-    typedef _List_iterator<_Tp, _Tp &, _Tp *> iterator;
-    typedef _List_iterator<_Tp, const _Tp &, const _Tp *> const_iterator;
+    typedef __list_iterator<_Tp, _Tp &, _Tp *> iterator;
+    typedef __list_iterator<_Tp, const _Tp &, const _Tp *> const_iterator;
 
 #ifdef __DST_CLASS_PARTIAL_SPECIALIZATION
     typedef reverse_iterator<const_iterator> const_reverse_iterator;
@@ -294,42 +290,42 @@ public:
 
 protected:
 #ifdef __DST_HAS_NAMESPACES
-    using _Base::_M_get_node;
-    using _Base::_M_node;
-    using _Base::_M_put_node;
+    using __base::__m_get_node;
+    using __base::__m_node;
+    using __base::__m_put_node;
 #endif /* __DST_HAS_NAMESPACES */
 
 protected:
-    _Node *_M_create_node(const _Tp &__x)
+    __node *__m_create_node(const _Tp &__x)
     {
-        _Node *__p = _M_get_node();
+        __node *__p = __m_get_node();
         __DST_TRY
         {
-            _Construct(&__p->_M_data, __x);
+            __construct(&__p->__m_data, __x);
         }
-        __DST_UNWIND(_M_put_node(__p));
+        __DST_UNWIND(__m_put_node(__p));
         return __p;
     }
 
-    _Node *_M_create_node()
+    __node *__m_create_node()
     {
-        _Node *__p = _M_get_node();
+        __node *__p = __m_get_node();
         __DST_TRY
         {
-            _Construct(&__p->_M_data);
+            __construct(&__p->__m_data);
         }
-        __DST_UNWIND(_M_put_node(__p));
+        __DST_UNWIND(__m_put_node(__p));
         return __p;
     }
 
 public:
-    explicit list(const allocator_type &__a = allocator_type()) : _Base(__a) {}
+    explicit list(const allocator_type &__a = allocator_type()) : __base(__a) {}
 
-    iterator begin() { return (_Node *)(_M_node->_M_next); }
-    const_iterator begin() const { return (_Node *)(_M_node->_M_next); }
+    iterator begin() { return (__node *)(__m_node->__m_next); }
+    const_iterator begin() const { return (__node *)(__m_node->__m_next); }
 
-    iterator end() { return _M_node; }
-    const_iterator end() const { return _M_node; }
+    iterator end() { return __m_node; }
+    const_iterator end() const { return __m_node; }
 
     reverse_iterator rbegin()
     {
@@ -349,7 +345,7 @@ public:
         return const_reverse_iterator(begin());
     }
 
-    bool empty() const { return _M_node->_M_next == _M_node; }
+    bool empty() const { return __m_node->__m_next == __m_node; }
     size_type size() const
     {
         size_type __result = 0;
@@ -363,15 +359,15 @@ public:
     reference back() { return *(--end()); }
     const_reference back() const { return *(--end()); }
 
-    void swap(list<_Tp, _Alloc> &__x) { __DSA::swap(_M_node, __x._M_node); }
+    void swap(list<_Tp, _Alloc> &__x) { __DSA::swap(__m_node, __x.__m_node); }
 
     iterator insert(iterator __position, const _Tp &__x)
     {
-        _Node *__tmp = _M_create_node(__x);
-        __tmp->_M_next = __position._M_node;
-        __tmp->_M_prev = __position._M_node->_M_prev;
-        __position._M_node->_M_prev->_M_next = __tmp;
-        __position._M_node->_M_prev = __tmp;
+        __node *__tmp = __m_create_node(__x);
+        __tmp->__m_next = __position.__m_node;
+        __tmp->__m_prev = __position.__m_node->__m_prev;
+        __position.__m_node->__m_prev->__m_next = __tmp;
+        __position.__m_node->__m_prev = __tmp;
         return __tmp;
     }
     iterator insert(iterator __position) { return insert(__position, _Tp()); }
@@ -379,22 +375,22 @@ public:
     // Check whether it's an integral type.  If so, it's not an iterator.
 
     template <class _Integer>
-    void _M_insert_dispatch(iterator __pos, _Integer __n, _Integer __x,
-                            __true_type)
+    void __m_insert_dispatch(iterator __pos, _Integer __n, _Integer __x,
+                             __true_type)
     {
-        _M_fill_insert(__pos, (size_type)__n, (_Tp)__x);
+        __m_fill_insert(__pos, (size_type)__n, (_Tp)__x);
     }
 
     template <class _InputIterator>
-    void _M_insert_dispatch(iterator __pos,
-                            _InputIterator __first, _InputIterator __last,
-                            __false_type);
+    void __m_insert_dispatch(iterator __pos,
+                             _InputIterator __first, _InputIterator __last,
+                             __false_type);
 
     template <class _InputIterator>
     void insert(iterator __pos, _InputIterator __first, _InputIterator __last)
     {
         typedef typename _Is_integer<_InputIterator>::_Integral _Integral;
-        _M_insert_dispatch(__pos, __first, __last, _Integral());
+        __m_insert_dispatch(__pos, __first, __last, _Integral());
     }
 
 #else  /* __DST_MEMBER_TEMPLATES */
@@ -404,9 +400,9 @@ public:
 #endif /* __DST_MEMBER_TEMPLATES */
     void insert(iterator __pos, size_type __n, const _Tp &__x)
     {
-        _M_fill_insert(__pos, __n, __x);
+        __m_fill_insert(__pos, __n, __x);
     }
-    void _M_fill_insert(iterator __pos, size_type __n, const _Tp &__x);
+    void __m_fill_insert(iterator __pos, size_type __n, const _Tp &__x);
 
     void push_front(const _Tp &__x) { insert(begin(), __x); }
     void push_front() { insert(begin()); }
@@ -415,17 +411,17 @@ public:
 
     iterator erase(iterator __position)
     {
-        _List_node_base *__next_node = __position._M_node->_M_next;
-        _List_node_base *__prev_node = __position._M_node->_M_prev;
-        _Node *__n = (_Node *)__position._M_node;
-        __prev_node->_M_next = __next_node;
-        __next_node->_M_prev = __prev_node;
-        _Destroy(&__n->_M_data);
-        _M_put_node(__n);
-        return iterator((_Node *)__next_node);
+        __list_pointer *__next_node = __position.__m_node->__m_next;
+        __list_pointer *__prev_node = __position.__m_node->__m_prev;
+        __node *__n = (__node *)__position.__m_node;
+        __prev_node->__m_next = __next_node;
+        __next_node->__m_prev = __prev_node;
+        __destory(&__n->__m_data);
+        __m_put_node(__n);
+        return iterator((__node *)__next_node);
     }
     iterator erase(iterator __first, iterator __last);
-    void clear() { _Base::clear(); }
+    void clear() { __base::clear(); }
 
     void resize(size_type __new_size, const _Tp &__x);
     void resize(size_type __new_size) { this->resize(__new_size, _Tp()); }
@@ -438,12 +434,12 @@ public:
     }
     list(size_type __n, const _Tp &__value,
          const allocator_type &__a = allocator_type())
-        : _Base(__a)
+        : __base(__a)
     {
         insert(begin(), __n, __value);
     }
     explicit list(size_type __n)
-        : _Base(allocator_type())
+        : __base(allocator_type())
     {
         insert(begin(), __n, _Tp());
     }
@@ -455,7 +451,7 @@ public:
     template <class _InputIterator>
     list(_InputIterator __first, _InputIterator __last,
          const allocator_type &__a = allocator_type())
-        : _Base(__a)
+        : __base(__a)
     {
         insert(begin(), __first, __last);
     }
@@ -464,19 +460,19 @@ public:
 
     list(const _Tp *__first, const _Tp *__last,
          const allocator_type &__a = allocator_type())
-        : _Base(__a)
+        : __base(__a)
     {
         this->insert(begin(), __first, __last);
     }
     list(const_iterator __first, const_iterator __last,
          const allocator_type &__a = allocator_type())
-        : _Base(__a)
+        : __base(__a)
     {
         this->insert(begin(), __first, __last);
     }
 
 #endif /* __DST_MEMBER_TEMPLATES */
-    list(const list<_Tp, _Alloc> &__x) : _Base(__x.get_allocator())
+    list(const list<_Tp, _Alloc> &__x) : __base(__x.get_allocator())
     {
         insert(begin(), __x.begin(), __x.end());
     }
@@ -491,9 +487,9 @@ public:
     // The range version is a member template, so we dispatch on whether
     // or not the type is an integer.
 
-    void assign(size_type __n, const _Tp &__val) { _M_fill_assign(__n, __val); }
+    void assign(size_type __n, const _Tp &__val) { __m_fill_assign(__n, __val); }
 
-    void _M_fill_assign(size_type __n, const _Tp &__val);
+    void __m_fill_assign(size_type __n, const _Tp &__val);
 
 #ifdef __DST_MEMBER_TEMPLATES
 
@@ -501,18 +497,18 @@ public:
     void assign(_InputIterator __first, _InputIterator __last)
     {
         typedef typename _Is_integer<_InputIterator>::_Integral _Integral;
-        _M_assign_dispatch(__first, __last, _Integral());
+        __m_assign_dispatch(__first, __last, _Integral());
     }
 
     template <class _Integer>
-    void _M_assign_dispatch(_Integer __n, _Integer __val, __true_type)
+    void __m_assign_dispatch(_Integer __n, _Integer __val, __true_type)
     {
-        _M_fill_assign((size_type)__n, (_Tp)__val);
+        __m_fill_assign((size_type)__n, (_Tp)__val);
     }
 
     template <class _InputIterator>
-    void _M_assign_dispatch(_InputIterator __first, _InputIterator __last,
-                            __false_type);
+    void __m_assign_dispatch(_InputIterator __first, _InputIterator __last,
+                             __false_type);
 
 #endif /* __DST_MEMBER_TEMPLATES */
 
@@ -522,15 +518,15 @@ protected:
         if (__position != __last)
         {
             // Remove [first, last) from its old position.
-            __last._M_node->_M_prev->_M_next = __position._M_node;
-            __first._M_node->_M_prev->_M_next = __last._M_node;
-            __position._M_node->_M_prev->_M_next = __first._M_node;
+            __last.__m_node->__m_prev->__m_next = __position.__m_node;
+            __first.__m_node->__m_prev->__m_next = __last.__m_node;
+            __position.__m_node->__m_prev->__m_next = __first.__m_node;
 
             // Splice [first, last) into its new position.
-            _List_node_base *__tmp = __position._M_node->_M_prev;
-            __position._M_node->_M_prev = __last._M_node->_M_prev;
-            __last._M_node->_M_prev = __first._M_node->_M_prev;
-            __first._M_node->_M_prev = __tmp;
+            __list_pointer *__tmp = __position.__m_node->__m_prev;
+            __position.__m_node->__m_prev = __last.__m_node->__m_prev;
+            __last.__m_node->__m_prev = __first.__m_node->__m_prev;
+            __first.__m_node->__m_prev = __tmp;
         }
     }
 
@@ -640,9 +636,9 @@ swap(list<_Tp, _Alloc> &__x, list<_Tp, _Alloc> &__y)
 
 template <class _Tp, class _Alloc>
 template <class _InputIter>
-void list<_Tp, _Alloc>::_M_insert_dispatch(iterator __position,
-                                           _InputIter __first, _InputIter __last,
-                                           __false_type)
+void list<_Tp, _Alloc>::__m_insert_dispatch(iterator __position,
+                                            _InputIter __first, _InputIter __last,
+                                            __false_type)
 {
     for (; __first != __last; ++__first)
         insert(__position, *__first);
@@ -669,8 +665,8 @@ void list<_Tp, _Alloc>::insert(iterator __position,
 #endif /* __DST_MEMBER_TEMPLATES */
 
 template <class _Tp, class _Alloc>
-void list<_Tp, _Alloc>::_M_fill_insert(iterator __position,
-                                       size_type __n, const _Tp &__x)
+void list<_Tp, _Alloc>::__m_fill_insert(iterator __position,
+                                        size_type __n, const _Tp &__x)
 {
     for (; __n > 0; --__n)
         insert(__position, __x);
@@ -718,7 +714,7 @@ list<_Tp, _Alloc> &list<_Tp, _Alloc>::operator=(const list<_Tp, _Alloc> &__x)
 }
 
 template <class _Tp, class _Alloc>
-void list<_Tp, _Alloc>::_M_fill_assign(size_type __n, const _Tp &__val)
+void list<_Tp, _Alloc>::__m_fill_assign(size_type __n, const _Tp &__val)
 {
     iterator __i = begin();
     for (; __i != end() && __n > 0; ++__i, --__n)
@@ -733,8 +729,8 @@ void list<_Tp, _Alloc>::_M_fill_assign(size_type __n, const _Tp &__val)
 
 template <class _Tp, class _Alloc>
 template <class _InputIter>
-void list<_Tp, _Alloc>::_M_assign_dispatch(_InputIter __first2, _InputIter __last2,
-                                           __false_type)
+void list<_Tp, _Alloc>::__m_assign_dispatch(_InputIter __first2, _InputIter __last2,
+                                            __false_type)
 {
     iterator __first1 = begin();
     iterator __last1 = end();
@@ -801,27 +797,27 @@ void list<_Tp, _Alloc>::merge(list<_Tp, _Alloc> &__x)
         transfer(__last1, __first2, __last2);
 }
 
-inline void __List_base_reverse(_List_node_base *__p)
+inline void __List_base_reverse(__list_pointer *__p)
 {
-    _List_node_base *__tmp = __p;
+    __list_pointer *__tmp = __p;
     do
     {
-        __DSA::swap(__tmp->_M_next, __tmp->_M_prev);
-        __tmp = __tmp->_M_prev; // Old next node is now prev.
+        __DSA::swap(__tmp->__m_next, __tmp->__m_prev);
+        __tmp = __tmp->__m_prev; // Old next node is now prev.
     } while (__tmp != __p);
 }
 
 template <class _Tp, class _Alloc>
 inline void list<_Tp, _Alloc>::reverse()
 {
-    __List_base_reverse(this->_M_node);
+    __List_base_reverse(this->__m_node);
 }
 
 template <class _Tp, class _Alloc>
 void list<_Tp, _Alloc>::sort()
 {
     // Do nothing if the list has length 0 or 1.
-    if (_M_node->_M_next != _M_node && _M_node->_M_next->_M_next != _M_node)
+    if (__m_node->__m_next != __m_node && __m_node->__m_next->__m_next != __m_node)
     {
         list<_Tp, _Alloc> __carry;
         list<_Tp, _Alloc> __counter[64];
@@ -910,7 +906,7 @@ template <class _StrictWeakOrdering>
 void list<_Tp, _Alloc>::sort(_StrictWeakOrdering __comp)
 {
     // Do nothing if the list has length 0 or 1.
-    if (_M_node->_M_next != _M_node && _M_node->_M_next->_M_next != _M_node)
+    if (__m_node->__m_next != __m_node && __m_node->__m_next->__m_next != __m_node)
     {
         list<_Tp, _Alloc> __carry;
         list<_Tp, _Alloc> __counter[64];

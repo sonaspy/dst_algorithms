@@ -32,7 +32,6 @@ public:
     {
     }
 
-protected:
     allocator_type __m_data_allocator;
     _Tp *__m_start;
     _Tp *__m_finish;
@@ -62,7 +61,6 @@ public:
     {
     }
 
-protected:
     _Tp *__m_start;
     _Tp *__m_finish;
     _Tp *__m_end_of_storage;
@@ -116,7 +114,6 @@ public:
 
     ~__vector_base() { __m_deallocate(__m_start, __m_end_of_storage - __m_start); }
 
-protected:
     _Tp *__m_start;
     _Tp *__m_finish;
     _Tp *__m_end_of_storage;
@@ -135,7 +132,7 @@ protected:
 #endif /* __DST_USE_DSA_ALLOCATORS */
 
 template <class _Tp, class _Alloc = __DST_DEFAULT_ALLOCATOR(_Tp)>
-class vector : protected __vector_base<_Tp, _Alloc>
+class vector : public __vector_base<_Tp, _Alloc>
 {
     // requirements:
 

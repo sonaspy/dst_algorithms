@@ -13,26 +13,26 @@ __DST_BEGIN_NAMESPACE
 
 // construct and destroy.  These functions are not part of the C++ standard,
 // and are provided for backward compatibility with the HP DST.  We also
-// provide internal names _Construct and _Destroy that can be used within
+// provide internal names __construct and __destory that can be used within
 // the library, so that standard-conforming pieces don't have to rely on
 // non-standard extensions.
 
 // Internal names
 
 template <class _T1, class _T2>
-inline void _Construct(_T1 *_p, const _T2 &_value)
+inline void __construct(_T1 *_p, const _T2 &_value)
 {
     new ((void *)_p) _T1(_value);
 }
 
 template <class _T1>
-inline void _Construct(_T1 *_p)
+inline void __construct(_T1 *_p)
 {
     new ((void *)_p) _T1();
 }
 
 template <class _Tp>
-inline void _Destroy(_Tp *_pointer)
+inline void __destory(_Tp *_pointer)
 {
     _pointer->~_Tp();
 }
@@ -56,18 +56,18 @@ inline void __destroy(_ForwardIterator _first, _ForwardIterator _last, _Tp *)
 }
 
 template <class _ForwardIterator>
-inline void _Destroy(_ForwardIterator _first, _ForwardIterator _last)
+inline void __destory(_ForwardIterator _first, _ForwardIterator _last)
 {
     __destroy(_first, _last, __VALUE_TYPE(_first));
 }
 
-inline void _Destroy(char *, char *) {}
-inline void _Destroy(int *, int *) {}
-inline void _Destroy(long *, long *) {}
-inline void _Destroy(float *, float *) {}
-inline void _Destroy(double *, double *) {}
+inline void __destory(char *, char *) {}
+inline void __destory(int *, int *) {}
+inline void __destory(long *, long *) {}
+inline void __destory(float *, float *) {}
+inline void __destory(double *, double *) {}
 #ifdef __DST_HAS_WCHAR_T
-inline void _Destroy(wchar_t *, wchar_t *)
+inline void __destory(wchar_t *, wchar_t *)
 {
 }
 #endif /* __DST_HAS_WCHAR_T */
@@ -78,25 +78,25 @@ inline void _Destroy(wchar_t *, wchar_t *)
 template <class _T1, class _T2>
 inline void construct(_T1 *_p, const _T2 &_value)
 {
-    _Construct(_p, _value);
+    __construct(_p, _value);
 }
 
 template <class _T1>
 inline void construct(_T1 *_p)
 {
-    _Construct(_p);
+    __construct(_p);
 }
 
 template <class _Tp>
 inline void destroy(_Tp *_pointer)
 {
-    _Destroy(_pointer);
+    __destory(_pointer);
 }
 
 template <class _ForwardIterator>
 inline void destroy(_ForwardIterator _first, _ForwardIterator _last)
 {
-    _Destroy(_first, _last);
+    __destory(_first, _last);
 }
 
 __DST_END_NAMESPACE
