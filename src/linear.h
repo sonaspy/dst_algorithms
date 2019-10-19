@@ -522,13 +522,13 @@ public:
     }
 };
 
-
 template <typename _Tp>
 class _deque
 {
 protected:
     vector<int> data;
     int _rear, _front, _maxsize;
+
 public:
     _deque(int n = 100)
     {
@@ -593,8 +593,7 @@ public:
     }
 };
 
-bool
-bracketMatch(char *f)
+bool bracketMatch(char *f)
 {
     stack<char> s;
     char *p = f;
