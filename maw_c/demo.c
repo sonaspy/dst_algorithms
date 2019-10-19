@@ -33,4 +33,6 @@ int main()
     printf("%d\n", s->k);
     printf("%d\n", s->i[0]);
     printf("%d\n", s->c);
+    char ccc = 127 + 1;
+    printf("%d", ccc);
 }
