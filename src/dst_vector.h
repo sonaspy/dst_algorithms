@@ -164,13 +164,11 @@ public:
 #endif /* __DST_CLASS_PARTIAL_SPECIALIZATION */
 
 protected:
-#ifdef __DST_HAS_NAMESPACES
     using __base::__m_allocate;
     using __base::__m_deallocate;
     using __base::__m_end_of_storage;
     using __base::__m_finish;
     using __base::__m_start;
-#endif /* __DST_HAS_NAMESPACES */
 
 protected:
     void __m_insert_aux(iterator __position, const _Tp &__x);

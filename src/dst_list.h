@@ -267,6 +267,7 @@ public:
     typedef value_type &reference;
     typedef const value_type &const_reference;
     typedef __list_node<_Tp> __node;
+    typedef __node *__link_type;
     typedef size_t size_type;
     typedef ptrdiff_t difference_type;
 
@@ -290,11 +291,9 @@ public:
 #endif /* __DST_CLASS_PARTIAL_SPECIALIZATION */
 
 protected:
-#ifdef __DST_HAS_NAMESPACES
     using __base::__m_get_node;
     using __base::__m_node;
     using __base::__m_put_node;
-#endif /* __DST_HAS_NAMESPACES */
 
 protected:
     __link_type __m_create_node(const _Tp &__x)
