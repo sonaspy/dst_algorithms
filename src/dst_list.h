@@ -57,12 +57,13 @@ struct __list_iterator : public __list_iterator_base
     typedef _Ptr pointer;
     typedef _Ref reference;
     typedef __list_node<_Tp> __node;
+    typedef __node *__link_type;
 
-    __list_iterator(__node *__x) : __list_iterator_base(__x) {}
+    __list_iterator(__link_type __x) : __list_iterator_base(__x) {}
     __list_iterator() {}
     __list_iterator(const iterator &__x) : __list_iterator_base(__x.__m_node) {}
 
-    reference operator*() const { return ((__node *)__m_node)->__m_data; }
+    reference operator*() const { return ((__link_type)__m_node)->__m_data; }
 
 #ifndef ___DST_NO_ARROW_OPERATOR
     pointer operator->() const
@@ -240,7 +241,7 @@ void __list_base<_Tp, _Alloc>::clear()
     {
         __list_node<_Tp> *__tmp = __cur;
         __cur = (__list_node<_Tp> *)__cur->__m_next;
-        __destory(&__tmp->__m_data);
+        __destroy(&__tmp->__m_data);
         __m_put_node(__tmp);
     }
     __m_node->__m_next = __m_node;
@@ -248,7 +249,7 @@ void __list_base<_Tp, _Alloc>::clear()
 }
 
 template <class _Tp, class _Alloc = __DST_DEFAULT_ALLOCATOR(_Tp)>
-class list : protected __list_base<_Tp, _Alloc>
+class list : public __list_base<_Tp, _Alloc>
 {
     // requirements:
 
@@ -257,7 +258,7 @@ class list : protected __list_base<_Tp, _Alloc>
     typedef __list_base<_Tp, _Alloc> __base;
 
 protected:
-    typedef void *_Void_pointer;
+    typedef void *__void_pointer;
 
 public:
     typedef _Tp value_type;
@@ -296,9 +297,9 @@ protected:
 #endif /* __DST_HAS_NAMESPACES */
 
 protected:
-    __node *__m_create_node(const _Tp &__x)
+    __link_type __m_create_node(const _Tp &__x)
     {
-        __node *__p = __m_get_node();
+        __link_type __p = __m_get_node();
         __DST_TRY
         {
             __construct(&__p->__m_data, __x);
@@ -307,9 +308,9 @@ protected:
         return __p;
     }
 
-    __node *__m_create_node()
+    __link_type __m_create_node()
     {
-        __node *__p = __m_get_node();
+        __link_type __p = __m_get_node();
         __DST_TRY
         {
             __construct(&__p->__m_data);
@@ -321,8 +322,8 @@ protected:
 public:
     explicit list(const allocator_type &__a = allocator_type()) : __base(__a) {}
 
-    iterator begin() { return (__node *)(__m_node->__m_next); }
-    const_iterator begin() const { return (__node *)(__m_node->__m_next); }
+    iterator begin() { return (__link_type)(__m_node->__m_next); }
+    const_iterator begin() const { return (__link_type)(__m_node->__m_next); }
 
     iterator end() { return __m_node; }
     const_iterator end() const { return __m_node; }
@@ -363,7 +364,7 @@ public:
 
     iterator insert(iterator __position, const _Tp &__x)
     {
-        __node *__tmp = __m_create_node(__x);
+        __link_type __tmp = __m_create_node(__x);
         __tmp->__m_next = __position.__m_node;
         __tmp->__m_prev = __position.__m_node->__m_prev;
         __position.__m_node->__m_prev->__m_next = __tmp;
@@ -413,12 +414,12 @@ public:
     {
         __list_pointer *__next_node = __position.__m_node->__m_next;
         __list_pointer *__prev_node = __position.__m_node->__m_prev;
-        __node *__n = (__node *)__position.__m_node;
+        __link_type __n = (__link_type)__position.__m_node;
         __prev_node->__m_next = __next_node;
         __next_node->__m_prev = __prev_node;
-        __destory(&__n->__m_data);
+        __destroy(&__n->__m_data);
         __m_put_node(__n);
-        return iterator((__node *)__next_node);
+        return iterator((__link_type)__next_node);
     }
     iterator erase(iterator __first, iterator __last);
     void clear() { __base::clear(); }

@@ -28,7 +28,7 @@ _ForwardIter __uninitialized_copy_aux(_InputIter _first, _InputIter _last, _Forw
             __construct(&*__cur, *_first);
         return __cur;
     }
-    __DST_UNWIND(__destory(__result, __cur));
+    __DST_UNWIND(__destroy(__result, __cur));
 }
 
 template <class _InputIter, class _ForwardIter, class _Tp>
@@ -68,7 +68,7 @@ pair<_InputIter, _ForwardIter> __uninitialized_copy_n(_InputIter _first, _Size _
             __construct(&*__cur, *_first);
         return pair<_InputIter, _ForwardIter>(_first, __cur);
     }
-    __DST_UNWIND(__destory(__result, __cur));
+    __DST_UNWIND(__destroy(__result, __cur));
 }
 
 template <class _RandomAccessIter, class _Size, class _ForwardIter>
@@ -108,7 +108,7 @@ void __uninitialized_fill_aux(_ForwardIter _first, _ForwardIter _last, const _Tp
         for (; __cur != _last; ++__cur)
             __construct(&*__cur, __x);
     }
-    __DST_UNWIND(__destory(_first, __cur));
+    __DST_UNWIND(__destroy(_first, __cur));
 }
 
 template <class _ForwardIter, class _Tp, class _Tp1>
@@ -142,7 +142,7 @@ _ForwardIter __uninitialized_fill_n_aux(_ForwardIter _first, _Size __n, const _T
             __construct(&*__cur, __x);
         return __cur;
     }
-    __DST_UNWIND(__destory(_first, __cur));
+    __DST_UNWIND(__destroy(_first, __cur));
 }
 
 template <class _ForwardIter, class _Size, class _Tp, class _Tp1>
@@ -175,7 +175,7 @@ __uninitialized_copy_copy(_InputIter1 __first1, _InputIter1 __last1, _InputIter2
     {
         return uninitialized_copy(__first2, __last2, __mid);
     }
-    __DST_UNWIND(__destory(__result, __mid));
+    __DST_UNWIND(__destroy(__result, __mid));
 }
 
 // __uninitialized_fill_copy
@@ -190,7 +190,7 @@ __uninitialized_fill_copy(_ForwardIter __result, _ForwardIter __mid, const _Tp &
     {
         return uninitialized_copy(_first, _last, __mid);
     }
-    __DST_UNWIND(__destory(__result, __mid));
+    __DST_UNWIND(__destroy(__result, __mid));
 }
 
 // __uninitialized_copy_fill
@@ -205,7 +205,7 @@ __uninitialized_copy_fill(_InputIter __first1, _InputIter __last1, _ForwardIter 
     {
         uninitialized_fill(__mid2, __last2, __x);
     }
-    __DST_UNWIND(__destory(__first2, __mid2));
+    __DST_UNWIND(__destroy(__first2, __mid2));
 }
 
 __DST_END_NAMESPACE
