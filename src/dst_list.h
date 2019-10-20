@@ -226,8 +226,6 @@ protected:
     typedef simple_alloc<__list_node<_Tp>, _Alloc> _Alloc_type;
     __list_node<_Tp> *__m_get_node() { return _Alloc_type::allocate(1); }
     void __m_put_node(__list_node<_Tp> *__p) { _Alloc_type::deallocate(__p, 1); }
-
-protected:
     __list_node<_Tp> *__m_node;
 };
 
@@ -249,7 +247,7 @@ void __list_base<_Tp, _Alloc>::clear()
 }
 
 template <class _Tp, class _Alloc = __DST_DEFAULT_ALLOCATOR(_Tp)>
-class list : public __list_base<_Tp, _Alloc>
+class list : protected __list_base<_Tp, _Alloc>
 {
     // requirements:
 

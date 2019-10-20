@@ -50,10 +50,8 @@ inline void iter_swap(_ForwardIter1 __a, _ForwardIter2 __b)
 {
     __DST_REQUIRES(_ForwardIter1, _Mutable_ForwardIterator);
     __DST_REQUIRES(_ForwardIter2, _Mutable_ForwardIterator);
-    __DST_CONVERTIBLE(typename iterator_traits<_ForwardIter1>::value_type,
-                      typename iterator_traits<_ForwardIter2>::value_type);
-    __DST_CONVERTIBLE(typename iterator_traits<_ForwardIter2>::value_type,
-                      typename iterator_traits<_ForwardIter1>::value_type);
+    __DST_CONVERTIBLE(typename iterator_traits<_ForwardIter1>::value_type, typename iterator_traits<_ForwardIter2>::value_type);
+    __DST_CONVERTIBLE(typename iterator_traits<_ForwardIter2>::value_type, typename iterator_traits<_ForwardIter1>::value_type);
     __iter_swap(__a, __b, __VALUE_TYPE(__a));
 }
 
@@ -259,10 +257,10 @@ inline _OutputIter copy(_InputIter _first, _InputIter _last,
                   __DISTANCE_TYPE(_first));
 }
 
-#define ___DST_DECLARE_COPY_TRIVIAL(_Tp)                                   \
+#define ___DST_DECLARE_COPY_TRIVIAL(_Tp)                                 \
     inline _Tp *copy(const _Tp *_first, const _Tp *_last, _Tp *__result) \
-    {                                                                      \
-        memmove(__result, _first, sizeof(_Tp) * (_last - _first));      \
+    {                                                                    \
+        memmove(__result, _first, sizeof(_Tp) * (_last - _first));       \
         return __result + (_last - _first);                              \
     }
 

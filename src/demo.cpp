@@ -12,7 +12,7 @@ int main(int argc, char const *argv[])
 {
     /* code */
     //test();
-    list<int> l;
+    list<int> d1(100, 9);
 
     return 0;
 }
