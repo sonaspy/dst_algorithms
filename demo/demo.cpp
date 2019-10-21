@@ -17,10 +17,9 @@ int main(int argc, char const *argv[])
     char c = 'A';
 
     endTime = clock();
-    string s = "01101100000000000000000";
-    bitset<32> b(s);
-    cout << b.to_ulong() << endl;
-
+    bitset<1> b(0);
+    cout << b << endl;
+    cout << __checksum<1>(b, 1) << endl;
     cout << "The elapsed time is: " << (double)(endTime - startTime) / 1000 << "ms" << endl;
 
     return 0;

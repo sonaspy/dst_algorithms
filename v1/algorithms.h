@@ -24,6 +24,18 @@ __DST_BEGIN_NAMESPACE
 // {
 //     swap(*a, *b);
 // }
+
+
+#include <bitset>
+template <int _Digit>
+bitset<1> __checksum(bitset<_Digit> b, bool _even)
+{
+    bitset<1> res(b[0]);
+    for (int i = 1; i < _Digit; i++)
+        res ^= bitset<1>(b[i]);
+    return _even ? res : ~res;
+}
+
 template <class _RandomAccessIterator>
 void __reverse(_RandomAccessIterator _first, _RandomAccessIterator _last)
 {
