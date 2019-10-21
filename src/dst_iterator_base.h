@@ -7,7 +7,7 @@
 #define ___DST_INTERNAL_ITERATOR_BASE_H
 
 // This file contains all of the general iterator-related utilities.
-// The internal file stl_iterator.h contains predefined iterators,
+// The internal file dst_iterator.h contains predefined iterators,
 // such as front_insert_iterator and istream_iterator.
 
 #include "concept_checks.h"

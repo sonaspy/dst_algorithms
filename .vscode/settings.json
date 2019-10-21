@@ -82,7 +82,15 @@
     "regex": "cpp",
     "set": "cpp",
     "hashtable": "cpp",
-    "valarray": "cpp"
+    "valarray": "cpp",
+    "cfenv": "cpp",
+    "cinttypes": "cpp",
+    "clocale": "cpp",
+    "condition_variable": "cpp",
+    "csetjmp": "cpp",
+    "csignal": "cpp",
+    "iomanip": "cpp",
+    "typeindex": "cpp"
 },
   "python.pythonPath": "/usr/local/opt/python/bin/python3.7",
 

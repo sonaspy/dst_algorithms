@@ -22,8 +22,8 @@
     _COMPILER_VERSION >= 730 && defined(_STANDARD_C_PLUS_PLUS)
 
 __DST_BEGIN_NAMESPACE
-void __stl_throw_range_error(const char *__msg);
-void __stl_throw_length_error(const char *__msg);
+void __dst_throw_range_error(const char *__msg);
+void __dst_throw_length_error(const char *__msg);
 __DST_END_NAMESPACE
 
 // For other compilers where we're throwing range errors, include the
@@ -33,11 +33,11 @@ __DST_END_NAMESPACE
 #include <stdexcept>
 
 __DST_BEGIN_NAMESPACE
-inline void __stl_throw_range_error(const char *__msg)
+inline void __dst_throw_range_error(const char *__msg)
 {
     throw range_error(__msg);
 }
-inline void __stl_throw_length_error(const char *__msg)
+inline void __dst_throw_length_error(const char *__msg)
 {
     throw length_error(__msg);
 }
@@ -47,8 +47,8 @@ __DST_END_NAMESPACE
 #else
 
 __DST_BEGIN_NAMESPACE
-inline void __stl_throw_range_error(const char *) {}
-inline void __stl_throw_length_error(const char *) {}
+inline void __dst_throw_range_error(const char *) {}
+inline void __dst_throw_length_error(const char *) {}
 __DST_END_NAMESPACE
 
 #endif

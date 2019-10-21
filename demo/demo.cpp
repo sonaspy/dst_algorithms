@@ -1,7 +1,7 @@
 // author - sonaspy@outlook.com
 // coding - utf_8
 
-#define SIZE 100000
+#define SIZE 50000000
 #include <bits/stdc++.h>
 #define test() freopen("in", "r", stdin)
 using namespace std;
@@ -12,16 +12,12 @@ int main(int argc, char const *argv[])
     //test();
 
     clock_t startTime, endTime;
-    list<int> l1;
-    deque<int> d1;
-    vector<int> v1;
+    vector<int> v1(SIZE);
+
     startTime = clock();
-
-    for (int i = 0; i < SIZE; ++i)
-        v1.push_back(i);
-    for (int i = 0; i < SIZE; ++i)
-        v1.pop_back();
-
+    auto end = v1.end();
+    for (auto i = v1.begin(); i != end; i++)
+        ;
     endTime = clock();
 
     cout << "The elapsed time is: " << (double)(endTime - startTime) / 1000 << "ms" << endl;

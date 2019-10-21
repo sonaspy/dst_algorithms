@@ -365,6 +365,7 @@ typedef int bool;
 #endif
 
 #ifdef __DST_USE_EXCEPTIONS
+
 #define __DST_TRY try
 #define __DST_CATCH_ALL catch (...)
 #define __DST_THROW(x) throw x
@@ -376,13 +377,16 @@ typedef int bool;
         action;              \
         throw;               \
     }
+
 #else
+
 #define __DST_TRY
 #define __DST_CATCH_ALL if (false)
 #define __DST_THROW(x)
 #define __DST_RETHROW
 #define __DST_NOTHROW
 #define __DST_UNWIND(action)
+
 #endif
 
 #ifdef __DST_ASSERTIONS

@@ -2,7 +2,7 @@
 // coding - utf_8
 
 #define SIZE 100
-#include "list.h"
+#include "../src/deque.h"
 #include <stdio.h>
 #define test() freopen("in", "r", stdin)
 
@@ -12,7 +12,6 @@ int main(int argc, char const *argv[])
 {
     /* code */
     //test();
-    list<int> d1(100, 9);
-
+    
     return 0;
 }

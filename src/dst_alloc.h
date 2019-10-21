@@ -52,7 +52,7 @@
 #define __NODE_ALLOCATOR_THREADS true
 #ifdef __DST__THREADS
 // We test whether threads are in use before locking.
-// Perhaps this should be moved into stl_threads.h, but that
+// Perhaps this should be moved into dst_threads.h, but that
 // probably makes it harder to avoid the procedure call when
 // it isn't needed.
 extern "C"

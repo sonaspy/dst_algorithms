@@ -221,7 +221,7 @@ public:
     void __m_range_check(size_type __n) const
     {
         if (__n >= this->size())
-            __stl_throw_range_error("vector");
+            __dst_throw_range_error("vector");
     }
 
     reference at(size_type __n)
