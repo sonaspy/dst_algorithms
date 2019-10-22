@@ -4,12 +4,24 @@
 #ifndef __BSTREE__
 #define __BSTREE__
 
-__DSTbeginname
+__DST_BEGIN_NAMESPACE
+
 template <typename _Tp>
 class bstree : public bintree<_Tp>
 {
 protected:
+    typedef bintree<_Tp> __base;
+    using __base::__newbinode;
+    using __base::__release;
+    using __base::__update_status;
+    using __base::__updateheight;
+    using __base::__updateheightabove;
+    using __base::_root;
+    using __base::_size;
+    using __base::clear;
+
     binode_ptr<_Tp> _last;
+
     inline void __attAsL(binode_ptr<_Tp> &p, binode_ptr<_Tp> &lc)
     {
         p->lc = lc;
@@ -59,29 +71,32 @@ protected:
             {
                 tmp = opnv;
                 opnv = opnv->lc ? opnv->lc : opnv->rc;
-                this->__release(tmp);
+                __release(tmp);
             }
         }
         return opnv;
     }
 
 public:
-    ~bstree() { this->clear(); }
+    ~bstree() { clear(); }
     void build(vector<_Tp> &a)
     {
         for (auto &i : a)
             insert(i);
-        this->__update_status();
+        __update_status();
     }
     bool avlbalanced()
     {
         binode_ptr<_Tp> p = nullptr;
-        return __judge_avl(this->_root, p);
+        return __judge_avl(_root, p);
     }
     bool erase(const _Tp &x)
     {
-        if (__erase(this->_root, x))
+        if (__erase(_root, x))
+        {
+            _size--;
             return true;
+        }
         return false;
     }
     bool insert(const _Tp &x)
@@ -89,14 +104,15 @@ public:
         binode_ptr<_Tp> &w = search(x);
         if (w)
             return false;
-        w = this->__newbinode(x, _last);
-        this->__updateheightabove(w);
+        _size++;
+        w = __newbinode(x, _last);
+        __updateheightabove(w);
         return true;
     }
     binode_ptr<_Tp> &search(const _Tp &x)
     {
         _last = nullptr;
-        return __search(this->_root, x);
+        return __search(_root, x);
     }
     bool count(const _Tp &x) { return search(x) != nullptr; }
     inline void clear()
@@ -106,7 +122,7 @@ public:
     }
     binode_ptr<_Tp> get_lca(const _Tp &v1, const _Tp &v2)
     {
-        binode_ptr<_Tp> _walk = this->_root;
+        binode_ptr<_Tp> _walk = _root;
         while (_walk)
         {
             if (v1 < _walk->val && v2 < _walk->val)
@@ -197,16 +213,18 @@ public:
 
     iterator begin()
     {
-        binode_ptr<_Tp> p = this->_root->leftest();
+        binode_ptr<_Tp> p = _root->leftest();
         iterator it(p);
         return it;
     }
     iterator end()
     {
-        binode_ptr<_Tp> p = this->_root->rightest();
+        binode_ptr<_Tp> p = _root->rightest();
         iterator it(p);
         return it;
     }
 };
-} // namespace dsa
+
+__DST_END_NAMESPACE
+
 #endif

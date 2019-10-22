@@ -7,7 +7,7 @@
 __DST_BEGIN_NAMESPACE
 
 template <typename _Tp>
-class rbtree : public avltree<_Tp>
+class rbtree : public bstree<_Tp>
 {
 protected:
 #define is_blk(opnv) ((!(opnv) || (opnv)->color == BLK))
@@ -17,6 +17,20 @@ protected:
 #define __rbcolor(opnv) (((opnv) ? (opnv->color) : BLK))
 #define __downblk(opnv) (((opnv) ? (opnv->downblk) : 0))
 
+    typedef bintree<_Tp> __base;
+    using __base::__newbinode;
+    using __base::__release;
+    using __base::__update_status;
+    using __base::__updateheight;
+    using __base::__updateheightabove;
+    using __base::_isRBtree;
+    using __base::_root;
+    using __base::_size;
+    using __base::clear;
+
+    using bstree<_Tp>::search;
+    using bstree<_Tp>::_last;
+
     inline void __rotate_l(binode_ptr<_Tp> x)
     {
         binode_ptr<_Tp> y = x->rc;
@@ -24,11 +38,11 @@ protected:
         if (y->lc)
             y->lc->parent = x;
         y->parent = x->parent;
-        x->isroot() ? this->_root = y : fromParent2(x) = y;
+        x->isroot() ? _root = y : fromParent2(x) = y;
         y->lc = x;
         x->parent = y;
-        this->__updateheight(x);
-        this->__updateheight(y);
+        __updateheight(x);
+        __updateheight(y);
     }
     inline void __rotate_r(binode_ptr<_Tp> x)
     {
@@ -37,11 +51,11 @@ protected:
         if (y->rc)
             y->rc->parent = x;
         y->parent = x->parent;
-        x->isroot() ? this->_root = y : fromParent2(x) = y;
+        x->isroot() ? _root = y : fromParent2(x) = y;
         y->rc = x;
         x->parent = y;
-        this->__updateheight(x);
-        this->__updateheight(y);
+        __updateheight(x);
+        __updateheight(y);
     }
     void __double_red_solution(binode_ptr<_Tp> opnv)
     {
@@ -60,23 +74,23 @@ protected:
             }
             if (p->is_l() && opnv->is_r())
             {
-                this->__rotate_l(p);
+                __rotate_l(p);
                 swap(opnv, p);
             }
             else if (p->is_r() && opnv->is_l())
             {
-                this->__rotate_r(p);
+                __rotate_r(p);
                 swap(opnv, p);
             }
             __setblk(p);
             __setred(g);
-            p->is_l() ? this->__rotate_r(g) : this->__rotate_l(g);
+            p->is_l() ? __rotate_r(g) : __rotate_l(g);
         }
-        __setblk(this->_root);
+        __setblk(_root);
     }
     void __double_blk_solution(binode_ptr<_Tp> pp, binode_ptr<_Tp> p)
     {
-        while ((nullptr == p || BLK == p->color) && p != this->_root)
+        while ((nullptr == p || BLK == p->color) && p != _root)
         {
             if (pp->lc == p)
             {
@@ -85,7 +99,7 @@ protected:
                 {
                     s->color = BLK;
                     pp->color = RED;
-                    this->__rotate_l(pp);
+                    __rotate_l(pp);
                     s = pp->rc;
                 }
                 if ((nullptr == s->lc || BLK == s->lc->color) && (nullptr == s->rc || BLK == s->rc->color))
@@ -100,15 +114,15 @@ protected:
                     {
                         s->lc ? s->lc->color = BLK : 0;
                         s->color = RED;
-                        this->__rotate_r(s);
+                        __rotate_r(s);
                         s = pp->rc;
                     }
 
                     s->color = pp->color;
                     pp->color = BLK;
                     s->rc->color = BLK;
-                    this->__rotate_l(pp);
-                    p = this->_root;
+                    __rotate_l(pp);
+                    p = _root;
                 }
             }
             else
@@ -118,7 +132,7 @@ protected:
                 {
                     s->color = BLK;
                     pp->color = RED;
-                    this->__rotate_r(pp);
+                    __rotate_r(pp);
                     s = pp->lc;
                 }
                 if ((nullptr == s->lc || BLK == s->lc->color) && (nullptr == s->rc || BLK == s->rc->color))
@@ -133,15 +147,15 @@ protected:
                     {
                         s->rc ? s->rc->color = BLK : 0;
                         s->color = RED;
-                        this->__rotate_l(s);
+                        __rotate_l(s);
                         s = pp->lc;
                     }
 
                     s->color = pp->color;
                     pp->color = BLK;
                     s->lc->color = BLK;
-                    this->__rotate_r(pp);
-                    p = this->_root;
+                    __rotate_r(pp);
+                    p = _root;
                 }
             }
         }
@@ -154,9 +168,9 @@ protected:
         __isrbtree(opnv->lc);
         __isrbtree(opnv->rc);
         if (opnv->color == RED && (__rbcolor(opnv->lc) == RED || __rbcolor(opnv->rc) == RED))
-            this->_isRBtree = 0;
+            _isRBtree = 0;
         if (__downblk(opnv->lc) != __downblk(opnv->rc))
-            this->_isRBtree = 0;
+            _isRBtree = 0;
         else
             opnv->downblk = opnv->color == BLK ? __downblk(opnv->lc) : __downblk(opnv->lc);
     }
@@ -164,27 +178,27 @@ protected:
 public:
     rbtree()
     {
-        this->_isRBtree = 1;
+        _isRBtree = 1;
     }
     bool insert(const _Tp &x)
     {
-        binode_ptr<_Tp> &w = this->search(x);
+        binode_ptr<_Tp> &w = search(x);
         if (w)
             return false;
-        w = this->__newbinode(x, this->_last, nullptr, nullptr, RED);
+        w = __newbinode(x, _last, nullptr, nullptr, RED);
         __double_red_solution(w);
         return true;
     }
     bool erase(const _Tp &val)
     {
-        int thesize = this->_size - 1;
+        int thesize = _size - 1;
         binode_ptr<_Tp> &w = bstree<_Tp>::search(val);
         if (!w)
             return 0;
         binode_ptr<_Tp> p = w, pp = p->parent, _nil = nullptr;
         RBColor _del_color = p->color;
         int pp_child_tag = (!pp || pp->lc == p) ? 1 : 2;
-        binode_ptr<_Tp> &ref_p = (pp ? (pp_child_tag == 1 ? pp->lc : pp->rc) : this->_root);
+        binode_ptr<_Tp> &ref_p = (pp ? (pp_child_tag == 1 ? pp->lc : pp->rc) : _root);
         if (p->lc && p->rc)
         {
             auto prev = p->lc, curr = prev;
@@ -199,7 +213,7 @@ public:
                     curr->lc->parent = p;
                 pp = p, p = p->lc;
                 pp_child_tag = 1;
-                this->__release(curr);
+                __release(curr);
             }
             else
             {
@@ -208,21 +222,21 @@ public:
                 p = prev->rc = curr->lc;
                 if (curr->lc)
                     curr->lc->parent = prev;
-                this->__release(curr);
+                __release(curr);
             }
         }
         else if (p->lc)
         {
             ref_p = p->lc;
             p->lc->parent = pp;
-            this->__release(p);
+            __release(p);
             p = ref_p;
         }
         else if (p->rc)
         {
             ref_p = p->rc;
             p->rc->parent = pp;
-            this->__release(p);
+            __release(p);
             p = ref_p;
         }
         else
@@ -231,7 +245,7 @@ public:
         {
             if (nullptr == p)
             {
-                _nil = p = this->__newbinode();
+                _nil = p = __newbinode();
                 p->parent = pp;
                 1 == pp_child_tag ? pp->lc = p : pp->rc = p;
             }
@@ -239,28 +253,26 @@ public:
             if (_nil)
             {
                 _nil->is_l() ? _nil->parent->lc = nullptr : _nil->parent->rc = nullptr;
-                this->__release(_nil);
+                __release(_nil);
             }
         }
-        this->_size = thesize;
+        _size = thesize;
         return 1;
     }
     bool isrbtree()
     {
-        this->_isRBtree = 1;
-        __isrbtree(this->_root);
-        return this->_isRBtree && this->_root->color == BLK;
+        _isRBtree = 1;
+        __isrbtree(_root);
+        return _isRBtree && _root->color == BLK;
     }
     void build(vector<_Tp> &a)
     {
         for (auto &x : a)
             insert(x);
-        bintree<_Tp>::__update_status();
+        __update_status();
     }
 };
 
-
 __DST_END_NAMESPACE
-
 
 #endif

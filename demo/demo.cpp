@@ -5,7 +5,28 @@
 #include <bits/stdc++.h>
 #define test() freopen("in", "r", stdin)
 using namespace std;
+class cl1
+{
+protected:
+    void func() {}
+};
 
+class cl2 : public cl1
+{
+    using cl1::func;
+    void f()
+    {
+        func();
+    }
+};
+class cl3 : public cl2
+{
+    using cl1::func;
+    void ff()
+    {
+        func();
+    }
+};
 int main(int argc, char const *argv[])
 {
     /* code */
@@ -17,9 +38,7 @@ int main(int argc, char const *argv[])
     char c = 'A';
 
     endTime = clock();
-    bitset<1> b(0);
-    cout << b << endl;
-    cout << __checksum<1>(b, 1) << endl;
+
     cout << "The elapsed time is: " << (double)(endTime - startTime) / 1000 << "ms" << endl;
 
     return 0;

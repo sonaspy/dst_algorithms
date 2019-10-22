@@ -10,8 +10,7 @@ template <typename _Tp>
 class bintree
 {
 protected:
-    binode_ptr<_Tp> _root, tp1;
-    deque<binode_ptr<_Tp>> q, nexq;
+    binode_ptr<_Tp> _root;
     int _size, _unitsize;
     bool _isunique, _isRBtree, _ishuffman;
     string _direct2l, _direct2r;
@@ -45,7 +44,7 @@ protected:
     }
     static inline void __updatedepth(binode_ptr<_Tp> &opnv) { opnv->depth = _depth(opnv->parent) + 1; }
     static inline void __updateheight(binode_ptr<_Tp> &opnv) { opnv->height = max(_height(opnv->lc), _height(opnv->rc)) + 1; }
-    static inline void __updateheightabove(binode_ptr<_Tp> opnv)
+    static void __updateheightabove(binode_ptr<_Tp> opnv)
     {
         while (opnv)
         {
@@ -175,18 +174,19 @@ protected:
         if (!_root)
             return -1;
         int cnt = 0;
-        this->q.push_back(_root);
-        while (this->q.size())
+        deque<binode_ptr<_Tp>> q;
+        binode_ptr<_Tp> __tmp;
+        q.push_back(_root);
+        while (q.size())
         {
-            tp1 = this->q.front(), this->q.pop_front();
-            if (!tp1->lc && !tp1->rc)
+            __tmp = q.front(), q.pop_front();
+            if (!__tmp->lc && !__tmp->rc)
                 cnt++;
-            if (tp1->lc)
-                this->q.push_back(tp1->lc);
-            if (tp1->rc)
-                this->q.push_back(tp1->rc);
+            if (__tmp->lc)
+                q.push_back(__tmp->lc);
+            if (__tmp->rc)
+                q.push_back(__tmp->rc);
         }
-        this->q.clear();
         return cnt;
     }
 
@@ -198,10 +198,11 @@ protected:
             __eraseallSub(opnv);
             return;
         }
-        this->q.push_back(opnv);
-        while (this->q.size())
+        deque<binode_ptr<_Tp>> q;
+        q.push_back(opnv);
+        while (q.size())
         {
-            x = this->q.front(), this->q.pop_front();
+            x = q.front(), q.pop_front();
             if (x->val == target)
             {
                 __eraseallSub(x->lc);
@@ -210,11 +211,10 @@ protected:
                 continue;
             }
             if (x->lc)
-                this->q.push_back(x->lc);
+                q.push_back(x->lc);
             if (x->rc)
-                this->q.push_back(x->rc);
+                q.push_back(x->rc);
         }
-        this->q.clear();
     }
     void __eraseallSub(binode_ptr<_Tp> opnv)
     {
@@ -341,7 +341,7 @@ protected:
         }
         return res;
     }
-    double __infix_val(binode<string> *opnv)
+    double __infix_val(binode_ptr<string> opnv)
     {
         if (!opnv)
             return 0;
@@ -354,24 +354,25 @@ protected:
     }
     int __diameter()
     {
+        deque<binode_ptr<_Tp>> q, nexq;
         q.push_back(_root);
         int level = 0, last = 0;
+        binode_ptr<_Tp> __tmp;
         while (q.size())
         {
             if (q.size() > 1)
                 last = level;
             while (q.size())
             {
-                tp1 = q.front(), q.pop_front();
-                if (tp1->lc)
-                    nexq.push_back(tp1->lc);
-                if (tp1->rc)
-                    nexq.push_back(tp1->rc);
+                __tmp = q.front(), q.pop_front();
+                if (__tmp->lc)
+                    nexq.push_back(__tmp->lc);
+                if (__tmp->rc)
+                    nexq.push_back(__tmp->rc);
             }
             level++;
             swap(q, nexq);
         }
-        this->q.clear(), this->nexq.clear();
         return last + level - 1;
     }
 
@@ -392,7 +393,6 @@ public:
     {
         _root = nullptr;
         this->_isunique = true;
-        this->q.clear(), this->nexq.clear();
         this->_size = 0;
         _isRBtree = 0;
         _ishuffman = 0;
@@ -414,8 +414,7 @@ public:
     }
     inline void clear()
     {
-        _root = tp1 = nullptr;
-        q.clear(), nexq.clear();
+        _root  = nullptr;
         _size = 0;
         _isunique = 1;
         __display_buffer.clear();
@@ -553,22 +552,22 @@ public:
     {
         if (!_root)
             return true;
-        binode_ptr<_Tp> opnv = _root;
-        this->q.push_back(opnv);
-        while (this->q.size())
+        deque<binode_ptr<_Tp>> q;
+        q.push_back(_root);
+        binode_ptr<_Tp> __tmp;
+        while (q.size())
         {
-            tp1 = this->q.front(), this->q.pop_front();
-            if (tp1)
-                this->q.push_back(tp1->lc), this->q.push_back(tp1->rc);
+            __tmp = q.front(), q.pop_front();
+            if (__tmp)
+                q.push_back(__tmp->lc), q.push_back(__tmp->rc);
             else
-                while (this->q.size())
+                while (q.size())
                 {
-                    tp1 = this->q.front(), this->q.pop_front();
-                    if (tp1)
+                    __tmp = q.front(), q.pop_front();
+                    if (__tmp)
                         return false;
                 }
         }
-        this->q.clear();
         return true;
     }
     template <class _Function>

@@ -216,11 +216,11 @@ public:
     }
     ~btree()
     {
-        this->clear();
+        clear();
     }
-    inline int const order() { return this->_order; }
-    inline int const size() { return this->_size; }
-    inline bnode_ptr<_Tp> root() { return this->_root; }
+    inline int const order() { return _order; }
+    inline int const size() { return _size; }
+    inline bnode_ptr<_Tp> root() { return _root; }
     inline bool const empty() const { return _root == nullptr; }
     inline void const clear()
     {
@@ -262,7 +262,7 @@ public:
             _root = v;
         }
         __nonfull_insert(_root, val);
-        this->_size++;
+        _size++;
         return true;
     }
     bool erase(const _Tp &val)
@@ -319,12 +319,10 @@ public:
     }
     void inorder()
     {
-        __inorder(this->_root);
+        __inorder(_root);
         cout << "nullptr\n";
     }
 };
-
-
 
 __DST_END_NAMESPACE
 

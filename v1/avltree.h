@@ -6,70 +6,80 @@
 
 __DST_BEGIN_NAMESPACE
 
-template <typename T>
-class avltree : public bstree<T>
+template <typename _Tp>
+class avltree : public bstree<_Tp>
 {
 public:
-    void build(vector<T> &a)
+    void build(vector<_Tp> &a)
     {
         for (auto i : a)
             insert(i);
-        bintree<T>::__update_status();
+        __update_status();
     }
-    bool erase(const T &x)
+    bool erase(const _Tp &x)
     {
-        if (bstree<T>::search(x) == nullptr)
+        if (bstree<_Tp>::search(x) == nullptr)
             return false;
-        __erase(this->_root, x);
+        __erase(_root, x);
         return true;
     }
-    bool insert(const T &x)
+    bool insert(const _Tp &x)
     {
-        if (bstree<T>::search(x) != nullptr)
+        if (bstree<_Tp>::search(x) != nullptr)
             return false;
-        __insert(this->_root, x);
+        __insert(_root, x);
         return true;
     }
-    inline void clear() { bstree<T>::clear(); }
+    inline void clear() { bstree<_Tp>::clear(); }
     ~avltree()
     {
-        this->clear();
+        clear();
     }
 
 protected:
-    inline void _zig(binode_ptr<T> &v)
+    typedef bintree<_Tp> __base;
+    using __base::__newbinode;
+    using __base::__release;
+    using __base::__update_status;
+    using __base::__updateheight;
+    using __base::__updateheightabove;
+    using __base::_root;
+    using __base::_size;
+    using __base::clear;
+
+    inline void _zig(binode_ptr<_Tp> &v)
     {
-        binode_ptr<T> y = v->lc;
+        binode_ptr<_Tp> y = v->lc;
         v->lc = y->rc;
         y->rc = v;
-        bintree<T>::__updateheight(v);
-        bintree<T>::__updateheight(y);
+        __updateheight(v);
+        __updateheight(y);
         v = y;
     }
-    inline void _zag(binode_ptr<T> &v)
+    inline void _zag(binode_ptr<_Tp> &v)
     {
-        binode_ptr<T> y = v->rc;
+        binode_ptr<_Tp> y = v->rc;
         v->rc = y->lc;
         y->lc = v;
-        bintree<T>::__updateheight(v);
-        bintree<T>::__updateheight(y);
+        __updateheight(v);
+        __updateheight(y);
         v = y;
     }
-    inline void _zigzag(binode_ptr<T> &v)
+    inline void _zigzag(binode_ptr<_Tp> &v)
     {
         _zag(v->lc);
         _zig(v);
     }
-    inline void _zagzig(binode_ptr<T> &v)
+    inline void _zagzig(binode_ptr<_Tp> &v)
     {
         _zig(v->rc);
         _zag(v);
     }
-    void __insert(binode_ptr<T> &v, const T &x)
+    void __insert(binode_ptr<_Tp> &v, const _Tp &x)
     {
         if (!v)
         {
-            v = this->__newbinode(x);
+            v = __newbinode(x);
             return;
         }
         else if (x < v->val)
@@ -84,10 +94,10 @@ protected:
             if (_factor(v) == -2)
                 x > v->rc->val ? _zag(v) : _zagzig(v);
         }
-        bintree<T>::__updateheight(v);
+        __updateheight(v);
     }
 
-    void __erase(binode_ptr<T> &v, const T x)
+    void __erase(binode_ptr<_Tp> &v, const _Tp x)
     {
         if (x == v->val)
         {
@@ -106,9 +116,9 @@ protected:
             }
             else
             {
-                binode_ptr<T> tmp = v;
+                binode_ptr<_Tp> tmp = v;
                 v = v->lc ? v->lc : v->rc;
-                this->__release(tmp);
+                __release(tmp);
             }
         }
         else if (x < v->val)
@@ -124,7 +134,7 @@ protected:
                 _factor(v->lc) >= 0 ? _zig(v) : _zigzag(v);
         }
         if (v)
-            bintree<T>::__updateheight(v);
+            __updateheight(v);
     }
 };
 
