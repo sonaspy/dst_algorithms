@@ -14,11 +14,11 @@ template <class _Key, class _Val>
 struct skipNode
 {
     typedef pair<const _Key, _Val> pairType;
+    typedef skipNode<_Key, _Val> *__skipnode_pointer;
     pairType element;
-    skipNode<_Key, _Val> **next; // 1D array of pointers
+    __skipnode_pointer *next; // 1D array of pointers
 
-    skipNode(const pairType &thePair, int size)
-        : element(thePair) { next = new skipNode<_Key, _Val> *[size]; }
+    skipNode(const pairType &thePair, int size) : element(thePair) { next = new __skipnode_pointer[size]; }
 };
 
 template <class _Key, class _Val>
@@ -28,25 +28,26 @@ public:
     skipList(_Key, int maxPairs = 10000, float prob = 0.5);
     ~skipList();
 
-    bool empty() const { return dSize == 0; }
-    int size() const { return dSize; }
+    bool empty() const { return _size == 0; }
+    int size() const { return _size; }
     pair<const _Key, _Val> *find(const _Key &) const;
     void erase(const _Key &);
     void insert(const pair<const _Key, _Val> &);
-    void output(ostream &out) const;
+    void __output(ostream &out) const;
 
 protected:
     float cutOff;      // used to decide level number
     int level() const; // generate a random level number
     int levels;        // max current nonempty chain
-    int dSize;         // number of pairs in dictionary
+    int _size;         // number of pairs in dictionary
     int maxLevel;      // max permissible chain level
     _Key tailKey;      // a large key
-    skipNode<_Key, _Val> *search(const _Key &) const;
-    // search saving last nodes seen
-    skipNode<_Key, _Val> *headerNode; // header node pointer
-    skipNode<_Key, _Val> *tailNode;   // tail node pointer
-    skipNode<_Key, _Val> **last;      // last[i] = last node seen on level i
+    typedef skipNode<_Key, _Val> *__skipnode_pointer;
+    __skipnode_pointer search(const _Key &) const;
+    // search saving _last nodes seen
+    __skipnode_pointer _headernode; // header node pointer
+    __skipnode_pointer _tailnode;   // tail node pointer
+    __skipnode_pointer *_last;      // _last[i] = _last node seen on level i
 };
 
 template <class _Key, class _Val>
@@ -56,36 +57,36 @@ skipList<_Key, _Val>::skipList(_Key largeKey, int maxPairs, float prob)
     cutOff = prob * RAND_MAX;
     maxLevel = (int)ceil(logf((float)maxPairs) / logf(1 / prob)) - 1;
     levels = 0; // initial number of levels
-    dSize = 0;
+    _size = 0;
     tailKey = largeKey;
 
-    // create header & tail nodes and last array
+    // create header & tail nodes and _last array
     pair<_Key, _Val> tailPair;
     tailPair.first = tailKey;
-    headerNode = new skipNode<_Key, _Val>(tailPair, maxLevel + 1);
-    tailNode = new skipNode<_Key, _Val>(tailPair, 0);
-    last = new skipNode<_Key, _Val> *[maxLevel + 1];
+    _headernode = new skipNode<_Key, _Val>(tailPair, maxLevel + 1);
+    _tailnode = new skipNode<_Key, _Val>(tailPair, 0);
+    _last = new __skipnode_pointer[maxLevel + 1];
 
     // header points to tail at all levels as lists are empty
     for (int i = 0; i <= maxLevel; i++)
-        headerNode->next[i] = tailNode;
+        _headernode->next[i] = _tailnode;
 }
 
 template <class _Key, class _Val>
 skipList<_Key, _Val>::~skipList()
-{ // Delete all nodes and array last.
-    skipNode<_Key, _Val> *nextNode;
+{ // Delete all nodes and array _last.
+    __skipnode_pointer nextNode;
 
     // delete all nodes by following level 0 chain
-    while (headerNode != tailNode)
+    while (_headernode != _tailnode)
     {
-        nextNode = headerNode->next[0];
-        delete headerNode;
-        headerNode = nextNode;
+        nextNode = _headernode->next[0];
+        delete _headernode;
+        _headernode = nextNode;
     }
-    delete tailNode;
+    delete _tailnode;
 
-    delete[] last;
+    delete[] _last;
 }
 
 template <class _Key, class _Val>
@@ -96,7 +97,7 @@ pair<const _Key, _Val> *skipList<_Key, _Val>::find(const _Key &theKey) const
         return NULL; // no matching pair possible
 
     // position beforeNode just before possible node with theKey
-    skipNode<_Key, _Val> *beforeNode = headerNode;
+    __skipnode_pointer beforeNode = _headernode;
     for (int i = levels; i >= 0; i--) // go down levels
         // follow level i pointers
         while (beforeNode->next[i]->element.first < theKey)
@@ -119,17 +120,17 @@ int skipList<_Key, _Val>::level() const
 }
 
 template <class _Key, class _Val>
-skipNode<_Key, _Val> *skipList<_Key, _Val>::search(const _Key &theKey) const
-{ // Search for theKey saving last nodes seen at each
-    // level in the array last
+__skipnode_pointer skipList<_Key, _Val>::search(const _Key &theKey) const
+{ // Search for theKey saving _last nodes seen at each
+    // level in the array _last
     // Return node that might contain theKey.
     // position beforeNode just before possible node with theKey
-    skipNode<_Key, _Val> *beforeNode = headerNode;
+    __skipnode_pointer beforeNode = _headernode;
     for (int i = levels; i >= 0; i--)
     {
         while (beforeNode->next[i]->element.first < theKey)
             beforeNode = beforeNode->next[i];
-        last[i] = beforeNode; // last level i node seen
+        _last[i] = beforeNode; // _last level i node seen
     }
     return beforeNode->next[0];
 }
@@ -146,7 +147,7 @@ void skipList<_Key, _Val>::insert(const pair<const _Key, _Val> &thePair)
     }
 
     // see if pair with theKey already present
-    skipNode<_Key, _Val> *theNode = search(thePair.first);
+    __skipnode_pointer theNode = search(thePair.first);
     if (theNode->element.first == thePair.first)
     { // update theNode->element.second
         theNode->element.second = thePair.second;
@@ -159,18 +160,18 @@ void skipList<_Key, _Val>::insert(const pair<const _Key, _Val> &thePair)
     if (theLevel > levels)
     {
         theLevel = ++levels;
-        last[theLevel] = headerNode;
+        _last[theLevel] = _headernode;
     }
 
     // get and insert new node just after theNode
-    skipNode<_Key, _Val> *newNode = new skipNode<_Key, _Val>(thePair, theLevel + 1);
+    __skipnode_pointer newNode = new skipNode<_Key, _Val>(thePair, theLevel + 1);
     for (int i = 0; i <= theLevel; i++)
     { // insert into level i chain
-        newNode->next[i] = last[i]->next[i];
-        last[i]->next[i] = newNode;
+        newNode->next[i] = _last[i]->next[i];
+        _last[i]->next[i] = newNode;
     }
 
-    dSize++;
+    _size++;
     return;
 }
 
@@ -181,40 +182,37 @@ void skipList<_Key, _Val>::erase(const _Key &theKey)
         return;
 
     // see if matching pair present
-    skipNode<_Key, _Val> *theNode = search(theKey);
+    __skipnode_pointer theNode = search(theKey);
     if (theNode->element.first != theKey) // not present
         return;
 
     // delete node from skip list
-    for (int i = 0; i <= levels &&
-                    last[i]->next[i] == theNode;
-         i++)
-        last[i]->next[i] = theNode->next[i];
+    for (int i = 0; i <= levels && _last[i]->next[i] == theNode; i++)
+        _last[i]->next[i] = theNode->next[i];
 
     // update levels
-    while (levels > 0 && headerNode->next[levels] == tailNode)
+    while (levels > 0 && _headernode->next[levels] == _tailnode)
         levels--;
 
     delete theNode;
-    dSize--;
+    _size--;
 }
 
 template <class _Key, class _Val>
-void skipList<_Key, _Val>::output(ostream &out) const
+void skipList<_Key, _Val>::__output(ostream &out) const
 { // Insert the dictionary pairs into the stream out.
     // follow level 0 chain
-    for (skipNode<_Key, _Val> *currentNode = headerNode->next[0];
-         currentNode != tailNode;
+    for (__skipnode_pointer currentNode = _headernode->next[0];
+         currentNode != _tailnode;
          currentNode = currentNode->next[0])
-        out << currentNode->element.first << " "
-            << currentNode->element.second << "  ";
+        out << currentNode->element.first << " " << currentNode->element.second << "  ";
 }
 
 // overload <<
 template <class _Key, class _Val>
 ostream &operator<<(ostream &out, const skipList<_Key, _Val> &x)
 {
-    x.output(out);
+    x.__output(out);
     return out;
 }
 

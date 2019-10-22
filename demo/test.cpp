@@ -11,8 +11,6 @@ int main(int argc, char const *argv[])
     /* code */
     //test();
     deque<int> d1;
-
-    printf("hello world\n");
-
+    
     return 0;
 }
