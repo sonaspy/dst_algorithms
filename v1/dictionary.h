@@ -1,5 +1,5 @@
-#ifndef dictionary_
-#define dictionary_
+#ifndef __DICTIONARY__
+#define __DICTIONARY__
 
 using namespace std;
 

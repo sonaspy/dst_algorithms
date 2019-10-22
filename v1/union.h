@@ -3,8 +3,9 @@
 #define __Union__
 #include <vector>
 using namespace std;
-namespace dsa
-{
+
+__DST_BEGIN_NAMESPACE
+
 class __Union
 {
 protected:
@@ -55,6 +56,7 @@ public:
         return __getRoot(v1) == __getRoot(v2);
     }
 };
-}; // namespace dsa
+
+__DST_END_NAMESPACE
 
 #endif

@@ -14,8 +14,9 @@
 #include <stack>
 using namespace std;
 
-namespace dsa
-{
+__DST_BEGIN_NAMESPACE
+
+
 #define MAXCOL 100000
 #define MAXROW 100000
 #define fromParent2(x) (((x)->is_l() ? (x)->parent->lc : (x)->parent->rc))
@@ -230,7 +231,7 @@ public:
     virtual void clear() = 0;
 };
 
-}; // namespace dsa
+__DST_END_NAMESPACE
 
 #include "bintree.h"
 #include "huffman.h"
@@ -239,5 +240,7 @@ public:
 #include "spltree.h"
 #include "rbtree.h"
 #include "btree.h"
+
+
 
 #endif

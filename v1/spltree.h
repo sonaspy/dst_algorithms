@@ -2,8 +2,7 @@
 // coding - utf_8
 #ifndef __SPLAYTREE___
 #define __SPLAYTREE___
-namespace dsa
-{
+__DST_BEGIN_NAMESPACE
 template <class _Tp>
 class spltree : public bstree<_Tp>
 {
@@ -134,6 +133,7 @@ public:
         return true;
     }
 };
-} // namespace dsa
+
+__DST_END_NAMESPACE
 
 #endif

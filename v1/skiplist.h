@@ -1,5 +1,5 @@
-#ifndef skipList_
-#define skipList_
+#ifndef __SKIPLIST__
+#define __SKIPLIST__
 
 #include <iostream>
 #include <math.h>

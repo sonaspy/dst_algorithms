@@ -3,8 +3,8 @@
 #ifndef __PRIORITY_QUEUE__
 #define __PRIORITY_QUEUE__
 #include "algorithms.h"
-namespace dsa
-{
+
+__DST_BEGIN_NAMESPACE
 
 template <typename _Tp, typename _Compare = less<_Tp>>
 class priority_q
@@ -40,5 +40,7 @@ public:
         return _containter.empty();
     }
 };
-} // namespace dsa
+
+__DST_END_NAMESPACE
+
 #endif
