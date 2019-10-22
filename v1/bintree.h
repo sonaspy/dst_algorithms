@@ -4,8 +4,7 @@
 #ifndef __BINARYTREE__
 #define __BINARYTREE__
 
-namespace dsa
-{
+__DST_BEGIN_NAMESPACE
 
 template <typename _Tp>
 class bintree
@@ -40,7 +39,7 @@ protected:
     {
         __memory_pool.erase(v);
         __bintree_alloc.destroy(v);
-        __bintree_alloc.deallocate(v);
+        __bintree_alloc.deallocate(v, __SIZEOF_BINODE);
         v = nullptr;
         this->_size--;
     }
@@ -686,5 +685,5 @@ public:
     }
 };
 
-} // namespace dsa
+__DST_END_NAMESPACE
 #endif

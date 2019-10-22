@@ -4,8 +4,7 @@
 #ifndef __RB_TREE__
 #define __RB_TREE__
 
-namespace dsa
-{
+__DST_BEGIN_NAMESPACE
 
 template <typename _Tp>
 class rbtree : public avltree<_Tp>
@@ -44,7 +43,7 @@ protected:
         this->__updateheight(x);
         this->__updateheight(y);
     }
-    void __doubleis_red_solution(binode_ptr<_Tp> opnv)
+    void __double_red_solution(binode_ptr<_Tp> opnv)
     {
         binode_ptr<_Tp> p, g, u;
         while ((p = opnv->parent) && is_red(p))
@@ -75,7 +74,7 @@ protected:
         }
         __setblk(this->_root);
     }
-    void __doubleis_blk_solution(binode_ptr<_Tp> pp, binode_ptr<_Tp> p)
+    void __double_blk_solution(binode_ptr<_Tp> pp, binode_ptr<_Tp> p)
     {
         while ((nullptr == p || BLK == p->color) && p != this->_root)
         {
@@ -173,7 +172,7 @@ public:
         if (w)
             return false;
         w = this->__newbinode(x, this->_last, nullptr, nullptr, RED);
-        __doubleis_red_solution(w);
+        __double_red_solution(w);
         return true;
     }
     bool erase(const _Tp &val)
@@ -236,7 +235,7 @@ public:
                 p->parent = pp;
                 1 == pp_child_tag ? pp->lc = p : pp->rc = p;
             }
-            __doubleis_blk_solution(pp, p);
+            __double_blk_solution(pp, p);
             if (_nil)
             {
                 _nil->is_l() ? _nil->parent->lc = nullptr : _nil->parent->rc = nullptr;
@@ -259,5 +258,9 @@ public:
         bintree<_Tp>::__update_status();
     }
 };
-} // namespace dsa
+
+
+__DST_END_NAMESPACE
+
+
 #endif

@@ -1,9 +1,9 @@
 // author - sonaspy@outlook.com
 // coding - utf_8
 
-#include "../src/stddsa.h"
+#include "../v1/stddsa.h"
 
-#define SIZE 20
+#define SIZE 10000
 using namespace std;
 using namespace dsa;
 int main(int argc, char const *argv[])
@@ -16,13 +16,14 @@ int main(int argc, char const *argv[])
     int nm = 10;
     int c = 0, c0 = 0;
     int b[SIZE], n = SIZE;
-    generate(b, b + n, [&]() { return rand() % 100; });
+    // generate(b, b + n, [&]() { return rand(); });
     vector<int> a(b, b + n);
-    // iota(a.begin(), a.end(), 1);
-    avltree<int> ax;
+    iota(a.begin(), a.end(), 1);
+    rbtree<int> ax;
     ax.build(a);
-    endTime = clock();
+    cout << ax.size() << endl;
     ax.printhorizon();
+    endTime = clock();
     cout << "The elapsed time is: " << (double)(endTime - startTime) / 1000 << "ms" << endl;
     return 0;
 }

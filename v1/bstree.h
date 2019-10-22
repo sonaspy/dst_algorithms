@@ -4,8 +4,7 @@
 #ifndef __BSTREE__
 #define __BSTREE__
 
-namespace dsa
-{
+__DSTbeginname
 template <typename _Tp>
 class bstree : public bintree<_Tp>
 {

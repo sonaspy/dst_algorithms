@@ -33,7 +33,7 @@ protected:
     {
         __memory_pool.erase(v);
         __btree_alloc.destroy(v);
-        __btree_alloc.deallocate(v);
+        __btree_alloc.deallocate(v, __SIZEOF_BNODE);
         v = nullptr;
     }
 

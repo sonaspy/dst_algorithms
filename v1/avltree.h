@@ -4,8 +4,7 @@
 #ifndef __AVLTREE__
 #define __AVLTREE__
 
-namespace dsa
-{
+__DST_BEGIN_NAMESPACE
 
 template <typename T>
 class avltree : public bstree<T>
@@ -129,5 +128,5 @@ protected:
     }
 };
 
-} // namespace dsa
+__DST_END_NAMESPACE
 #endif
