@@ -9,5 +9,6 @@
 
 #include "algorithms.h"
 #include "trees.h"
+#include "skiplist.h"
 
 #endif
