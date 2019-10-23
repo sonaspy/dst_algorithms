@@ -13,10 +13,15 @@ struct __snode
     typedef pair<_Key, _Val> _Entry;
     typedef __snode<_Key, _Val> *__snode_ptr;
 
-    _Entry element;
+    _Entry entry;
+    int _height;
     __snode_ptr *next; // 1D array of pointers
 
-    __snode(_Entry &__entry, int size = 0) : element(__entry) { next = new __snode_ptr[size]; }
+    __snode(_Entry &__entry, int size = 0) : entry(__entry)
+    {
+        next = new __snode_ptr[size];
+        _height = size;
+    }
     ~__snode() { delete[] next; }
 };
 
@@ -49,13 +54,13 @@ public:
     }
     ~skiplist()
     {
-        __snode_ptr nextNode;
+        __snode_ptr next_node;
         // delete all nodes by following level 0 chain
         while (_begin != _end)
         {
-            nextNode = _begin->next[0];
+            next_node = _begin->next[0];
             delete _begin;
-            _begin = nextNode;
+            _begin = next_node;
         }
         delete _end;
         delete[] _last;
@@ -63,11 +68,11 @@ public:
 
     void clear()
     {
-        __snode_ptr nextNode = _begin->next[0], tmp;
-        while (nextNode != _end)
+        __snode_ptr next_node = _begin->next[0], tmp;
+        while (next_node != _end)
         {
-            tmp = nextNode;
-            nextNode = nextNode->next[0];
+            tmp = next_node;
+            next_node = next_node->next[0];
             delete tmp;
         }
         for (int i = 0; i <= _max_level; i++)
@@ -78,41 +83,43 @@ public:
 
     int size() { return _size; }
     bool empty() { return _size == 0; }
-    _Entry *find(_Key &theKey)
+    _Entry *get(_Key &the_key)
     {
-        if (theKey >= _end_key)
+        if (the_key >= _end_key)
             return nullptr; // no matching pair possible
 
         __snode_ptr pre_node = _begin;
         for (int i = _level; i >= 0; i--) // go down _level
-            while (pre_node->next[i]->element.first < theKey)
+            while (pre_node->next[i]->entry.first < the_key)
                 pre_node = pre_node->next[i];
 
-        if (pre_node->next[0]->element.first == theKey)
-            return &pre_node->next[0]->element;
+        if (pre_node->next[0]->entry.first == the_key)
+            return &pre_node->next[0]->entry;
 
         return nullptr; // no matching pair
     }
 
-    void erase(_Key &theKey)
+    inline bool count(_Key &the_key) { return get(the_key) != nullptr; }
+
+    void erase(_Key &the_key)
     {
-        // Delete the pair, if any, whose key equals theKey.
-        if (theKey >= _end_key) // too large
+        // Delete the pair, if any, whose key equals the_key.
+        if (the_key >= _end_key) // too large
             return;
 
-        __snode_ptr theNode = __search(theKey);
-        if (theNode->element.first != theKey) // not present
+        __snode_ptr the_node = __search(the_key);
+        if (the_node->entry.first != the_key) // not present
             return;
 
         // delete node from skip list
-        for (int i = 0; i <= _level && _last[i]->next[i] == theNode; i++)
-            _last[i]->next[i] = theNode->next[i];
+        for (int i = 0; i <= _level && _last[i]->next[i] == the_node; i++)
+            _last[i]->next[i] = the_node->next[i];
 
         // update _level
         while (_level > 0 && _begin->next[_level] == _end)
             _level--;
 
-        delete theNode;
+        delete the_node;
         _size--;
     }
 
@@ -125,38 +132,40 @@ public:
             throw illegalParameterValue(s.str());
         }
 
-        __snode_ptr theNode = __search(__entry.first);
-        if (theNode->element.first == __entry.first)
-        { // update theNode->element.second
-            theNode->element.second = __entry.second;
+        __snode_ptr the_node = __search(__entry.first);
+        if (the_node->entry.first == __entry.first)
+        { // update the_node->entry.second
+            the_node->entry.second = __entry.second;
             return;
         }
 
-        int theLevel = __decide_level(); // level of new node
-        // fix theLevel to be <= _level + 1
-        if (theLevel > _level)
+        int the_level = __decide_level(); // level of new node
+        // fix the_level to be <= _level + 1
+        if (the_level > _level)
         {
-            theLevel = ++_level;
-            _last[theLevel] = _begin;
+            the_level = ++_level;
+            _last[the_level] = _begin;
         }
 
-        __snode_ptr newNode = new __snode<_Key, _Val>(__entry, theLevel + 1);
+        __snode_ptr new_node = new __snode<_Key, _Val>(__entry, the_level + 1);
         ++_size;
-        for (int i = 0; i <= theLevel; i++)
+        for (int i = 0; i <= the_level; i++)
         { // insert into level i chain
-            newNode->next[i] = _last[i]->next[i];
-            _last[i]->next[i] = newNode;
+            new_node->next[i] = _last[i]->next[i];
+            _last[i]->next[i] = new_node;
         }
     }
     void print(ostream &out)
     {
+
+        out << "(begin h:" << _begin->_height << ")->";
         for (__snode_ptr _walk = _begin->next[0]; _walk != _end; _walk = _walk->next[0])
-            out << "(" << _walk->element.first << " : " << _walk->element.second << ") -> ";
-        out << endl;
+            out << "(" << _walk->entry.first << " h:" << _walk->_height << ")->";
+        out << "(end)" << endl;
     }
 
 protected:
-    int __decide_level() // generate a random level number
+    int __decide_level() // generate a level number by 0.5 probability
     {
         int lev = 0;
         while (rand() & 1)
@@ -164,13 +173,13 @@ protected:
         return (lev <= _max_level) ? lev : _max_level;
     }
 
-    __snode_ptr __search(_Key &theKey)
+    __snode_ptr __search(_Key &the_key)
     {
-        // Return node that might contain theKey. position pre_node just before possible node with theKey
+        // Return node that might contain the_key. position pre_node just before possible node with the_key
         __snode_ptr pre_node = _begin;
         for (int i = _level; i >= 0; i--)
         {
-            while (pre_node->next[i]->element.first < theKey)
+            while (pre_node->next[i]->entry.first < the_key)
                 pre_node = pre_node->next[i];
             _last[i] = pre_node; // _last level i node seen
         }

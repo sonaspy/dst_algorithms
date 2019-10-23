@@ -14,7 +14,7 @@ public:
     virtual int size() = 0;
     // return number of pairs in dictionary
 
-    virtual pair<K, E> *find(K &) = 0;
+    virtual pair<K, E> *get(K &) = 0;
     // return pointer to matching pair
 
     virtual void erase(K &) = 0;
