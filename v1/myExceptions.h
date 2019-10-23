@@ -3,7 +3,8 @@
 #ifndef myExceptions_
 #define myExceptions_
 #include <string>
-
+#include <iostream>
+#include <sstream>
 using namespace std;
 
 // illegal parameter value
