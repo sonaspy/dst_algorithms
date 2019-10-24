@@ -7,8 +7,7 @@ __DST_BEGIN_NAMESPACE
 
 // Forward declarations of operators < and ==, needed for friend declaration.
 
-template <class _Tp,
-          class _Sequence __DST_DEPENDENT_DEFAULT_TMPL(deque<_Tp>)>
+template <class _Tp, class _Sequence __DST_DEPENDENT_DEFAULT_TMPL(deque<_Tp>)>
 class queue;
 
 template <class _Tp, class _Seq>
@@ -20,7 +19,6 @@ inline bool operator<(const queue<_Tp, _Seq> &, const queue<_Tp, _Seq> &);
 template <class _Tp, class _Sequence>
 class queue
 {
-
     // requirements:
 
     __DST_CLASS_REQUIRES(_Tp, _Assignable);
@@ -110,11 +108,9 @@ bool operator>=(const queue<_Tp, _Sequence> &__x, const queue<_Tp, _Sequence> &_
 
 template <class _Tp,
           class _Sequence __DST_DEPENDENT_DEFAULT_TMPL(vector<_Tp>),
-          class _Compare
-              __DST_DEPENDENT_DEFAULT_TMPL(less<typename _Sequence::value_type>)>
+          class _Compare __DST_DEPENDENT_DEFAULT_TMPL(less<typename _Sequence::value_type>)>
 class priority_queue
 {
-
     // requirements:
 
     __DST_CLASS_REQUIRES(_Tp, _Assignable);
@@ -154,16 +150,14 @@ public:
     }
 
     template <class _InputIterator>
-    priority_queue(_InputIterator __first,
-                   _InputIterator __last, const _Compare &__x)
+    priority_queue(_InputIterator __first, _InputIterator __last, const _Compare &__x)
         : c(__first, __last), comp(__x)
     {
         make_heap(c.begin(), c.end(), comp);
     }
 
     template <class _InputIterator>
-    priority_queue(_InputIterator __first, _InputIterator __last,
-                   const _Compare &__x, const _Sequence &__s)
+    priority_queue(_InputIterator __first, _InputIterator __last, const _Compare &__x, const _Sequence &__s)
         : c(__s), comp(__x)
     {
         c.insert(c.end(), __first, __last);
@@ -184,8 +178,7 @@ public:
         make_heap(c.begin(), c.end(), comp);
     }
 
-    priority_queue(const value_type *__first, const value_type *__last,
-                   const _Compare &__x, const _Sequence &__c)
+    priority_queue(const value_type *__first, const value_type *__last, const _Compare &__x, const _Sequence &__c)
         : c(__c), comp(__x)
     {
         c.insert(c.end(), __first, __last);

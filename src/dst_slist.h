@@ -1,5 +1,5 @@
-#ifndef ___DST_INTERNAL_LIST_H
-#define ___DST_INTERNAL_LIST_H
+#ifndef ___DST_INTERNAL_SLIST_H
+#define ___DST_INTERNAL_SLIST_H
 
 #include "concept_checks.h"
 
@@ -10,60 +10,59 @@ __DST_BEGIN_NAMESPACE
 #pragma set woff 1375
 #endif
 
-struct __list_pointer
+struct _slist_node_base
 {
-    __list_pointer *__m_next;
-    __list_pointer *__m_prev;
+    _slist_node_base *__m_next;
+    _slist_node_base *__m_prev;
 };
 
 template <class _Tp>
-struct __list_node : public __list_pointer
+struct _slist_node : public _slist_node_base
 {
     _Tp __m_data;
 };
 
-struct __list_iterator_base
+struct _slist_iterator_base
 {
     typedef size_t size_type;
     typedef ptrdiff_t difference_type;
     typedef bidirectional_iterator_tag iterator_category;
 
-    __list_pointer *__m_node;
+    _slist_node_base *__m_node;
 
-    __list_iterator_base(__list_pointer *__x) : __m_node(__x) {}
-    __list_iterator_base() {}
+    _slist_iterator_base(_slist_node_base *__x) : __m_node(__x) {}
+    _slist_iterator_base() {}
 
     void __m_incr() { __m_node = __m_node->__m_next; }
     void __m_decr() { __m_node = __m_node->__m_prev; }
 
-    bool operator==(const __list_iterator_base &__x) const
+    bool operator==(const _slist_iterator_base &__x) const
     {
         return __m_node == __x.__m_node;
     }
-    bool operator!=(const __list_iterator_base &__x) const
+    bool operator!=(const _slist_iterator_base &__x) const
     {
         return __m_node != __x.__m_node;
     }
 };
 
 template <class _Tp, class _Ref, class _Ptr>
-struct __list_iterator : public __list_iterator_base
+struct _slist_iterator : public _slist_iterator_base
 {
-    typedef __list_iterator<_Tp, _Tp &, _Tp *> iterator;
-    typedef __list_iterator<_Tp, const _Tp &, const _Tp *> const_iterator;
-    typedef __list_iterator<_Tp, _Ref, _Ptr> __self;
+    typedef _slist_iterator<_Tp, _Tp &, _Tp *> iterator;
+    typedef _slist_iterator<_Tp, const _Tp &, const _Tp *> const_iterator;
+    typedef _slist_iterator<_Tp, _Ref, _Ptr> _Self;
 
     typedef _Tp value_type;
     typedef _Ptr pointer;
     typedef _Ref reference;
-    typedef __list_node<_Tp> __node;
-    typedef __node *__node_Ptr;
+    typedef _slist_node<_Tp> __node;
 
-    __list_iterator(__node_Ptr __x) : __list_iterator_base(__x) {}
-    __list_iterator() {}
-    __list_iterator(const iterator &__x) : __list_iterator_base(__x.__m_node) {}
+    _slist_iterator(__node *__x) : _slist_iterator_base(__x) {}
+    _slist_iterator() {}
+    _slist_iterator(const iterator &__x) : _slist_iterator_base(__x.__m_node) {}
 
-    reference operator*() const { return ((__node_Ptr)__m_node)->__m_data; }
+    reference operator*() const { return ((__node *)__m_node)->__m_data; }
 
 #ifndef ___DST_NO_ARROW_OPERATOR
     pointer operator->() const
@@ -72,25 +71,25 @@ struct __list_iterator : public __list_iterator_base
     }
 #endif /* ___DST_NO_ARROW_OPERATOR */
 
-    __self &operator++()
+    _Self &operator++()
     {
         this->__m_incr();
         return *this;
     }
-    __self operator++(int)
+    _Self operator++(int)
     {
-        __self __tmp = *this;
+        _Self __tmp = *this;
         this->__m_incr();
         return __tmp;
     }
-    __self &operator--()
+    _Self &operator--()
     {
         this->__m_decr();
         return *this;
     }
-    __self operator--(int)
+    _Self operator--(int)
     {
-        __self __tmp = *this;
+        _Self __tmp = *this;
         this->__m_decr();
         return __tmp;
     }
@@ -99,20 +98,20 @@ struct __list_iterator : public __list_iterator_base
 #ifndef __DST_CLASS_PARTIAL_SPECIALIZATION
 
 inline bidirectional_iterator_tag
-iterator_category(const __list_iterator_base &)
+iterator_category(const _slist_iterator_base &)
 {
     return bidirectional_iterator_tag();
 }
 
 template <class _Tp, class _Ref, class _Ptr>
 inline _Tp *
-value_type(const __list_iterator<_Tp, _Ref, _Ptr> &)
+value_type(const _slist_iterator<_Tp, _Ref, _Ptr> &)
 {
     return 0;
 }
 
 inline ptrdiff_t *
-distance_type(const __list_iterator_base &)
+distance_type(const _slist_iterator_base &)
 {
     return 0;
 }
@@ -126,71 +125,75 @@ distance_type(const __list_iterator_base &)
 // compatibility and because we want to avoid wasting storage on an
 // allocator instance if it isn't necessary.
 
-#ifdef __DST_USE_DSA_ALLOCATORS
+#ifdef __DST_USE_STD_ALLOCATORS
 
 // Base for general standard-conforming allocators.
 template <class _Tp, class _Allocator, bool _IsStatic>
-class __list_alloc_base
+class _slist_alloc_base
 {
 public:
     typedef typename _Alloc_traits<_Tp, _Allocator>::allocator_type
         allocator_type;
     allocator_type get_allocator() const { return _Node_allocator; }
 
-    __list_alloc_base(const allocator_type &__a) : _Node_allocator(__a) {}
+    _slist_alloc_base(const allocator_type &__a) : _Node_allocator(__a) {}
 
 protected:
-    __list_node<_Tp> *__m_get_node()
+    _slist_node<_Tp> *__m_get_node()
     {
         return _Node_allocator.allocate(1);
     }
-    void __m_put_node(__list_node<_Tp> *__p)
+    void __m_put_node(_slist_node<_Tp> *__p)
     {
         _Node_allocator.deallocate(__p, 1);
     }
 
 protected:
-    typename _Alloc_traits<__list_node<_Tp>, _Allocator>::allocator_type
+    typename _Alloc_traits<_slist_node<_Tp>, _Allocator>::allocator_type
         _Node_allocator;
-    __list_node<_Tp> *__m_node;
+    _slist_node<_Tp> *__m_node;
 };
 
 // Specialization for instanceless allocators.
 
 template <class _Tp, class _Allocator>
-class __list_alloc_base<_Tp, _Allocator, true>
+class _slist_alloc_base<_Tp, _Allocator, true>
 {
 public:
     typedef typename _Alloc_traits<_Tp, _Allocator>::allocator_type
         allocator_type;
     allocator_type get_allocator() const { return allocator_type(); }
 
-    __list_alloc_base(const allocator_type &) {}
+    _slist_alloc_base(const allocator_type &) {}
 
 protected:
-    typedef typename _Alloc_traits<__list_node<_Tp>, _Allocator>::_Alloc_type
+    typedef typename _Alloc_traits<_slist_node<_Tp>, _Allocator>::_Alloc_type
         _Alloc_type;
-    __list_node<_Tp> *__m_get_node() { return _Alloc_type::allocate(1); }
-    void __m_put_node(__list_node<_Tp> *__p) { _Alloc_type::deallocate(__p, 1); }
+    _slist_node<_Tp> *__m_get_node() { return _Alloc_type::allocate(1); }
+    void __m_put_node(_slist_node<_Tp> *__p) { _Alloc_type::deallocate(__p, 1); }
 
 protected:
-    __list_node<_Tp> *__m_node;
+    _slist_node<_Tp> *__m_node;
 };
 
 template <class _Tp, class _Alloc>
-class __list_base : public __list_alloc_base<_Tp, _Alloc, _Alloc_traits<_Tp, _Alloc>::_S_instanceless>
+class _slist_base
+    : public _slist_alloc_base<_Tp, _Alloc,
+                               _Alloc_traits<_Tp, _Alloc>::_S_instanceless>
 {
 public:
-    typedef __list_alloc_base<_Tp, _Alloc, _Alloc_traits<_Tp, _Alloc>::_S_instanceless> __base;
+    typedef _slist_alloc_base<_Tp, _Alloc,
+                              _Alloc_traits<_Tp, _Alloc>::_S_instanceless>
+        __base;
     typedef typename __base::allocator_type allocator_type;
 
-    __list_base(const allocator_type &__a) : __base(__a)
+    _slist_base(const allocator_type &__a) : __base(__a)
     {
         __m_node = __m_get_node();
         __m_node->__m_next = __m_node;
         __m_node->__m_prev = __m_node;
     }
-    ~__list_base()
+    ~_slist_base()
     {
         clear();
         __m_put_node(__m_node);
@@ -199,22 +202,22 @@ public:
     void clear();
 };
 
-#else /* __DST_USE_DSA_ALLOCATORS */
+#else /* __DST_USE_STD_ALLOCATORS */
 
 template <class _Tp, class _Alloc>
-class __list_base
+class _slist_base
 {
 public:
     typedef _Alloc allocator_type;
     allocator_type get_allocator() const { return allocator_type(); }
 
-    __list_base(const allocator_type &)
+    _slist_base(const allocator_type &)
     {
         __m_node = __m_get_node();
         __m_node->__m_next = __m_node;
         __m_node->__m_prev = __m_node;
     }
-    ~__list_base()
+    ~_slist_base()
     {
         clear();
         __m_put_node(__m_node);
@@ -223,22 +226,24 @@ public:
     void clear();
 
 protected:
-    typedef simple_alloc<__list_node<_Tp>, _Alloc> _Alloc_type;
-    __list_node<_Tp> *__m_get_node() { return _Alloc_type::allocate(1); }
-    void __m_put_node(__list_node<_Tp> *__p) { _Alloc_type::deallocate(__p, 1); }
-    __list_node<_Tp> *__m_node;
+    typedef simple_alloc<_slist_node<_Tp>, _Alloc> _Alloc_type;
+    _slist_node<_Tp> *__m_get_node() { return _Alloc_type::allocate(1); }
+    void __m_put_node(_slist_node<_Tp> *__p) { _Alloc_type::deallocate(__p, 1); }
+
+protected:
+    _slist_node<_Tp> *__m_node;
 };
 
-#endif /* __DST_USE_DSA_ALLOCATORS */
+#endif /* __DST_USE_STD_ALLOCATORS */
 
 template <class _Tp, class _Alloc>
-void __list_base<_Tp, _Alloc>::clear()
+void _slist_base<_Tp, _Alloc>::clear()
 {
-    __list_node<_Tp> *__cur = (__list_node<_Tp> *)__m_node->__m_next;
+    _slist_node<_Tp> *__cur = (_slist_node<_Tp> *)__m_node->__m_next;
     while (__cur != __m_node)
     {
-        __list_node<_Tp> *__tmp = __cur;
-        __cur = (__list_node<_Tp> *)__cur->__m_next;
+        _slist_node<_Tp> *__tmp = __cur;
+        __cur = (_slist_node<_Tp> *)__cur->__m_next;
         __destroy(&__tmp->__m_data);
         __m_put_node(__tmp);
     }
@@ -247,16 +252,16 @@ void __list_base<_Tp, _Alloc>::clear()
 }
 
 template <class _Tp, class _Alloc = __DST_DEFAULT_ALLOCATOR(_Tp)>
-class list : protected __list_base<_Tp, _Alloc>
+class slist : protected _slist_base<_Tp, _Alloc>
 {
     // requirements:
 
     __DST_CLASS_REQUIRES(_Tp, _Assignable);
 
-    typedef __list_base<_Tp, _Alloc> __base;
+    typedef _slist_base<_Tp, _Alloc> __base;
 
 protected:
-    typedef void *__void_pointer;
+    typedef void *_Void_pointer;
 
 public:
     typedef _Tp value_type;
@@ -264,8 +269,7 @@ public:
     typedef const value_type *const_pointer;
     typedef value_type &reference;
     typedef const value_type &const_reference;
-    typedef __list_node<_Tp> __node;
-    typedef __node *__node_Ptr;
+    typedef _slist_node<_Tp> __node;
     typedef size_t size_type;
     typedef ptrdiff_t difference_type;
 
@@ -273,8 +277,8 @@ public:
     allocator_type get_allocator() const { return __base::get_allocator(); }
 
 public:
-    typedef __list_iterator<_Tp, _Tp &, _Tp *> iterator;
-    typedef __list_iterator<_Tp, const _Tp &, const _Tp *> const_iterator;
+    typedef _slist_iterator<_Tp, _Tp &, _Tp *> iterator;
+    typedef _slist_iterator<_Tp, const _Tp &, const _Tp *> const_iterator;
 
 #ifdef __DST_CLASS_PARTIAL_SPECIALIZATION
     typedef reverse_iterator<const_iterator> const_reverse_iterator;
@@ -294,9 +298,9 @@ protected:
     using __base::__m_put_node;
 
 protected:
-    __node_Ptr __m_create_node(const _Tp &__x)
+    __node *__m_create_node(const _Tp &__x)
     {
-        __node_Ptr __p = __m_get_node();
+        __node *__p = __m_get_node();
         __DST_TRY
         {
             __construct(&__p->__m_data, __x);
@@ -305,9 +309,9 @@ protected:
         return __p;
     }
 
-    __node_Ptr __m_create_node()
+    __node *__m_create_node()
     {
-        __node_Ptr __p = __m_get_node();
+        __node *__p = __m_get_node();
         __DST_TRY
         {
             __construct(&__p->__m_data);
@@ -317,10 +321,10 @@ protected:
     }
 
 public:
-    explicit list(const allocator_type &__a = allocator_type()) : __base(__a) {}
+    explicit slist(const allocator_type &__a = allocator_type()) : __base(__a) {}
 
-    iterator begin() { return (__node_Ptr)(__m_node->__m_next); }
-    const_iterator begin() const { return (__node_Ptr)(__m_node->__m_next); }
+    iterator begin() { return (__node *)(__m_node->__m_next); }
+    const_iterator begin() const { return (__node *)(__m_node->__m_next); }
 
     iterator end() { return __m_node; }
     const_iterator end() const { return __m_node; }
@@ -357,11 +361,11 @@ public:
     reference back() { return *(--end()); }
     const_reference back() const { return *(--end()); }
 
-    void swap(list<_Tp, _Alloc> &__x) { __DSA::swap(__m_node, __x.__m_node); }
+    void swap(slist<_Tp, _Alloc> &__x) { __DSA::swap(__m_node, __x.__m_node); }
 
     iterator insert(iterator __position, const _Tp &__x)
     {
-        __node_Ptr __tmp = __m_create_node(__x);
+        __node *__tmp = __m_create_node(__x);
         __tmp->__m_next = __position.__m_node;
         __tmp->__m_prev = __position.__m_node->__m_prev;
         __position.__m_node->__m_prev->__m_next = __tmp;
@@ -409,14 +413,14 @@ public:
 
     iterator erase(iterator __position)
     {
-        __list_pointer *__next_node = __position.__m_node->__m_next;
-        __list_pointer *__prev_node = __position.__m_node->__m_prev;
-        __node_Ptr __n = (__node_Ptr)__position.__m_node;
+        _slist_node_base *__next_node = __position.__m_node->__m_next;
+        _slist_node_base *__prev_node = __position.__m_node->__m_prev;
+        __node *__n = (__node *)__position.__m_node;
         __prev_node->__m_next = __next_node;
         __next_node->__m_prev = __prev_node;
         __destroy(&__n->__m_data);
         __m_put_node(__n);
-        return iterator((__node_Ptr)__next_node);
+        return iterator((__node *)__next_node);
     }
     iterator erase(iterator __first, iterator __last);
     void clear() { __base::clear(); }
@@ -430,13 +434,13 @@ public:
         iterator __tmp = end();
         erase(--__tmp);
     }
-    list(size_type __n, const _Tp &__value,
-         const allocator_type &__a = allocator_type())
+    slist(size_type __n, const _Tp &__value,
+          const allocator_type &__a = allocator_type())
         : __base(__a)
     {
         insert(begin(), __n, __value);
     }
-    explicit list(size_type __n)
+    explicit slist(size_type __n)
         : __base(allocator_type())
     {
         insert(begin(), __n, _Tp());
@@ -447,8 +451,8 @@ public:
     // We don't need any dispatching tricks here, because insert does all of
     // that anyway.
     template <class _InputIterator>
-    list(_InputIterator __first, _InputIterator __last,
-         const allocator_type &__a = allocator_type())
+    slist(_InputIterator __first, _InputIterator __last,
+          const allocator_type &__a = allocator_type())
         : __base(__a)
     {
         insert(begin(), __first, __last);
@@ -456,28 +460,28 @@ public:
 
 #else /* __DST_MEMBER_TEMPLATES */
 
-    list(const _Tp *__first, const _Tp *__last,
-         const allocator_type &__a = allocator_type())
+    slist(const _Tp *__first, const _Tp *__last,
+          const allocator_type &__a = allocator_type())
         : __base(__a)
     {
         this->insert(begin(), __first, __last);
     }
-    list(const_iterator __first, const_iterator __last,
-         const allocator_type &__a = allocator_type())
+    slist(const_iterator __first, const_iterator __last,
+          const allocator_type &__a = allocator_type())
         : __base(__a)
     {
         this->insert(begin(), __first, __last);
     }
 
 #endif /* __DST_MEMBER_TEMPLATES */
-    list(const list<_Tp, _Alloc> &__x) : __base(__x.get_allocator())
+    slist(const slist<_Tp, _Alloc> &__x) : __base(__x.get_allocator())
     {
         insert(begin(), __x.begin(), __x.end());
     }
 
-    ~list() {}
+    ~slist() {}
 
-    list<_Tp, _Alloc> &operator=(const list<_Tp, _Alloc> &__x);
+    slist<_Tp, _Alloc> &operator=(const slist<_Tp, _Alloc> &__x);
 
 public:
     // assign(), a generalized assignment member function.  Two
@@ -521,7 +525,7 @@ protected:
             __position.__m_node->__m_prev->__m_next = __first.__m_node;
 
             // Splice [first, last) into its new position.
-            __list_pointer *__tmp = __position.__m_node->__m_prev;
+            _slist_node_base *__tmp = __position.__m_node->__m_prev;
             __position.__m_node->__m_prev = __last.__m_node->__m_prev;
             __last.__m_node->__m_prev = __first.__m_node->__m_prev;
             __first.__m_node->__m_prev = __tmp;
@@ -529,12 +533,12 @@ protected:
     }
 
 public:
-    void splice(iterator __position, list &__x)
+    void splice(iterator __position, slist &__x)
     {
         if (!__x.empty())
             this->transfer(__position, __x.begin(), __x.end());
     }
-    void splice(iterator __position, list &, iterator __i)
+    void splice(iterator __position, slist &, iterator __i)
     {
         iterator __j = __i;
         ++__j;
@@ -542,14 +546,14 @@ public:
             return;
         this->transfer(__position, __i, __j);
     }
-    void splice(iterator __position, list &, iterator __first, iterator __last)
+    void splice(iterator __position, slist &, iterator __first, iterator __last)
     {
         if (__first != __last)
             this->transfer(__position, __first, __last);
     }
     void remove(const _Tp &__value);
     void unique();
-    void merge(list &__x);
+    void merge(slist &__x);
     void reverse();
     void sort();
 
@@ -559,7 +563,7 @@ public:
     template <class _BinaryPredicate>
     void unique(_BinaryPredicate);
     template <class _StrictWeakOrdering>
-    void merge(list &, _StrictWeakOrdering);
+    void merge(slist &, _StrictWeakOrdering);
     template <class _StrictWeakOrdering>
     void sort(_StrictWeakOrdering);
 #endif /* __DST_MEMBER_TEMPLATES */
@@ -567,9 +571,9 @@ public:
 
 template <class _Tp, class _Alloc>
 inline bool
-operator==(const list<_Tp, _Alloc> &__x, const list<_Tp, _Alloc> &__y)
+operator==(const slist<_Tp, _Alloc> &__x, const slist<_Tp, _Alloc> &__y)
 {
-    typedef typename list<_Tp, _Alloc>::const_iterator const_iterator;
+    typedef typename slist<_Tp, _Alloc>::const_iterator const_iterator;
     const_iterator __end1 = __x.end();
     const_iterator __end2 = __y.end();
 
@@ -584,8 +588,8 @@ operator==(const list<_Tp, _Alloc> &__x, const list<_Tp, _Alloc> &__y)
 }
 
 template <class _Tp, class _Alloc>
-inline bool operator<(const list<_Tp, _Alloc> &__x,
-                      const list<_Tp, _Alloc> &__y)
+inline bool operator<(const slist<_Tp, _Alloc> &__x,
+                      const slist<_Tp, _Alloc> &__y)
 {
     return lexicographical_compare(__x.begin(), __x.end(),
                                    __y.begin(), __y.end());
@@ -594,36 +598,36 @@ inline bool operator<(const list<_Tp, _Alloc> &__x,
 #ifdef __DST_FUNCTION_TMPL_PARTIAL_ORDER
 
 template <class _Tp, class _Alloc>
-inline bool operator!=(const list<_Tp, _Alloc> &__x,
-                       const list<_Tp, _Alloc> &__y)
+inline bool operator!=(const slist<_Tp, _Alloc> &__x,
+                       const slist<_Tp, _Alloc> &__y)
 {
     return !(__x == __y);
 }
 
 template <class _Tp, class _Alloc>
-inline bool operator>(const list<_Tp, _Alloc> &__x,
-                      const list<_Tp, _Alloc> &__y)
+inline bool operator>(const slist<_Tp, _Alloc> &__x,
+                      const slist<_Tp, _Alloc> &__y)
 {
     return __y < __x;
 }
 
 template <class _Tp, class _Alloc>
-inline bool operator<=(const list<_Tp, _Alloc> &__x,
-                       const list<_Tp, _Alloc> &__y)
+inline bool operator<=(const slist<_Tp, _Alloc> &__x,
+                       const slist<_Tp, _Alloc> &__y)
 {
     return !(__y < __x);
 }
 
 template <class _Tp, class _Alloc>
-inline bool operator>=(const list<_Tp, _Alloc> &__x,
-                       const list<_Tp, _Alloc> &__y)
+inline bool operator>=(const slist<_Tp, _Alloc> &__x,
+                       const slist<_Tp, _Alloc> &__y)
 {
     return !(__x < __y);
 }
 
 template <class _Tp, class _Alloc>
 inline void
-swap(list<_Tp, _Alloc> &__x, list<_Tp, _Alloc> &__y)
+swap(slist<_Tp, _Alloc> &__x, slist<_Tp, _Alloc> &__y)
 {
     __x.swap(__y);
 }
@@ -634,9 +638,9 @@ swap(list<_Tp, _Alloc> &__x, list<_Tp, _Alloc> &__y)
 
 template <class _Tp, class _Alloc>
 template <class _InputIter>
-void list<_Tp, _Alloc>::__m_insert_dispatch(iterator __position,
-                                            _InputIter __first, _InputIter __last,
-                                            __false_type)
+void slist<_Tp, _Alloc>::__m_insert_dispatch(iterator __position,
+                                             _InputIter __first, _InputIter __last,
+                                             __false_type)
 {
     for (; __first != __last; ++__first)
         insert(__position, *__first);
@@ -645,16 +649,16 @@ void list<_Tp, _Alloc>::__m_insert_dispatch(iterator __position,
 #else /* __DST_MEMBER_TEMPLATES */
 
 template <class _Tp, class _Alloc>
-void list<_Tp, _Alloc>::insert(iterator __position,
-                               const _Tp *__first, const _Tp *__last)
+void slist<_Tp, _Alloc>::insert(iterator __position,
+                                const _Tp *__first, const _Tp *__last)
 {
     for (; __first != __last; ++__first)
         insert(__position, *__first);
 }
 
 template <class _Tp, class _Alloc>
-void list<_Tp, _Alloc>::insert(iterator __position,
-                               const_iterator __first, const_iterator __last)
+void slist<_Tp, _Alloc>::insert(iterator __position,
+                                const_iterator __first, const_iterator __last)
 {
     for (; __first != __last; ++__first)
         insert(__position, *__first);
@@ -663,16 +667,16 @@ void list<_Tp, _Alloc>::insert(iterator __position,
 #endif /* __DST_MEMBER_TEMPLATES */
 
 template <class _Tp, class _Alloc>
-void list<_Tp, _Alloc>::__m_fill_insert(iterator __position,
-                                        size_type __n, const _Tp &__x)
+void slist<_Tp, _Alloc>::__m_fill_insert(iterator __position,
+                                         size_type __n, const _Tp &__x)
 {
     for (; __n > 0; --__n)
         insert(__position, __x);
 }
 
 template <class _Tp, class _Alloc>
-typename list<_Tp, _Alloc>::iterator list<_Tp, _Alloc>::erase(iterator __first,
-                                                              iterator __last)
+typename slist<_Tp, _Alloc>::iterator slist<_Tp, _Alloc>::erase(iterator __first,
+                                                                iterator __last)
 {
     while (__first != __last)
         erase(__first++);
@@ -680,7 +684,7 @@ typename list<_Tp, _Alloc>::iterator list<_Tp, _Alloc>::erase(iterator __first,
 }
 
 template <class _Tp, class _Alloc>
-void list<_Tp, _Alloc>::resize(size_type __new_size, const _Tp &__x)
+void slist<_Tp, _Alloc>::resize(size_type __new_size, const _Tp &__x)
 {
     iterator __i = begin();
     size_type __len = 0;
@@ -693,7 +697,7 @@ void list<_Tp, _Alloc>::resize(size_type __new_size, const _Tp &__x)
 }
 
 template <class _Tp, class _Alloc>
-list<_Tp, _Alloc> &list<_Tp, _Alloc>::operator=(const list<_Tp, _Alloc> &__x)
+slist<_Tp, _Alloc> &slist<_Tp, _Alloc>::operator=(const slist<_Tp, _Alloc> &__x)
 {
     if (this != &__x)
     {
@@ -712,7 +716,7 @@ list<_Tp, _Alloc> &list<_Tp, _Alloc>::operator=(const list<_Tp, _Alloc> &__x)
 }
 
 template <class _Tp, class _Alloc>
-void list<_Tp, _Alloc>::__m_fill_assign(size_type __n, const _Tp &__val)
+void slist<_Tp, _Alloc>::__m_fill_assign(size_type __n, const _Tp &__val)
 {
     iterator __i = begin();
     for (; __i != end() && __n > 0; ++__i, --__n)
@@ -727,8 +731,8 @@ void list<_Tp, _Alloc>::__m_fill_assign(size_type __n, const _Tp &__val)
 
 template <class _Tp, class _Alloc>
 template <class _InputIter>
-void list<_Tp, _Alloc>::__m_assign_dispatch(_InputIter __first2, _InputIter __last2,
-                                            __false_type)
+void slist<_Tp, _Alloc>::__m_assign_dispatch(_InputIter __first2, _InputIter __last2,
+                                             __false_type)
 {
     iterator __first1 = begin();
     iterator __last1 = end();
@@ -743,7 +747,7 @@ void list<_Tp, _Alloc>::__m_assign_dispatch(_InputIter __first2, _InputIter __la
 #endif /* __DST_MEMBER_TEMPLATES */
 
 template <class _Tp, class _Alloc>
-void list<_Tp, _Alloc>::remove(const _Tp &__value)
+void slist<_Tp, _Alloc>::remove(const _Tp &__value)
 {
     iterator __first = begin();
     iterator __last = end();
@@ -758,7 +762,7 @@ void list<_Tp, _Alloc>::remove(const _Tp &__value)
 }
 
 template <class _Tp, class _Alloc>
-void list<_Tp, _Alloc>::unique()
+void slist<_Tp, _Alloc>::unique()
 {
     iterator __first = begin();
     iterator __last = end();
@@ -776,7 +780,7 @@ void list<_Tp, _Alloc>::unique()
 }
 
 template <class _Tp, class _Alloc>
-void list<_Tp, _Alloc>::merge(list<_Tp, _Alloc> &__x)
+void slist<_Tp, _Alloc>::merge(slist<_Tp, _Alloc> &__x)
 {
     iterator __first1 = begin();
     iterator __last1 = end();
@@ -795,9 +799,9 @@ void list<_Tp, _Alloc>::merge(list<_Tp, _Alloc> &__x)
         transfer(__last1, __first2, __last2);
 }
 
-inline void __List_base_reverse(__list_pointer *__p)
+inline void __slist_base_reverse(_slist_node_base *__p)
 {
-    __list_pointer *__tmp = __p;
+    _slist_node_base *__tmp = __p;
     do
     {
         __DSA::swap(__tmp->__m_next, __tmp->__m_prev);
@@ -806,19 +810,19 @@ inline void __List_base_reverse(__list_pointer *__p)
 }
 
 template <class _Tp, class _Alloc>
-inline void list<_Tp, _Alloc>::reverse()
+inline void slist<_Tp, _Alloc>::reverse()
 {
-    __List_base_reverse(this->__m_node);
+    __slist_base_reverse(this->__m_node);
 }
 
 template <class _Tp, class _Alloc>
-void list<_Tp, _Alloc>::sort()
+void slist<_Tp, _Alloc>::sort()
 {
-    // Do nothing if the list has length 0 or 1.
+    // Do nothing if the slist has length 0 or 1.
     if (__m_node->__m_next != __m_node && __m_node->__m_next->__m_next != __m_node)
     {
-        list<_Tp, _Alloc> __carry;
-        list<_Tp, _Alloc> __counter[64];
+        slist<_Tp, _Alloc> __carry;
+        slist<_Tp, _Alloc> __counter[64];
         int __fill = 0;
         while (!empty())
         {
@@ -844,7 +848,7 @@ void list<_Tp, _Alloc>::sort()
 
 template <class _Tp, class _Alloc>
 template <class _Predicate>
-void list<_Tp, _Alloc>::remove_if(_Predicate __pred)
+void slist<_Tp, _Alloc>::remove_if(_Predicate __pred)
 {
     iterator __first = begin();
     iterator __last = end();
@@ -860,7 +864,7 @@ void list<_Tp, _Alloc>::remove_if(_Predicate __pred)
 
 template <class _Tp, class _Alloc>
 template <class _BinaryPredicate>
-void list<_Tp, _Alloc>::unique(_BinaryPredicate __binary_pred)
+void slist<_Tp, _Alloc>::unique(_BinaryPredicate __binary_pred)
 {
     iterator __first = begin();
     iterator __last = end();
@@ -879,8 +883,8 @@ void list<_Tp, _Alloc>::unique(_BinaryPredicate __binary_pred)
 
 template <class _Tp, class _Alloc>
 template <class _StrictWeakOrdering>
-void list<_Tp, _Alloc>::merge(list<_Tp, _Alloc> &__x,
-                              _StrictWeakOrdering __comp)
+void slist<_Tp, _Alloc>::merge(slist<_Tp, _Alloc> &__x,
+                               _StrictWeakOrdering __comp)
 {
     iterator __first1 = begin();
     iterator __last1 = end();
@@ -901,13 +905,13 @@ void list<_Tp, _Alloc>::merge(list<_Tp, _Alloc> &__x,
 
 template <class _Tp, class _Alloc>
 template <class _StrictWeakOrdering>
-void list<_Tp, _Alloc>::sort(_StrictWeakOrdering __comp)
+void slist<_Tp, _Alloc>::sort(_StrictWeakOrdering __comp)
 {
-    // Do nothing if the list has length 0 or 1.
+    // Do nothing if the slist has length 0 or 1.
     if (__m_node->__m_next != __m_node && __m_node->__m_next->__m_next != __m_node)
     {
-        list<_Tp, _Alloc> __carry;
-        list<_Tp, _Alloc> __counter[64];
+        slist<_Tp, _Alloc> __carry;
+        slist<_Tp, _Alloc> __counter[64];
         int __fill = 0;
         while (!empty())
         {
@@ -938,4 +942,4 @@ void list<_Tp, _Alloc>::sort(_StrictWeakOrdering __comp)
 
 __DST_END_NAMESPACE
 
-#endif /* ___DST_INTERNAL_LIST_H */
+#endif /* ___DST_INTERNAL_SLIST_H */

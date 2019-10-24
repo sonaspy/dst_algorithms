@@ -90,7 +90,8 @@
     "csetjmp": "cpp",
     "csignal": "cpp",
     "iomanip": "cpp",
-    "typeindex": "cpp"
+    "typeindex": "cpp",
+    "slist": "cpp"
 },
   "python.pythonPath": "/usr/local/opt/python/bin/python3.7",
 

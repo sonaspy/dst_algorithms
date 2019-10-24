@@ -6,39 +6,47 @@
 __DST_BEGIN_NAMESPACE
 
 template <class _Key, class _Val>
-struct __snode
+struct __skiplist_node
 {
     typedef pair<_Key, _Val> _Entry;
-    typedef __snode<_Key, _Val> *__snode_ptr;
+    typedef __skiplist_node<_Key, _Val> *__node_Ptr;
 
     _Entry _entry;
     int _height;
-    __snode_ptr *__m_next; // 1D array of pointers
+    __node_Ptr *__m_nexts; // 1D array of pointers
 
-    __snode(_Entry &e, int __size = 0) : _entry(e)
+    __skiplist_node(_Entry &e, int __size = 0) : _entry(e)
     {
-        __m_next = new __snode_ptr[__size];
+        __m_nexts = new __node_Ptr[__size];
         _height = __size;
     }
-    ~__snode() { delete[] __m_next; }
+    ~__skiplist_node() { delete[] __m_nexts; }
 };
 
 template <class _Key, class _Val>
-class __sklist_iterator
+struct __skip_list_iterator
 {
-protected:
-    typedef __snode<_Key, _Val> *__snode_ptr;
-    typedef pair<_Key, _Val> &refrence_of_entry;
-    typedef __sklist_iterator __self;
-    __snode_ptr __m_cur;
+    typedef __skiplist_node<_Key, _Val> __node;
+    typedef __node *__node_Ptr;
+    typedef pair<_Key, _Val> _Entry;
+    typedef __skip_list_iterator __self;
 
-public:
-    __sklist_iterator(__snode_ptr p) : __m_cur(p) {}
+    typedef size_t size_type;
+    typedef ptrdiff_t difference_type;
+    typedef forward_iterator_tag iterator_category;
+    typedef _Entry value_type;
+    typedef _Entry *pointer;
+    typedef _Entry &reference;
 
-    refrence_of_entry operator*() { return __m_cur->_entry; }
+    __node_Ptr __m_this;
+
+    __skip_list_iterator() {}
+    __skip_list_iterator(__node_Ptr p) : __m_this(p) {}
+
+    reference operator*() { return __m_this->_entry; }
     __self &operator++()
     {
-        __m_cur = __m_cur->__m_next[0];
+        __m_this = __m_this->__m_nexts[0];
         return *this;
     }
     __self operator++(int)
@@ -47,20 +55,30 @@ public:
         ++*this;
         return __tmp;
     }
-    bool operator==(__self &__x) const { return __m_cur == __x.__m_cur; }
-    bool operator!=(__self &__x) const { return __m_cur != __x.__m_cur; }
+    bool operator==(__self &__x) const { return __m_this == __x.__m_this; }
+    bool operator!=(__self &__x) const { return __m_this != __x.__m_this; }
 };
 
 template <class _Key, class _Val>
 class skiplist
 {
 protected:
-    typedef __snode<_Key, _Val> *__snode_ptr;
-    typedef __snode<_Key, _Val> __snode_base;
-    typedef __sklist_iterator<_Key, _Val> iterator;
+    typedef __skiplist_node<_Key, _Val> __node;
+    typedef __node *__node_Ptr;
     typedef pair<_Key, _Val> _Entry;
 
 public:
+    typedef size_t size_type;
+    typedef _Entry value_type;
+    typedef value_type *pointer;
+    typedef const value_type *const_pointer;
+    typedef value_type &reference;
+    typedef const value_type &const_reference;
+    typedef ptrdiff_t difference_type;
+
+    typedef __skip_list_iterator<_Key, _Val> iterator;
+    typedef __skip_list_iterator<const _Key, const _Val> const_iterator;
+
     int level() { return _level; }
     int size() { return _size; }
     bool empty() { return _size == 0; }
@@ -71,58 +89,58 @@ public:
         _max_level = (int)ceil(logf((double)__max_size) / logf(1 / 0.5)) - 1;
         _level = 0; // initial number of _level
         _size = 0;
-        _end_key = __max_key;
+        __null_key = __max_key;
 
-        _Entry _end_entry;
-        _end_entry.first = _end_key;
-        _begin = new __snode_base(_end_entry, _max_level + 1);
-        _end = new __snode_base(_end_entry);
-        _last = new __snode_ptr[_max_level + 1];
+        _Entry __null_entry;
+        __null_entry.first = __null_key;
+        __m_start = new __node(__null_entry, _max_level + 1);
+        __m_finish = new __node(__null_entry);
+        __last_checked_ptrs = new __node_Ptr[_max_level + 1];
 
         // header points to tail at all _level as lists are empty
-        fill(_begin->__m_next, _begin->__m_next + _max_level + 1, _end);
+        fill(__m_start->__m_nexts, __m_start->__m_nexts + _max_level + 1, __m_finish);
     }
     ~skiplist()
     {
-        __snode_ptr __m_next_node;
+        __node_Ptr __m_next_node;
         // delete all nodes by following level 0 chain
-        while (_begin != _end)
+        while (__m_start != __m_finish)
         {
-            __m_next_node = _begin->__m_next[0];
-            delete _begin;
-            _begin = __m_next_node;
+            __m_next_node = __m_start->__m_nexts[0];
+            delete __m_start;
+            __m_start = __m_next_node;
         }
-        delete _end;
-        delete[] _last;
+        delete __m_finish;
+        delete[] __last_checked_ptrs;
     }
 
     void clear()
     {
-        __snode_ptr __m_next_node = _begin->__m_next[0], tmp;
-        while (__m_next_node != _end)
+        __node_Ptr __m_next_node = __m_start->__m_nexts[0], tmp;
+        while (__m_next_node != __m_finish)
         {
             tmp = __m_next_node;
-            __m_next_node = __m_next_node->__m_next[0];
+            __m_next_node = __m_next_node->__m_nexts[0];
             delete tmp;
         }
         for (int i = 0; i <= _max_level; i++)
-            _begin->__m_next[i] = _end;
+            __m_start->__m_nexts[i] = __m_finish;
         _size = 0;
         _level = 0;
     }
 
     _Entry *get(_Key &the_key)
     {
-        if (the_key >= _end_key)
+        if (the_key >= __null_key)
             return nullptr; // no matching pair possible
 
-        __snode_ptr pre_node = _begin;
+        __pre_node = __m_start;
         for (int i = _level; i >= 0; i--) // go down _level
-            while (pre_node->__m_next[i]->_entry.first < the_key)
-                pre_node = pre_node->__m_next[i];
+            while (__pre_node->__m_nexts[i]->_entry.first < the_key)
+                __pre_node = __pre_node->__m_nexts[i];
 
-        if (pre_node->__m_next[0]->_entry.first == the_key)
-            return &pre_node->__m_next[0]->_entry;
+        if (__pre_node->__m_nexts[0]->_entry.first == the_key)
+            return &__pre_node->__m_nexts[0]->_entry;
 
         return nullptr; // no matching pair
     }
@@ -132,33 +150,33 @@ public:
     void erase(_Key &the_key)
     {
         // Delete the pair, if any, whose key equals the_key.
-        if (the_key >= _end_key) // too large
+        if (the_key >= __null_key) // too large
             return;
 
-        __snode_ptr __the_node = __search(the_key);
+        __node_Ptr __the_node = __search(the_key);
         if (__the_node->_entry.first != the_key) // not present
             return;
 
         // delete node from skip list
-        for (int i = 0; i <= _level && _last[i]->__m_next[i] == __the_node; i++)
-            _last[i]->__m_next[i] = __the_node->__m_next[i];
+        for (int i = 0; i <= _level && __last_checked_ptrs[i]->__m_nexts[i] == __the_node; i++)
+            __last_checked_ptrs[i]->__m_nexts[i] = __the_node->__m_nexts[i];
 
         // update _level
-        while (_level > 0 && _begin->__m_next[_level] == _end)
+        while (_level > 0 && __m_start->__m_nexts[_level] == __m_finish)
             _level--;
 
         delete __the_node;
         _size--;
     }
 
-    void insert(_Entry &__entry)
+    void insert(_Entry __entry)
     {
-        if (__entry.first >= _end_key) // key too large
+        if (__entry.first >= __null_key) // key too large
         {
             return;
         }
 
-        __snode_ptr __the_node = __search(__entry.first);
+        __node_Ptr __the_node = __search(__entry.first);
         if (__the_node->_entry.first == __entry.first)
         { // update __the_node->_entry.second
             __the_node->_entry.second = __entry.second;
@@ -170,15 +188,15 @@ public:
         if (__the_level > _level)
         {
             __the_level = ++_level;
-            _last[__the_level] = _begin;
+            __last_checked_ptrs[__the_level] = __m_start;
         }
 
-        __snode_ptr new_node = new __snode_base(__entry, __the_level + 1);
+        __node_Ptr new_node = new __node(__entry, __the_level + 1);
         ++_size;
         for (int i = 0; i <= __the_level; i++)
         { // insert into level i chain
-            new_node->__m_next[i] = _last[i]->__m_next[i];
-            _last[i]->__m_next[i] = new_node;
+            new_node->__m_nexts[i] = __last_checked_ptrs[i]->__m_nexts[i];
+            __last_checked_ptrs[i]->__m_nexts[i] = new_node;
         }
     }
     inline void insert(_Key k, _Val v)
@@ -203,13 +221,13 @@ public:
 
     void print()
     {
-        std::cout << "(begin h:" << _begin->_height << ")->";
-        for (__snode_ptr _walk = _begin->__m_next[0]; _walk != _end; _walk = _walk->__m_next[0])
+        std::cout << "(begin h:" << __m_start->_height << ")->";
+        for (__node_Ptr _walk = __m_start->__m_nexts[0]; _walk != __m_finish; _walk = _walk->__m_nexts[0])
             std::cout << "(" << _walk->_entry.first << " h:" << _walk->_height << ")->";
         std::cout << "(end)" << endl;
     }
-    iterator begin() { return iterator(_begin->__m_next[0]); }
-    iterator end() { return iterator(_end); }
+    iterator begin() { return iterator(__m_start->__m_nexts[0]); }
+    iterator end() { return iterator(__m_finish); }
 
 protected:
     int __decide_level() // generate a level number by 0.5 probability
@@ -220,27 +238,28 @@ protected:
         return (__lev <= _max_level) ? __lev : _max_level;
     }
 
-    __snode_ptr __search(_Key &the_key)
+    __node_Ptr __search(_Key &the_key)
     {
-        __snode_ptr pre_node = _begin;
+        __pre_node = __m_start;
         for (int i = _level; i >= 0; i--)
         {
-            while (pre_node->__m_next[i]->_entry.first < the_key)
-                pre_node = pre_node->__m_next[i];
-            _last[i] = pre_node; // _last level i node seen
+            while (__pre_node->__m_nexts[i]->_entry.first < the_key)
+                __pre_node = __pre_node->__m_nexts[i];
+            __last_checked_ptrs[i] = __pre_node; // __last_checked_ptrs level i node seen
         }
-        return pre_node->__m_next[0];
+        return __pre_node->__m_nexts[0];
     }
 
     int _level,     // max current nonempty chain
         _size,      // number of pairs in dictionary
         _max_level; // max permissible chain level
 
-    _Key _end_key; // a large key
+    _Key __null_key; // a max key
 
-    __snode_ptr _begin; // header node pointer
-    __snode_ptr _end;   // tail node pointer
-    __snode_ptr *_last; // _last[i] = _last node seen on level i
+    __node_Ptr __m_start;            // header node pointer
+    __node_Ptr __m_finish;           // tail node pointer
+    __node_Ptr __pre_node;           // every time operate, remember the pre node.
+    __node_Ptr *__last_checked_ptrs; // __last_checked_ptrs[i] = __last_checked_ptrs node seen on level i
 };
 
 __DST_END_NAMESPACE
