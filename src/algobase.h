@@ -46,6 +46,4 @@ using __DSA::uninitialized_fill_n;
 
 #endif /* ___DST_ALGOBASE_H */
 
-// Local Variables:
-// mode:C++
-// End:
+

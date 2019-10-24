@@ -85,6 +85,4 @@ using __DSA::raw_storage_iterator;
 
 #endif /* ___DST_ITERATOR_H */
 
-// Local Variables:
-// mode:C++
-// End:
+

@@ -933,6 +933,4 @@ __DST_END_NAMESPACE
 
 #endif /* ___DST_INTERNAL_VECTOR_H */
 
-// Local Variables:
-// mode:C++
-// End:
+

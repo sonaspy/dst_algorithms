@@ -378,6 +378,4 @@ __DST_END_NAMESPACE
 
 #endif /* ___DST_INTERNAL_ITERATOR_BASE_H */
 
-// Local Variables:
-// mode:C++
-// End:
+

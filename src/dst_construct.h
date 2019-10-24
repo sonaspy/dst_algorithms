@@ -1,9 +1,4 @@
 
-
-/* NOTE: This is an internal header file, included by other DST headers.
- *   You should not attempt to use it directly.
- */
-
 #ifndef ___DST_INTERNAL_CONSTRUCT_H
 #define ___DST_INTERNAL_CONSTRUCT_H
 

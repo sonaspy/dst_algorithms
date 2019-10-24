@@ -140,6 +140,4 @@ __DST_END_NAMESPACE
 
 #endif /* ___DST_MEMORY */
 
-// Local Variables:
-// mode:C++
-// End:
+

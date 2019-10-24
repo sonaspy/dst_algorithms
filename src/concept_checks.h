@@ -764,6 +764,4 @@ _Allocator_requirement_violation(_Alloc __a) {
 
 #endif /* __CONCEPT_CHECKS_H */
 
-// Local Variables:
-// mode:C++
-// End:
+

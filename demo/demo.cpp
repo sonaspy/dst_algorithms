@@ -27,6 +27,19 @@ class cl3 : public cl2
         func();
     }
 };
+
+struct S1
+{
+    int i;
+    char c;
+    int j;
+};
+struct S2
+{
+    int i;
+    int j;
+    char c;
+};
 int main(int argc, char const *argv[])
 {
     /* code */
@@ -35,7 +48,11 @@ int main(int argc, char const *argv[])
     clock_t startTime, endTime;
 
     startTime = clock();
-    char c = 'A';
+    short i;
+    S2 s2;
+    S1 s1;
+    bitset<64> b((uint64_t)&s2.c);
+    cout << b << endl;
 
     endTime = clock();
 
