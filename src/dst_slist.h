@@ -132,8 +132,7 @@ template <class _Tp, class _Allocator, bool _IsStatic>
 class _slist_alloc_base
 {
 public:
-    typedef typename _Alloc_traits<_Tp, _Allocator>::allocator_type
-        allocator_type;
+    typedef typename _Alloc_traits<_Tp, _Allocator>::allocator_type allocator_type;
     allocator_type get_allocator() const { return _Node_allocator; }
 
     _slist_alloc_base(const allocator_type &__a) : _Node_allocator(__a) {}
@@ -169,7 +168,7 @@ public:
 protected:
     typedef typename _Alloc_traits<_slist_node<_Tp>, _Allocator>::_Alloc_type
         _Alloc_type;
-    _slist_node<_Tp> *__m_get_node() { return _Alloc_type::allocate(1); }
+    inline _slist_node<_Tp> *__m_get_node() { return _Alloc_type::allocate(1); }
     void __m_put_node(_slist_node<_Tp> *__p) { _Alloc_type::deallocate(__p, 1); }
 
 protected:
@@ -177,14 +176,10 @@ protected:
 };
 
 template <class _Tp, class _Alloc>
-class _slist_base
-    : public _slist_alloc_base<_Tp, _Alloc,
-                               _Alloc_traits<_Tp, _Alloc>::_S_instanceless>
+class _slist_base : public _slist_alloc_base<_Tp, _Alloc, _Alloc_traits<_Tp, _Alloc>::_S_instanceless>
 {
 public:
-    typedef _slist_alloc_base<_Tp, _Alloc,
-                              _Alloc_traits<_Tp, _Alloc>::_S_instanceless>
-        __base;
+    typedef _slist_alloc_base<_Tp, _Alloc, _Alloc_traits<_Tp, _Alloc>::_S_instanceless> __base;
     typedef typename __base::allocator_type allocator_type;
 
     _slist_base(const allocator_type &__a) : __base(__a)
@@ -227,7 +222,7 @@ public:
 
 protected:
     typedef simple_alloc<_slist_node<_Tp>, _Alloc> _Alloc_type;
-    _slist_node<_Tp> *__m_get_node() { return _Alloc_type::allocate(1); }
+    inline _slist_node<_Tp> *__m_get_node() { return _Alloc_type::allocate(1); }
     void __m_put_node(_slist_node<_Tp> *__p) { _Alloc_type::deallocate(__p, 1); }
 
 protected:
@@ -612,15 +607,13 @@ inline bool operator>(const slist<_Tp, _Alloc> &__x,
 }
 
 template <class _Tp, class _Alloc>
-inline bool operator<=(const slist<_Tp, _Alloc> &__x,
-                       const slist<_Tp, _Alloc> &__y)
+inline bool operator<=(const slist<_Tp, _Alloc> &__x, const slist<_Tp, _Alloc> &__y)
 {
     return !(__y < __x);
 }
 
 template <class _Tp, class _Alloc>
-inline bool operator>=(const slist<_Tp, _Alloc> &__x,
-                       const slist<_Tp, _Alloc> &__y)
+inline bool operator>=(const slist<_Tp, _Alloc> &__x, const slist<_Tp, _Alloc> &__y)
 {
     return !(__x < __y);
 }
@@ -731,8 +724,7 @@ void slist<_Tp, _Alloc>::__m_fill_assign(size_type __n, const _Tp &__val)
 
 template <class _Tp, class _Alloc>
 template <class _InputIter>
-void slist<_Tp, _Alloc>::__m_assign_dispatch(_InputIter __first2, _InputIter __last2,
-                                             __false_type)
+void slist<_Tp, _Alloc>::__m_assign_dispatch(_InputIter __first2, _InputIter __last2, __false_type)
 {
     iterator __first1 = begin();
     iterator __last1 = end();
@@ -883,8 +875,7 @@ void slist<_Tp, _Alloc>::unique(_BinaryPredicate __binary_pred)
 
 template <class _Tp, class _Alloc>
 template <class _StrictWeakOrdering>
-void slist<_Tp, _Alloc>::merge(slist<_Tp, _Alloc> &__x,
-                               _StrictWeakOrdering __comp)
+void slist<_Tp, _Alloc>::merge(slist<_Tp, _Alloc> &__x,  _StrictWeakOrdering __comp)
 {
     iterator __first1 = begin();
     iterator __last1 = end();

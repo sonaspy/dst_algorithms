@@ -22,15 +22,15 @@ public:
 
     ~hashChains() { delete[] table; }
 
-    bool empty() const { return dSize == 0; }
-    int size() const { return dSize; }
+    bool empty() { return dSize == 0; }
+    int size() { return dSize; }
 
-    pair<const K, E> *find(const K &theKey) const
+    pair<K, E> *find(K &theKey)
     {
         return table[hash(theKey) % divisor].find(theKey);
     }
 
-    void insert(const pair<const K, E> &thePair)
+    void insert(pair<K, E> &thePair)
     {
         int homeBucket = (int)hash(thePair.first) % divisor;
         int homeSize = table[homeBucket].size();
@@ -39,12 +39,12 @@ public:
             dSize++;
     }
 
-    void erase(const K &theKey)
+    void erase(K &theKey)
     {
         table[hash(theKey) % divisor].erase(theKey);
     }
 
-    void output(ostream &out) const
+    void output(ostream &out)
     {
         for (int i = 0; i < divisor; i++)
             if (table[i].size() == 0)
@@ -62,7 +62,7 @@ protected:
 
 // overload <<
 template <class K, class E>
-ostream &operator<<(ostream &out, const hashChains<K, E> &x)
+ostream &operator<<(ostream &out, hashChains<K, E> &x)
 {
     x.output(out);
     return out;

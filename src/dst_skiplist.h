@@ -1,6 +1,13 @@
 #ifndef __SKIPLIST__
 #define __SKIPLIST__
 
+/*
+    This file contains the skiplist implementation.
+    To use the skiplist, you must provide a max key,
+    all keys which are larger than the maxkey will be ditched.
+    If you choose the default maxkey, it probably won't work as you expected.
+*/
+
 #include <math.h>
 
 __DST_BEGIN_NAMESPACE
@@ -256,8 +263,8 @@ protected:
 
     _Key __null_key; // a max key
 
-    __node_Ptr __m_start;            // header node pointer
-    __node_Ptr __m_finish;           // tail node pointer
+    __node_Ptr __m_start;            // dummy header node pointer
+    __node_Ptr __m_finish;           // dummy tail node pointer
     __node_Ptr __pre_node;           // every time operate, remember the pre node.
     __node_Ptr *__last_checked_ptrs; // __last_checked_ptrs[i] = __last_checked_ptrs node seen on level i
 };

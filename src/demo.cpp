@@ -1,7 +1,7 @@
 // author - sonaspy@outlook.com
 // coding - utf_8
 
-#define SIZE 1000000
+#define SIZE 100000
 #include "stddsa.h"
 #include <bits/stdc++.h>
 #define test() freopen("in", "r", stdin)
@@ -14,15 +14,14 @@ int main(int argc, char const *argv[])
     clock_t startTime, endTime;
     vector<int> v(SIZE);
     generate(v.begin(), v.end(), [&]() { return rand(); });
-    std::list<int> stdl;
-    dsa::list<int> dsal;
-    dsa::slist<int> dsasl;
+    dsa::slist<int> dsasl(v.begin(), v.end());
     dsa::skiplist<int, int> sk(INT_MAX);
     std::map<int, int> mp;
+    std::list<int> stdl(v.begin(), v.end());
+
     startTime = clock();
 
-    for (int i = 0; i < SIZE; ++i)
-        stdl.push_front(i);
+    dsa::list<int> dsal(v.begin(), v.end());
 
     endTime = clock();
     cout << "The elapsed time is: " << (double)(endTime - startTime) / 1000 << "ms" << endl;

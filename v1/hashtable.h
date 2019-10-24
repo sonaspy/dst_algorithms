@@ -16,18 +16,18 @@ public:
     hashTable(int theDivisor = 11);
     ~hashTable() { delete[] table; }
 
-    bool empty() const { return dSize == 0; }
-    int size() const { return dSize; }
-    pair<const K, E> *find(const K &) const;
-    void insert(const pair<const K, E> &);
-    void output(ostream &out) const;
+    bool empty() { return dSize == 0; }
+    int size() { return dSize; }
+    pair<K, E> *find(K &);
+    void insert(pair<K, E> &);
+    void output(ostream &out);
 
 protected:
-    int search(const K &) const;
-    pair<const K, E> **table; // hash table
-    hash<K> hash;             // maps type K to nonnegative integer
-    int dSize;                // number of pairs in dictionary
-    int divisor;              // hash function divisor
+    int search(K &);
+    pair<K, E> **table; // hash table
+    hash<K> hash;       // maps type K to nonnegative integer
+    int dSize;          // number of pairs in dictionary
+    int divisor;        // hash function divisor
 };
 
 template <class K, class E>
@@ -37,13 +37,13 @@ hashTable<K, E>::hashTable(int theDivisor)
     dSize = 0;
 
     // allocate and initialize hash table array
-    table = new pair<const K, E> *[divisor];
+    table = new pair<K, E> *[divisor];
     for (int i = 0; i < divisor; i++)
         table[i] = NULL;
 }
 
 template <class K, class E>
-int hashTable<K, E>::search(const K &theKey) const
+int hashTable<K, E>::search(K &theKey)
 { // Search an open addressed hash table for a pair with key theKey.
     // Return location of matching pair if found, otherwise return
     // location where a pair with key theKey may be inserted
@@ -62,7 +62,7 @@ int hashTable<K, E>::search(const K &theKey) const
 }
 
 template <class K, class E>
-pair<const K, E> *hashTable<K, E>::find(const K &theKey) const
+pair<K, E> *hashTable<K, E>::find(K &theKey)
 { // Return pointer to matching pair.
     // Return NULL if no matching pair.
     // search the table
@@ -76,7 +76,7 @@ pair<const K, E> *hashTable<K, E>::find(const K &theKey) const
 }
 
 template <class K, class E>
-void hashTable<K, E>::insert(const pair<const K, E> &thePair)
+void hashTable<K, E>::insert(pair<K, E> &thePair)
 { // Insert thePair into the dictionary. Overwrite existing
     // pair, if any, with same key.
     // Throw hashTableFull exception in case table is full.
@@ -87,7 +87,7 @@ void hashTable<K, E>::insert(const pair<const K, E> &thePair)
     if (table[b] == NULL)
     {
         // no matching pair and table not full
-        table[b] = new pair<const K, E>(thePair);
+        table[b] = new pair<K, E>(thePair);
         dSize++;
     }
     else
@@ -102,7 +102,7 @@ void hashTable<K, E>::insert(const pair<const K, E> &thePair)
 }
 
 template <class K, class E>
-void hashTable<K, E>::output(ostream &out) const
+void hashTable<K, E>::output(ostream &out)
 { // Insert the hash table into the stream out.
     for (int i = 0; i < divisor; i++)
         if (table[i] == NULL)
@@ -114,7 +114,7 @@ void hashTable<K, E>::output(ostream &out) const
 
 // overload <<
 template <class K, class E>
-ostream &operator<<(ostream &out, const hashTable<K, E> &x)
+ostream &operator<<(ostream &out, hashTable<K, E> &x)
 {
     x.output(out);
     return out;

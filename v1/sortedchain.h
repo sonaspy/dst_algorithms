@@ -4,7 +4,7 @@
 #define __SORTEDCHAIN__
 
 #include <iostream>
-
+#include "pairnode.h"
 using namespace std;
 
 template <class K, class E>
@@ -18,12 +18,12 @@ public:
     }
     ~sortedChain();
 
-    bool empty() const { return dSize == 0; }
-    int size() const { return dSize; }
-    pair<const K, E> *find(const K &) const;
-    void erase(const K &);
-    void insert(const pair<const K, E> &);
-    void output(ostream &out) const;
+    bool empty() { return dSize == 0; }
+    int size() { return dSize; }
+    pair<K, E> *find(K &);
+    void erase(K &);
+    void insert(pair<K, E> &);
+    void output(ostream &out);
 
 protected:
     pairNode<K, E> *firstNode; // pointer to first node in chain
@@ -42,7 +42,7 @@ sortedChain<K, E>::~sortedChain()
 }
 
 template <class K, class E>
-pair<const K, E> *sortedChain<K, E>::find(const K &theKey) const
+pair<K, E> *sortedChain<K, E>::find(K &theKey)
 { // Return pointer to matching pair.
     // Return NULL if no matching pair.
     pairNode<K, E> *currentNode = firstNode;
@@ -62,7 +62,7 @@ pair<const K, E> *sortedChain<K, E>::find(const K &theKey) const
 }
 
 template <class K, class E>
-void sortedChain<K, E>::insert(const pair<const K, E> &thePair)
+void sortedChain<K, E>::insert(pair<K, E> &thePair)
 { // Insert thePair into the dictionary. Overwrite existing
     // pair, if any, with same key.
     pairNode<K, E> *p = firstNode,
@@ -96,7 +96,7 @@ void sortedChain<K, E>::insert(const pair<const K, E> &thePair)
 }
 
 template <class K, class E>
-void sortedChain<K, E>::erase(const K &theKey)
+void sortedChain<K, E>::erase(K &theKey)
 { // Delete the pair, if any, whose key equals theKey.
     pairNode<K, E> *p = firstNode,
                    *tp = NULL; // tp trails p
@@ -123,7 +123,7 @@ void sortedChain<K, E>::erase(const K &theKey)
 }
 
 template <class K, class E>
-void sortedChain<K, E>::output(ostream &out) const
+void sortedChain<K, E>::output(ostream &out)
 { // Insert the chain elements into the stream out.
     for (pairNode<K, E> *currentNode = firstNode;
          currentNode != NULL;
@@ -134,7 +134,7 @@ void sortedChain<K, E>::output(ostream &out) const
 
 // overload <<
 template <class K, class E>
-ostream &operator<<(ostream &out, const sortedChain<K, E> &x)
+ostream &operator<<(ostream &out, sortedChain<K, E> &x)
 {
     x.output(out);
     return out;

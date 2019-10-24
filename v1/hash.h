@@ -16,7 +16,7 @@ template <>
 class hash<string>
 {
 public:
-    size_t operator()(const string theKey) const
+    size_t operator()(string theKey)
     { // Convert theKey to a nonnegative integer.
         unsigned long hashValue = 0;
         int length = (int)theKey.length();
@@ -31,7 +31,7 @@ template <>
 class hash<int>
 {
 public:
-    size_t operator()(const int theKey) const
+    size_t operator()(int theKey)
     {
         return size_t(theKey);
     }
@@ -41,7 +41,7 @@ template <>
 class hash<long>
 {
 public:
-    size_t operator()(const long theKey) const
+    size_t operator()(long theKey)
     {
         return size_t(theKey);
     }
