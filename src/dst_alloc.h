@@ -719,7 +719,7 @@ inline bool operator!=(const allocator<_T1> &, const allocator<_T2> &)
     return false;
 }
 
-// Allocator adaptor to turn an -style allocator (e.g. alloc, malloc_alloc)
+// Allocator adaptor to turn a  stl-style allocator (e.g. alloc, malloc_alloc)
 // into a standard-conforming allocator.   Note that this adaptor does
 // *not* assume that all objects of the underlying alloc class are
 // identical, nor does it assume that all of the underlying alloc's
@@ -811,7 +811,7 @@ inline bool operator!=(const __allocator<_Tp, _Alloc> &__a1,
 }
 #endif /* __DST_FUNCTION_TMPL_PARTIAL_ORDER */
 
-// Comparison operators for all of the predifined -style allocators.
+// Comparison operators for all of the predifined  stl-style allocators.
 // This ensures that __allocator<malloc_alloc> (for example) will
 // work correctly.
 
@@ -849,7 +849,7 @@ inline bool operator!=(const debug_alloc<_Alloc> &,
 
 // Another allocator adaptor: __alloc_traits.  This serves two
 // purposes.  First, make it possible to write containers that can use
-// either -style allocators or standard-conforming allocator.
+// either  stl-style allocators or standard-conforming allocator.
 // Second, provide a mechanism so that containers can query whether or
 // not the allocator has distinct instances.  If not, the container
 // can avoid wasting a word of memory to store an empty object.
@@ -896,7 +896,7 @@ struct __alloc_traits<_Tp, allocator<_Tp1>>
     typedef allocator<_Tp> allocator_type;
 };
 
-// Versions for the predefined -style allocators.
+// Versions for the predefined  stl-style allocators.
 
 template <class _Tp, int __inst>
 struct __alloc_traits<_Tp, __malloc_alloc_template<__inst>>
@@ -925,7 +925,7 @@ struct __alloc_traits<_Tp, debug_alloc<_Alloc>>
 };
 
 // Versions for the __allocator adaptor used with the predefined
-// -style allocators.
+// stl-style allocators.
 
 template <class _Tp, class _Tp1, int __inst>
 struct __alloc_traits<_Tp, __allocator<_Tp1, __malloc_alloc_template<__inst>>>

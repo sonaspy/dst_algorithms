@@ -1,11 +1,28 @@
-# Data Structure and Algorithms
+# Data Structure and Algorithms (STL style)
+
+## Overall
+./src is the  source code of my dst implementation, which is based on stl.
+
+(detailed and efficient, actually more efficient than llvm-stl in osx).
+
+filename start with prefix 'dst_' is the detailed implementation, otherwise is head file.
+
+Usage: almost the same interface like stl.
+
+```
+#include "stddsa.h"
+using namespace dsa;
+```
+./v1 is a simple and incomplete version of dst, its main purpose is for visualization.
 
 
-## Example 
+## Example
+### visualization
 ![avatar](./demo/rbtree_demo_use00.png)
 ![avatar](./demo/rbtree_demo_use01.png)
+### performance comparsion
 ![avatar](./demo/skiplist_rbtree_compare.png)
-## lastest huffman implementation !
+## huffman
 ```
 The Total optimal WPL is -> 230
 t
@@ -95,17 +112,16 @@ code is -> " 101010 "
 
 
 ```
-This reporsitoriy including but not limited to the following content
+This reporsitoriy including but not limited to the following structure
 
-- linkedChain
-- linearList
-- matrix
+- list
+- slist
+- deque
+- vector
 - greedy
 - spanning tree
-- dynamic programming
 - divide and rule
 - sorting
-- tournamentTree
 - heap
 - graph
 - balancedTree
@@ -114,8 +130,71 @@ code is -> " 101010 "
 - queue
 - stack
 - rbtree
-- hashing
+- hashtable
+- btree
+- ...
 
+
+# src
+```
+// Base class that encapsulates details of allocators.  Three cases:
+// an ordinary standard-conforming allocator, a standard-conforming
+// allocator with no non-static data, and an stl-style allocator.
+// This complexity is necessary only because we're worrying about backward
+// compatibility and because we want to avoid wasting storage on an
+// allocator instance if it isn't necessary.
+
+template <class _Tp, class _Ref, class _Ptr>
+struct _slist_iterator : public _slist_iterator_base
+{
+    typedef _slist_iterator<_Tp, _Tp &, _Tp *> iterator;
+    typedef _slist_iterator<_Tp, const _Tp &, const _Tp *> const_iterator;
+    typedef _slist_iterator<_Tp, _Ref, _Ptr> _Self;
+
+    typedef _Tp value_type;
+    typedef _Ptr pointer;
+    typedef _Ref reference;
+    typedef _slist_node<_Tp> __node;
+
+    _slist_iterator(__node *__x) : _slist_iterator_base(__x) {}
+    _slist_iterator() {}
+    _slist_iterator(const iterator &__x) : _slist_iterator_base(__x.__m_node) {}
+
+    reference operator*() const { return ((__node *)__m_node)->__m_data; }
+
+#ifndef ___DST_NO_ARROW_OPERATOR
+    pointer operator->() const
+    {
+        return &(operator*());
+    }
+#endif /* ___DST_NO_ARROW_OPERATOR */
+
+    _Self &operator++()
+    {
+        this->__m_incr();
+        return *this;
+    }
+    _Self operator++(int)
+    {
+        _Self __tmp = *this;
+        this->__m_incr();
+        return __tmp;
+    }
+    _Self &operator--()
+    {
+        this->__m_decr();
+        return *this;
+    }
+    _Self operator--(int)
+    {
+        _Self __tmp = *this;
+        this->__m_decr();
+        return __tmp;
+    }
+};
+```
+
+# V1
 ```
 C++ head file like this one
 ===========================

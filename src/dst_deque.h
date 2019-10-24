@@ -205,7 +205,7 @@ inline ptrdiff_t *distance_type(const __deque_iterator<_Tp, _Ref, _Ptr> &)
 // deque base class.  It has two purposes.  First, its constructor
 //  and destructor allocate (but don't initialize) storage.  This makes
 //  exception safety easier.  Second, the base class encapsulates all of
-//  the differences between -style allocators and standard-conforming
+//  the differences between stl-style allocators and standard-conforming
 //  allocators.
 
 #ifdef __DST_USE_DSA_ALLOCATORS

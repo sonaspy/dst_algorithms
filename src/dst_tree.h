@@ -457,7 +457,7 @@ __rbtree_rebalance_for_erase(__rbtree_node_base *__z,
     return __y;
 }
 
-// Base class to encapsulate the differences between old -style
+// Base class to encapsulate the differences between old stl-style
 // allocators and standard-conforming allocators.  In order to avoid
 // having an empty base class, we arbitrarily move one of rb_tree's
 // data members into the base class.

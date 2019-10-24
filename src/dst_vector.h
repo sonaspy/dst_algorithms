@@ -15,7 +15,7 @@ __DST_BEGIN_NAMESPACE
 // The vector base class serves two purposes.  First, its constructor
 // and destructor allocate (but don't initialize) storage.  This makes
 // exception safety easier.  Second, the base class encapsulates all of
-// the differences between -style allocators and standard-conforming
+// the differences between stl-style allocators and standard-conforming
 // allocators.
 
 #ifdef __DST_USE_DSA_ALLOCATORS

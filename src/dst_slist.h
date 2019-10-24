@@ -120,7 +120,7 @@ distance_type(const _slist_iterator_base &)
 
 // Base class that encapsulates details of allocators.  Three cases:
 // an ordinary standard-conforming allocator, a standard-conforming
-// allocator with no non-static data, and an -style allocator.
+// allocator with no non-static data, and a  stl-style allocator.
 // This complexity is necessary only because we're worrying about backward
 // compatibility and because we want to avoid wasting storage on an
 // allocator instance if it isn't necessary.
