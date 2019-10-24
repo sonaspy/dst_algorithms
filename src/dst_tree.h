@@ -340,7 +340,7 @@ __rbtree_rebalance_for_erase(__rbtree_node_base *__z,
         else
             __z->__m_parent->__m_right = __y;
         __y->__m_parent = __z->__m_parent;
-        __DSA::swap(__y->__m_color, __z->__m_color);
+        __VDSA::swap(__y->__m_color, __z->__m_color);
         __y = __z;
         // __y now points to node to be actually deleted
     }
@@ -786,9 +786,9 @@ public:
 
     void swap(__rbtree<_Key, _Value, _KeyOfValue, _Compare, _Alloc> &__t)
     {
-        __DSA::swap(__m_header, __t.__m_header);
-        __DSA::swap(__m_node_count, __t.__m_node_count);
-        __DSA::swap(__m_key_compare, __t.__m_key_compare);
+        __VDSA::swap(__m_header, __t.__m_header);
+        __VDSA::swap(__m_node_count, __t.__m_node_count);
+        __VDSA::swap(__m_key_compare, __t.__m_key_compare);
     }
 
 public:

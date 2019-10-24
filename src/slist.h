@@ -6,7 +6,7 @@
 #include "dst_slist.h"
 
 #ifdef __DST_USE_NAMESPACES
-using __DSA::slist;
+using __VDSA::slist;
 #endif /* __DST_USE_NAMESPACES */
 
 #endif /* ___DST_SLIST_H */

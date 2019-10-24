@@ -627,10 +627,10 @@ public: // Constructor, destructor.
 
     void swap(deque &__x)
     {
-        __DSA::swap(__m_start, __x.__m_start);
-        __DSA::swap(__m_finish, __x.__m_finish);
-        __DSA::swap(__m_map, __x.__m_map);
-        __DSA::swap(__m_map_size, __x.__m_map_size);
+        __VDSA::swap(__m_start, __x.__m_start);
+        __VDSA::swap(__m_finish, __x.__m_finish);
+        __VDSA::swap(__m_map, __x.__m_map);
+        __VDSA::swap(__m_map_size, __x.__m_map_size);
     }
 
 public:

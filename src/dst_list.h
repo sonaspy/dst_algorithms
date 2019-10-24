@@ -357,7 +357,7 @@ public:
     reference back() { return *(--end()); }
     const_reference back() const { return *(--end()); }
 
-    void swap(list<_Tp, _Alloc> &__x) { __DSA::swap(__m_node, __x.__m_node); }
+    void swap(list<_Tp, _Alloc> &__x) { __VDSA::swap(__m_node, __x.__m_node); }
 
     iterator insert(iterator __position, const _Tp &__x)
     {
@@ -800,7 +800,7 @@ inline void __List_base_reverse(__list_pointer *__p)
     __list_pointer *__tmp = __p;
     do
     {
-        __DSA::swap(__tmp->__m_next, __tmp->__m_prev);
+        __VDSA::swap(__tmp->__m_next, __tmp->__m_prev);
         __tmp = __tmp->__m_prev; // Old next node is now prev.
     } while (__tmp != __p);
 }

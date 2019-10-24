@@ -297,11 +297,11 @@ public:
 
     void swap(hashtable &__ht)
     {
-        __DSA::swap(__m_hash, __ht.__m_hash);
-        __DSA::swap(__m_equals, __ht.__m_equals);
-        __DSA::swap(__m_get_key, __ht.__m_get_key);
+        __VDSA::swap(__m_hash, __ht.__m_hash);
+        __VDSA::swap(__m_equals, __ht.__m_equals);
+        __VDSA::swap(__m_get_key, __ht.__m_get_key);
         __m_buckets.swap(__ht.__m_buckets);
-        __DSA::swap(__m_num_elements, __ht.__m_num_elements);
+        __VDSA::swap(__m_num_elements, __ht.__m_num_elements);
     }
 
     iterator begin()

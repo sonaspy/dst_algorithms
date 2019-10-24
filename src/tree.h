@@ -9,7 +9,7 @@
 #include "alloc.h"
 
 #ifdef __DST_USE_NAMESPACES
-using __DSA::rb_tree;
+using __VDSA::rb_tree;
 #endif /* __DST_USE_NAMESPACES */
 
 #endif /* ___DST_TREE_H */

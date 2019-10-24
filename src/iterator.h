@@ -35,51 +35,51 @@
 
 // Names from dst_iterator.h
 
-using __DSA::bidirectional_iterator_tag;
-using __DSA::forward_iterator_tag;
-using __DSA::input_iterator_tag;
-using __DSA::output_iterator_tag;
-using __DSA::random_access_iterator_tag;
+using __VDSA::bidirectional_iterator_tag;
+using __VDSA::forward_iterator_tag;
+using __VDSA::input_iterator_tag;
+using __VDSA::output_iterator_tag;
+using __VDSA::random_access_iterator_tag;
 
 #if 0
-using __DSA::iterator;
+using __VDSA::iterator;
 #endif
-using __DSA::bidirectional_iterator;
-using __DSA::forward_iterator;
-using __DSA::input_iterator;
-using __DSA::output_iterator;
-using __DSA::random_access_iterator;
+using __VDSA::bidirectional_iterator;
+using __VDSA::forward_iterator;
+using __VDSA::input_iterator;
+using __VDSA::output_iterator;
+using __VDSA::random_access_iterator;
 
 #ifdef __DST_CLASS_PARTIAL_SPECIALIZATION
-using __DSA::iterator_traits;
+using __VDSA::iterator_traits;
 #endif
 
-using __DSA::distance_type;
-using __DSA::iterator_category;
-using __DSA::value_type;
+using __VDSA::distance_type;
+using __VDSA::iterator_category;
+using __VDSA::value_type;
 
-using __DSA::advance;
-using __DSA::distance;
+using __VDSA::advance;
+using __VDSA::distance;
 
-using __DSA::back_insert_iterator;
-using __DSA::back_inserter;
-using __DSA::front_insert_iterator;
-using __DSA::front_inserter;
-using __DSA::insert_iterator;
-using __DSA::inserter;
+using __VDSA::back_insert_iterator;
+using __VDSA::back_inserter;
+using __VDSA::front_insert_iterator;
+using __VDSA::front_inserter;
+using __VDSA::insert_iterator;
+using __VDSA::inserter;
 
-using __DSA::reverse_bidirectional_iterator;
-using __DSA::reverse_iterator;
+using __VDSA::reverse_bidirectional_iterator;
+using __VDSA::reverse_iterator;
 
-using __DSA::istream_iterator;
-using __DSA::ostream_iterator;
+using __VDSA::istream_iterator;
+using __VDSA::ostream_iterator;
 
 // Names from dst_construct.h
-using __DSA::construct;
-using __DSA::destroy;
+using __VDSA::construct;
+using __VDSA::destroy;
 
 // Names from dst_raw_storage_iter.h
-using __DSA::raw_storage_iterator;
+using __VDSA::raw_storage_iterator;
 
 #endif /* __DST_USE_NAMESPACES */
 

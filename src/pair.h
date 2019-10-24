@@ -7,8 +7,8 @@
 
 #ifdef __DST_USE_NAMESPACES
 
-using __DSA::make_pair;
-using __DSA::pair;
+using __VDSA::make_pair;
+using __VDSA::pair;
 
 #endif /* __DST_USE_NAMESPACES */
 

@@ -7,7 +7,7 @@
 #include "dst_deque.h"
 
 #ifdef __DST_USE_NAMESPACES
-using __DSA::deque;
+using __VDSA::deque;
 #endif /* __DST_USE_NAMESPACES */
 
 #endif /* ___DST_DEQUE_H */

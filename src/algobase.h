@@ -22,25 +22,25 @@
 #ifdef __DST_USE_NAMESPACES
 
 // Names from dst_algobase.h
-using __DSA::copy;
-using __DSA::copy_backward;
-using __DSA::copy_n;
-using __DSA::equal;
-using __DSA::fill;
-using __DSA::fill_n;
-using __DSA::iter_swap;
-using __DSA::lexicographical_compare;
-using __DSA::lexicographical_compare_3way;
-using __DSA::max;
-using __DSA::min;
-using __DSA::mismatch;
-using __DSA::swap;
+using __VDSA::copy;
+using __VDSA::copy_backward;
+using __VDSA::copy_n;
+using __VDSA::equal;
+using __VDSA::fill;
+using __VDSA::fill_n;
+using __VDSA::iter_swap;
+using __VDSA::lexicographical_compare;
+using __VDSA::lexicographical_compare_3way;
+using __VDSA::max;
+using __VDSA::min;
+using __VDSA::mismatch;
+using __VDSA::swap;
 
 // Names from dst_uninitialized.h
-using __DSA::uninitialized_copy;
-using __DSA::uninitialized_copy_n;
-using __DSA::uninitialized_fill;
-using __DSA::uninitialized_fill_n;
+using __VDSA::uninitialized_copy;
+using __VDSA::uninitialized_copy_n;
+using __VDSA::uninitialized_fill;
+using __VDSA::uninitialized_fill_n;
 
 #endif /* __DST_USE_NAMESPACES */
 

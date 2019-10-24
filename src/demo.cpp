@@ -21,9 +21,7 @@ int main(int argc, char const *argv[])
 
     startTime = clock();
 
-    rb_tree<
-
-    endTime = clock();
+        endTime = clock();
     cout << "The elapsed time is: " << (double)(endTime - startTime) / 1000 << "ms" << endl;
 
     return 0;

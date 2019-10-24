@@ -8,7 +8,7 @@
 #include "dst_vector.h"
 
 #ifdef __DST_USE_NAMESPACES
-using __DSA::vector;
+using __VDSA::vector;
 #endif /* __DST_USE_NAMESPACES */
 
 #endif /* ___DST_VECTOR_H */

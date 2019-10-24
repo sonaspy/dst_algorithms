@@ -6,10 +6,10 @@
 
 #ifdef __DST_USE_NAMESPACES
 
-using __DSA::make_heap;
-using __DSA::pop_heap;
-using __DSA::push_heap;
-using __DSA::sort_heap;
+using __VDSA::make_heap;
+using __VDSA::pop_heap;
+using __VDSA::push_heap;
+using __VDSA::sort_heap;
 
 #endif /* __DST_USE_NAMESPACES */
 

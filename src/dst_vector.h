@@ -375,9 +375,9 @@ public:
     }
     void swap(vector<_Tp, _Alloc> &__x)
     {
-        __DSA::swap(__m_start, __x.__m_start);
-        __DSA::swap(__m_finish, __x.__m_finish);
-        __DSA::swap(__m_end_of_storage, __x.__m_end_of_storage);
+        __VDSA::swap(__m_start, __x.__m_start);
+        __VDSA::swap(__m_finish, __x.__m_finish);
+        __VDSA::swap(__m_end_of_storage, __x.__m_end_of_storage);
     }
 
     iterator insert(iterator __position, const _Tp &__x)

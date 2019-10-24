@@ -14,9 +14,9 @@
 
 #ifdef __DST_USE_NAMESPACES
 
-using __DSA::get_temporary_buffer;
-using __DSA::return_temporary_buffer;
-using __DSA::temporary_buffer;
+using __VDSA::get_temporary_buffer;
+using __VDSA::return_temporary_buffer;
+using __VDSA::temporary_buffer;
 
 #endif /* __DST_USE_NAMESPACES */
 

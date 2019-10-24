@@ -86,14 +86,14 @@ public:
     typedef __skip_list_iterator<_Key, _Val> iterator;
     typedef __skip_list_iterator<const _Key, const _Val> const_iterator;
 
-    int level() { return _level; }
-    int size() { return _size; }
+    size_t level() { return _level; }
+    size_t size() { return _size; }
     bool empty() { return _size == 0; }
 
-    skiplist(_Key __max_key = _Key(), int __max_size = 10000000)
+    skiplist(_Key __max_key = _Key(), size_t __max_size = 10000000)
     {
         // Constructor for skip lists with keys smaller than __max_key
-        _max_level = (int)ceil(logf((double)__max_size) / logf(1 / 0.5)) - 1;
+        _max_level = (size_t)ceil(logf((double)__max_size) / logf(1 / 0.5)) - 1;
         _level = 0; // initial number of _level
         _size = 0;
         __null_key = __max_key;
@@ -190,7 +190,7 @@ public:
             return;
         }
 
-        int __the_level = __decide_level();
+        size_t __the_level = __decide_level();
         // fix __the_level to be <= _level + 1
         if (__the_level > _level)
         {
@@ -237,9 +237,9 @@ public:
     iterator end() { return iterator(__m_finish); }
 
 protected:
-    int __decide_level() // generate a level number by 0.5 probability
+    size_t __decide_level() // generate a level number by 0.5 probability
     {
-        int __lev = 0;
+        size_t __lev = 0;
         while (rand() & 1)
             ++__lev;
         return (__lev <= _max_level) ? __lev : _max_level;
@@ -257,9 +257,9 @@ protected:
         return __pre_node->__m_nexts[0];
     }
 
-    int _level,     // max current nonempty chain
-        _size,      // number of pairs in dictionary
-        _max_level; // max permissible chain level
+    size_t _level;     // max current nonempty chain
+    size_t _size;      // number of pairs in dictionary
+    size_t _max_level; // max permissible chain level
 
     _Key __null_key; // a max key
 

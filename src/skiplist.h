@@ -6,7 +6,7 @@
 #include "dst_skiplist.h"
 
 #ifdef __DST_USE_NAMESPACES
-using __DSA::skiplist;
+using __VDSA::skiplist;
 #endif /* __DST_USE_NAMESPACES */
 
 #endif /* ___DST_SKIPLIST_H */

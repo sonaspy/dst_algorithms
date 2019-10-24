@@ -334,7 +334,7 @@ typedef int bool;
 // edit library headers.
 
 #define __DST_USE_NAMESPACES
-#define __DSA dsa
+#define __VDSA dsa
 #define __DST_BEGIN_NAMESPACE \
     namespace dsa             \
     {

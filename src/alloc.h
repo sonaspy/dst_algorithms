@@ -11,18 +11,18 @@
 
 #ifdef __DST_USE_NAMESPACES
 
-using __DSA::__default_alloc_template;
-using __DSA::__malloc_alloc_template;
-using __DSA::alloc;
-using __DSA::debug_alloc;
-using __DSA::malloc_alloc;
-using __DSA::simple_alloc;
-using __DSA::single_client_alloc;
+using __VDSA::__default_alloc_template;
+using __VDSA::__malloc_alloc_template;
+using __VDSA::alloc;
+using __VDSA::debug_alloc;
+using __VDSA::malloc_alloc;
+using __VDSA::simple_alloc;
+using __VDSA::single_client_alloc;
 #ifdef __DST_STATIC_TEMPLATE_MEMBER_BUG
-using __DSA::__malloc_alloc_oom_handler;
+using __VDSA::__malloc_alloc_oom_handler;
 #endif /* __DST_STATIC_TEMPLATE_MEMBER_BUG */
 #ifdef __DST_USE_DSA_ALLOCATORS
-using __DSA::allocator;
+using __VDSA::allocator;
 #endif /* __DST_USE_DSA_ALLOCATORS */
 
 #endif /* __DST_USE_NAMESPACES */

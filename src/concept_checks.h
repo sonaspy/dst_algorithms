@@ -454,28 +454,28 @@ __DST_END_NAMESPACE
 
 template <class _Iter> 
 struct __value_type_type_definition_requirement_violation {
-  typedef typename __DSA::iterator_traits<_Iter>::value_type value_type;
+  typedef typename __VDSA::iterator_traits<_Iter>::value_type value_type;
 };
 
 template <class _Iter> 
 struct __difference_type_type_definition_requirement_violation {
-  typedef typename __DSA::iterator_traits<_Iter>::difference_type
+  typedef typename __VDSA::iterator_traits<_Iter>::difference_type
           difference_type;
 };
 
 template <class _Iter> 
 struct __reference_type_definition_requirement_violation {
-  typedef typename __DSA::iterator_traits<_Iter>::reference reference;
+  typedef typename __VDSA::iterator_traits<_Iter>::reference reference;
 };
 
 template <class _Iter> 
 struct __pointer_type_definition_requirement_violation {
-  typedef typename __DSA::iterator_traits<_Iter>::pointer pointer;
+  typedef typename __VDSA::iterator_traits<_Iter>::pointer pointer;
 };
 
 template <class _Iter> 
 struct __iterator_category_type_definition_requirement_violation {
-  typedef typename __DSA::iterator_traits<_Iter>::iterator_category 
+  typedef typename __VDSA::iterator_traits<_Iter>::iterator_category 
           iterator_category;
 };
 
