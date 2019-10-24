@@ -91,7 +91,8 @@
     "csignal": "cpp",
     "iomanip": "cpp",
     "typeindex": "cpp",
-    "slist": "cpp"
+    "slist": "cpp",
+    "rb_tree": "cpp"
 },
   "python.pythonPath": "/usr/local/opt/python/bin/python3.7",
 

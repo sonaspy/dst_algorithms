@@ -21,7 +21,7 @@ int main(int argc, char const *argv[])
 
     startTime = clock();
 
-    dsa::list<int> dsal(v.begin(), v.end());
+    rb_tree<
 
     endTime = clock();
     cout << "The elapsed time is: " << (double)(endTime - startTime) / 1000 << "ms" << endl;
