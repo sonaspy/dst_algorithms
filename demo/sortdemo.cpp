@@ -1,6 +1,6 @@
 // author - sonaspy@outlook.com
 // coding - utf_8
-#include "../src/stddsa.h"
+#include "../v1/stddsa.h"
 #include <random>
 #define SIZE 1000000
 #define test() freopen("in", "r", stdin)
@@ -13,7 +13,7 @@ int main(int argc, char const *argv[])
     /* code */
     // srand(time(NULL));
     int b[SIZE], n;
-    generate(b, b + SIZE, [&]() { return rand() % 501; });
+    generate(b, b + SIZE, [&]() { return rand(); });
     vector<int> a(b, b + SIZE);
     // iota(a.begin(), a.end(), 0);
 
@@ -22,7 +22,7 @@ int main(int argc, char const *argv[])
     clock_t startTime, endTime;
     // a.erase(unique(a.begin(), a.end()), a.end());
     startTime = clock();
-    radix_sort(a.begin(), a.end());
+    quicksort(a.begin(), a.end());
     endTime = clock();
     cout << is_sorted(a.begin(), a.end()) << endl;
     cout << "The elapsed time is: " << (double)(endTime - startTime) / 1000 << "ms" << endl;

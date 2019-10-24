@@ -594,8 +594,7 @@ template <class _ForwardIter, class _Generator>
 void generate(_ForwardIter __first, _ForwardIter __last, _Generator __gen)
 {
     __DST_REQUIRES(_ForwardIter, _ForwardIterator);
-    __DST_GENERATOR_CHECK(_Generator,
-                          typename iterator_traits<_ForwardIter>::value_type);
+    __DST_GENERATOR_CHECK(_Generator, typename iterator_traits<_ForwardIter>::value_type);
     for (; __first != __last; ++__first)
         *__first = __gen();
 }
@@ -1349,9 +1348,7 @@ _RandomAccessIter __unguarded_partition(_RandomAccessIter __first,
 }
 
 template <class _RandomAccessIter, class _Tp, class _Compare>
-_RandomAccessIter __unguarded_partition(_RandomAccessIter __first,
-                                        _RandomAccessIter __last,
-                                        _Tp __pivot, _Compare __comp)
+_RandomAccessIter __unguarded_partition(_RandomAccessIter __first, _RandomAccessIter __last, _Tp __pivot, _Compare __comp)
 {
     while (true)
     {
@@ -1476,13 +1473,11 @@ inline void __unguarded_insertion_sort(_RandomAccessIter __first,
                                        _RandomAccessIter __last,
                                        _Compare __comp)
 {
-    __unguarded_insertion_sort_aux(__first, __last, __VALUE_TYPE(__first),
-                                   __comp);
+    __unguarded_insertion_sort_aux(__first, __last, __VALUE_TYPE(__first), __comp);
 }
 
 template <class _RandomAccessIter>
-void __final_insertion_sort(_RandomAccessIter __first,
-                            _RandomAccessIter __last)
+void __final_insertion_sort(_RandomAccessIter __first, _RandomAccessIter __last)
 {
     if (__last - __first > __dst_threshold)
     {
@@ -1494,8 +1489,7 @@ void __final_insertion_sort(_RandomAccessIter __first,
 }
 
 template <class _RandomAccessIter, class _Compare>
-void __final_insertion_sort(_RandomAccessIter __first,
-                            _RandomAccessIter __last, _Compare __comp)
+void __final_insertion_sort(_RandomAccessIter __first, _RandomAccessIter __last, _Compare __comp)
 {
     if (__last - __first > __dst_threshold)
     {
@@ -1765,8 +1759,7 @@ void __merge_sort_loop(_RandomAccessIter1 __first, _RandomAccessIter1 __last,
 const int __dst_chunk_size = 7;
 
 template <class _RandomAccessIter, class _Distance>
-void __chunk_insertion_sort(_RandomAccessIter __first,
-                            _RandomAccessIter __last, _Distance __chunk_size)
+void __chunk_insertion_sort(_RandomAccessIter __first, _RandomAccessIter __last, _Distance __chunk_size)
 {
     while (__last - __first >= __chunk_size)
     {
@@ -1777,9 +1770,7 @@ void __chunk_insertion_sort(_RandomAccessIter __first,
 }
 
 template <class _RandomAccessIter, class _Distance, class _Compare>
-void __chunk_insertion_sort(_RandomAccessIter __first,
-                            _RandomAccessIter __last,
-                            _Distance __chunk_size, _Compare __comp)
+void __chunk_insertion_sort(_RandomAccessIter __first, _RandomAccessIter __last, _Distance __chunk_size, _Compare __comp)
 {
     while (__last - __first >= __chunk_size)
     {
@@ -1790,9 +1781,7 @@ void __chunk_insertion_sort(_RandomAccessIter __first,
 }
 
 template <class _RandomAccessIter, class _Pointer, class _Distance>
-void __merge_sort_with_buffer(_RandomAccessIter __first,
-                              _RandomAccessIter __last,
-                              _Pointer __buffer, _Distance *)
+void __merge_sort_with_buffer(_RandomAccessIter __first, _RandomAccessIter __last, _Pointer __buffer, _Distance *)
 {
     _Distance __len = __last - __first;
     _Pointer __buffer_last = __buffer + __len;
@@ -1809,11 +1798,8 @@ void __merge_sort_with_buffer(_RandomAccessIter __first,
     }
 }
 
-template <class _RandomAccessIter, class _Pointer, class _Distance,
-          class _Compare>
-void __merge_sort_with_buffer(_RandomAccessIter __first,
-                              _RandomAccessIter __last, _Pointer __buffer,
-                              _Distance *, _Compare __comp)
+template <class _RandomAccessIter, class _Pointer, class _Distance, class _Compare>
+void __merge_sort_with_buffer(_RandomAccessIter __first, _RandomAccessIter __last, _Pointer __buffer, _Distance *, _Compare __comp)
 {
     _Distance __len = __last - __first;
     _Pointer __buffer_last = __buffer + __len;
@@ -1831,9 +1817,7 @@ void __merge_sort_with_buffer(_RandomAccessIter __first,
 }
 
 template <class _RandomAccessIter, class _Pointer, class _Distance>
-void __stable_sort_adaptive(_RandomAccessIter __first,
-                            _RandomAccessIter __last, _Pointer __buffer,
-                            _Distance __buffer_size)
+void __stable_sort_adaptive(_RandomAccessIter __first, _RandomAccessIter __last, _Pointer __buffer, _Distance __buffer_size)
 {
     _Distance __len = (__last - __first + 1) / 2;
     _RandomAccessIter __middle = __first + __len;
@@ -1851,85 +1835,62 @@ void __stable_sort_adaptive(_RandomAccessIter __first,
                      _Distance(__last - __middle), __buffer, __buffer_size);
 }
 
-template <class _RandomAccessIter, class _Pointer, class _Distance,
-          class _Compare>
-void __stable_sort_adaptive(_RandomAccessIter __first,
-                            _RandomAccessIter __last, _Pointer __buffer,
-                            _Distance __buffer_size, _Compare __comp)
+template <class _RandomAccessIter, class _Pointer, class _Distance, class _Compare>
+void __stable_sort_adaptive(_RandomAccessIter __first, _RandomAccessIter __last, _Pointer __buffer, _Distance __buffer_size, _Compare __comp)
 {
     _Distance __len = (__last - __first + 1) / 2;
     _RandomAccessIter __middle = __first + __len;
     if (__len > __buffer_size)
     {
-        __stable_sort_adaptive(__first, __middle, __buffer, __buffer_size,
-                               __comp);
-        __stable_sort_adaptive(__middle, __last, __buffer, __buffer_size,
-                               __comp);
+        __stable_sort_adaptive(__first, __middle, __buffer, __buffer_size, __comp);
+        __stable_sort_adaptive(__middle, __last, __buffer, __buffer_size, __comp);
     }
     else
     {
-        __merge_sort_with_buffer(__first, __middle, __buffer, (_Distance *)0,
-                                 __comp);
-        __merge_sort_with_buffer(__middle, __last, __buffer, (_Distance *)0,
-                                 __comp);
+        __merge_sort_with_buffer(__first, __middle, __buffer, (_Distance *)0, __comp);
+        __merge_sort_with_buffer(__middle, __last, __buffer, (_Distance *)0, __comp);
     }
     __merge_adaptive(__first, __middle, __last, _Distance(__middle - __first),
-                     _Distance(__last - __middle), __buffer, __buffer_size,
-                     __comp);
+                     _Distance(__last - __middle), __buffer, __buffer_size, __comp);
 }
 
 template <class _RandomAccessIter, class _Tp, class _Distance>
-inline void __stable_sort_aux(_RandomAccessIter __first,
-                              _RandomAccessIter __last, _Tp *, _Distance *)
+inline void __stable_sort_aux(_RandomAccessIter __first, _RandomAccessIter __last, _Tp *, _Distance *)
 {
     _Temporary_buffer<_RandomAccessIter, _Tp> buf(__first, __last);
     if (buf.begin() == 0)
         __inplace_stable_sort(__first, __last);
     else
-        __stable_sort_adaptive(__first, __last, buf.begin(),
-                               _Distance(buf.size()));
+        __stable_sort_adaptive(__first, __last, buf.begin(), _Distance(buf.size()));
 }
 
 template <class _RandomAccessIter, class _Tp, class _Distance, class _Compare>
-inline void __stable_sort_aux(_RandomAccessIter __first,
-                              _RandomAccessIter __last, _Tp *, _Distance *,
-                              _Compare __comp)
+inline void __stable_sort_aux(_RandomAccessIter __first, _RandomAccessIter __last, _Tp *, _Distance *, _Compare __comp)
 {
     _Temporary_buffer<_RandomAccessIter, _Tp> buf(__first, __last);
     if (buf.begin() == 0)
         __inplace_stable_sort(__first, __last, __comp);
     else
-        __stable_sort_adaptive(__first, __last, buf.begin(),
-                               _Distance(buf.size()),
-                               __comp);
+        __stable_sort_adaptive(__first, __last, buf.begin(), _Distance(buf.size()), __comp);
 }
 
 template <class _RandomAccessIter>
-inline void stable_sort(_RandomAccessIter __first,
-                        _RandomAccessIter __last)
+inline void stable_sort(_RandomAccessIter __first, _RandomAccessIter __last)
 {
     __DST_REQUIRES(_RandomAccessIter, _Mutable_RandomAccessIterator);
-    __DST_REQUIRES(typename iterator_traits<_RandomAccessIter>::value_type,
-                   _LessThanComparable);
-    __stable_sort_aux(__first, __last,
-                      __VALUE_TYPE(__first),
-                      __DISTANCE_TYPE(__first));
+    __DST_REQUIRES(typename iterator_traits<_RandomAccessIter>::value_type, _LessThanComparable);
+    __stable_sort_aux(__first, __last, __VALUE_TYPE(__first), __DISTANCE_TYPE(__first));
 }
 
 template <class _RandomAccessIter, class _Compare>
-inline void stable_sort(_RandomAccessIter __first,
-                        _RandomAccessIter __last, _Compare __comp)
+inline void stable_sort(_RandomAccessIter __first, _RandomAccessIter __last, _Compare __comp)
 {
     __DST_REQUIRES(_RandomAccessIter, _Mutable_RandomAccessIterator);
     __DST_BINARY_FUNCTION_CHECK(_Compare, bool,
                                 typename iterator_traits<_RandomAccessIter>::value_type,
                                 typename iterator_traits<_RandomAccessIter>::value_type);
-    __stable_sort_aux(__first, __last,
-                      __VALUE_TYPE(__first),
-                      __DISTANCE_TYPE(__first),
-                      __comp);
+    __stable_sort_aux(__first, __last, __VALUE_TYPE(__first), __DISTANCE_TYPE(__first), __comp);
 }
-
 
 // nth_element() and its auxiliary functions.
 

@@ -4,11 +4,10 @@
 #define __DST_BEGIN_NAMESPACE \
     namespace dsa             \
     {
-        
+
 #define __DST_END_NAMESPACE }
 
 #include "algorithms.h"
-#include "trees.h"
-#include "skiplist.h"
+#include "sort.h"
 
 #endif
