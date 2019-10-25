@@ -8,27 +8,19 @@
 
 __DST_BEGIN_RELOPS_NAMESPACE
 
-template <class _Tp>
-inline bool operator!=(const _Tp &__x, const _Tp &__y)
-{
+template <class _Tp> inline bool operator!=(const _Tp &__x, const _Tp &__y) {
     return !(__x == __y);
 }
 
-template <class _Tp>
-inline bool operator>(const _Tp &__x, const _Tp &__y)
-{
+template <class _Tp> inline bool operator>(const _Tp &__x, const _Tp &__y) {
     return __y < __x;
 }
 
-template <class _Tp>
-inline bool operator<=(const _Tp &__x, const _Tp &__y)
-{
+template <class _Tp> inline bool operator<=(const _Tp &__x, const _Tp &__y) {
     return !(__y < __x);
 }
 
-template <class _Tp>
-inline bool operator>=(const _Tp &__x, const _Tp &__y)
-{
+template <class _Tp> inline bool operator>=(const _Tp &__x, const _Tp &__y) {
     return !(__x < __y);
 }
 

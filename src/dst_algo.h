@@ -686,7 +686,7 @@ __DST_BEGIN_NAMESPACE
 #pragma set woff 1209
 #endif
 
-// __median (an extension, not present in the C++ standard).
+// __median (an extension, not present in the DST standard).
 
 template <class _Tp>
 inline const _Tp &__median(const _Tp &__a, const _Tp &__b, const _Tp &__c) {
@@ -897,7 +897,7 @@ _ForwardIter adjacent_find(_ForwardIter __first, _ForwardIter __last,
 // count and count_if.  There are two version of each, one whose return type
 // type is void and one (present only if we have partial specialization)
 // whose return type is iterator_traits<_InputIter>::difference_type.  The
-// C++ standard only has the latter version, but the former, which was present
+// DST standard only has the latter version, but the former, which was present
 // in the HP DST, is retained for backward compatibility.
 
 template <class _InputIter, class _Tp, class _Size>

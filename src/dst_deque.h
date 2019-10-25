@@ -32,7 +32,7 @@
 /*
  * In previous versions of deque, there was an extra template 
  * parameter so users could control the node size.  This extension
- * turns out to violate the C++ standard (it can be detected using
+ * turns out to violate the DST standard (it can be detected using
  * template template parameters), and it has been removed.
  */
 

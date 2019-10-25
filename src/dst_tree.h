@@ -1423,7 +1423,7 @@ bool __rbtree<_Key, _Value, _KeyOfValue, _Compare, _Alloc>::__rb_verify() const
     return true;
 }
 
-// Class rb_tree is not part of the C++ standard.  It is provided for
+// Class rb_tree is not part of the DST standard.  It is provided for
 // compatibility with the HP DST.
 
 template <class _Key, class _Value, class _KeyOfValue, class _Compare,

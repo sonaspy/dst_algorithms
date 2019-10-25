@@ -24,14 +24,13 @@ __DST_BEGIN_NAMESPACE
 // _M_ref_count.
 
 // Hack for  o32 compilers.
-#if defined(__DST__THREADS) && !defined(__add_and_fetch) && \
+#if defined(__DST__THREADS) && !defined(__add_and_fetch) &&                    \
     (__mips < 3 || !(defined(_ABIN32) || defined(_ABI64)))
 #define __add_and_fetch(__l, __v) add_then_test((unsigned long *)__l, __v)
 #define __test_and_set(__l, __v) test_and_set(__l, __v)
 #endif /* o32 */
 
-struct _Refcount_Base
-{
+struct _Refcount_Base {
     // The type _RC_t
 #ifdef __DST_WIN32THREADS
     typedef long _RC_t;
@@ -45,68 +44,51 @@ struct _Refcount_Base
     // Constructor
 #ifdef __DST_PTHREADS
     pthread_mutex_t _M_ref_count_lock;
-    _Refcount_Base(_RC_t __n) : _M_ref_count(__n)
-    {
+    _Refcount_Base(_RC_t __n) : _M_ref_count(__n) {
         pthread_mutex_init(&_M_ref_count_lock, 0);
     }
 #elif defined(__DST_UITHREADS)
     mutex_t _M_ref_count_lock;
-    _Refcount_Base(_RC_t __n) : _M_ref_count(__n)
-    {
+    _Refcount_Base(_RC_t __n) : _M_ref_count(__n) {
         mutex_init(&_M_ref_count_lock, USYNC_THREAD, 0);
     }
 #else
-    _Refcount_Base(_RC_t __n) : _M_ref_count(__n)
-    {
-    }
+    _Refcount_Base(_RC_t __n) : _M_ref_count(__n) {}
 #endif
 
     // _M_incr and _M_decr
 #ifdef __DST__THREADS
-    void _M_incr()
-    {
-        __add_and_fetch(&_M_ref_count, 1);
-    }
+    void _M_incr() { __add_and_fetch(&_M_ref_count, 1); }
     _RC_t _M_decr() { return __add_and_fetch(&_M_ref_count, (size_t)-1); }
 #elif defined(__DST_WIN32THREADS)
-    void _M_incr()
-    {
-        InterlockedIncrement((_RC_t *)&_M_ref_count);
-    }
+    void _M_incr() { InterlockedIncrement((_RC_t *)&_M_ref_count); }
     _RC_t _M_decr() { return InterlockedDecrement((_RC_t *)&_M_ref_count); }
 #elif defined(__DST_PTHREADS)
-    void _M_incr()
-    {
+    void _M_incr() {
         pthread_mutex_lock(&_M_ref_count_lock);
         ++_M_ref_count;
         pthread_mutex_unlock(&_M_ref_count_lock);
     }
-    _RC_t _M_decr()
-    {
+    _RC_t _M_decr() {
         pthread_mutex_lock(&_M_ref_count_lock);
         volatile _RC_t __tmp = --_M_ref_count;
         pthread_mutex_unlock(&_M_ref_count_lock);
         return __tmp;
     }
 #elif defined(__DST_UITHREADS)
-    void _M_incr()
-    {
+    void _M_incr() {
         mutex_lock(&_M_ref_count_lock);
         ++_M_ref_count;
         mutex_unlock(&_M_ref_count_lock);
     }
-    _RC_t _M_decr()
-    {
+    _RC_t _M_decr() {
         mutex_lock(&_M_ref_count_lock);
         /*volatile*/ _RC_t __tmp = --_M_ref_count;
         mutex_unlock(&_M_ref_count_lock);
         return __tmp;
     }
 #else /* No threads */
-    void _M_incr()
-    {
-        ++_M_ref_count;
-    }
+    void _M_incr() { ++_M_ref_count; }
     _RC_t _M_decr() { return --_M_ref_count; }
 #endif
 };
@@ -116,8 +98,7 @@ struct _Refcount_Base
 // possibly concurrent updates use _Atomic_swap.
 // In some cases the operation is emulated with a lock.
 #ifdef __DST__THREADS
-inline unsigned long _Atomic_swap(unsigned long *_p, unsigned long __q)
-{
+inline unsigned long _Atomic_swap(unsigned long *_p, unsigned long __q) {
 #if __mips < 3 || !(defined(_ABIN32) || defined(_ABI64))
     return test_and_set(_p, __q);
 #else
@@ -125,27 +106,23 @@ inline unsigned long _Atomic_swap(unsigned long *_p, unsigned long __q)
 #endif
 }
 #elif defined(__DST_WIN32THREADS)
-inline unsigned long _Atomic_swap(unsigned long *_p, unsigned long __q)
-{
+inline unsigned long _Atomic_swap(unsigned long *_p, unsigned long __q) {
     return (unsigned long)InterlockedExchange((LPLONG)_p, (LONG)__q);
 }
 #elif defined(__DST_PTHREADS)
 // We use a template here only to get a unique initialized instance.
-template <int __dummy>
-struct _Swap_lock_struct
-{
+template <int __dummy> struct _Swap_lock_struct {
     static pthread_mutex_t _S_swap_lock;
 };
 
 template <int __dummy>
-pthread_mutex_t
-    _Swap_lock_struct<__dummy>::_S_swap_lock = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t _Swap_lock_struct<__dummy>::_S_swap_lock =
+    PTHREAD_MUTEX_INITIALIZER;
 
 // This should be portable, but performance is expected
 // to be quite awful.  This really needs platform specific
 // code.
-inline unsigned long _Atomic_swap(unsigned long *_p, unsigned long __q)
-{
+inline unsigned long _Atomic_swap(unsigned long *_p, unsigned long __q) {
     pthread_mutex_lock(&_Swap_lock_struct<0>::_S_swap_lock);
     unsigned long __result = *_p;
     *_p = __q;
@@ -154,21 +131,17 @@ inline unsigned long _Atomic_swap(unsigned long *_p, unsigned long __q)
 }
 #elif defined(__DST_UITHREADS)
 // We use a template here only to get a unique initialized instance.
-template <int __dummy>
-struct _Swap_lock_struct
-{
+template <int __dummy> struct _Swap_lock_struct {
     static mutex_t _S_swap_lock;
 };
 
 template <int __dummy>
-mutex_t
-    _Swap_lock_struct<__dummy>::_S_swap_lock = DEFAULTMUTEX;
+mutex_t _Swap_lock_struct<__dummy>::_S_swap_lock = DEFAULTMUTEX;
 
 // This should be portable, but performance is expected
 // to be quite awful.  This really needs platform specific
 // code.
-inline unsigned long _Atomic_swap(unsigned long *_p, unsigned long __q)
-{
+inline unsigned long _Atomic_swap(unsigned long *_p, unsigned long __q) {
     mutex_lock(&_Swap_lock_struct<0>::_S_swap_lock);
     unsigned long __result = *_p;
     *_p = __q;
@@ -178,16 +151,13 @@ inline unsigned long _Atomic_swap(unsigned long *_p, unsigned long __q)
 #elif defined(__DST_SOLARIS_THREADS)
 // any better solutions ?
 // We use a template here only to get a unique initialized instance.
-template <int __dummy>
-struct _Swap_lock_struct
-{
+template <int __dummy> struct _Swap_lock_struct {
     static mutex_t _S_swap_lock;
 };
 
 #if (__DST_STATIC_TEMPLATE_DATA > 0)
 template <int __dummy>
-mutex_t
-    _Swap_lock_struct<__dummy>::_S_swap_lock = DEFAULTMUTEX;
+mutex_t _Swap_lock_struct<__dummy>::_S_swap_lock = DEFAULTMUTEX;
 #else
 __DECLARE_INSTANCE(mutex_t, _Swap_lock_struct<__dummy>::_S_swap_lock,
                    = DEFAULTMUTEX);
@@ -196,8 +166,7 @@ __DECLARE_INSTANCE(mutex_t, _Swap_lock_struct<__dummy>::_S_swap_lock,
 // This should be portable, but performance is expected
 // to be quite awful.  This really needs platform specific
 // code.
-inline unsigned long _Atomic_swap(unsigned long *_p, unsigned long __q)
-{
+inline unsigned long _Atomic_swap(unsigned long *_p, unsigned long __q) {
     mutex_lock(&_Swap_lock_struct<0>::_S_swap_lock);
     unsigned long __result = *_p;
     *_p = __q;
@@ -205,8 +174,7 @@ inline unsigned long _Atomic_swap(unsigned long *_p, unsigned long __q)
     return __result;
 }
 #else
-static inline unsigned long _Atomic_swap(unsigned long *_p, unsigned long __q)
-{
+static inline unsigned long _Atomic_swap(unsigned long *_p, unsigned long __q) {
     unsigned long __result = *_p;
     *_p = __q;
     return __result;
@@ -227,14 +195,8 @@ static inline unsigned long _Atomic_swap(unsigned long *_p, unsigned long __q)
 
 // Helper struct.  This is a workaround for various compilers that don't
 // handle static variables in inline functions properly.
-template <int __inst>
-struct _DST_mutex_spin
-{
-    enum
-    {
-        __low_max = 30,
-        __high_max = 1000
-    };
+template <int __inst> struct _DST_mutex_spin {
+    enum { __low_max = 30, __high_max = 1000 };
     // Low if we suspect uniprocessor, high for multiprocessor.
 
     static unsigned __max;
@@ -244,17 +206,14 @@ struct _DST_mutex_spin
 template <int __inst>
 unsigned _DST_mutex_spin<__inst>::__max = _DST_mutex_spin<__inst>::__low_max;
 
-template <int __inst>
-unsigned _DST_mutex_spin<__inst>::_last = 0;
+template <int __inst> unsigned _DST_mutex_spin<__inst>::_last = 0;
 
-struct _DST_mutex_lock
-{
+struct _DST_mutex_lock {
 #if defined(__DST__THREADS) || defined(__DST_WIN32THREADS)
     // It should be relatively easy to get this to work on any modern Unix.
     volatile unsigned long _M_lock;
     void _M_initialize() { _M_lock = 0; }
-    static void _S_nsec_sleep(int __log_nsec)
-    {
+    static void _S_nsec_sleep(int __log_nsec) {
 #ifdef __DST__THREADS
         struct timespec __ts;
         /* Max sleep is 2**27nsec ~ 60msec      */
@@ -262,42 +221,34 @@ struct _DST_mutex_lock
         __ts.tv_nsec = 1 << __log_nsec;
         nanosleep(&__ts, 0);
 #elif defined(__DST_WIN32THREADS)
-        if (__log_nsec <= 20)
-        {
+        if (__log_nsec <= 20) {
             Sleep(0);
-        }
-        else
-        {
+        } else {
             Sleep(1 << (__log_nsec - 20));
         }
 #else
 #error unimplemented
 #endif
     }
-    void _M_acquire_lock()
-    {
+    void _M_acquire_lock() {
         volatile unsigned long *__lock = &this->_M_lock;
 
-        if (!_Atomic_swap((unsigned long *)__lock, 1))
-        {
+        if (!_Atomic_swap((unsigned long *)__lock, 1)) {
             return;
         }
         unsigned __my_spin_max = _DST_mutex_spin<0>::__max;
         unsigned __my_last_spins = _DST_mutex_spin<0>::_last;
         volatile unsigned __junk = 17; // Value doesn't matter.
         unsigned __i;
-        for (__i = 0; __i < __my_spin_max; __i++)
-        {
-            if (__i < __my_last_spins / 2 || *__lock)
-            {
+        for (__i = 0; __i < __my_spin_max; __i++) {
+            if (__i < __my_last_spins / 2 || *__lock) {
                 __junk *= __junk;
                 __junk *= __junk;
                 __junk *= __junk;
                 __junk *= __junk;
                 continue;
             }
-            if (!_Atomic_swap((unsigned long *)__lock, 1))
-            {
+            if (!_Atomic_swap((unsigned long *)__lock, 1)) {
                 // got it!
                 // Spinning worked.  Thus we're probably not being scheduled
                 // against the other process with which we were contending.
@@ -309,26 +260,24 @@ struct _DST_mutex_lock
         }
         // We are probably being scheduled against the other process.  Sleep.
         _DST_mutex_spin<0>::__max = _DST_mutex_spin<0>::__low_max;
-        for (__i = 0;; ++__i)
-        {
+        for (__i = 0;; ++__i) {
             int __log_nsec = __i + 6;
 
             if (__log_nsec > 27)
                 __log_nsec = 27;
-            if (!_Atomic_swap((unsigned long *)__lock, 1))
-            {
+            if (!_Atomic_swap((unsigned long *)__lock, 1)) {
                 return;
             }
             _S_nsec_sleep(__log_nsec);
         }
     }
-    void _M_release_lock()
-    {
+    void _M_release_lock() {
         volatile unsigned long *__lock = &_M_lock;
 #if defined(__DST__THREADS) && defined(__GNUC__) && __mips >= 3
         asm("sync");
         *__lock = 0;
-#elif defined(__DST__THREADS) && __mips >= 3 && (defined(_ABIN32) || defined(_ABI64))
+#elif defined(__DST__THREADS) && __mips >= 3 &&                                \
+    (defined(_ABIN32) || defined(_ABI64))
         __lock_release(__lock);
 #else
         *__lock = 0;
@@ -352,9 +301,7 @@ struct _DST_mutex_lock
     void _M_acquire_lock() { mutex_lock(&_M_lock); }
     void _M_release_lock() { mutex_unlock(&_M_lock); }
 #else /* No threads */
-    void _M_initialize()
-    {
-    }
+    void _M_initialize() {}
     void _M_acquire_lock() {}
     void _M_release_lock() {}
 #endif
@@ -379,17 +326,15 @@ struct _DST_mutex_lock
 // destructor releases the lock.  It's not clear that this is exactly
 // the right functionality.  It will probably change in the future.
 
-struct _DST_auto_lock
-{
+struct _DST_auto_lock {
     _DST_mutex_lock &_M_lock;
 
-    _DST_auto_lock(_DST_mutex_lock &__lock) : _M_lock(__lock)
-    {
+    _DST_auto_lock(_DST_mutex_lock &__lock) : _M_lock(__lock) {
         _M_lock._M_acquire_lock();
     }
     ~_DST_auto_lock() { _M_lock._M_release_lock(); }
 
-private:
+  private:
     void operator=(const _DST_auto_lock &);
     _DST_auto_lock(const _DST_auto_lock &);
 };

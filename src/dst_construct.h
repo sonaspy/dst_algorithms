@@ -6,7 +6,7 @@
 
 __DST_BEGIN_NAMESPACE
 
-// construct and destroy.  These functions are not part of the C++ standard,
+// construct and destroy.  These functions are not part of the DST standard,
 // and are provided for backward compatibility with the HP DST.  We also
 // provide internal names __construct and __destroy that can be used within
 // the library, so that standard-conforming pieces don't have to rely on
@@ -15,44 +15,34 @@ __DST_BEGIN_NAMESPACE
 // Internal names
 
 template <class _T1, class _T2>
-inline void __construct(_T1 *_p, const _T2 &_value)
-{
+inline void __construct(_T1 *_p, const _T2 &_value) {
     new ((void *)_p) _T1(_value);
 }
 
-template <class _T1>
-inline void __construct(_T1 *_p)
-{
+template <class _T1> inline void __construct(_T1 *_p) {
     new ((void *)_p) _T1();
 }
 
-template <class _Tp>
-inline void __destroy(_Tp *_pointer)
-{
-    _pointer->~_Tp();
-}
+template <class _Tp> inline void __destroy(_Tp *_pointer) { _pointer->~_Tp(); }
 
 template <class _ForwardIterator>
-void __destroy_aux(_ForwardIterator _first, _ForwardIterator _last, __false_type)
-{
-    for (; _first != _last; ++_first)
-        destroy(&*_first);
+void __destroy_aux(_ForwardIterator _first, _ForwardIterator _last,
+                   __false_type) {
+    for (; _first != _last; ++_first) destroy(&*_first);
 }
 
 template <class _ForwardIterator>
 inline void __destroy_aux(_ForwardIterator, _ForwardIterator, __true_type) {}
 
 template <class _ForwardIterator, class _Tp>
-inline void __destroy(_ForwardIterator _first, _ForwardIterator _last, _Tp *)
-{
-    typedef typename __type_traits<_Tp>::has_trivial_destructor
-        _Trivial_destructor;
+inline void __destroy(_ForwardIterator _first, _ForwardIterator _last, _Tp *) {
+    typedef
+        typename __type_traits<_Tp>::has_trivial_destructor _Trivial_destructor;
     __destroy_aux(_first, _last, _Trivial_destructor());
 }
 
 template <class _ForwardIterator>
-inline void __destroy(_ForwardIterator _first, _ForwardIterator _last)
-{
+inline void __destroy(_ForwardIterator _first, _ForwardIterator _last) {
     __destroy(_first, _last, __VALUE_TYPE(_first));
 }
 
@@ -62,35 +52,23 @@ inline void __destroy(long *, long *) {}
 inline void __destroy(float *, float *) {}
 inline void __destroy(double *, double *) {}
 #ifdef __DST_HAS_WCHAR_T
-inline void __destroy(wchar_t *, wchar_t *)
-{
-}
+inline void __destroy(wchar_t *, wchar_t *) {}
 #endif /* __DST_HAS_WCHAR_T */
 
 // --------------------------------------------------
 // Old names from the HP DST.
 
 template <class _T1, class _T2>
-inline void construct(_T1 *_p, const _T2 &_value)
-{
+inline void construct(_T1 *_p, const _T2 &_value) {
     __construct(_p, _value);
 }
 
-template <class _T1>
-inline void construct(_T1 *_p)
-{
-    __construct(_p);
-}
+template <class _T1> inline void construct(_T1 *_p) { __construct(_p); }
 
-template <class _Tp>
-inline void destroy(_Tp *_pointer)
-{
-    __destroy(_pointer);
-}
+template <class _Tp> inline void destroy(_Tp *_pointer) { __destroy(_pointer); }
 
 template <class _ForwardIterator>
-inline void destroy(_ForwardIterator _first, _ForwardIterator _last)
-{
+inline void destroy(_ForwardIterator _first, _ForwardIterator _last) {
     __destroy(_first, _last);
 }
 

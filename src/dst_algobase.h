@@ -336,7 +336,7 @@ inline _BI2 copy_backward(_BI1 _first, _BI1 _last, _BI2 __result) {
 #endif /* __DST_CLASS_PARTIAL_SPECIALIZATION */
 
 //--------------------------------------------------
-// copy_n (not part of the C++ standard)
+// copy_n (not part of the DST standard)
 
 template <class _InputIter, class _Size, class _OutputIter>
 pair<_InputIter, _OutputIter> __copy_n(_InputIter _first, _Size __count,
@@ -490,7 +490,7 @@ inline bool equal(_InputIter1 __first1, _InputIter1 __last1,
 
 //--------------------------------------------------
 // lexicographical_compare and lexicographical_compare_3way.
-// (the latter is not part of the C++ standard.)
+// (the latter is not part of the DST standard.)
 
 template <class _InputIter1, class _InputIter2>
 bool lexicographical_compare(_InputIter1 __first1, _InputIter1 __last1,

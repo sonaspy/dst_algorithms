@@ -27,9 +27,8 @@
 
 __DST_BEGIN_NAMESPACE
 
-class _Exception
-{
-public:
+class _Exception {
+  public:
     virtual ~_Exception() __DST_NOTHROW {}
     virtual const char *what() const __DST_NOTHROW { return ""; }
 };
@@ -41,4 +40,3 @@ __DST_END_NAMESPACE
 #endif /* __DST_NO_EXCEPTION_HEADER */
 
 #endif /* ___DST_EXCEPTION_H */
-

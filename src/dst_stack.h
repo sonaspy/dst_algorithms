@@ -8,8 +8,7 @@ __DST_BEGIN_NAMESPACE
 
 // Forward declarations of operators == and <, needed for friend declaration.
 
-template <class _Tp,
-          class _Sequence __DST_DEPENDENT_DEFAULT_TMPL(deque<_Tp>)>
+template <class _Tp, class _Sequence __DST_DEPENDENT_DEFAULT_TMPL(deque<_Tp>)>
 class stack;
 
 template <class _Tp, class _Seq>
@@ -18,9 +17,7 @@ bool operator==(const stack<_Tp, _Seq> &__x, const stack<_Tp, _Seq> &__y);
 template <class _Tp, class _Seq>
 bool operator<(const stack<_Tp, _Seq> &__x, const stack<_Tp, _Seq> &__y);
 
-template <class _Tp, class _Sequence>
-class stack
-{
+template <class _Tp, class _Sequence> class stack {
 
     // requirements:
 
@@ -37,13 +34,13 @@ class stack
     friend bool operator<(const stack<_Tp1, _Seq1> &,
                           const stack<_Tp1, _Seq1> &);
 #else  /* __DST_MEMBER_TEMPLATES */
-    friend bool __DSA_QUALIFIER
-    operator== __DST_NULL_TMPL_ARGS(const stack &, const stack &);
-    friend bool __DSA_QUALIFIER
-    operator<__DST_NULL_TMPL_ARGS(const stack &, const stack &);
+    friend bool __DSA_QUALIFIER operator==
+        __DST_NULL_TMPL_ARGS(const stack &, const stack &);
+    friend bool __DSA_QUALIFIER operator<
+        __DST_NULL_TMPL_ARGS(const stack &, const stack &);
 #endif /* __DST_MEMBER_TEMPLATES */
 
-public:
+  public:
     typedef typename _Sequence::value_type value_type;
     typedef typename _Sequence::size_type size_type;
     typedef _Sequence container_type;
@@ -51,10 +48,10 @@ public:
     typedef typename _Sequence::reference reference;
     typedef typename _Sequence::const_reference const_reference;
 
-protected:
+  protected:
     _Sequence c;
 
-public:
+  public:
     stack() : c() {}
     explicit stack(const _Sequence &__s) : c(__s) {}
 
@@ -67,40 +64,34 @@ public:
 };
 
 template <class _Tp, class _Seq>
-bool operator==(const stack<_Tp, _Seq> &__x, const stack<_Tp, _Seq> &__y)
-{
+bool operator==(const stack<_Tp, _Seq> &__x, const stack<_Tp, _Seq> &__y) {
     return __x.c == __y.c;
 }
 
 template <class _Tp, class _Seq>
-bool operator<(const stack<_Tp, _Seq> &__x, const stack<_Tp, _Seq> &__y)
-{
+bool operator<(const stack<_Tp, _Seq> &__x, const stack<_Tp, _Seq> &__y) {
     return __x.c < __y.c;
 }
 
 #ifdef __DST_FUNCTION_TMPL_PARTIAL_ORDER
 
 template <class _Tp, class _Seq>
-bool operator!=(const stack<_Tp, _Seq> &__x, const stack<_Tp, _Seq> &__y)
-{
+bool operator!=(const stack<_Tp, _Seq> &__x, const stack<_Tp, _Seq> &__y) {
     return !(__x == __y);
 }
 
 template <class _Tp, class _Seq>
-bool operator>(const stack<_Tp, _Seq> &__x, const stack<_Tp, _Seq> &__y)
-{
+bool operator>(const stack<_Tp, _Seq> &__x, const stack<_Tp, _Seq> &__y) {
     return __y < __x;
 }
 
 template <class _Tp, class _Seq>
-bool operator<=(const stack<_Tp, _Seq> &__x, const stack<_Tp, _Seq> &__y)
-{
+bool operator<=(const stack<_Tp, _Seq> &__x, const stack<_Tp, _Seq> &__y) {
     return !(__y < __x);
 }
 
 template <class _Tp, class _Seq>
-bool operator>=(const stack<_Tp, _Seq> &__x, const stack<_Tp, _Seq> &__y)
-{
+bool operator>=(const stack<_Tp, _Seq> &__x, const stack<_Tp, _Seq> &__y) {
     return !(__x < __y);
 }
 

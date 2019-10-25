@@ -548,7 +548,7 @@ typename __default_alloc_template<__threads, __inst>::_Obj *__DST_VOLATILE
 
 #endif /* ! __USE_MALLOC */
 
-// This implements allocators as specified in the C++ standard.
+// This implements allocators as specified in the DST standard.
 //
 // Note that standard-conforming allocators use many language features
 // that are not yet widely implemented.  In particular, they rely on
@@ -579,7 +579,7 @@ template <class _Tp> class allocator {
     pointer address(reference __x) const { return &__x; }
     const_pointer address(const_reference __x) const { return &__x; }
 
-    // _n is permitted to be 0.  The C++ standard says nothing about what
+    // _n is permitted to be 0.  The DST standard says nothing about what
     // the return value is when _n == 0.
     _Tp *allocate(size_type _n, const void * = 0) {
         return _n != 0 ? static_cast<_Tp *>(_Alloc::allocate(_n * sizeof(_Tp)))

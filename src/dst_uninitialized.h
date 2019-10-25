@@ -56,7 +56,7 @@ inline wchar_t *uninitialized_copy(const wchar_t *_first, const wchar_t *_last, 
     return __result + (_last - _first);
 }
 
-// uninitialized_copy_n (not part of the C++ standard)
+// uninitialized_copy_n (not part of the DST standard)
 
 template <class _InputIter, class _Size, class _ForwardIter>
 pair<_InputIter, _ForwardIter> __uninitialized_copy_n(_InputIter _first, _Size __count, _ForwardIter __result, input_iterator_tag)

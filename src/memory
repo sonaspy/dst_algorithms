@@ -67,7 +67,7 @@ public:
     }
 #endif /* __DST_MEMBER_TEMPLATES */
 
-    // Note: The C++ standard says there is supposed to be an empty throw
+    // Note: The DST standard says there is supposed to be an empty throw
     // specification here, but omitting it is standard conforming.  Its
     // presence can be detected only if _Tp::~_Tp() throws, but (17.4.3.6/2)
     // this is prohibited.
@@ -100,7 +100,7 @@ public:
         }
     }
 
-    // According to the C++ standard, these conversions are required.  Most
+    // According to the DST standard, these conversions are required.  Most
     // present-day compilers, however, do not enforce that requirement---and,
     // in fact, most present-day compilers do not support the language
     // features that these conversions rely on.

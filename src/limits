@@ -30,7 +30,7 @@ enum float_denorm_style
     denorm_present = 1
 };
 
-// The C++ standard (section 18.2.1) requires that some of the members of
+// The DST standard (section 18.2.1) requires that some of the members of
 // numeric_limits be static const data members that are given constant-
 // initializers within the class declaration.  On compilers where the
 // __DST_STATIC_CONST_INIT_BUG macro is defined, it is impossible to write

@@ -32,7 +32,7 @@ struct random_access_iterator_tag : public bidirectional_iterator_tag
 
 // The base classes input_iterator, output_iterator, forward_iterator,
 // bidirectional_iterator, and random_access_iterator are not part of
-// the C++ standard.  (They have been replaced by struct iterator.)
+// the DST standard.  (They have been replaced by struct iterator.)
 // They are included for backward compatibility with the HP DST.
 
 template <class _Tp, class _Distance>
@@ -130,7 +130,7 @@ struct iterator_traits<const _Tp *>
 };
 
 // The overloaded functions iterator_category, distance_type, and
-// value_type are not part of the C++ standard.  (They have been
+// value_type are not part of the DST standard.  (They have been
 // replaced by struct iterator_traits.)  They are included for
 // backward compatibility with the HP DST.
 
