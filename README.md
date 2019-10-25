@@ -158,9 +158,9 @@ struct _slist_iterator : public _slist_iterator_base
 
     _slist_iterator(__node *__x) : _slist_iterator_base(__x) {}
     _slist_iterator() {}
-    _slist_iterator(const iterator &__x) : _slist_iterator_base(__x.__m_node) {}
+    _slist_iterator(const iterator &__x) : _slist_iterator_base(__x._M_node) {}
 
-    reference operator*() const { return ((__node *)__m_node)->__m_data; }
+    reference operator*() const { return ((__node *)_M_node)->_M_data; }
 
 #ifndef ___DST_NO_ARROW_OPERATOR
     pointer operator->() const
@@ -171,24 +171,24 @@ struct _slist_iterator : public _slist_iterator_base
 
     _Self &operator++()
     {
-        this->__m_incr();
+        this->_M_incr();
         return *this;
     }
     _Self operator++(int)
     {
         _Self __tmp = *this;
-        this->__m_incr();
+        this->_M_incr();
         return __tmp;
     }
     _Self &operator--()
     {
-        this->__m_decr();
+        this->_M_decr();
         return *this;
     }
     _Self operator--(int)
     {
         _Self __tmp = *this;
-        this->__m_decr();
+        this->_M_decr();
         return __tmp;
     }
 };

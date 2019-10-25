@@ -54,7 +54,7 @@ struct __deque_iterator
 {
     typedef __deque_iterator<_Tp, _Tp &, _Tp *> iterator;
     typedef __deque_iterator<_Tp, const _Tp &, const _Tp *> const_iterator;
-    inline static size_t __s_buffer_size() { return __deque_buf_size(sizeof(_Tp)); }
+    inline static size_t _S_buffer_size() { return __deque_buf_size(sizeof(_Tp)); }
 
     typedef random_access_iterator_tag iterator_category;
     typedef _Tp value_type;
@@ -66,40 +66,40 @@ struct __deque_iterator
 
     typedef __deque_iterator __self;
 
-    _Tp *__m_cur;
-    _Tp *__m_first;
-    _Tp *__m_last;
+    _Tp *_M_cur;
+    _Tp *_M_first;
+    _Tp *_M_last;
     __map_pointer __map_node;
 
     __deque_iterator(_Tp *__x, __map_pointer __y)
-        : __m_cur(__x), __m_first(*__y), __m_last(*__y + __s_buffer_size()), __map_node(__y) {}
+        : _M_cur(__x), _M_first(*__y), _M_last(*__y + _S_buffer_size()), __map_node(__y) {}
 
-    __deque_iterator() : __m_cur(0), __m_first(0), __m_last(0), __map_node(0) {}
+    __deque_iterator() : _M_cur(0), _M_first(0), _M_last(0), __map_node(0) {}
 
     __deque_iterator(const iterator &__x)
-        : __m_cur(__x.__m_cur), __m_first(__x.__m_first), __m_last(__x.__m_last), __map_node(__x.__map_node) {}
+        : _M_cur(__x._M_cur), _M_first(__x._M_first), _M_last(__x._M_last), __map_node(__x.__map_node) {}
 
-    reference operator*() const { return *__m_cur; }
+    reference operator*() const { return *_M_cur; }
 
 #ifndef ___DST_NO_ARROW_OPERATOR
     pointer operator->() const
     {
-        return __m_cur;
+        return _M_cur;
     }
 #endif /* ___DST_NO_ARROW_OPERATOR */
 
     difference_type operator-(const __self &__x) const
     {
-        return difference_type(__s_buffer_size()) * (__map_node - __x.__map_node - 1) + (__m_cur - __m_first) + (__x.__m_last - __x.__m_cur);
+        return difference_type(_S_buffer_size()) * (__map_node - __x.__map_node - 1) + (_M_cur - _M_first) + (__x._M_last - __x._M_cur);
     }
 
     __self &operator++()
     {
-        ++__m_cur;
-        if (__m_cur == __m_last)
+        ++_M_cur;
+        if (_M_cur == _M_last)
         {
-            __m_set_node(__map_node + 1);
-            __m_cur = __m_first;
+            _M_set_node(__map_node + 1);
+            _M_cur = _M_first;
         }
         return *this;
     }
@@ -112,12 +112,12 @@ struct __deque_iterator
 
     __self &operator--()
     {
-        if (__m_cur == __m_first)
+        if (_M_cur == _M_first)
         {
-            __m_set_node(__map_node - 1);
-            __m_cur = __m_last;
+            _M_set_node(__map_node - 1);
+            _M_cur = _M_last;
         }
-        --__m_cur;
+        --_M_cur;
         return *this;
     }
     __self operator--(int)
@@ -129,14 +129,14 @@ struct __deque_iterator
 
     __self &operator+=(difference_type __n)
     {
-        difference_type __offset = __m_cur - __m_first + __n;
-        if (0 <= __offset && __offset < difference_type(__s_buffer_size()))
-            __m_cur += __n;
+        difference_type __offset = _M_cur - _M_first + __n;
+        if (0 <= __offset && __offset < difference_type(_S_buffer_size()))
+            _M_cur += __n;
         else
         {
-            difference_type __node_offset = __offset > 0 ? __offset / difference_type(__s_buffer_size()) : -difference_type((-__offset - 1) / __s_buffer_size()) - 1;
-            __m_set_node(__map_node + __node_offset);
-            __m_cur = __m_first + (__offset - __node_offset * difference_type(__s_buffer_size()));
+            difference_type __node_offset = __offset > 0 ? __offset / difference_type(_S_buffer_size()) : -difference_type((-__offset - 1) / _S_buffer_size()) - 1;
+            _M_set_node(__map_node + __node_offset);
+            _M_cur = _M_first + (__offset - __node_offset * difference_type(_S_buffer_size()));
         }
         return *this;
     }
@@ -157,21 +157,21 @@ struct __deque_iterator
 
     reference operator[](difference_type __n) const { return *(*this + __n); }
 
-    bool operator==(const __self &__x) const { return __m_cur == __x.__m_cur; }
+    bool operator==(const __self &__x) const { return _M_cur == __x._M_cur; }
     bool operator!=(const __self &__x) const { return !(*this == __x); }
     bool operator<(const __self &__x) const
     {
-        return (__map_node == __x.__map_node) ? (__m_cur < __x.__m_cur) : (__map_node < __x.__map_node);
+        return (__map_node == __x.__map_node) ? (_M_cur < __x._M_cur) : (__map_node < __x.__map_node);
     }
     bool operator>(const __self &__x) const { return __x < *this; }
     bool operator<=(const __self &__x) const { return !(__x < *this); }
     bool operator>=(const __self &__x) const { return !(*this < __x); }
 
-    void __m_set_node(__map_pointer __new_node)
+    void _M_set_node(__map_pointer __new_node)
     {
         __map_node = __new_node;
-        __m_first = *__new_node;
-        __m_last = __m_first + difference_type(__s_buffer_size());
+        _M_first = *__new_node;
+        _M_last = _M_first + difference_type(_S_buffer_size());
     }
 };
 
@@ -216,38 +216,38 @@ class __deque_alloc_base
 {
 public:
     typedef typename _Alloc_traits<_Tp, _Alloc>::allocator_type allocator_type;
-    allocator_type get_allocator() const { return __m_node_allocator; }
+    allocator_type get_allocator() const { return _M_node_allocator; }
 
     __deque_alloc_base(const allocator_type &__a)
-        : __m_node_allocator(__a), __m_map_allocator(__a), __m_map(0), __m_map_size(0)
+        : _M_node_allocator(__a), _M_map_allocator(__a), _M_map(0), _M_map_size(0)
     {
     }
 
 protected:
     typedef typename _Alloc_traits<_Tp *, _Alloc>::allocator_type __map_allocator_type;
 
-    allocator_type __m_node_allocator;
-    __map_allocator_type __m_map_allocator;
+    allocator_type _M_node_allocator;
+    __map_allocator_type _M_map_allocator;
 
-    _Tp *__m_allocate_node()
+    _Tp *_M_allocate_node()
     {
-        return __m_node_allocator.allocate(__deque_buf_size(sizeof(_Tp)));
+        return _M_node_allocator.allocate(__deque_buf_size(sizeof(_Tp)));
     }
-    void __m_deallocate_node(_Tp *__p)
+    void _M_deallocate_node(_Tp *__p)
     {
-        __m_node_allocator.deallocate(__p, __deque_buf_size(sizeof(_Tp)));
+        _M_node_allocator.deallocate(__p, __deque_buf_size(sizeof(_Tp)));
     }
-    _Tp **__m_allocate_map(size_t __n)
+    _Tp **_M_allocate_map(size_t __n)
     {
-        return __m_map_allocator.allocate(__n);
+        return _M_map_allocator.allocate(__n);
     }
-    void __m_deallocate_map(_Tp **__p, size_t __n)
+    void _M_deallocate_map(_Tp **__p, size_t __n)
     {
-        __m_map_allocator.deallocate(__p, __n);
+        _M_map_allocator.deallocate(__p, __n);
     }
 
-    _Tp **__m_map;
-    size_t __m_map_size;
+    _Tp **_M_map;
+    size_t _M_map_size;
 };
 
 // Specialization for instanceless allocators.
@@ -258,31 +258,31 @@ public:
     typedef typename _Alloc_traits<_Tp, _Alloc>::allocator_type allocator_type;
     allocator_type get_allocator() const { return allocator_type(); }
 
-    __deque_alloc_base(const allocator_type &) : __m_map(0), __m_map_size(0) {}
+    __deque_alloc_base(const allocator_type &) : _M_map(0), _M_map_size(0) {}
 
 protected:
     typedef typename _Alloc_traits<_Tp, _Alloc>::_Alloc_type __node_alloc_type;
     typedef typename _Alloc_traits<_Tp *, _Alloc>::_Alloc_type __map_alloc_type;
 
-    _Tp *__m_allocate_node()
+    _Tp *_M_allocate_node()
     {
         return __node_alloc_type::allocate(__deque_buf_size(sizeof(_Tp)));
     }
-    void __m_deallocate_node(_Tp *__p)
+    void _M_deallocate_node(_Tp *__p)
     {
         __node_alloc_type::deallocate(__p, __deque_buf_size(sizeof(_Tp)));
     }
-    _Tp **__m_allocate_map(size_t __n)
+    _Tp **_M_allocate_map(size_t __n)
     {
         return __map_alloc_type::allocate(__n);
     }
-    void __m_deallocate_map(_Tp **__p, size_t __n)
+    void _M_deallocate_map(_Tp **__p, size_t __n)
     {
         __map_alloc_type::deallocate(__p, __n);
     }
 
-    _Tp **__m_map;
-    size_t __m_map_size;
+    _Tp **_M_map;
+    size_t _M_map_size;
 };
 
 template <class _Tp, class _Alloc>
@@ -294,25 +294,25 @@ public:
     typedef __deque_iterator<_Tp, _Tp &, _Tp *> iterator;
     typedef __deque_iterator<_Tp, const _Tp &, const _Tp *> const_iterator;
 
-    __deque_base(const allocator_type &__a, size_t __num_elements) : __base(__a), __m_start(), __m_finish()
+    __deque_base(const allocator_type &__a, size_t __num_elements) : __base(__a), _M_start(), _M_finish()
     {
-        __m_initialize_map(__num_elements);
+        _M_initialize_map(__num_elements);
     }
-    __deque_base(const allocator_type &__a) : __base(__a), __m_start(), __m_finish() {}
+    __deque_base(const allocator_type &__a) : __base(__a), _M_start(), _M_finish() {}
     ~__deque_base();
 
 protected:
-    void __m_initialize_map(size_t);
-    void __m_create_nodes(_Tp **__nstart, _Tp **__nfinish);
-    void __m_destroy_nodes(_Tp **__nstart, _Tp **__nfinish);
+    void _M_initialize_map(size_t);
+    void _M_create_nodes(_Tp **__nstart, _Tp **__nfinish);
+    void _M_destroy_nodes(_Tp **__nstart, _Tp **__nfinish);
     enum
     {
-        __s_initial_map_size = 8
+        _S_initial_map_size = 8
     };
 
 protected:
-    iterator __m_start;
-    iterator __m_finish;
+    iterator _M_start;
+    iterator _M_finish;
 };
 
 #else /* __DST_USE_DSA_ALLOCATORS */
@@ -327,44 +327,44 @@ public:
     typedef _Alloc allocator_type;
     allocator_type get_allocator() const { return allocator_type(); }
 
-    __deque_base(const allocator_type &, size_t __num_elements) : __m_map(0), __m_map_size(0), __m_start(), __m_finish()
+    __deque_base(const allocator_type &, size_t __num_elements) : _M_map(0), _M_map_size(0), _M_start(), _M_finish()
     {
-        __m_initialize_map(__num_elements);
+        _M_initialize_map(__num_elements);
     }
-    __deque_base(const allocator_type &) : __m_map(0), __m_map_size(0), __m_start(), __m_finish() {}
+    __deque_base(const allocator_type &) : _M_map(0), _M_map_size(0), _M_start(), _M_finish() {}
     ~__deque_base();
 
 protected:
-    void __m_initialize_map(size_t);
-    void __m_create_nodes(_Tp **__nstart, _Tp **__nfinish);
-    void __m_destroy_nodes(_Tp **__nstart, _Tp **__nfinish);
+    void _M_initialize_map(size_t);
+    void _M_create_nodes(_Tp **__nstart, _Tp **__nfinish);
+    void _M_destroy_nodes(_Tp **__nstart, _Tp **__nfinish);
     enum
     {
-        __s_initial_map_size = 8
+        _S_initial_map_size = 8
     };
 
 protected:
-    _Tp **__m_map;
-    size_t __m_map_size;
-    iterator __m_start;
-    iterator __m_finish;
+    _Tp **_M_map;
+    size_t _M_map_size;
+    iterator _M_start;
+    iterator _M_finish;
 
     typedef simple_alloc<_Tp, _Alloc> __node_alloc_type;
     typedef simple_alloc<_Tp *, _Alloc> __map_alloc_type;
 
-    _Tp *__m_allocate_node()
+    _Tp *_M_allocate_node()
     {
         return __node_alloc_type::allocate(__deque_buf_size(sizeof(_Tp)));
     }
-    void __m_deallocate_node(_Tp *__p)
+    void _M_deallocate_node(_Tp *__p)
     {
         __node_alloc_type::deallocate(__p, __deque_buf_size(sizeof(_Tp)));
     }
-    _Tp **__m_allocate_map(size_t __n)
+    _Tp **_M_allocate_map(size_t __n)
     {
         return __map_alloc_type::allocate(__n);
     }
-    void __m_deallocate_map(_Tp **__p, size_t __n)
+    void _M_deallocate_map(_Tp **__p, size_t __n)
     {
         __map_alloc_type::deallocate(__p, __n);
     }
@@ -377,52 +377,52 @@ protected:
 template <class _Tp, class _Alloc>
 __deque_base<_Tp, _Alloc>::~__deque_base()
 {
-    if (__m_map)
+    if (_M_map)
     {
-        __m_destroy_nodes(__m_start.__map_node, __m_finish.__map_node + 1);
-        __m_deallocate_map(__m_map, __m_map_size);
+        _M_destroy_nodes(_M_start.__map_node, _M_finish.__map_node + 1);
+        _M_deallocate_map(_M_map, _M_map_size);
     }
 }
 
 template <class _Tp, class _Alloc>
-void __deque_base<_Tp, _Alloc>::__m_initialize_map(size_t __num_elements)
+void __deque_base<_Tp, _Alloc>::_M_initialize_map(size_t __num_elements)
 {
     size_t __num_nodes = __num_elements / __deque_buf_size(sizeof(_Tp)) + 1;
 
-    __m_map_size = max((size_t)__s_initial_map_size, __num_nodes + 2);
-    __m_map = __m_allocate_map(__m_map_size);
+    _M_map_size = max((size_t)_S_initial_map_size, __num_nodes + 2);
+    _M_map = _M_allocate_map(_M_map_size);
 
-    _Tp **__nstart = __m_map + (__m_map_size - __num_nodes) / 2;
+    _Tp **__nstart = _M_map + (_M_map_size - __num_nodes) / 2;
     _Tp **__nfinish = __nstart + __num_nodes;
 
     __DST_TRY
     {
-        __m_create_nodes(__nstart, __nfinish);
+        _M_create_nodes(__nstart, __nfinish);
     }
-    __DST_UNWIND((__m_deallocate_map(__m_map, __m_map_size), __m_map = 0, __m_map_size = 0));
-    __m_start.__m_set_node(__nstart);
-    __m_finish.__m_set_node(__nfinish - 1);
-    __m_start.__m_cur = __m_start.__m_first;
-    __m_finish.__m_cur = __m_finish.__m_first + __num_elements % __deque_buf_size(sizeof(_Tp));
+    __DST_UNWIND((_M_deallocate_map(_M_map, _M_map_size), _M_map = 0, _M_map_size = 0));
+    _M_start._M_set_node(__nstart);
+    _M_finish._M_set_node(__nfinish - 1);
+    _M_start._M_cur = _M_start._M_first;
+    _M_finish._M_cur = _M_finish._M_first + __num_elements % __deque_buf_size(sizeof(_Tp));
 }
 
 template <class _Tp, class _Alloc>
-void __deque_base<_Tp, _Alloc>::__m_create_nodes(_Tp **__nstart, _Tp **__nfinish)
+void __deque_base<_Tp, _Alloc>::_M_create_nodes(_Tp **__nstart, _Tp **__nfinish)
 {
     _Tp **__cur;
     __DST_TRY
     {
         for (__cur = __nstart; __cur < __nfinish; ++__cur)
-            *__cur = __m_allocate_node();
+            *__cur = _M_allocate_node();
     }
-    __DST_UNWIND(__m_destroy_nodes(__nstart, __cur));
+    __DST_UNWIND(_M_destroy_nodes(__nstart, __cur));
 }
 
 template <class _Tp, class _Alloc>
-void __deque_base<_Tp, _Alloc>::__m_destroy_nodes(_Tp **__nstart, _Tp **__nfinish)
+void __deque_base<_Tp, _Alloc>::_M_destroy_nodes(_Tp **__nstart, _Tp **__nfinish)
 {
     for (_Tp **__n = __nstart; __n < __nfinish; ++__n)
-        __m_deallocate_node(*__n);
+        _M_deallocate_node(*__n);
 }
 
 template <class _Tp, class _Alloc = __DST_DEFAULT_ALLOCATOR(_Tp)>
@@ -463,49 +463,49 @@ protected:
     // Internal typedefs
     typedef pointer *__map_pointer;
 
-    static size_t __s_buffer_size() { return __deque_buf_size(sizeof(_Tp)); }
+    static size_t _S_buffer_size() { return __deque_buf_size(sizeof(_Tp)); }
 
-    using __base::__m_allocate_map;
-    using __base::__m_allocate_node;
-    using __base::__m_create_nodes;
-    using __base::__m_deallocate_map;
-    using __base::__m_deallocate_node;
-    using __base::__m_destroy_nodes;
-    using __base::__m_finish;
-    using __base::__m_initialize_map;
-    using __base::__m_map;
-    using __base::__m_map_size;
-    using __base::__m_start;
+    using __base::_M_allocate_map;
+    using __base::_M_allocate_node;
+    using __base::_M_create_nodes;
+    using __base::_M_deallocate_map;
+    using __base::_M_deallocate_node;
+    using __base::_M_destroy_nodes;
+    using __base::_M_finish;
+    using __base::_M_initialize_map;
+    using __base::_M_map;
+    using __base::_M_map_size;
+    using __base::_M_start;
 
 public:
     // basic accessors
-    iterator begin() { return __m_start; }
-    iterator end() { return __m_finish; }
-    const_iterator begin() const { return __m_start; }
-    const_iterator end() const { return __m_finish; }
+    iterator begin() { return _M_start; }
+    iterator end() { return _M_finish; }
+    const_iterator begin() const { return _M_start; }
+    const_iterator end() const { return _M_finish; }
 
-    reverse_iterator rbegin() { return reverse_iterator(__m_finish); }
-    reverse_iterator rend() { return reverse_iterator(__m_start); }
+    reverse_iterator rbegin() { return reverse_iterator(_M_finish); }
+    reverse_iterator rend() { return reverse_iterator(_M_start); }
     const_reverse_iterator rbegin() const
     {
-        return const_reverse_iterator(__m_finish);
+        return const_reverse_iterator(_M_finish);
     }
     const_reverse_iterator rend() const
     {
-        return const_reverse_iterator(__m_start);
+        return const_reverse_iterator(_M_start);
     }
 
     reference operator[](size_type __n)
     {
-        return __m_start[difference_type(__n)];
+        return _M_start[difference_type(__n)];
     }
     const_reference operator[](size_type __n) const
     {
-        return __m_start[difference_type(__n)];
+        return _M_start[difference_type(__n)];
     }
 
 #ifdef __DST_THROW_RANGE_ERRORS
-    void __m_range_check(size_type __n) const
+    void _M_range_check(size_type __n) const
     {
         if (__n >= this->size())
             __dst_throw_range_error("deque");
@@ -513,53 +513,53 @@ public:
 
     reference at(size_type __n)
     {
-        __m_range_check(__n);
+        _M_range_check(__n);
         return (*this)[__n];
     }
     const_reference at(size_type __n) const
     {
-        __m_range_check(__n);
+        _M_range_check(__n);
         return (*this)[__n];
     }
 #endif /* __DST_THROW_RANGE_ERRORS */
 
     reference front()
     {
-        return *__m_start;
+        return *_M_start;
     }
     reference back()
     {
-        iterator __tmp = __m_finish;
+        iterator __tmp = _M_finish;
         --__tmp;
         return *__tmp;
     }
-    const_reference front() const { return *__m_start; }
+    const_reference front() const { return *_M_start; }
     const_reference back() const
     {
-        const_iterator __tmp = __m_finish;
+        const_iterator __tmp = _M_finish;
         --__tmp;
         return *__tmp;
     }
 
-    size_type size() const { return __m_finish - __m_start; }
+    size_type size() const { return _M_finish - _M_start; }
     size_type max_size() const { return size_type(-1); }
-    bool empty() const { return __m_finish == __m_start; }
+    bool empty() const { return _M_finish == _M_start; }
 
 public: // Constructor, destructor.
     explicit deque(const allocator_type &__a = allocator_type())
         : __base(__a, 0) {}
     deque(const deque &__x) : __base(__x.get_allocator(), __x.size())
     {
-        uninitialized_copy(__x.begin(), __x.end(), __m_start);
+        uninitialized_copy(__x.begin(), __x.end(), _M_start);
     }
     deque(size_type __n, const value_type &__value,
           const allocator_type &__a = allocator_type()) : __base(__a, __n)
     {
-        __m_fill_initialize(__value);
+        _M_fill_initialize(__value);
     }
     explicit deque(size_type __n) : __base(allocator_type(), __n)
     {
-        __m_fill_initialize(value_type());
+        _M_fill_initialize(value_type());
     }
 
 #ifdef __DST_MEMBER_TEMPLATES
@@ -570,20 +570,20 @@ public: // Constructor, destructor.
           const allocator_type &__a = allocator_type()) : __base(__a)
     {
         typedef typename _Is_integer<_InputIterator>::_Integral _Integral;
-        __m_initialize_dispatch(__first, __last, _Integral());
+        _M_initialize_dispatch(__first, __last, _Integral());
     }
 
     template <class _Integer>
-    void __m_initialize_dispatch(_Integer __n, _Integer __x, __true_type)
+    void _M_initialize_dispatch(_Integer __n, _Integer __x, __true_type)
     {
-        __m_initialize_map(__n);
-        __m_fill_initialize(__x);
+        _M_initialize_map(__n);
+        _M_fill_initialize(__x);
     }
 
     template <class _InputIter>
-    void __m_initialize_dispatch(_InputIter __first, _InputIter __last,  __false_type)
+    void _M_initialize_dispatch(_InputIter __first, _InputIter __last,  __false_type)
     {
-        __m_range_initialize(__first, __last, __ITERATOR_CATEGORY(__first));
+        _M_range_initialize(__first, __last, __ITERATOR_CATEGORY(__first));
     }
 
 #else /* __DST_MEMBER_TEMPLATES */
@@ -592,20 +592,20 @@ public: // Constructor, destructor.
           const allocator_type &__a = allocator_type())
         : __base(__a, __last - __first)
     {
-        uninitialized_copy(__first, __last, __m_start);
+        uninitialized_copy(__first, __last, _M_start);
     }
     deque(const_iterator __first, const_iterator __last,
           const allocator_type &__a = allocator_type())
         : __base(__a, __last - __first)
     {
-        uninitialized_copy(__first, __last, __m_start);
+        uninitialized_copy(__first, __last, _M_start);
     }
 
 #endif /* __DST_MEMBER_TEMPLATES */
 
     ~deque()
     {
-        destroy(__m_start, __m_finish);
+        destroy(_M_start, _M_finish);
     }
 
     deque &operator=(const deque &__x)
@@ -614,12 +614,12 @@ public: // Constructor, destructor.
         if (&__x != this)
         {
             if (__len >= __x.size())
-                erase(copy(__x.begin(), __x.end(), __m_start), __m_finish);
+                erase(copy(__x.begin(), __x.end(), _M_start), _M_finish);
             else
             {
                 const_iterator __mid = __x.begin() + difference_type(__len);
-                copy(__x.begin(), __mid, __m_start);
-                insert(__m_finish, __mid, __x.end());
+                copy(__x.begin(), __mid, _M_start);
+                insert(_M_finish, __mid, __x.end());
             }
         }
         return *this;
@@ -627,10 +627,10 @@ public: // Constructor, destructor.
 
     void swap(deque &__x)
     {
-        __VDSA::swap(__m_start, __x.__m_start);
-        __VDSA::swap(__m_finish, __x.__m_finish);
-        __VDSA::swap(__m_map, __x.__m_map);
-        __VDSA::swap(__m_map_size, __x.__m_map_size);
+        __VDSA::swap(_M_start, __x._M_start);
+        __VDSA::swap(_M_finish, __x._M_finish);
+        __VDSA::swap(_M_map, __x._M_map);
+        __VDSA::swap(_M_map_size, __x._M_map_size);
     }
 
 public:
@@ -639,7 +639,7 @@ public:
     // The range version is a member template, so we dispatch on whether
     // or not the type is an integer.
 
-    void __m_fill_assign(size_type __n, const _Tp &__val)
+    void _M_fill_assign(size_type __n, const _Tp &__val)
     {
         if (__n > size())
         {
@@ -655,7 +655,7 @@ public:
 
     void assign(size_type __n, const _Tp &__val)
     {
-        __m_fill_assign(__n, __val);
+        _M_fill_assign(__n, __val);
     }
 
 #ifdef __DST_MEMBER_TEMPLATES
@@ -664,27 +664,27 @@ public:
     void assign(_InputIterator __first, _InputIterator __last)
     {
         typedef typename _Is_integer<_InputIterator>::_Integral _Integral;
-        __m_assign_dispatch(__first, __last, _Integral());
+        _M_assign_dispatch(__first, __last, _Integral());
     }
 
 private: // helper functions for assign()
     template <class _Integer>
-    void __m_assign_dispatch(_Integer __n, _Integer __val, __true_type)
+    void _M_assign_dispatch(_Integer __n, _Integer __val, __true_type)
     {
-        __m_fill_assign((size_type)__n, (_Tp)__val);
+        _M_fill_assign((size_type)__n, (_Tp)__val);
     }
 
     template <class _InputIterator>
-    void __m_assign_dispatch(_InputIterator __first, _InputIterator __last, __false_type)
+    void _M_assign_dispatch(_InputIterator __first, _InputIterator __last, __false_type)
     {
-        __m_assign_aux(__first, __last, __ITERATOR_CATEGORY(__first));
+        _M_assign_aux(__first, __last, __ITERATOR_CATEGORY(__first));
     }
 
     template <class _InputIterator>
-    void __m_assign_aux(_InputIterator __first, _InputIterator __last, input_iterator_tag);
+    void _M_assign_aux(_InputIterator __first, _InputIterator __last, input_iterator_tag);
 
     template <class _ForwardIterator>
-    void __m_assign_aux(_ForwardIterator __first, _ForwardIterator __last, forward_iterator_tag)
+    void _M_assign_aux(_ForwardIterator __first, _ForwardIterator __last, forward_iterator_tag)
     {
         size_type __len = 0;
         distance(__first, __last, __len);
@@ -704,88 +704,88 @@ private: // helper functions for assign()
 public: // push_* and pop_*
     void push_back(const value_type &__t)
     {
-        if (__m_finish.__m_cur != __m_finish.__m_last - 1)
+        if (_M_finish._M_cur != _M_finish._M_last - 1)
         {
-            construct(__m_finish.__m_cur, __t);
-            ++__m_finish.__m_cur;
+            construct(_M_finish._M_cur, __t);
+            ++_M_finish._M_cur;
         }
         else
-            __m_push_back_aux(__t);
+            _M_push_back_aux(__t);
     }
 
     void push_back()
     {
-        if (__m_finish.__m_cur != __m_finish.__m_last - 1)
+        if (_M_finish._M_cur != _M_finish._M_last - 1)
         {
-            construct(__m_finish.__m_cur);
-            ++__m_finish.__m_cur;
+            construct(_M_finish._M_cur);
+            ++_M_finish._M_cur;
         }
         else
-            __m_push_back_aux();
+            _M_push_back_aux();
     }
 
     void push_front(const value_type &__t)
     {
-        if (__m_start.__m_cur != __m_start.__m_first)
+        if (_M_start._M_cur != _M_start._M_first)
         {
-            construct(__m_start.__m_cur - 1, __t);
-            --__m_start.__m_cur;
+            construct(_M_start._M_cur - 1, __t);
+            --_M_start._M_cur;
         }
         else
-            __m_push_front_aux(__t);
+            _M_push_front_aux(__t);
     }
 
     void push_front()
     {
-        if (__m_start.__m_cur != __m_start.__m_first)
+        if (_M_start._M_cur != _M_start._M_first)
         {
-            construct(__m_start.__m_cur - 1);
-            --__m_start.__m_cur;
+            construct(_M_start._M_cur - 1);
+            --_M_start._M_cur;
         }
         else
-            __m_push_front_aux();
+            _M_push_front_aux();
     }
 
     void pop_back()
     {
-        if (__m_finish.__m_cur != __m_finish.__m_first)
+        if (_M_finish._M_cur != _M_finish._M_first)
         {
-            --__m_finish.__m_cur;
-            destroy(__m_finish.__m_cur);
+            --_M_finish._M_cur;
+            destroy(_M_finish._M_cur);
         }
         else
-            __m_pop_back_aux();
+            _M_pop_back_aux();
     }
 
     void pop_front()
     {
-        if (__m_start.__m_cur != __m_start.__m_last - 1)
+        if (_M_start._M_cur != _M_start._M_last - 1)
         {
-            destroy(__m_start.__m_cur);
-            ++__m_start.__m_cur;
+            destroy(_M_start._M_cur);
+            ++_M_start._M_cur;
         }
         else
-            __m_pop_front_aux();
+            _M_pop_front_aux();
     }
 
 public: // Insert
     iterator insert(iterator position, const value_type &__x)
     {
-        if (position.__m_cur == __m_start.__m_cur)
+        if (position._M_cur == _M_start._M_cur)
         {
             push_front(__x);
-            return __m_start;
+            return _M_start;
         }
-        else if (position.__m_cur == __m_finish.__m_cur)
+        else if (position._M_cur == _M_finish._M_cur)
         {
             push_back(__x);
-            iterator __tmp = __m_finish;
+            iterator __tmp = _M_finish;
             --__tmp;
             return __tmp;
         }
         else
         {
-            return __m_insert_aux(position, __x);
+            return _M_insert_aux(position, __x);
         }
     }
 
@@ -796,10 +796,10 @@ public: // Insert
 
     void insert(iterator __pos, size_type __n, const value_type &__x)
     {
-        __m_fill_insert(__pos, __n, __x);
+        _M_fill_insert(__pos, __n, __x);
     }
 
-    void __m_fill_insert(iterator __pos, size_type __n, const value_type &__x);
+    void _M_fill_insert(iterator __pos, size_type __n, const value_type &__x);
 
 #ifdef __DST_MEMBER_TEMPLATES
 
@@ -808,17 +808,17 @@ public: // Insert
     void insert(iterator __pos, _InputIterator __first, _InputIterator __last)
     {
         typedef typename _Is_integer<_InputIterator>::_Integral _Integral;
-        __m_insert_dispatch(__pos, __first, __last, _Integral());
+        _M_insert_dispatch(__pos, __first, __last, _Integral());
     }
 
     template <class _Integer>
-    void __m_insert_dispatch(iterator __pos, _Integer __n, _Integer __x, __true_type)
+    void _M_insert_dispatch(iterator __pos, _Integer __n, _Integer __x, __true_type)
     {
-        __m_fill_insert(__pos, (size_type)__n, (value_type)__x);
+        _M_fill_insert(__pos, (size_type)__n, (value_type)__x);
     }
 
     template <class _InputIterator>
-    void __m_insert_dispatch(iterator __pos, _InputIterator __first, _InputIterator __last, __false_type)
+    void _M_insert_dispatch(iterator __pos, _InputIterator __first, _InputIterator __last, __false_type)
     {
         insert(__pos, __first, __last, __ITERATOR_CATEGORY(__first));
     }
@@ -834,9 +834,9 @@ public: // Insert
     {
         const size_type __len = size();
         if (__new_size < __len)
-            erase(__m_start + __new_size, __m_finish);
+            erase(_M_start + __new_size, _M_finish);
         else
-            insert(__m_finish, __new_size - __len, __x);
+            insert(_M_finish, __new_size - __len, __x);
     }
 
     void resize(size_type new_size) { resize(new_size, value_type()); }
@@ -846,43 +846,43 @@ public: // Erase
     {
         iterator __next = __pos;
         ++__next;
-        difference_type __index = __pos - __m_start;
+        difference_type __index = __pos - _M_start;
         if (size_type(__index) < (this->size() >> 1))
         {
-            copy_backward(__m_start, __pos, __next);
+            copy_backward(_M_start, __pos, __next);
             pop_front();
         }
         else
         {
-            copy(__next, __m_finish, __pos);
+            copy(__next, _M_finish, __pos);
             pop_back();
         }
-        return __m_start + __index;
+        return _M_start + __index;
     }
 
     iterator erase(iterator __first, iterator __last);
     void clear();
 
 protected: // Internal construction/destruction
-    void __m_fill_initialize(const value_type &__value);
+    void _M_fill_initialize(const value_type &__value);
 
 #ifdef __DST_MEMBER_TEMPLATES
 
     template <class _InputIterator>
-    void __m_range_initialize(_InputIterator __first, _InputIterator __last, input_iterator_tag);
+    void _M_range_initialize(_InputIterator __first, _InputIterator __last, input_iterator_tag);
 
     template <class _ForwardIterator>
-    void __m_range_initialize(_ForwardIterator __first, _ForwardIterator __last, forward_iterator_tag);
+    void _M_range_initialize(_ForwardIterator __first, _ForwardIterator __last, forward_iterator_tag);
 
 #endif /* __DST_MEMBER_TEMPLATES */
 
 protected: // Internal push_* and pop_*
-    void __m_push_back_aux(const value_type &);
-    void __m_push_back_aux();
-    void __m_push_front_aux(const value_type &);
-    void __m_push_front_aux();
-    void __m_pop_back_aux();
-    void __m_pop_front_aux();
+    void _M_push_back_aux(const value_type &);
+    void _M_push_back_aux();
+    void _M_push_front_aux(const value_type &);
+    void _M_push_front_aux();
+    void _M_pop_back_aux();
+    void _M_pop_front_aux();
 
 protected: // Internal insert functions
 #ifdef __DST_MEMBER_TEMPLATES
@@ -895,60 +895,60 @@ protected: // Internal insert functions
 
 #endif /* __DST_MEMBER_TEMPLATES */
 
-    iterator __m_insert_aux(iterator __pos, const value_type &__x);
-    iterator __m_insert_aux(iterator __pos);
-    void __m_insert_aux(iterator __pos, size_type __n, const value_type &__x);
+    iterator _M_insert_aux(iterator __pos, const value_type &__x);
+    iterator _M_insert_aux(iterator __pos);
+    void _M_insert_aux(iterator __pos, size_type __n, const value_type &__x);
 
 #ifdef __DST_MEMBER_TEMPLATES
 
     template <class _ForwardIterator>
-    void __m_insert_aux(iterator __pos, _ForwardIterator __first, _ForwardIterator __last, size_type __n);
+    void _M_insert_aux(iterator __pos, _ForwardIterator __first, _ForwardIterator __last, size_type __n);
 
 #else /* __DST_MEMBER_TEMPLATES */
 
-    void __m_insert_aux(iterator __pos, const value_type *__first, const value_type *__last, size_type __n);
+    void _M_insert_aux(iterator __pos, const value_type *__first, const value_type *__last, size_type __n);
 
-    void __m_insert_aux(iterator __pos, const_iterator __first, const_iterator __last, size_type __n);
+    void _M_insert_aux(iterator __pos, const_iterator __first, const_iterator __last, size_type __n);
 
 #endif /* __DST_MEMBER_TEMPLATES */
 
-    iterator __m_reserve_elements_at_front(size_type __n)
+    iterator _M_reserve_elements_at_front(size_type __n)
     {
-        size_type __vacancies = __m_start.__m_cur - __m_start.__m_first;
+        size_type __vacancies = _M_start._M_cur - _M_start._M_first;
         if (__n > __vacancies)
-            __m_new_elements_at_front(__n - __vacancies);
-        return __m_start - difference_type(__n);
+            _M_new_elements_at_front(__n - __vacancies);
+        return _M_start - difference_type(__n);
     }
 
-    iterator __m_reserve_elements_at_back(size_type __n)
+    iterator _M_reserve_elements_at_back(size_type __n)
     {
-        size_type __vacancies = (__m_finish.__m_last - __m_finish.__m_cur) - 1;
+        size_type __vacancies = (_M_finish._M_last - _M_finish._M_cur) - 1;
         if (__n > __vacancies)
-            __m_new_elements_at_back(__n - __vacancies);
-        return __m_finish + difference_type(__n);
+            _M_new_elements_at_back(__n - __vacancies);
+        return _M_finish + difference_type(__n);
     }
 
-    void __m_new_elements_at_front(size_type __new_elements);
-    void __m_new_elements_at_back(size_type __new_elements);
+    void _M_new_elements_at_front(size_type __new_elements);
+    void _M_new_elements_at_back(size_type __new_elements);
 
-protected: // Allocation of __m_map and nodes
-    // Makes sure the __m_map has space for new nodes.  Does not actually
-    //  add the nodes.  Can invalidate __m_map pointers.  (And consequently,
+protected: // Allocation of _M_map and nodes
+    // Makes sure the _M_map has space for new nodes.  Does not actually
+    //  add the nodes.  Can invalidate _M_map pointers.  (And consequently,
     //  deque iterators.)
 
-    void __m_reserve_map_at_back(size_type __nodes_to_add = 1)
+    void _M_reserve_map_at_back(size_type __nodes_to_add = 1)
     {
-        if (__nodes_to_add + 1 > __m_map_size - (__m_finish.__map_node - __m_map))
-            __m_reallocate_map(__nodes_to_add, false);
+        if (__nodes_to_add + 1 > _M_map_size - (_M_finish.__map_node - _M_map))
+            _M_reallocate_map(__nodes_to_add, false);
     }
 
-    void __m_reserve_map_at_front(size_type __nodes_to_add = 1)
+    void _M_reserve_map_at_front(size_type __nodes_to_add = 1)
     {
-        if (__nodes_to_add > size_type(__m_start.__map_node - __m_map))
-            __m_reallocate_map(__nodes_to_add, true);
+        if (__nodes_to_add > size_type(_M_start.__map_node - _M_map))
+            _M_reallocate_map(__nodes_to_add, true);
     }
 
-    void __m_reallocate_map(size_type __nodes_to_add, bool __add_at_front);
+    void _M_reallocate_map(size_type __nodes_to_add, bool __add_at_front);
 };
 
 // Non-inline member functions
@@ -957,7 +957,7 @@ protected: // Allocation of __m_map and nodes
 
 template <class _Tp, class _Alloc>
 template <class _InputIter>
-void deque<_Tp, _Alloc>::__m_assign_aux(_InputIter __first, _InputIter __last, input_iterator_tag)
+void deque<_Tp, _Alloc>::_M_assign_aux(_InputIter __first, _InputIter __last, input_iterator_tag)
 {
     iterator __cur = begin();
     for (; __first != __last && __cur != end(); ++__cur, ++__first)
@@ -971,30 +971,30 @@ void deque<_Tp, _Alloc>::__m_assign_aux(_InputIter __first, _InputIter __last, i
 #endif /* __DST_MEMBER_TEMPLATES */
 
 template <class _Tp, class _Alloc>
-void deque<_Tp, _Alloc>::__m_fill_insert(iterator __pos, size_type __n, const value_type &__x)
+void deque<_Tp, _Alloc>::_M_fill_insert(iterator __pos, size_type __n, const value_type &__x)
 {
-    if (__pos.__m_cur == __m_start.__m_cur)
+    if (__pos._M_cur == _M_start._M_cur)
     {
-        iterator __new_start = __m_reserve_elements_at_front(__n);
+        iterator __new_start = _M_reserve_elements_at_front(__n);
         __DST_TRY
         {
-            uninitialized_fill(__new_start, __m_start, __x);
-            __m_start = __new_start;
+            uninitialized_fill(__new_start, _M_start, __x);
+            _M_start = __new_start;
         }
-        __DST_UNWIND(__m_destroy_nodes(__new_start.__map_node, __m_start.__map_node));
+        __DST_UNWIND(_M_destroy_nodes(__new_start.__map_node, _M_start.__map_node));
     }
-    else if (__pos.__m_cur == __m_finish.__m_cur)
+    else if (__pos._M_cur == _M_finish._M_cur)
     {
-        iterator __new_finish = __m_reserve_elements_at_back(__n);
+        iterator __new_finish = _M_reserve_elements_at_back(__n);
         __DST_TRY
         {
-            uninitialized_fill(__m_finish, __new_finish, __x);
-            __m_finish = __new_finish;
+            uninitialized_fill(_M_finish, __new_finish, __x);
+            _M_finish = __new_finish;
         }
-        __DST_UNWIND(__m_destroy_nodes(__m_finish.__map_node + 1, __new_finish.__map_node + 1));
+        __DST_UNWIND(_M_destroy_nodes(_M_finish.__map_node + 1, __new_finish.__map_node + 1));
     }
     else
-        __m_insert_aux(__pos, __n, __x);
+        _M_insert_aux(__pos, __n, __x);
 }
 
 #ifndef __DST_MEMBER_TEMPLATES
@@ -1003,56 +1003,56 @@ template <class _Tp, class _Alloc>
 void deque<_Tp, _Alloc>::insert(iterator __pos, const value_type *__first, const value_type *__last)
 {
     size_type __n = __last - __first;
-    if (__pos.__m_cur == __m_start.__m_cur)
+    if (__pos._M_cur == _M_start._M_cur)
     {
-        iterator __new_start = __m_reserve_elements_at_front(__n);
+        iterator __new_start = _M_reserve_elements_at_front(__n);
         __DST_TRY
         {
             uninitialized_copy(__first, __last, __new_start);
-            __m_start = __new_start;
+            _M_start = __new_start;
         }
-        __DST_UNWIND(__m_destroy_nodes(__new_start.__map_node, __m_start.__map_node));
+        __DST_UNWIND(_M_destroy_nodes(__new_start.__map_node, _M_start.__map_node));
     }
-    else if (__pos.__m_cur == __m_finish.__m_cur)
+    else if (__pos._M_cur == _M_finish._M_cur)
     {
-        iterator __new_finish = __m_reserve_elements_at_back(__n);
+        iterator __new_finish = _M_reserve_elements_at_back(__n);
         __DST_TRY
         {
-            uninitialized_copy(__first, __last, __m_finish);
-            __m_finish = __new_finish;
+            uninitialized_copy(__first, __last, _M_finish);
+            _M_finish = __new_finish;
         }
-        __DST_UNWIND(__m_destroy_nodes(__m_finish.__map_node + 1, __new_finish.__map_node + 1));
+        __DST_UNWIND(_M_destroy_nodes(_M_finish.__map_node + 1, __new_finish.__map_node + 1));
     }
     else
-        __m_insert_aux(__pos, __first, __last, __n);
+        _M_insert_aux(__pos, __first, __last, __n);
 }
 
 template <class _Tp, class _Alloc>
 void deque<_Tp, _Alloc>::insert(iterator __pos, const_iterator __first, const_iterator __last)
 {
     size_type __n = __last - __first;
-    if (__pos.__m_cur == __m_start.__m_cur)
+    if (__pos._M_cur == _M_start._M_cur)
     {
-        iterator __new_start = __m_reserve_elements_at_front(__n);
+        iterator __new_start = _M_reserve_elements_at_front(__n);
         __DST_TRY
         {
             uninitialized_copy(__first, __last, __new_start);
-            __m_start = __new_start;
+            _M_start = __new_start;
         }
-        __DST_UNWIND(__m_destroy_nodes(__new_start.__map_node, __m_start.__map_node));
+        __DST_UNWIND(_M_destroy_nodes(__new_start.__map_node, _M_start.__map_node));
     }
-    else if (__pos.__m_cur == __m_finish.__m_cur)
+    else if (__pos._M_cur == _M_finish._M_cur)
     {
-        iterator __new_finish = __m_reserve_elements_at_back(__n);
+        iterator __new_finish = _M_reserve_elements_at_back(__n);
         __DST_TRY
         {
-            uninitialized_copy(__first, __last, __m_finish);
-            __m_finish = __new_finish;
+            uninitialized_copy(__first, __last, _M_finish);
+            _M_finish = __new_finish;
         }
-        __DST_UNWIND(__m_destroy_nodes(__m_finish.__map_node + 1, __new_finish.__map_node + 1));
+        __DST_UNWIND(_M_destroy_nodes(_M_finish.__map_node + 1, __new_finish.__map_node + 1));
     }
     else
-        __m_insert_aux(__pos, __first, __last, __n);
+        _M_insert_aux(__pos, __first, __last, __n);
 }
 
 #endif /* __DST_MEMBER_TEMPLATES */
@@ -1061,80 +1061,80 @@ template <class _Tp, class _Alloc>
 typename deque<_Tp, _Alloc>::iterator
 deque<_Tp, _Alloc>::erase(iterator __first, iterator __last)
 {
-    if (__first == __m_start && __last == __m_finish)
+    if (__first == _M_start && __last == _M_finish)
     {
         clear();
-        return __m_finish;
+        return _M_finish;
     }
     else
     {
         difference_type __n = __last - __first;
-        difference_type __elems_before = __first - __m_start;
+        difference_type __elems_before = __first - _M_start;
         if (__elems_before < difference_type((this->size() - __n) / 2))
         {
-            copy_backward(__m_start, __first, __last);
-            iterator __new_start = __m_start + __n;
-            destroy(__m_start, __new_start);
-            __m_destroy_nodes(__new_start.__map_node, __m_start.__map_node);
-            __m_start = __new_start;
+            copy_backward(_M_start, __first, __last);
+            iterator __new_start = _M_start + __n;
+            destroy(_M_start, __new_start);
+            _M_destroy_nodes(__new_start.__map_node, _M_start.__map_node);
+            _M_start = __new_start;
         }
         else
         {
-            copy(__last, __m_finish, __first);
-            iterator __new_finish = __m_finish - __n;
-            destroy(__new_finish, __m_finish);
-            __m_destroy_nodes(__new_finish.__map_node + 1, __m_finish.__map_node + 1);
-            __m_finish = __new_finish;
+            copy(__last, _M_finish, __first);
+            iterator __new_finish = _M_finish - __n;
+            destroy(__new_finish, _M_finish);
+            _M_destroy_nodes(__new_finish.__map_node + 1, _M_finish.__map_node + 1);
+            _M_finish = __new_finish;
         }
-        return __m_start + __elems_before;
+        return _M_start + __elems_before;
     }
 }
 
 template <class _Tp, class _Alloc>
 void deque<_Tp, _Alloc>::clear()
 {
-    for (__map_pointer __node = __m_start.__map_node + 1; __node < __m_finish.__map_node; ++__node)
+    for (__map_pointer __node = _M_start.__map_node + 1; __node < _M_finish.__map_node; ++__node)
     {
-        destroy(*__node, *__node + __s_buffer_size());
-        __m_deallocate_node(*__node);
+        destroy(*__node, *__node + _S_buffer_size());
+        _M_deallocate_node(*__node);
     }
 
-    if (__m_start.__map_node != __m_finish.__map_node)
+    if (_M_start.__map_node != _M_finish.__map_node)
     {
-        destroy(__m_start.__m_cur, __m_start.__m_last);
-        destroy(__m_finish.__m_first, __m_finish.__m_cur);
-        __m_deallocate_node(__m_finish.__m_first);
+        destroy(_M_start._M_cur, _M_start._M_last);
+        destroy(_M_finish._M_first, _M_finish._M_cur);
+        _M_deallocate_node(_M_finish._M_first);
     }
     else
-        destroy(__m_start.__m_cur, __m_finish.__m_cur);
+        destroy(_M_start._M_cur, _M_finish._M_cur);
 
-    __m_finish = __m_start;
+    _M_finish = _M_start;
 }
 
-// Precondition: __m_start and __m_finish have already been initialized,
+// Precondition: _M_start and _M_finish have already been initialized,
 // but none of the deque's elements have yet been constructed.
 template <class _Tp, class _Alloc>
-void deque<_Tp, _Alloc>::__m_fill_initialize(const value_type &__value)
+void deque<_Tp, _Alloc>::_M_fill_initialize(const value_type &__value)
 {
     __map_pointer __cur;
     __DST_TRY
     {
-        for (__cur = __m_start.__map_node; __cur < __m_finish.__map_node; ++__cur)
+        for (__cur = _M_start.__map_node; __cur < _M_finish.__map_node; ++__cur)
         {
-            uninitialized_fill(*__cur, *__cur + __s_buffer_size(), __value);
+            uninitialized_fill(*__cur, *__cur + _S_buffer_size(), __value);
         }
-        uninitialized_fill(__m_finish.__m_first, __m_finish.__m_cur, __value);
+        uninitialized_fill(_M_finish._M_first, _M_finish._M_cur, __value);
     }
-    __DST_UNWIND(destroy(__m_start, iterator(*__cur, __cur)));
+    __DST_UNWIND(destroy(_M_start, iterator(*__cur, __cur)));
 }
 
 #ifdef __DST_MEMBER_TEMPLATES
 
 template <class _Tp, class _Alloc>
 template <class _InputIterator>
-void deque<_Tp, _Alloc>::__m_range_initialize(_InputIterator __first, _InputIterator __last, input_iterator_tag)
+void deque<_Tp, _Alloc>::_M_range_initialize(_InputIterator __first, _InputIterator __last, input_iterator_tag)
 {
-    __m_initialize_map(0);
+    _M_initialize_map(0);
     __DST_TRY
     {
         for (; __first != __last; ++__first)
@@ -1145,114 +1145,114 @@ void deque<_Tp, _Alloc>::__m_range_initialize(_InputIterator __first, _InputIter
 
 template <class _Tp, class _Alloc>
 template <class _ForwardIterator>
-void deque<_Tp, _Alloc>::__m_range_initialize(_ForwardIterator __first, _ForwardIterator __last, forward_iterator_tag)
+void deque<_Tp, _Alloc>::_M_range_initialize(_ForwardIterator __first, _ForwardIterator __last, forward_iterator_tag)
 {
     size_type __n = 0;
     distance(__first, __last, __n);
-    __m_initialize_map(__n);
+    _M_initialize_map(__n);
 
     __map_pointer __cur_node;
     __DST_TRY
     {
-        for (__cur_node = __m_start.__map_node;
-             __cur_node < __m_finish.__map_node;
+        for (__cur_node = _M_start.__map_node;
+             __cur_node < _M_finish.__map_node;
              ++__cur_node)
         {
             _ForwardIterator __mid = __first;
-            advance(__mid, __s_buffer_size());
+            advance(__mid, _S_buffer_size());
             uninitialized_copy(__first, __mid, *__cur_node);
             __first = __mid;
         }
-        uninitialized_copy(__first, __last, __m_finish.__m_first);
+        uninitialized_copy(__first, __last, _M_finish._M_first);
     }
-    __DST_UNWIND(destroy(__m_start, iterator(*__cur_node, __cur_node)));
+    __DST_UNWIND(destroy(_M_start, iterator(*__cur_node, __cur_node)));
 }
 
 #endif /* __DST_MEMBER_TEMPLATES */
 
-// Called only if __m_finish.__m_cur == __m_finish.__m_last - 1.
+// Called only if _M_finish._M_cur == _M_finish._M_last - 1.
 template <class _Tp, class _Alloc>
-void deque<_Tp, _Alloc>::__m_push_back_aux(const value_type &__t)
+void deque<_Tp, _Alloc>::_M_push_back_aux(const value_type &__t)
 {
     value_type __t_copy = __t;
-    __m_reserve_map_at_back();
-    *(__m_finish.__map_node + 1) = __m_allocate_node();
+    _M_reserve_map_at_back();
+    *(_M_finish.__map_node + 1) = _M_allocate_node();
     __DST_TRY
     {
-        construct(__m_finish.__m_cur, __t_copy);
-        __m_finish.__m_set_node(__m_finish.__map_node + 1);
-        __m_finish.__m_cur = __m_finish.__m_first;
+        construct(_M_finish._M_cur, __t_copy);
+        _M_finish._M_set_node(_M_finish.__map_node + 1);
+        _M_finish._M_cur = _M_finish._M_first;
     }
-    __DST_UNWIND(__m_deallocate_node(*(__m_finish.__map_node + 1)));
+    __DST_UNWIND(_M_deallocate_node(*(_M_finish.__map_node + 1)));
 }
 
-// Called only if __m_finish.__m_cur == __m_finish.__m_last - 1.
+// Called only if _M_finish._M_cur == _M_finish._M_last - 1.
 template <class _Tp, class _Alloc>
-void deque<_Tp, _Alloc>::__m_push_back_aux()
+void deque<_Tp, _Alloc>::_M_push_back_aux()
 {
-    __m_reserve_map_at_back();
-    *(__m_finish.__map_node + 1) = __m_allocate_node();
+    _M_reserve_map_at_back();
+    *(_M_finish.__map_node + 1) = _M_allocate_node();
     __DST_TRY
     {
-        construct(__m_finish.__m_cur);
-        __m_finish.__m_set_node(__m_finish.__map_node + 1);
-        __m_finish.__m_cur = __m_finish.__m_first;
+        construct(_M_finish._M_cur);
+        _M_finish._M_set_node(_M_finish.__map_node + 1);
+        _M_finish._M_cur = _M_finish._M_first;
     }
-    __DST_UNWIND(__m_deallocate_node(*(__m_finish.__map_node + 1)));
+    __DST_UNWIND(_M_deallocate_node(*(_M_finish.__map_node + 1)));
 }
 
-// Called only if __m_start.__m_cur == __m_start.__m_first.
+// Called only if _M_start._M_cur == _M_start._M_first.
 template <class _Tp, class _Alloc>
-void deque<_Tp, _Alloc>::__m_push_front_aux(const value_type &__t)
+void deque<_Tp, _Alloc>::_M_push_front_aux(const value_type &__t)
 {
     value_type __t_copy = __t;
-    __m_reserve_map_at_front();
-    *(__m_start.__map_node - 1) = __m_allocate_node();
+    _M_reserve_map_at_front();
+    *(_M_start.__map_node - 1) = _M_allocate_node();
     __DST_TRY
     {
-        __m_start.__m_set_node(__m_start.__map_node - 1);
-        __m_start.__m_cur = __m_start.__m_last - 1;
-        construct(__m_start.__m_cur, __t_copy);
+        _M_start._M_set_node(_M_start.__map_node - 1);
+        _M_start._M_cur = _M_start._M_last - 1;
+        construct(_M_start._M_cur, __t_copy);
     }
-    __DST_UNWIND((++__m_start, __m_deallocate_node(*(__m_start.__map_node - 1))));
+    __DST_UNWIND((++_M_start, _M_deallocate_node(*(_M_start.__map_node - 1))));
 }
 
-// Called only if __m_start.__m_cur == __m_start.__m_first.
+// Called only if _M_start._M_cur == _M_start._M_first.
 template <class _Tp, class _Alloc>
-void deque<_Tp, _Alloc>::__m_push_front_aux()
+void deque<_Tp, _Alloc>::_M_push_front_aux()
 {
-    __m_reserve_map_at_front();
-    *(__m_start.__map_node - 1) = __m_allocate_node();
+    _M_reserve_map_at_front();
+    *(_M_start.__map_node - 1) = _M_allocate_node();
     __DST_TRY
     {
-        __m_start.__m_set_node(__m_start.__map_node - 1);
-        __m_start.__m_cur = __m_start.__m_last - 1;
-        construct(__m_start.__m_cur);
+        _M_start._M_set_node(_M_start.__map_node - 1);
+        _M_start._M_cur = _M_start._M_last - 1;
+        construct(_M_start._M_cur);
     }
-    __DST_UNWIND((++__m_start, __m_deallocate_node(*(__m_start.__map_node - 1))));
+    __DST_UNWIND((++_M_start, _M_deallocate_node(*(_M_start.__map_node - 1))));
 }
 
-// Called only if __m_finish.__m_cur == __m_finish.__m_first.
+// Called only if _M_finish._M_cur == _M_finish._M_first.
 template <class _Tp, class _Alloc>
-void deque<_Tp, _Alloc>::__m_pop_back_aux()
+void deque<_Tp, _Alloc>::_M_pop_back_aux()
 {
-    __m_deallocate_node(__m_finish.__m_first);
-    __m_finish.__m_set_node(__m_finish.__map_node - 1);
-    __m_finish.__m_cur = __m_finish.__m_last - 1;
-    destroy(__m_finish.__m_cur);
+    _M_deallocate_node(_M_finish._M_first);
+    _M_finish._M_set_node(_M_finish.__map_node - 1);
+    _M_finish._M_cur = _M_finish._M_last - 1;
+    destroy(_M_finish._M_cur);
 }
 
-// Called only if __m_start.__m_cur == __m_start.__m_last - 1.  Note that
+// Called only if _M_start._M_cur == _M_start._M_last - 1.  Note that
 // if the deque has at least one element (a precondition for this member
-// function), and if __m_start.__m_cur == __m_start.__m_last, then the deque
+// function), and if _M_start._M_cur == _M_start._M_last, then the deque
 // must have at least two nodes.
 template <class _Tp, class _Alloc>
-void deque<_Tp, _Alloc>::__m_pop_front_aux()
+void deque<_Tp, _Alloc>::_M_pop_front_aux()
 {
-    destroy(__m_start.__m_cur);
-    __m_deallocate_node(__m_start.__m_first);
-    __m_start.__m_set_node(__m_start.__map_node + 1);
-    __m_start.__m_cur = __m_start.__m_first;
+    destroy(_M_start._M_cur);
+    _M_deallocate_node(_M_start._M_first);
+    _M_start._M_set_node(_M_start.__map_node + 1);
+    _M_start._M_cur = _M_start._M_first;
 }
 
 #ifdef __DST_MEMBER_TEMPLATES
@@ -1270,46 +1270,46 @@ void deque<_Tp, _Alloc>::insert(iterator __pos, _ForwardIterator __first, _Forwa
 {
     size_type __n = 0;
     distance(__first, __last, __n);
-    if (__pos.__m_cur == __m_start.__m_cur)
+    if (__pos._M_cur == _M_start._M_cur)
     {
-        iterator __new_start = __m_reserve_elements_at_front(__n);
+        iterator __new_start = _M_reserve_elements_at_front(__n);
         __DST_TRY
         {
             uninitialized_copy(__first, __last, __new_start);
-            __m_start = __new_start;
+            _M_start = __new_start;
         }
-        __DST_UNWIND(__m_destroy_nodes(__new_start.__map_node, __m_start.__map_node));
+        __DST_UNWIND(_M_destroy_nodes(__new_start.__map_node, _M_start.__map_node));
     }
-    else if (__pos.__m_cur == __m_finish.__m_cur)
+    else if (__pos._M_cur == _M_finish._M_cur)
     {
-        iterator __new_finish = __m_reserve_elements_at_back(__n);
+        iterator __new_finish = _M_reserve_elements_at_back(__n);
         __DST_TRY
         {
-            uninitialized_copy(__first, __last, __m_finish);
-            __m_finish = __new_finish;
+            uninitialized_copy(__first, __last, _M_finish);
+            _M_finish = __new_finish;
         }
-        __DST_UNWIND(__m_destroy_nodes(__m_finish.__map_node + 1, __new_finish.__map_node + 1));
+        __DST_UNWIND(_M_destroy_nodes(_M_finish.__map_node + 1, __new_finish.__map_node + 1));
     }
     else
-        __m_insert_aux(__pos, __first, __last, __n);
+        _M_insert_aux(__pos, __first, __last, __n);
 }
 
 #endif /* __DST_MEMBER_TEMPLATES */
 
 template <class _Tp, class _Alloc>
 typename deque<_Tp, _Alloc>::iterator
-deque<_Tp, _Alloc>::__m_insert_aux(iterator __pos, const value_type &__x)
+deque<_Tp, _Alloc>::_M_insert_aux(iterator __pos, const value_type &__x)
 {
-    difference_type __index = __pos - __m_start;
+    difference_type __index = __pos - _M_start;
     value_type __x_copy = __x;
     if (size_type(__index) < this->size() / 2)
     {
         push_front(front());
-        iterator __front1 = __m_start;
+        iterator __front1 = _M_start;
         ++__front1;
         iterator __front2 = __front1;
         ++__front2;
-        __pos = __m_start + __index;
+        __pos = _M_start + __index;
         iterator __pos1 = __pos;
         ++__pos1;
         copy(__front2, __pos1, __front1);
@@ -1317,11 +1317,11 @@ deque<_Tp, _Alloc>::__m_insert_aux(iterator __pos, const value_type &__x)
     else
     {
         push_back(back());
-        iterator __back1 = __m_finish;
+        iterator __back1 = _M_finish;
         --__back1;
         iterator __back2 = __back1;
         --__back2;
-        __pos = __m_start + __index;
+        __pos = _M_start + __index;
         copy_backward(__pos, __back2, __back1);
     }
     *__pos = __x_copy;
@@ -1330,17 +1330,17 @@ deque<_Tp, _Alloc>::__m_insert_aux(iterator __pos, const value_type &__x)
 
 template <class _Tp, class _Alloc>
 typename deque<_Tp, _Alloc>::iterator
-deque<_Tp, _Alloc>::__m_insert_aux(iterator __pos)
+deque<_Tp, _Alloc>::_M_insert_aux(iterator __pos)
 {
-    difference_type __index = __pos - __m_start;
+    difference_type __index = __pos - _M_start;
     if (__index < size() / 2)
     {
         push_front(front());
-        iterator __front1 = __m_start;
+        iterator __front1 = _M_start;
         ++__front1;
         iterator __front2 = __front1;
         ++__front2;
-        __pos = __m_start + __index;
+        __pos = _M_start + __index;
         iterator __pos1 = __pos;
         ++__pos1;
         copy(__front2, __pos1, __front1);
@@ -1348,11 +1348,11 @@ deque<_Tp, _Alloc>::__m_insert_aux(iterator __pos)
     else
     {
         push_back(back());
-        iterator __back1 = __m_finish;
+        iterator __back1 = _M_finish;
         --__back1;
         iterator __back2 = __back1;
         --__back2;
-        __pos = __m_start + __index;
+        __pos = _M_start + __index;
         copy_backward(__pos, __back2, __back1);
     }
     *__pos = value_type();
@@ -1360,62 +1360,62 @@ deque<_Tp, _Alloc>::__m_insert_aux(iterator __pos)
 }
 
 template <class _Tp, class _Alloc>
-void deque<_Tp, _Alloc>::__m_insert_aux(iterator __pos,
+void deque<_Tp, _Alloc>::_M_insert_aux(iterator __pos,
                                         size_type __n,
                                         const value_type &__x)
 {
-    const difference_type __elems_before = __pos - __m_start;
+    const difference_type __elems_before = __pos - _M_start;
     size_type __length = this->size();
     value_type __x_copy = __x;
     if (__elems_before < difference_type(__length / 2))
     {
-        iterator __new_start = __m_reserve_elements_at_front(__n);
-        iterator __old_start = __m_start;
-        __pos = __m_start + __elems_before;
+        iterator __new_start = _M_reserve_elements_at_front(__n);
+        iterator __old_start = _M_start;
+        __pos = _M_start + __elems_before;
         __DST_TRY
         {
             if (__elems_before >= difference_type(__n))
             {
-                iterator __start_n = __m_start + difference_type(__n);
-                uninitialized_copy(__m_start, __start_n, __new_start);
-                __m_start = __new_start;
+                iterator __start_n = _M_start + difference_type(__n);
+                uninitialized_copy(_M_start, __start_n, __new_start);
+                _M_start = __new_start;
                 copy(__start_n, __pos, __old_start);
                 fill(__pos - difference_type(__n), __pos, __x_copy);
             }
             else
             {
-                __uninitialized_copy_fill(__m_start, __pos, __new_start, __m_start, __x_copy);
-                __m_start = __new_start;
+                __uninitialized_copy_fill(_M_start, __pos, __new_start, _M_start, __x_copy);
+                _M_start = __new_start;
                 fill(__old_start, __pos, __x_copy);
             }
         }
-        __DST_UNWIND(__m_destroy_nodes(__new_start.__map_node, __m_start.__map_node));
+        __DST_UNWIND(_M_destroy_nodes(__new_start.__map_node, _M_start.__map_node));
     }
     else
     {
-        iterator __new_finish = __m_reserve_elements_at_back(__n);
-        iterator __old_finish = __m_finish;
+        iterator __new_finish = _M_reserve_elements_at_back(__n);
+        iterator __old_finish = _M_finish;
         const difference_type __elems_after =
             difference_type(__length) - __elems_before;
-        __pos = __m_finish - __elems_after;
+        __pos = _M_finish - __elems_after;
         __DST_TRY
         {
             if (__elems_after > difference_type(__n))
             {
-                iterator __finish_n = __m_finish - difference_type(__n);
-                uninitialized_copy(__finish_n, __m_finish, __m_finish);
-                __m_finish = __new_finish;
+                iterator __finish_n = _M_finish - difference_type(__n);
+                uninitialized_copy(__finish_n, _M_finish, _M_finish);
+                _M_finish = __new_finish;
                 copy_backward(__pos, __finish_n, __old_finish);
                 fill(__pos, __pos + difference_type(__n), __x_copy);
             }
             else
             {
-                __uninitialized_fill_copy(__m_finish, __pos + difference_type(__n), __x_copy, __pos, __m_finish);
-                __m_finish = __new_finish;
+                __uninitialized_fill_copy(_M_finish, __pos + difference_type(__n), __x_copy, __pos, _M_finish);
+                _M_finish = __new_finish;
                 fill(__pos, __old_finish, __x_copy);
             }
         }
-        __DST_UNWIND(__m_destroy_nodes(__m_finish.__map_node + 1, __new_finish.__map_node + 1));
+        __DST_UNWIND(_M_destroy_nodes(_M_finish.__map_node + 1, __new_finish.__map_node + 1));
     }
 }
 
@@ -1423,22 +1423,22 @@ void deque<_Tp, _Alloc>::__m_insert_aux(iterator __pos,
 
 template <class _Tp, class _Alloc>
 template <class _ForwardIterator>
-void deque<_Tp, _Alloc>::__m_insert_aux(iterator __pos, _ForwardIterator __first, _ForwardIterator __last, size_type __n)
+void deque<_Tp, _Alloc>::_M_insert_aux(iterator __pos, _ForwardIterator __first, _ForwardIterator __last, size_type __n)
 {
-    const difference_type __elemsbefore = __pos - __m_start;
+    const difference_type __elemsbefore = __pos - _M_start;
     size_type __length = size();
     if (__elemsbefore < __length / 2)
     {
-        iterator __new_start = __m_reserve_elements_at_front(__n);
-        iterator __old_start = __m_start;
-        __pos = __m_start + __elemsbefore;
+        iterator __new_start = _M_reserve_elements_at_front(__n);
+        iterator __old_start = _M_start;
+        __pos = _M_start + __elemsbefore;
         __DST_TRY
         {
             if (__elemsbefore >= difference_type(__n))
             {
-                iterator __start_n = __m_start + difference_type(__n);
-                uninitialized_copy(__m_start, __start_n, __new_start);
-                __m_start = __new_start;
+                iterator __start_n = _M_start + difference_type(__n);
+                uninitialized_copy(_M_start, __start_n, __new_start);
+                _M_start = __new_start;
                 copy(__start_n, __pos, __old_start);
                 copy(__first, __last, __pos - difference_type(__n));
             }
@@ -1446,26 +1446,26 @@ void deque<_Tp, _Alloc>::__m_insert_aux(iterator __pos, _ForwardIterator __first
             {
                 _ForwardIterator __mid = __first;
                 advance(__mid, difference_type(__n) - __elemsbefore);
-                __uninitialized_copy_copy(__m_start, __pos, __first, __mid, __new_start);
-                __m_start = __new_start;
+                __uninitialized_copy_copy(_M_start, __pos, __first, __mid, __new_start);
+                _M_start = __new_start;
                 copy(__mid, __last, __old_start);
             }
         }
-        __DST_UNWIND(__m_destroy_nodes(__new_start.__map_node, __m_start.__map_node));
+        __DST_UNWIND(_M_destroy_nodes(__new_start.__map_node, _M_start.__map_node));
     }
     else
     {
-        iterator __new_finish = __m_reserve_elements_at_back(__n);
-        iterator __old_finish = __m_finish;
+        iterator __new_finish = _M_reserve_elements_at_back(__n);
+        iterator __old_finish = _M_finish;
         const difference_type __elemsafter = difference_type(__length) - __elemsbefore;
-        __pos = __m_finish - __elemsafter;
+        __pos = _M_finish - __elemsafter;
         __DST_TRY
         {
             if (__elemsafter > difference_type(__n))
             {
-                iterator __finish_n = __m_finish - difference_type(__n);
-                uninitialized_copy(__finish_n, __m_finish, __m_finish);
-                __m_finish = __new_finish;
+                iterator __finish_n = _M_finish - difference_type(__n);
+                uninitialized_copy(__finish_n, _M_finish, _M_finish);
+                _M_finish = __new_finish;
                 copy_backward(__pos, __finish_n, __old_finish);
                 copy(__first, __last, __pos);
             }
@@ -1473,34 +1473,34 @@ void deque<_Tp, _Alloc>::__m_insert_aux(iterator __pos, _ForwardIterator __first
             {
                 _ForwardIterator __mid = __first;
                 advance(__mid, __elemsafter);
-                __uninitialized_copy_copy(__mid, __last, __pos, __m_finish, __m_finish);
-                __m_finish = __new_finish;
+                __uninitialized_copy_copy(__mid, __last, __pos, _M_finish, _M_finish);
+                _M_finish = __new_finish;
                 copy(__first, __mid, __pos);
             }
         }
-        __DST_UNWIND(__m_destroy_nodes(__m_finish.__map_node + 1, __new_finish.__map_node + 1));
+        __DST_UNWIND(_M_destroy_nodes(_M_finish.__map_node + 1, __new_finish.__map_node + 1));
     }
 }
 
 #else /* __DST_MEMBER_TEMPLATES */
 
 template <class _Tp, class _Alloc>
-void deque<_Tp, _Alloc>::__m_insert_aux(iterator __pos, const value_type *__first, const value_type *__last, size_type __n)
+void deque<_Tp, _Alloc>::_M_insert_aux(iterator __pos, const value_type *__first, const value_type *__last, size_type __n)
 {
-    const difference_type __elemsbefore = __pos - __m_start;
+    const difference_type __elemsbefore = __pos - _M_start;
     size_type __length = size();
     if (__elemsbefore < __length / 2)
     {
-        iterator __new_start = __m_reserve_elements_at_front(__n);
-        iterator __old_start = __m_start;
-        __pos = __m_start + __elemsbefore;
+        iterator __new_start = _M_reserve_elements_at_front(__n);
+        iterator __old_start = _M_start;
+        __pos = _M_start + __elemsbefore;
         __DST_TRY
         {
             if (__elemsbefore >= difference_type(__n))
             {
-                iterator __start_n = __m_start + difference_type(__n);
-                uninitialized_copy(__m_start, __start_n, __new_start);
-                __m_start = __new_start;
+                iterator __start_n = _M_start + difference_type(__n);
+                uninitialized_copy(_M_start, __start_n, __new_start);
+                _M_start = __new_start;
                 copy(__start_n, __pos, __old_start);
                 copy(__first, __last, __pos - difference_type(__n));
             }
@@ -1508,175 +1508,175 @@ void deque<_Tp, _Alloc>::__m_insert_aux(iterator __pos, const value_type *__firs
             {
                 const value_type *__mid =
                     __first + (difference_type(__n) - __elemsbefore);
-                __uninitialized_copy_copy(__m_start, __pos, __first, __mid, __new_start);
-                __m_start = __new_start;
+                __uninitialized_copy_copy(_M_start, __pos, __first, __mid, __new_start);
+                _M_start = __new_start;
                 copy(__mid, __last, __old_start);
             }
         }
-        __DST_UNWIND(__m_destroy_nodes(__new_start.__map_node, __m_start.__map_node));
+        __DST_UNWIND(_M_destroy_nodes(__new_start.__map_node, _M_start.__map_node));
     }
     else
     {
-        iterator __new_finish = __m_reserve_elements_at_back(__n);
-        iterator __old_finish = __m_finish;
+        iterator __new_finish = _M_reserve_elements_at_back(__n);
+        iterator __old_finish = _M_finish;
         const difference_type __elemsafter = difference_type(__length) - __elemsbefore;
-        __pos = __m_finish - __elemsafter;
+        __pos = _M_finish - __elemsafter;
         __DST_TRY
         {
             if (__elemsafter > difference_type(__n))
             {
-                iterator __finish_n = __m_finish - difference_type(__n);
-                uninitialized_copy(__finish_n, __m_finish, __m_finish);
-                __m_finish = __new_finish;
+                iterator __finish_n = _M_finish - difference_type(__n);
+                uninitialized_copy(__finish_n, _M_finish, _M_finish);
+                _M_finish = __new_finish;
                 copy_backward(__pos, __finish_n, __old_finish);
                 copy(__first, __last, __pos);
             }
             else
             {
                 const value_type *__mid = __first + __elemsafter;
-                __uninitialized_copy_copy(__mid, __last, __pos, __m_finish, __m_finish);
-                __m_finish = __new_finish;
+                __uninitialized_copy_copy(__mid, __last, __pos, _M_finish, _M_finish);
+                _M_finish = __new_finish;
                 copy(__first, __mid, __pos);
             }
         }
-        __DST_UNWIND(__m_destroy_nodes(__m_finish.__map_node + 1, __new_finish.__map_node + 1));
+        __DST_UNWIND(_M_destroy_nodes(_M_finish.__map_node + 1, __new_finish.__map_node + 1));
     }
 }
 
 template <class _Tp, class _Alloc>
-void deque<_Tp, _Alloc>::__m_insert_aux(iterator __pos, const_iterator __first, const_iterator __last, size_type __n)
+void deque<_Tp, _Alloc>::_M_insert_aux(iterator __pos, const_iterator __first, const_iterator __last, size_type __n)
 {
-    const difference_type __elemsbefore = __pos - __m_start;
+    const difference_type __elemsbefore = __pos - _M_start;
     size_type __length = size();
     if (__elemsbefore < __length / 2)
     {
-        iterator __new_start = __m_reserve_elements_at_front(__n);
-        iterator __old_start = __m_start;
-        __pos = __m_start + __elemsbefore;
+        iterator __new_start = _M_reserve_elements_at_front(__n);
+        iterator __old_start = _M_start;
+        __pos = _M_start + __elemsbefore;
         __DST_TRY
         {
             if (__elemsbefore >= __n)
             {
-                iterator __start_n = __m_start + __n;
-                uninitialized_copy(__m_start, __start_n, __new_start);
-                __m_start = __new_start;
+                iterator __start_n = _M_start + __n;
+                uninitialized_copy(_M_start, __start_n, __new_start);
+                _M_start = __new_start;
                 copy(__start_n, __pos, __old_start);
                 copy(__first, __last, __pos - difference_type(__n));
             }
             else
             {
                 const_iterator __mid = __first + (__n - __elemsbefore);
-                __uninitialized_copy_copy(__m_start, __pos, __first, __mid,
+                __uninitialized_copy_copy(_M_start, __pos, __first, __mid,
                                           __new_start);
-                __m_start = __new_start;
+                _M_start = __new_start;
                 copy(__mid, __last, __old_start);
             }
         }
-        __DST_UNWIND(__m_destroy_nodes(__new_start.__map_node, __m_start.__map_node));
+        __DST_UNWIND(_M_destroy_nodes(__new_start.__map_node, _M_start.__map_node));
     }
     else
     {
-        iterator __new_finish = __m_reserve_elements_at_back(__n);
-        iterator __old_finish = __m_finish;
+        iterator __new_finish = _M_reserve_elements_at_back(__n);
+        iterator __old_finish = _M_finish;
         const difference_type __elemsafter = __length - __elemsbefore;
-        __pos = __m_finish - __elemsafter;
+        __pos = _M_finish - __elemsafter;
         __DST_TRY
         {
             if (__elemsafter > __n)
             {
-                iterator __finish_n = __m_finish - difference_type(__n);
-                uninitialized_copy(__finish_n, __m_finish, __m_finish);
-                __m_finish = __new_finish;
+                iterator __finish_n = _M_finish - difference_type(__n);
+                uninitialized_copy(__finish_n, _M_finish, _M_finish);
+                _M_finish = __new_finish;
                 copy_backward(__pos, __finish_n, __old_finish);
                 copy(__first, __last, __pos);
             }
             else
             {
                 const_iterator __mid = __first + __elemsafter;
-                __uninitialized_copy_copy(__mid, __last, __pos, __m_finish, __m_finish);
-                __m_finish = __new_finish;
+                __uninitialized_copy_copy(__mid, __last, __pos, _M_finish, _M_finish);
+                _M_finish = __new_finish;
                 copy(__first, __mid, __pos);
             }
         }
-        __DST_UNWIND(__m_destroy_nodes(__m_finish.__map_node + 1, __new_finish.__map_node + 1));
+        __DST_UNWIND(_M_destroy_nodes(_M_finish.__map_node + 1, __new_finish.__map_node + 1));
     }
 }
 
 #endif /* __DST_MEMBER_TEMPLATES */
 
 template <class _Tp, class _Alloc>
-void deque<_Tp, _Alloc>::__m_new_elements_at_front(size_type __new_elems)
+void deque<_Tp, _Alloc>::_M_new_elements_at_front(size_type __new_elems)
 {
-    size_type __new_nodes = (__new_elems + __s_buffer_size() - 1) / __s_buffer_size();
-    __m_reserve_map_at_front(__new_nodes);
+    size_type __new_nodes = (__new_elems + _S_buffer_size() - 1) / _S_buffer_size();
+    _M_reserve_map_at_front(__new_nodes);
     size_type __i;
     __DST_TRY
     {
         for (__i = 1; __i <= __new_nodes; ++__i)
-            *(__m_start.__map_node - __i) = __m_allocate_node();
+            *(_M_start.__map_node - __i) = _M_allocate_node();
     }
 #ifdef __DST_USE_EXCEPTIONS
     catch (...)
     {
         for (size_type __j = 1; __j < __i; ++__j)
-            __m_deallocate_node(*(__m_start.__map_node - __j));
+            _M_deallocate_node(*(_M_start.__map_node - __j));
         throw;
     }
 #endif /* __DST_USE_EXCEPTIONS */
 }
 
 template <class _Tp, class _Alloc>
-void deque<_Tp, _Alloc>::__m_new_elements_at_back(size_type __new_elems)
+void deque<_Tp, _Alloc>::_M_new_elements_at_back(size_type __new_elems)
 {
-    size_type __new_nodes = (__new_elems + __s_buffer_size() - 1) / __s_buffer_size();
-    __m_reserve_map_at_back(__new_nodes);
+    size_type __new_nodes = (__new_elems + _S_buffer_size() - 1) / _S_buffer_size();
+    _M_reserve_map_at_back(__new_nodes);
     size_type __i;
     __DST_TRY
     {
         for (__i = 1; __i <= __new_nodes; ++__i)
-            *(__m_finish.__map_node + __i) = __m_allocate_node();
+            *(_M_finish.__map_node + __i) = _M_allocate_node();
     }
 #ifdef __DST_USE_EXCEPTIONS
     catch (...)
     {
         for (size_type __j = 1; __j < __i; ++__j)
-            __m_deallocate_node(*(__m_finish.__map_node + __j));
+            _M_deallocate_node(*(_M_finish.__map_node + __j));
         throw;
     }
 #endif /* __DST_USE_EXCEPTIONS */
 }
 
 template <class _Tp, class _Alloc>
-void deque<_Tp, _Alloc>::__m_reallocate_map(size_type __nodes_to_add, bool __add_at_front)
+void deque<_Tp, _Alloc>::_M_reallocate_map(size_type __nodes_to_add, bool __add_at_front)
 {
-    size_type __old_num_nodes = __m_finish.__map_node - __m_start.__map_node + 1;
+    size_type __old_num_nodes = _M_finish.__map_node - _M_start.__map_node + 1;
     size_type __new_num_nodes = __old_num_nodes + __nodes_to_add;
 
     __map_pointer __new_nstart;
-    if (__m_map_size > 2 * __new_num_nodes)
+    if (_M_map_size > 2 * __new_num_nodes)
     {
-        __new_nstart = __m_map + (__m_map_size - __new_num_nodes) / 2 + (__add_at_front ? __nodes_to_add : 0);
-        if (__new_nstart < __m_start.__map_node)
-            copy(__m_start.__map_node, __m_finish.__map_node + 1, __new_nstart);
+        __new_nstart = _M_map + (_M_map_size - __new_num_nodes) / 2 + (__add_at_front ? __nodes_to_add : 0);
+        if (__new_nstart < _M_start.__map_node)
+            copy(_M_start.__map_node, _M_finish.__map_node + 1, __new_nstart);
         else
-            copy_backward(__m_start.__map_node, __m_finish.__map_node + 1, __new_nstart + __old_num_nodes);
+            copy_backward(_M_start.__map_node, _M_finish.__map_node + 1, __new_nstart + __old_num_nodes);
     }
     else
     {
         size_type __new_map_size =
-            __m_map_size + max(__m_map_size, __nodes_to_add) + 2;
+            _M_map_size + max(_M_map_size, __nodes_to_add) + 2;
 
-        __map_pointer __new_map = __m_allocate_map(__new_map_size);
+        __map_pointer __new_map = _M_allocate_map(__new_map_size);
         __new_nstart = __new_map + (__new_map_size - __new_num_nodes) / 2 + (__add_at_front ? __nodes_to_add : 0);
-        copy(__m_start.__map_node, __m_finish.__map_node + 1, __new_nstart);
-        __m_deallocate_map(__m_map, __m_map_size);
+        copy(_M_start.__map_node, _M_finish.__map_node + 1, __new_nstart);
+        _M_deallocate_map(_M_map, _M_map_size);
 
-        __m_map = __new_map;
-        __m_map_size = __new_map_size;
+        _M_map = __new_map;
+        _M_map_size = __new_map_size;
     }
 
-    __m_start.__m_set_node(__new_nstart);
-    __m_finish.__m_set_node(__new_nstart + __old_num_nodes - 1);
+    _M_start._M_set_node(__new_nstart);
+    _M_finish._M_set_node(__new_nstart + __old_num_nodes - 1);
 }
 
 // Nonmember functions.

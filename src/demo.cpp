@@ -6,10 +6,9 @@
 #include <bits/stdc++.h>
 #define test() freopen("in", "r", stdin)
 
-int main(int argc, char const *argv[])
-{
+int main(int argc, char const *argv[]) {
     /* code */
-    //test();
+    // test();
 
     clock_t startTime, endTime;
     vector<int> v(SIZE);
@@ -21,8 +20,9 @@ int main(int argc, char const *argv[])
 
     startTime = clock();
 
-        endTime = clock();
-    cout << "The elapsed time is: " << (double)(endTime - startTime) / 1000 << "ms" << endl;
+    endTime = clock();
+    cout << "The elapsed time is: " << (double)(endTime - startTime) / 1000
+         << "ms" << endl;
 
     return 0;
 }

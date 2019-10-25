@@ -12,14 +12,14 @@ __DST_BEGIN_NAMESPACE
 
 struct _slist_node_base
 {
-    _slist_node_base *__m_next;
-    _slist_node_base *__m_prev;
+    _slist_node_base *_M_next;
+    _slist_node_base *_M_prev;
 };
 
 template <class _Tp>
 struct _slist_node : public _slist_node_base
 {
-    _Tp __m_data;
+    _Tp _M_data;
 };
 
 struct _slist_iterator_base
@@ -28,21 +28,21 @@ struct _slist_iterator_base
     typedef ptrdiff_t difference_type;
     typedef bidirectional_iterator_tag iterator_category;
 
-    _slist_node_base *__m_node;
+    _slist_node_base *_M_node;
 
-    _slist_iterator_base(_slist_node_base *__x) : __m_node(__x) {}
+    _slist_iterator_base(_slist_node_base *__x) : _M_node(__x) {}
     _slist_iterator_base() {}
 
-    void __m_incr() { __m_node = __m_node->__m_next; }
-    void __m_decr() { __m_node = __m_node->__m_prev; }
+    void _M_incr() { _M_node = _M_node->_M_next; }
+    void _M_decr() { _M_node = _M_node->_M_prev; }
 
     bool operator==(const _slist_iterator_base &__x) const
     {
-        return __m_node == __x.__m_node;
+        return _M_node == __x._M_node;
     }
     bool operator!=(const _slist_iterator_base &__x) const
     {
-        return __m_node != __x.__m_node;
+        return _M_node != __x._M_node;
     }
 };
 
@@ -60,9 +60,9 @@ struct _slist_iterator : public _slist_iterator_base
 
     _slist_iterator(__node *__x) : _slist_iterator_base(__x) {}
     _slist_iterator() {}
-    _slist_iterator(const iterator &__x) : _slist_iterator_base(__x.__m_node) {}
+    _slist_iterator(const iterator &__x) : _slist_iterator_base(__x._M_node) {}
 
-    reference operator*() const { return ((__node *)__m_node)->__m_data; }
+    reference operator*() const { return ((__node *)_M_node)->_M_data; }
 
 #ifndef ___DST_NO_ARROW_OPERATOR
     pointer operator->() const
@@ -73,24 +73,24 @@ struct _slist_iterator : public _slist_iterator_base
 
     _Self &operator++()
     {
-        this->__m_incr();
+        this->_M_incr();
         return *this;
     }
     _Self operator++(int)
     {
         _Self __tmp = *this;
-        this->__m_incr();
+        this->_M_incr();
         return __tmp;
     }
     _Self &operator--()
     {
-        this->__m_decr();
+        this->_M_decr();
         return *this;
     }
     _Self operator--(int)
     {
         _Self __tmp = *this;
-        this->__m_decr();
+        this->_M_decr();
         return __tmp;
     }
 };
@@ -138,11 +138,11 @@ public:
     _slist_alloc_base(const allocator_type &__a) : _Node_allocator(__a) {}
 
 protected:
-    _slist_node<_Tp> *__m_get_node()
+    _slist_node<_Tp> *_M_get_node()
     {
         return _Node_allocator.allocate(1);
     }
-    void __m_put_node(_slist_node<_Tp> *__p)
+    void _M_put_node(_slist_node<_Tp> *__p)
     {
         _Node_allocator.deallocate(__p, 1);
     }
@@ -150,7 +150,7 @@ protected:
 protected:
     typename _Alloc_traits<_slist_node<_Tp>, _Allocator>::allocator_type
         _Node_allocator;
-    _slist_node<_Tp> *__m_node;
+    _slist_node<_Tp> *_M_node;
 };
 
 // Specialization for instanceless allocators.
@@ -168,11 +168,11 @@ public:
 protected:
     typedef typename _Alloc_traits<_slist_node<_Tp>, _Allocator>::_Alloc_type
         _Alloc_type;
-    inline _slist_node<_Tp> *__m_get_node() { return _Alloc_type::allocate(1); }
-    void __m_put_node(_slist_node<_Tp> *__p) { _Alloc_type::deallocate(__p, 1); }
+    inline _slist_node<_Tp> *_M_get_node() { return _Alloc_type::allocate(1); }
+    void _M_put_node(_slist_node<_Tp> *__p) { _Alloc_type::deallocate(__p, 1); }
 
 protected:
-    _slist_node<_Tp> *__m_node;
+    _slist_node<_Tp> *_M_node;
 };
 
 template <class _Tp, class _Alloc>
@@ -184,14 +184,14 @@ public:
 
     _slist_base(const allocator_type &__a) : __base(__a)
     {
-        __m_node = __m_get_node();
-        __m_node->__m_next = __m_node;
-        __m_node->__m_prev = __m_node;
+        _M_node = _M_get_node();
+        _M_node->_M_next = _M_node;
+        _M_node->_M_prev = _M_node;
     }
     ~_slist_base()
     {
         clear();
-        __m_put_node(__m_node);
+        _M_put_node(_M_node);
     }
 
     void clear();
@@ -208,25 +208,25 @@ public:
 
     _slist_base(const allocator_type &)
     {
-        __m_node = __m_get_node();
-        __m_node->__m_next = __m_node;
-        __m_node->__m_prev = __m_node;
+        _M_node = _M_get_node();
+        _M_node->_M_next = _M_node;
+        _M_node->_M_prev = _M_node;
     }
     ~_slist_base()
     {
         clear();
-        __m_put_node(__m_node);
+        _M_put_node(_M_node);
     }
 
     void clear();
 
 protected:
     typedef simple_alloc<_slist_node<_Tp>, _Alloc> _Alloc_type;
-    inline _slist_node<_Tp> *__m_get_node() { return _Alloc_type::allocate(1); }
-    void __m_put_node(_slist_node<_Tp> *__p) { _Alloc_type::deallocate(__p, 1); }
+    inline _slist_node<_Tp> *_M_get_node() { return _Alloc_type::allocate(1); }
+    void _M_put_node(_slist_node<_Tp> *__p) { _Alloc_type::deallocate(__p, 1); }
 
 protected:
-    _slist_node<_Tp> *__m_node;
+    _slist_node<_Tp> *_M_node;
 };
 
 #endif /* __DST_USE_STD_ALLOCATORS */
@@ -234,16 +234,16 @@ protected:
 template <class _Tp, class _Alloc>
 void _slist_base<_Tp, _Alloc>::clear()
 {
-    _slist_node<_Tp> *__cur = (_slist_node<_Tp> *)__m_node->__m_next;
-    while (__cur != __m_node)
+    _slist_node<_Tp> *__cur = (_slist_node<_Tp> *)_M_node->_M_next;
+    while (__cur != _M_node)
     {
         _slist_node<_Tp> *__tmp = __cur;
-        __cur = (_slist_node<_Tp> *)__cur->__m_next;
-        __destroy(&__tmp->__m_data);
-        __m_put_node(__tmp);
+        __cur = (_slist_node<_Tp> *)__cur->_M_next;
+        __destroy(&__tmp->_M_data);
+        _M_put_node(__tmp);
     }
-    __m_node->__m_next = __m_node;
-    __m_node->__m_prev = __m_node;
+    _M_node->_M_next = _M_node;
+    _M_node->_M_prev = _M_node;
 }
 
 template <class _Tp, class _Alloc = __DST_DEFAULT_ALLOCATOR(_Tp)>
@@ -288,41 +288,41 @@ public:
 #endif /* __DST_CLASS_PARTIAL_SPECIALIZATION */
 
 protected:
-    using __base::__m_get_node;
-    using __base::__m_node;
-    using __base::__m_put_node;
+    using __base::_M_get_node;
+    using __base::_M_node;
+    using __base::_M_put_node;
 
 protected:
-    __node *__m_create_node(const _Tp &__x)
+    __node *_M_create_node(const _Tp &__x)
     {
-        __node *__p = __m_get_node();
+        __node *__p = _M_get_node();
         __DST_TRY
         {
-            __construct(&__p->__m_data, __x);
+            __construct(&__p->_M_data, __x);
         }
-        __DST_UNWIND(__m_put_node(__p));
+        __DST_UNWIND(_M_put_node(__p));
         return __p;
     }
 
-    __node *__m_create_node()
+    __node *_M_create_node()
     {
-        __node *__p = __m_get_node();
+        __node *__p = _M_get_node();
         __DST_TRY
         {
-            __construct(&__p->__m_data);
+            __construct(&__p->_M_data);
         }
-        __DST_UNWIND(__m_put_node(__p));
+        __DST_UNWIND(_M_put_node(__p));
         return __p;
     }
 
 public:
     explicit slist(const allocator_type &__a = allocator_type()) : __base(__a) {}
 
-    iterator begin() { return (__node *)(__m_node->__m_next); }
-    const_iterator begin() const { return (__node *)(__m_node->__m_next); }
+    iterator begin() { return (__node *)(_M_node->_M_next); }
+    const_iterator begin() const { return (__node *)(_M_node->_M_next); }
 
-    iterator end() { return __m_node; }
-    const_iterator end() const { return __m_node; }
+    iterator end() { return _M_node; }
+    const_iterator end() const { return _M_node; }
 
     reverse_iterator rbegin()
     {
@@ -342,7 +342,7 @@ public:
         return const_reverse_iterator(begin());
     }
 
-    bool empty() const { return __m_node->__m_next == __m_node; }
+    bool empty() const { return _M_node->_M_next == _M_node; }
     size_type size() const
     {
         size_type __result = 0;
@@ -356,15 +356,15 @@ public:
     reference back() { return *(--end()); }
     const_reference back() const { return *(--end()); }
 
-    void swap(slist<_Tp, _Alloc> &__x) { __VDSA::swap(__m_node, __x.__m_node); }
+    void swap(slist<_Tp, _Alloc> &__x) { __VDSA::swap(_M_node, __x._M_node); }
 
     iterator insert(iterator __position, const _Tp &__x)
     {
-        __node *__tmp = __m_create_node(__x);
-        __tmp->__m_next = __position.__m_node;
-        __tmp->__m_prev = __position.__m_node->__m_prev;
-        __position.__m_node->__m_prev->__m_next = __tmp;
-        __position.__m_node->__m_prev = __tmp;
+        __node *__tmp = _M_create_node(__x);
+        __tmp->_M_next = __position._M_node;
+        __tmp->_M_prev = __position._M_node->_M_prev;
+        __position._M_node->_M_prev->_M_next = __tmp;
+        __position._M_node->_M_prev = __tmp;
         return __tmp;
     }
     iterator insert(iterator __position) { return insert(__position, _Tp()); }
@@ -372,14 +372,14 @@ public:
     // Check whether it's an integral type.  If so, it's not an iterator.
 
     template <class _Integer>
-    void __m_insert_dispatch(iterator __pos, _Integer __n, _Integer __x,
+    void _M_insert_dispatch(iterator __pos, _Integer __n, _Integer __x,
                              __true_type)
     {
-        __m_fill_insert(__pos, (size_type)__n, (_Tp)__x);
+        _M_fill_insert(__pos, (size_type)__n, (_Tp)__x);
     }
 
     template <class _InputIterator>
-    void __m_insert_dispatch(iterator __pos,
+    void _M_insert_dispatch(iterator __pos,
                              _InputIterator __first, _InputIterator __last,
                              __false_type);
 
@@ -387,7 +387,7 @@ public:
     void insert(iterator __pos, _InputIterator __first, _InputIterator __last)
     {
         typedef typename _Is_integer<_InputIterator>::_Integral _Integral;
-        __m_insert_dispatch(__pos, __first, __last, _Integral());
+        _M_insert_dispatch(__pos, __first, __last, _Integral());
     }
 
 #else  /* __DST_MEMBER_TEMPLATES */
@@ -397,9 +397,9 @@ public:
 #endif /* __DST_MEMBER_TEMPLATES */
     void insert(iterator __pos, size_type __n, const _Tp &__x)
     {
-        __m_fill_insert(__pos, __n, __x);
+        _M_fill_insert(__pos, __n, __x);
     }
-    void __m_fill_insert(iterator __pos, size_type __n, const _Tp &__x);
+    void _M_fill_insert(iterator __pos, size_type __n, const _Tp &__x);
 
     void push_front(const _Tp &__x) { insert(begin(), __x); }
     void push_front() { insert(begin()); }
@@ -408,13 +408,13 @@ public:
 
     iterator erase(iterator __position)
     {
-        _slist_node_base *__next_node = __position.__m_node->__m_next;
-        _slist_node_base *__prev_node = __position.__m_node->__m_prev;
-        __node *__n = (__node *)__position.__m_node;
-        __prev_node->__m_next = __next_node;
-        __next_node->__m_prev = __prev_node;
-        __destroy(&__n->__m_data);
-        __m_put_node(__n);
+        _slist_node_base *__next_node = __position._M_node->_M_next;
+        _slist_node_base *__prev_node = __position._M_node->_M_prev;
+        __node *__n = (__node *)__position._M_node;
+        __prev_node->_M_next = __next_node;
+        __next_node->_M_prev = __prev_node;
+        __destroy(&__n->_M_data);
+        _M_put_node(__n);
         return iterator((__node *)__next_node);
     }
     iterator erase(iterator __first, iterator __last);
@@ -484,9 +484,9 @@ public:
     // The range version is a member template, so we dispatch on whether
     // or not the type is an integer.
 
-    void assign(size_type __n, const _Tp &__val) { __m_fill_assign(__n, __val); }
+    void assign(size_type __n, const _Tp &__val) { _M_fill_assign(__n, __val); }
 
-    void __m_fill_assign(size_type __n, const _Tp &__val);
+    void _M_fill_assign(size_type __n, const _Tp &__val);
 
 #ifdef __DST_MEMBER_TEMPLATES
 
@@ -494,17 +494,17 @@ public:
     void assign(_InputIterator __first, _InputIterator __last)
     {
         typedef typename _Is_integer<_InputIterator>::_Integral _Integral;
-        __m_assign_dispatch(__first, __last, _Integral());
+        _M_assign_dispatch(__first, __last, _Integral());
     }
 
     template <class _Integer>
-    void __m_assign_dispatch(_Integer __n, _Integer __val, __true_type)
+    void _M_assign_dispatch(_Integer __n, _Integer __val, __true_type)
     {
-        __m_fill_assign((size_type)__n, (_Tp)__val);
+        _M_fill_assign((size_type)__n, (_Tp)__val);
     }
 
     template <class _InputIterator>
-    void __m_assign_dispatch(_InputIterator __first, _InputIterator __last,
+    void _M_assign_dispatch(_InputIterator __first, _InputIterator __last,
                              __false_type);
 
 #endif /* __DST_MEMBER_TEMPLATES */
@@ -515,15 +515,15 @@ protected:
         if (__position != __last)
         {
             // Remove [first, last) from its old position.
-            __last.__m_node->__m_prev->__m_next = __position.__m_node;
-            __first.__m_node->__m_prev->__m_next = __last.__m_node;
-            __position.__m_node->__m_prev->__m_next = __first.__m_node;
+            __last._M_node->_M_prev->_M_next = __position._M_node;
+            __first._M_node->_M_prev->_M_next = __last._M_node;
+            __position._M_node->_M_prev->_M_next = __first._M_node;
 
             // Splice [first, last) into its new position.
-            _slist_node_base *__tmp = __position.__m_node->__m_prev;
-            __position.__m_node->__m_prev = __last.__m_node->__m_prev;
-            __last.__m_node->__m_prev = __first.__m_node->__m_prev;
-            __first.__m_node->__m_prev = __tmp;
+            _slist_node_base *__tmp = __position._M_node->_M_prev;
+            __position._M_node->_M_prev = __last._M_node->_M_prev;
+            __last._M_node->_M_prev = __first._M_node->_M_prev;
+            __first._M_node->_M_prev = __tmp;
         }
     }
 
@@ -631,7 +631,7 @@ swap(slist<_Tp, _Alloc> &__x, slist<_Tp, _Alloc> &__y)
 
 template <class _Tp, class _Alloc>
 template <class _InputIter>
-void slist<_Tp, _Alloc>::__m_insert_dispatch(iterator __position,
+void slist<_Tp, _Alloc>::_M_insert_dispatch(iterator __position,
                                              _InputIter __first, _InputIter __last,
                                              __false_type)
 {
@@ -660,7 +660,7 @@ void slist<_Tp, _Alloc>::insert(iterator __position,
 #endif /* __DST_MEMBER_TEMPLATES */
 
 template <class _Tp, class _Alloc>
-void slist<_Tp, _Alloc>::__m_fill_insert(iterator __position,
+void slist<_Tp, _Alloc>::_M_fill_insert(iterator __position,
                                          size_type __n, const _Tp &__x)
 {
     for (; __n > 0; --__n)
@@ -709,7 +709,7 @@ slist<_Tp, _Alloc> &slist<_Tp, _Alloc>::operator=(const slist<_Tp, _Alloc> &__x)
 }
 
 template <class _Tp, class _Alloc>
-void slist<_Tp, _Alloc>::__m_fill_assign(size_type __n, const _Tp &__val)
+void slist<_Tp, _Alloc>::_M_fill_assign(size_type __n, const _Tp &__val)
 {
     iterator __i = begin();
     for (; __i != end() && __n > 0; ++__i, --__n)
@@ -724,7 +724,7 @@ void slist<_Tp, _Alloc>::__m_fill_assign(size_type __n, const _Tp &__val)
 
 template <class _Tp, class _Alloc>
 template <class _InputIter>
-void slist<_Tp, _Alloc>::__m_assign_dispatch(_InputIter __first2, _InputIter __last2, __false_type)
+void slist<_Tp, _Alloc>::_M_assign_dispatch(_InputIter __first2, _InputIter __last2, __false_type)
 {
     iterator __first1 = begin();
     iterator __last1 = end();
@@ -796,22 +796,22 @@ inline void __slist_base_reverse(_slist_node_base *__p)
     _slist_node_base *__tmp = __p;
     do
     {
-        __VDSA::swap(__tmp->__m_next, __tmp->__m_prev);
-        __tmp = __tmp->__m_prev; // Old next node is now prev.
+        __VDSA::swap(__tmp->_M_next, __tmp->_M_prev);
+        __tmp = __tmp->_M_prev; // Old next node is now prev.
     } while (__tmp != __p);
 }
 
 template <class _Tp, class _Alloc>
 inline void slist<_Tp, _Alloc>::reverse()
 {
-    __slist_base_reverse(this->__m_node);
+    __slist_base_reverse(this->_M_node);
 }
 
 template <class _Tp, class _Alloc>
 void slist<_Tp, _Alloc>::sort()
 {
     // Do nothing if the slist has length 0 or 1.
-    if (__m_node->__m_next != __m_node && __m_node->__m_next->__m_next != __m_node)
+    if (_M_node->_M_next != _M_node && _M_node->_M_next->_M_next != _M_node)
     {
         slist<_Tp, _Alloc> __carry;
         slist<_Tp, _Alloc> __counter[64];
@@ -899,7 +899,7 @@ template <class _StrictWeakOrdering>
 void slist<_Tp, _Alloc>::sort(_StrictWeakOrdering __comp)
 {
     // Do nothing if the slist has length 0 or 1.
-    if (__m_node->__m_next != __m_node && __m_node->__m_next->__m_next != __m_node)
+    if (_M_node->_M_next != _M_node && _M_node->_M_next->_M_next != _M_node)
     {
         slist<_Tp, _Alloc> __carry;
         slist<_Tp, _Alloc> __counter[64];

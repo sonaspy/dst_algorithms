@@ -20,14 +20,14 @@ struct __skiplist_node
 
     _Entry _entry;
     int _height;
-    __node_Ptr *__m_nexts; // 1D array of pointers
+    __node_Ptr *_M_nexts; // 1D array of pointers
 
     __skiplist_node(_Entry &e, int __size = 0) : _entry(e)
     {
-        __m_nexts = new __node_Ptr[__size];
+        _M_nexts = new __node_Ptr[__size];
         _height = __size;
     }
-    ~__skiplist_node() { delete[] __m_nexts; }
+    ~__skiplist_node() { delete[] _M_nexts; }
 };
 
 template <class _Key, class _Val>
@@ -45,15 +45,15 @@ struct __skip_list_iterator
     typedef _Entry *pointer;
     typedef _Entry &reference;
 
-    __node_Ptr __m_this;
+    __node_Ptr _M_this;
 
     __skip_list_iterator() {}
-    __skip_list_iterator(__node_Ptr p) : __m_this(p) {}
+    __skip_list_iterator(__node_Ptr p) : _M_this(p) {}
 
-    reference operator*() { return __m_this->_entry; }
+    reference operator*() { return _M_this->_entry; }
     __self &operator++()
     {
-        __m_this = __m_this->__m_nexts[0];
+        _M_this = _M_this->_M_nexts[0];
         return *this;
     }
     __self operator++(int)
@@ -62,8 +62,8 @@ struct __skip_list_iterator
         ++*this;
         return __tmp;
     }
-    bool operator==(__self &__x) const { return __m_this == __x.__m_this; }
-    bool operator!=(__self &__x) const { return __m_this != __x.__m_this; }
+    bool operator==(__self &__x) const { return _M_this == __x._M_this; }
+    bool operator!=(__self &__x) const { return _M_this != __x._M_this; }
 };
 
 template <class _Key, class _Val = int>
@@ -100,38 +100,38 @@ public:
 
         _Entry __null_entry;
         __null_entry.first = __null_key;
-        __m_start = new __node(__null_entry, _max_level + 1);
-        __m_finish = new __node(__null_entry);
+        _M_start = new __node(__null_entry, _max_level + 1);
+        _M_finish = new __node(__null_entry);
         __last_checked_ptrs = new __node_Ptr[_max_level + 1];
 
         // header points to tail at all _level as lists are empty
-        fill(__m_start->__m_nexts, __m_start->__m_nexts + _max_level + 1, __m_finish);
+        fill(_M_start->_M_nexts, _M_start->_M_nexts + _max_level + 1, _M_finish);
     }
     ~skiplist()
     {
-        __node_Ptr __m_next_node;
+        __node_Ptr _M_next_node;
         // delete all nodes by following level 0 chain
-        while (__m_start != __m_finish)
+        while (_M_start != _M_finish)
         {
-            __m_next_node = __m_start->__m_nexts[0];
-            delete __m_start;
-            __m_start = __m_next_node;
+            _M_next_node = _M_start->_M_nexts[0];
+            delete _M_start;
+            _M_start = _M_next_node;
         }
-        delete __m_finish;
+        delete _M_finish;
         delete[] __last_checked_ptrs;
     }
 
     void clear()
     {
-        __node_Ptr __m_next_node = __m_start->__m_nexts[0], tmp;
-        while (__m_next_node != __m_finish)
+        __node_Ptr _M_next_node = _M_start->_M_nexts[0], tmp;
+        while (_M_next_node != _M_finish)
         {
-            tmp = __m_next_node;
-            __m_next_node = __m_next_node->__m_nexts[0];
+            tmp = _M_next_node;
+            _M_next_node = _M_next_node->_M_nexts[0];
             delete tmp;
         }
         for (int i = 0; i <= _max_level; i++)
-            __m_start->__m_nexts[i] = __m_finish;
+            _M_start->_M_nexts[i] = _M_finish;
         _size = 0;
         _level = 0;
     }
@@ -141,13 +141,13 @@ public:
         if (the_key >= __null_key)
             return nullptr; // no matching pair possible
 
-        __pre_node = __m_start;
+        __pre_node = _M_start;
         for (int i = _level; i >= 0; i--) // go down _level
-            while (__pre_node->__m_nexts[i]->_entry.first < the_key)
-                __pre_node = __pre_node->__m_nexts[i];
+            while (__pre_node->_M_nexts[i]->_entry.first < the_key)
+                __pre_node = __pre_node->_M_nexts[i];
 
-        if (__pre_node->__m_nexts[0]->_entry.first == the_key)
-            return &__pre_node->__m_nexts[0]->_entry;
+        if (__pre_node->_M_nexts[0]->_entry.first == the_key)
+            return &__pre_node->_M_nexts[0]->_entry;
 
         return nullptr; // no matching pair
     }
@@ -165,11 +165,11 @@ public:
             return;
 
         // delete node from skip list
-        for (int i = 0; i <= _level && __last_checked_ptrs[i]->__m_nexts[i] == __the_node; i++)
-            __last_checked_ptrs[i]->__m_nexts[i] = __the_node->__m_nexts[i];
+        for (int i = 0; i <= _level && __last_checked_ptrs[i]->_M_nexts[i] == __the_node; i++)
+            __last_checked_ptrs[i]->_M_nexts[i] = __the_node->_M_nexts[i];
 
         // update _level
-        while (_level > 0 && __m_start->__m_nexts[_level] == __m_finish)
+        while (_level > 0 && _M_start->_M_nexts[_level] == _M_finish)
             _level--;
 
         delete __the_node;
@@ -195,15 +195,15 @@ public:
         if (__the_level > _level)
         {
             __the_level = ++_level;
-            __last_checked_ptrs[__the_level] = __m_start;
+            __last_checked_ptrs[__the_level] = _M_start;
         }
 
         __node_Ptr new_node = new __node(__entry, __the_level + 1);
         ++_size;
         for (int i = 0; i <= __the_level; i++)
         { // insert into level i chain
-            new_node->__m_nexts[i] = __last_checked_ptrs[i]->__m_nexts[i];
-            __last_checked_ptrs[i]->__m_nexts[i] = new_node;
+            new_node->_M_nexts[i] = __last_checked_ptrs[i]->_M_nexts[i];
+            __last_checked_ptrs[i]->_M_nexts[i] = new_node;
         }
     }
     inline void insert(_Key k, _Val v)
@@ -228,13 +228,13 @@ public:
 
     void print()
     {
-        std::cout << "(begin h:" << __m_start->_height << ")->";
-        for (__node_Ptr _walk = __m_start->__m_nexts[0]; _walk != __m_finish; _walk = _walk->__m_nexts[0])
+        std::cout << "(begin h:" << _M_start->_height << ")->";
+        for (__node_Ptr _walk = _M_start->_M_nexts[0]; _walk != _M_finish; _walk = _walk->_M_nexts[0])
             std::cout << "(" << _walk->_entry.first << " h:" << _walk->_height << ")->";
         std::cout << "(end)" << endl;
     }
-    iterator begin() { return iterator(__m_start->__m_nexts[0]); }
-    iterator end() { return iterator(__m_finish); }
+    iterator begin() { return iterator(_M_start->_M_nexts[0]); }
+    iterator end() { return iterator(_M_finish); }
 
 protected:
     size_t __decide_level() // generate a level number by 0.5 probability
@@ -247,14 +247,14 @@ protected:
 
     __node_Ptr __search(_Key &the_key)
     {
-        __pre_node = __m_start;
+        __pre_node = _M_start;
         for (int i = _level; i >= 0; i--)
         {
-            while (__pre_node->__m_nexts[i]->_entry.first < the_key)
-                __pre_node = __pre_node->__m_nexts[i];
+            while (__pre_node->_M_nexts[i]->_entry.first < the_key)
+                __pre_node = __pre_node->_M_nexts[i];
             __last_checked_ptrs[i] = __pre_node; // __last_checked_ptrs level i node seen
         }
-        return __pre_node->__m_nexts[0];
+        return __pre_node->_M_nexts[0];
     }
 
     size_t _level;     // max current nonempty chain
@@ -263,8 +263,8 @@ protected:
 
     _Key __null_key; // a max key
 
-    __node_Ptr __m_start;            // dummy header node pointer
-    __node_Ptr __m_finish;           // dummy tail node pointer
+    __node_Ptr _M_start;            // dummy header node pointer
+    __node_Ptr _M_finish;           // dummy tail node pointer
     __node_Ptr __pre_node;           // every time operate, remember the pre node.
     __node_Ptr *__last_checked_ptrs; // __last_checked_ptrs[i] = __last_checked_ptrs node seen on level i
 };
