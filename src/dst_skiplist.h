@@ -66,7 +66,7 @@ struct __skip_list_iterator
     bool operator!=(__self &__x) const { return __m_this != __x.__m_this; }
 };
 
-template <class _Key, class _Val>
+template <class _Key, class _Val = int>
 class skiplist
 {
 protected:

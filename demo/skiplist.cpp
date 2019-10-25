@@ -2,8 +2,9 @@
 // coding - utf_8
 
 #define SIZE 100000
-#include <bits/stdc++.h>
-#include "../v1/stddsa.h"
+#include <set>
+#include <random>
+#include "../src/stddsa.h"
 #define test() freopen("in", "r", stdin)
 
 using namespace std;
@@ -11,15 +12,15 @@ using namespace dsa;
 
 skiplist<int, int> sk(INT_MAX);
 set<int> st;
-pair<int, int> p;
+dsa::pair<int, int> p;
 clock_t startTime, endTime;
 
 void performance_compare(int _size)
 {
     bool is_sorted = 0;
     cout << "The Test Case's Data Size is -> " << _size << ", The Data is " << (is_sorted ? "sorted" : "random") << endl;
-    vector<int> a(_size);
-    iota(a.begin(), a.end(), 0);
+    dsa::vector<int> a(_size);
+    dsa::iota(a.begin(), a.end(), 0);
 
     unsigned seed = chrono::system_clock::now().time_since_epoch().count();
     shuffle(a.begin(), a.end(), default_random_engine(seed));
@@ -33,7 +34,7 @@ void performance_compare(int _size)
         startTime = clock();
         for (int i = 0; i < SIZE; i++)
         {
-            p = make_pair(a[i], 0);
+            p = dsa::make_pair(a[i], 0);
             st.insert(a[i]);
         }
         endTime = clock();
@@ -66,7 +67,7 @@ void performance_compare(int _size)
         startTime = clock();
         for (int i = 0; i < SIZE; i++)
         {
-            p = make_pair(a[i], 0);
+            p = dsa::make_pair(a[i], 0);
             sk.insert(p);
         }
         endTime = clock();
