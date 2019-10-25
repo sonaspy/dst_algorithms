@@ -13,10 +13,8 @@ __DST_BEGIN_NAMESPACE
 
 // Class __char_traits_base.
 
-template <class _CharT, class _IntT>
-class __char_traits_base
-{
-public:
+template <class _CharT, class _IntT> class __char_traits_base {
+  public:
     typedef _CharT char_type;
     typedef _IntT int_type;
 #ifdef __DST_USE_NEW_IOSTREAMS
@@ -25,88 +23,69 @@ public:
     typedef mbstate_t state_type;
 #endif /* __DST_USE_NEW_IOSTREAMS */
 
-    static void assign(char_type &__c1, const char_type &__c2)
-    {
-        __c1 = __c2;
-    }
-    static bool eq(const _CharT &__c1, const _CharT &__c2)
-    {
+    static void assign(char_type &__c1, const char_type &__c2) { __c1 = __c2; }
+    static bool eq(const _CharT &__c1, const _CharT &__c2) {
         return __c1 == __c2;
     }
-    static bool lt(const _CharT &__c1, const _CharT &__c2)
-    {
+    static bool lt(const _CharT &__c1, const _CharT &__c2) {
         return __c1 < __c2;
     }
 
-    static int compare(const _CharT *__s1, const _CharT *__s2, size_t __n)
-    {
+    static int compare(const _CharT *__s1, const _CharT *__s2, size_t __n) {
         for (size_t __i = 0; __i < __n; ++__i)
             if (!eq(__s1[__i], __s2[__i]))
                 return __s1[__i] < __s2[__i] ? -1 : 1;
         return 0;
     }
 
-    static size_t length(const _CharT *__s)
-    {
+    static size_t length(const _CharT *__s) {
         const _CharT __nullchar = _CharT();
         size_t __i;
-        for (__i = 0; !eq(__s[__i], __nullchar); ++__i)
-        {
+        for (__i = 0; !eq(__s[__i], __nullchar); ++__i) {
         }
         return __i;
     }
 
-    static const _CharT *find(const _CharT *__s, size_t __n, const _CharT &__c)
-    {
+    static const _CharT *find(const _CharT *__s, size_t __n,
+                              const _CharT &__c) {
         for (; __n > 0; ++__s, --__n)
             if (eq(*__s, __c))
                 return __s;
         return 0;
     }
 
-    static _CharT *move(_CharT *__s1, const _CharT *__s2, size_t __n)
-    {
+    static _CharT *move(_CharT *__s1, const _CharT *__s2, size_t __n) {
         memmove(__s1, __s2, __n * sizeof(_CharT));
         return __s1;
     }
 
-    static _CharT *copy(_CharT *__s1, const _CharT *__s2, size_t __n)
-    {
+    static _CharT *copy(_CharT *__s1, const _CharT *__s2, size_t __n) {
         memcpy(__s1, __s2, __n * sizeof(_CharT));
         return __s1;
     }
 
-    static _CharT *assign(_CharT *__s, size_t __n, _CharT __c)
-    {
-        for (size_t __i = 0; __i < __n; ++__i)
-            __s[__i] = __c;
+    static _CharT *assign(_CharT *__s, size_t __n, _CharT __c) {
+        for (size_t __i = 0; __i < __n; ++__i) __s[__i] = __c;
         return __s;
     }
 
-    static int_type not_eof(const int_type &__c)
-    {
+    static int_type not_eof(const int_type &__c) {
         return !eq_int_type(__c, eof()) ? __c : 0;
     }
 
-    static char_type to_char_type(const int_type &__c)
-    {
+    static char_type to_char_type(const int_type &__c) {
         return static_cast<char_type>(__c);
     }
 
-    static int_type to_int_type(const char_type &__c)
-    {
+    static int_type to_int_type(const char_type &__c) {
         return static_cast<int_type>(__c);
     }
 
-    static bool eq_int_type(const int_type &__c1, const int_type &__c2)
-    {
+    static bool eq_int_type(const int_type &__c1, const int_type &__c2) {
         return __c1 == __c2;
     }
 
-    static int_type eof()
-    {
-        return static_cast<int_type>(-1);
-    }
+    static int_type eof() { return static_cast<int_type>(-1); }
 };
 
 // Generic char_traits class.  Note that this class is provided only
@@ -115,29 +94,22 @@ public:
 //  *will not work* for a non-POD type.
 
 template <class _CharT>
-class char_traits
-    : public __char_traits_base<_CharT, _CharT>
-{
-};
+class char_traits : public __char_traits_base<_CharT, _CharT> {};
 
 // Specialization for char.
 
 __DST_TEMPLATE_NULL class char_traits<char>
-    : public __char_traits_base<char, int>
-{
-public:
-    static char_type to_char_type(const int_type &__c)
-    {
+    : public __char_traits_base<char, int> {
+  public:
+    static char_type to_char_type(const int_type &__c) {
         return static_cast<char_type>(static_cast<unsigned char>(__c));
     }
 
-    static int_type to_int_type(const char_type &__c)
-    {
+    static int_type to_int_type(const char_type &__c) {
         return static_cast<unsigned char>(__c);
     }
 
-    static int compare(const char *__s1, const char *__s2, size_t __n)
-    {
+    static int compare(const char *__s1, const char *__s2, size_t __n) {
         return memcmp(__s1, __s2, __n);
     }
 
@@ -145,8 +117,7 @@ public:
 
     static void assign(char &__c1, const char &__c2) { __c1 = __c2; }
 
-    static char *assign(char *__s, size_t __n, char __c)
-    {
+    static char *assign(char *__s, size_t __n, char __c) {
         memset(__s, __c, __n);
         return __s;
     }
@@ -155,9 +126,7 @@ public:
 // Specialization for wchar_t.
 
 __DST_TEMPLATE_NULL class char_traits<wchar_t>
-    : public __char_traits_base<wchar_t, wint_t>
-{
-};
+    : public __char_traits_base<wchar_t, wint_t> {};
 
 __DST_END_NAMESPACE
 

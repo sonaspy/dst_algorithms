@@ -14,103 +14,78 @@
 //       _RandomAccessContainer
 //
 
-struct _ERROR_IN_DST_CONTAINER
-{
+struct _ERROR_IN_DST_CONTAINER {
 
     /* Container expresssions */
 
     template <class _Container>
     static void
-    __begin_iterator_accessor_requirement_violation(_Container __c)
-    {
+    __begin_iterator_accessor_requirement_violation(_Container __c) {
         __c.begin();
     }
     template <class _Container>
-    static void
-    __const_begin_iterator_accessor_requirement_violation(const _Container &__c)
-    {
+    static void __const_begin_iterator_accessor_requirement_violation(
+        const _Container &__c) {
         __c.begin();
     }
     template <class _Container>
-    static void
-    __end_iterator_accessor_requirement_violation(_Container __c)
-    {
+    static void __end_iterator_accessor_requirement_violation(_Container __c) {
         __c.end();
     }
     template <class _Container>
     static void
-    __const_end_iterator_accessor_requirement_violation(const _Container &__c)
-    {
+    __const_end_iterator_accessor_requirement_violation(const _Container &__c) {
         __c.end();
     }
 
     template <class _Container>
     static void
-    __rbegin_iterator_accessor_requirement_violation(_Container __c)
-    {
+    __rbegin_iterator_accessor_requirement_violation(_Container __c) {
         __c.rbegin();
     }
     template <class _Container>
-    static void
-    __const_rbegin_iterator_accessor_requirement_violation(const _Container &__c)
-    {
+    static void __const_rbegin_iterator_accessor_requirement_violation(
+        const _Container &__c) {
         __c.rbegin();
     }
     template <class _Container>
-    static void
-    __rend_iterator_accessor_requirement_violation(_Container __c)
-    {
+    static void __rend_iterator_accessor_requirement_violation(_Container __c) {
         __c.rend();
     }
     template <class _Container>
-    static void
-    __const_rend_iterator_accessor_requirement_violation(const _Container &__c)
-    {
+    static void __const_rend_iterator_accessor_requirement_violation(
+        const _Container &__c) {
         __c.rend();
     }
     template <class _Container>
-    static void
-    __size_function_must_be_const(const _Container &__c)
-    {
+    static void __size_function_must_be_const(const _Container &__c) {
         __c.size();
     }
     template <class _Container>
-    static void
-    __size_function_requirement_violation(_Container &__c)
-    {
+    static void __size_function_requirement_violation(_Container &__c) {
         __c.size();
         __size_function_must_be_const(__c);
     }
     template <class _Container>
-    static void
-    __max_size_function_must_be_const(const _Container &__c)
-    {
+    static void __max_size_function_must_be_const(const _Container &__c) {
         __c.max_size();
     }
     template <class _Container>
-    static void
-    __max_size_function_requirement_violation(_Container &__c)
-    {
+    static void __max_size_function_requirement_violation(_Container &__c) {
         __c.max_size();
         __max_size_function_must_be_const(__c);
     }
     template <class _Container>
-    static void
-    __empty_function_must_be_const(const _Container &__c)
-    {
+    static void __empty_function_must_be_const(const _Container &__c) {
         __c.empty();
     }
     template <class _Container>
-    static void
-    __empty_function_requirement_violation(_Container &__c)
-    {
+    static void __empty_function_requirement_violation(_Container &__c) {
         __c.empty();
         __empty_function_must_be_const(__c);
     }
     template <class _Container>
-    static void
-    __swap_function_requirement_violation(_Container &__c)
-    {
+    static void __swap_function_requirement_violation(_Container &__c) {
         __c.swap(__c);
     }
 };
@@ -120,14 +95,11 @@ __DST_TYPEDEF_REQUIREMENT(const_iterator);
 
 /* Containers */
 
-template <class _Container>
-struct _Container_concept_specification
-{
-    static void
-    _Container_requirement_violation(_Container __c)
-    {
+template <class _Container> struct _Container_concept_specification {
+    static void _Container_requirement_violation(_Container __c) {
         // Refinement of Assignable
-        _Assignable_concept_specification<_Container>::_Assignable_requirement_violation(__c);
+        _Assignable_concept_specification<
+            _Container>::_Assignable_requirement_violation(__c);
         // Associated Types
         __value_type__typedef_requirement_violation<_Container>();
         __difference_type__typedef_requirement_violation<_Container>();
@@ -139,10 +111,14 @@ struct _Container_concept_specification
         __iterator__typedef_requirement_violation<_Container>();
         __const_iterator__typedef_requirement_violation<_Container>();
         // Valid Expressions
-        _ERROR_IN_DST_CONTAINER::__const_begin_iterator_accessor_requirement_violation(__c);
-        _ERROR_IN_DST_CONTAINER::__const_end_iterator_accessor_requirement_violation(__c);
-        _ERROR_IN_DST_CONTAINER::__begin_iterator_accessor_requirement_violation(__c);
-        _ERROR_IN_DST_CONTAINER::__end_iterator_accessor_requirement_violation(__c);
+        _ERROR_IN_DST_CONTAINER::
+            __const_begin_iterator_accessor_requirement_violation(__c);
+        _ERROR_IN_DST_CONTAINER::
+            __const_end_iterator_accessor_requirement_violation(__c);
+        _ERROR_IN_DST_CONTAINER::
+            __begin_iterator_accessor_requirement_violation(__c);
+        _ERROR_IN_DST_CONTAINER::__end_iterator_accessor_requirement_violation(
+            __c);
         _ERROR_IN_DST_CONTAINER::__size_function_requirement_violation(__c);
         _ERROR_IN_DST_CONTAINER::__max_size_function_requirement_violation(__c);
         _ERROR_IN_DST_CONTAINER::__empty_function_requirement_violation(__c);
@@ -150,24 +126,26 @@ struct _Container_concept_specification
         // Requirements on Iterators
         typedef typename _Container::iterator iter;
         typedef typename _Container::const_iterator const_iter;
-        _InputIterator_concept_specification<const_iter>::_InputIterator_requirement_violation(const_iter());
-        _InputIterator_concept_specification<iter>::_InputIterator_requirement_violation(iter());
+        _InputIterator_concept_specification<
+            const_iter>::_InputIterator_requirement_violation(const_iter());
+        _InputIterator_concept_specification<
+            iter>::_InputIterator_requirement_violation(iter());
     }
 };
 
 template <class _ForwardContainer>
-struct _ForwardContainer_concept_specification
-{
-    static void
-    _ForwardContainer_requirement_violation(_ForwardContainer __c)
-    {
+struct _ForwardContainer_concept_specification {
+    static void _ForwardContainer_requirement_violation(_ForwardContainer __c) {
         // Refinement of Container
-        _Container_concept_specification<_ForwardContainer>::_Container_requirement_violation(__c);
+        _Container_concept_specification<
+            _ForwardContainer>::_Container_requirement_violation(__c);
         // Requirements on Iterators
         typedef typename _ForwardContainer::iterator iter;
         typedef typename _ForwardContainer::const_iterator const_iter;
-        _ForwardIterator_concept_specification<const_iter>::_ForwardIterator_requirement_violation(const_iter());
-        _Mutable_ForwardIterator_concept_specification<iter>::_Mutable_ForwardIterator_requirement_violation(iter());
+        _ForwardIterator_concept_specification<
+            const_iter>::_ForwardIterator_requirement_violation(const_iter());
+        _Mutable_ForwardIterator_concept_specification<
+            iter>::_Mutable_ForwardIterator_requirement_violation(iter());
     }
 };
 
@@ -175,78 +153,91 @@ __DST_TYPEDEF_REQUIREMENT(reverse_iterator);
 __DST_TYPEDEF_REQUIREMENT(const_reverse_iterator);
 
 template <class _ReversibleContainer>
-struct _ReversibleContainer_concept_specification
-{
+struct _ReversibleContainer_concept_specification {
     static void
-    _ReversibleContainer_requirement_violation(_ReversibleContainer __c)
-    {
+    _ReversibleContainer_requirement_violation(_ReversibleContainer __c) {
         // Refinement of ForwardContainer
-        _ForwardContainer_concept_specification<_ReversibleContainer>::_ForwardContainer_requirement_violation(__c);
+        _ForwardContainer_concept_specification<
+            _ReversibleContainer>::_ForwardContainer_requirement_violation(__c);
         // Associated types
-        __reverse_iterator__typedef_requirement_violation<_ReversibleContainer>();
-        __const_reverse_iterator__typedef_requirement_violation<_ReversibleContainer>();
+        __reverse_iterator__typedef_requirement_violation<
+            _ReversibleContainer>();
+        __const_reverse_iterator__typedef_requirement_violation<
+            _ReversibleContainer>();
         // Valid Expressions
-        _ERROR_IN_DST_CONTAINER::__const_rbegin_iterator_accessor_requirement_violation(__c);
-        _ERROR_IN_DST_CONTAINER::__const_rend_iterator_accessor_requirement_violation(__c);
-        _ERROR_IN_DST_CONTAINER::__rbegin_iterator_accessor_requirement_violation(__c);
-        _ERROR_IN_DST_CONTAINER::__rend_iterator_accessor_requirement_violation(__c);
+        _ERROR_IN_DST_CONTAINER::
+            __const_rbegin_iterator_accessor_requirement_violation(__c);
+        _ERROR_IN_DST_CONTAINER::
+            __const_rend_iterator_accessor_requirement_violation(__c);
+        _ERROR_IN_DST_CONTAINER::
+            __rbegin_iterator_accessor_requirement_violation(__c);
+        _ERROR_IN_DST_CONTAINER::__rend_iterator_accessor_requirement_violation(
+            __c);
         // Requirements on Iterators
         typedef typename _ReversibleContainer::iterator iter;
         typedef typename _ReversibleContainer::const_iterator const_iter;
-        _BidirectionalIterator_concept_specification<const_iter>::_BidirectionalIterator_requirement_violation(const_iter());
-        _Mutable_BidirectionalIterator_concept_specification<iter>::_Mutable_BidirectionalIterator_requirement_violation(iter());
+        _BidirectionalIterator_concept_specification<const_iter>::
+            _BidirectionalIterator_requirement_violation(const_iter());
+        _Mutable_BidirectionalIterator_concept_specification<
+            iter>::_Mutable_BidirectionalIterator_requirement_violation(iter());
     }
 };
 
 template <class _ReversibleContainer>
-struct _const_ReversibleContainer_concept_specification
-{
+struct _const_ReversibleContainer_concept_specification {
     static void
-    _const_ReversibleContainer_requirement_violation(_ReversibleContainer __c)
-    {
+    _const_ReversibleContainer_requirement_violation(_ReversibleContainer __c) {
         // Refinement of Container (JGS, not ForwardContainer)
-        _Container_concept_specification<_ReversibleContainer>::_Container_requirement_violation(__c);
+        _Container_concept_specification<
+            _ReversibleContainer>::_Container_requirement_violation(__c);
         // Associated types
-        __reverse_iterator__typedef_requirement_violation<_ReversibleContainer>();
-        __const_reverse_iterator__typedef_requirement_violation<_ReversibleContainer>();
+        __reverse_iterator__typedef_requirement_violation<
+            _ReversibleContainer>();
+        __const_reverse_iterator__typedef_requirement_violation<
+            _ReversibleContainer>();
         // Valid Expressions
-        _ERROR_IN_DST_CONTAINER::__const_rbegin_iterator_accessor_requirement_violation(__c);
-        _ERROR_IN_DST_CONTAINER::__const_rend_iterator_accessor_requirement_violation(__c);
-        _ERROR_IN_DST_CONTAINER::__rbegin_iterator_accessor_requirement_violation(__c);
-        _ERROR_IN_DST_CONTAINER::__rend_iterator_accessor_requirement_violation(__c);
+        _ERROR_IN_DST_CONTAINER::
+            __const_rbegin_iterator_accessor_requirement_violation(__c);
+        _ERROR_IN_DST_CONTAINER::
+            __const_rend_iterator_accessor_requirement_violation(__c);
+        _ERROR_IN_DST_CONTAINER::
+            __rbegin_iterator_accessor_requirement_violation(__c);
+        _ERROR_IN_DST_CONTAINER::__rend_iterator_accessor_requirement_violation(
+            __c);
         // Requirements on Iterators
         typedef typename _ReversibleContainer::iterator iter;
         typedef typename _ReversibleContainer::const_iterator const_iter;
 
         // This line won't compile on gcc 2.91 due to a compiler bug.
 #if !(__GNUC__ == 2 && __GNUC_MINOR__ == 91)
-        __BidirectionalIterator_concept_specification<const_iter>::_BidirectionalIterator_requirement_violation(const_iter());
+        __BidirectionalIterator_concept_specification<const_iter>::
+            _BidirectionalIterator_requirement_violation(const_iter());
 #endif
     }
 };
 
 template <class _RandomAccessContainer>
-struct _RandomAccessContainer_concept_specification
-{
+struct _RandomAccessContainer_concept_specification {
     static void
-    _RandomAccessContainer_requirement_violation(_RandomAccessContainer __c)
-    {
+    _RandomAccessContainer_requirement_violation(_RandomAccessContainer __c) {
         // Refinement of ReversibleContainer
-        _ReversibleContainer_concept_specification<_RandomAccessContainer>::_ReversibleContainer_requirement_violation(__c);
+        _ReversibleContainer_concept_specification<_RandomAccessContainer>::
+            _ReversibleContainer_requirement_violation(__c);
         // Valid Expressions
         typedef typename _RandomAccessContainer::value_type __T;
         typedef typename _RandomAccessContainer::difference_type _Dist;
         typedef typename _Mutable_trait<__T>::_Type Type;
         typedef Type *_TypePtr;
         typedef typename _Mutable_trait<_Dist>::_Type Dist;
-        _DST_ERROR::__element_access_operator_requirement_violation(__c,
-                                                                    _TypePtr(),
-                                                                    Dist());
+        _DST_ERROR::__element_access_operator_requirement_violation(
+            __c, _TypePtr(), Dist());
         // Requirements on Iterators
         typedef typename _RandomAccessContainer::iterator iter;
         typedef typename _RandomAccessContainer::const_iterator const_iter;
-        _RandomAccessIterator_concept_specification<const_iter>::_RandomAccessIterator_requirement_violation(const_iter());
-        _Mutable_RandomAccessIterator_concept_specification<iter>::_Mutable_RandomAccessIterator_requirement_violation(iter());
+        _RandomAccessIterator_concept_specification<const_iter>::
+            _RandomAccessIterator_requirement_violation(const_iter());
+        _Mutable_RandomAccessIterator_concept_specification<
+            iter>::_Mutable_RandomAccessIterator_requirement_violation(iter());
     }
 };
 

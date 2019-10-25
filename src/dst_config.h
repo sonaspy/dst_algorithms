@@ -56,11 +56,11 @@
 #if (_COMPILER_VERSION >= 721) && defined(_NAMESPACES)
 #define __DST_HAS_NAMESPACES
 #endif
-#if (_COMPILER_VERSION < 721) || \
-    !defined(__DST_HAS_NAMESPACES) || defined(__DST_NO_NAMESPACES)
+#if (_COMPILER_VERSION < 721) || !defined(__DST_HAS_NAMESPACES) ||             \
+    defined(__DST_NO_NAMESPACES)
 #define __DST_NO_EXCEPTION_HEADER
 #endif
-#if _COMPILER_VERSION < 730 || !defined(_STANDARD_C_PLUS_PLUS) || \
+#if _COMPILER_VERSION < 730 || !defined(_STANDARD_C_PLUS_PLUS) ||              \
     !defined(_NAMESPACES)
 #define __DST_NO_BAD_ALLOC
 #endif
@@ -212,7 +212,6 @@
 #define __DST_NO_BAD_ALLOC
 #endif
 #if _MSC_VER > 1000
-#include <yvals.h>
 #define __DST_DONT_USE_BOOL_TYPEDEF
 #endif
 #define __DST_NON_TYPE_TMPL_PARAM_BUG
@@ -309,12 +308,11 @@ typedef int bool;
 // features.  __DST_USE__ALLOCATORS is a hook so that users can
 // disable new-style allocators, and continue to use the same kind of
 // allocators as before, without having to edit library headers.
-#if defined(__DST_CLASS_PARTIAL_SPECIALIZATION) && \
-    defined(__DST_MEMBER_TEMPLATES) &&             \
-    defined(__DST_MEMBER_TEMPLATE_CLASSES) &&      \
-    !defined(__DST_NO_BOOL) &&                     \
-    !defined(__DST_NON_TYPE_TMPL_PARAM_BUG) &&     \
-    !defined(__DST_LIMITED_DEFAULT_TEMPLATES) &&   \
+#if defined(__DST_CLASS_PARTIAL_SPECIALIZATION) &&                             \
+    defined(__DST_MEMBER_TEMPLATES) &&                                         \
+    defined(__DST_MEMBER_TEMPLATE_CLASSES) && !defined(__DST_NO_BOOL) &&       \
+    !defined(__DST_NON_TYPE_TMPL_PARAM_BUG) &&                                 \
+    !defined(__DST_LIMITED_DEFAULT_TEMPLATES) &&                               \
     !defined(__DST_USE__ALLOCATORS)
 #define __DST_USE_DSA_ALLOCATORS
 #endif
@@ -335,22 +333,17 @@ typedef int bool;
 
 #define __DST_USE_NAMESPACES
 #define __VDSA dsa
-#define __DST_BEGIN_NAMESPACE \
-    namespace dsa             \
-    {
+#define __DST_BEGIN_NAMESPACE namespace dsa {
 #define __DST_END_NAMESPACE }
 
 #define __DST_USE_NAMESPACE_FOR_RELOPS
-#define __DST_BEGIN_RELOPS_NAMESPACE \
-    namespace dsa                    \
-    {                                \
-    namespace rel_ops                \
-    {
-#define __DST_END_RELOPS_NAMESPACE \
-    }                              \
+#define __DST_BEGIN_RELOPS_NAMESPACE                                           \
+    namespace dsa {                                                            \
+    namespace rel_ops {
+#define __DST_END_RELOPS_NAMESPACE                                             \
+    }                                                                          \
     }
 #define __DSA_RELOPS dsa::rel_ops
-
 
 // Some versions of the EDG front end sometimes require an explicit
 // namespace spec where they shouldn't.  This macro facilitates that.
@@ -371,11 +364,10 @@ typedef int bool;
 #define __DST_THROW(x) throw x
 #define __DST_RETHROW throw
 #define __DST_NOTHROW throw()
-#define __DST_UNWIND(action) \
-    catch (...)              \
-    {                        \
-        action;              \
-        throw;               \
+#define __DST_UNWIND(action)                                                   \
+    catch (...) {                                                              \
+        action;                                                                \
+        throw;                                                                 \
     }
 
 #else
@@ -390,29 +382,27 @@ typedef int bool;
 #endif
 
 #ifdef __DST_ASSERTIONS
-#include <dsaio.h>
-#define __dst_assert(expr)                                   \
-    if (!(expr))                                             \
-    {                                                        \
-        fprintf(dsaerr, "%s:%d DST assertion failure: %s\n", \
-                __FILE__, __LINE__, #expr);                  \
-        abort();                                             \
+#define __dst_assert(expr)                                                     \
+    if (!(expr)) {                                                             \
+        fprintf(dsaerr, "%s:%d DST assertion failure: %s\n", __FILE__,         \
+                __LINE__, #expr);                                              \
+        abort();                                                               \
     }
 #else
 #define __dst_assert(expr)
 #endif
 
-#if defined(__DST_WIN32THREADS) || defined(__DST__THREADS) || defined(__DST_PTHREADS) || defined(__DST_UITHREADS)
+#if defined(__DST_WIN32THREADS) || defined(__DST__THREADS) ||                  \
+    defined(__DST_PTHREADS) || defined(__DST_UITHREADS)
 #define __DST_THREADS
 #define __DST_VOLATILE volatile
 #else
 #define __DST_VOLATILE
 #endif
 
-#if defined(__DST_CLASS_PARTIAL_SPECIALIZATION) && defined(__DST_MEMBER_TEMPLATES) && !defined(_DST_NO_CONCEPT_CHECKS)
+#if defined(__DST_CLASS_PARTIAL_SPECIALIZATION) &&                             \
+    defined(__DST_MEMBER_TEMPLATES) && !defined(_DST_NO_CONCEPT_CHECKS)
 #define __DST_USE_CONCEPT_CHECKS
 #endif
 
 #endif /* __DST_CONFIG_H */
-
-
