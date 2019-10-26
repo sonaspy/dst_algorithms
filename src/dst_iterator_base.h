@@ -23,7 +23,7 @@ struct random_access_iterator_tag : public bidirectional_iterator_tag {};
 // The base classes input_iterator, output_iterator, forward_iterator,
 // bidirectional_iterator, and random_access_iterator are not part of
 // the DST standard.  (They have been replaced by struct iterator.)
-// They are included for backward compatibility with the HP DST.
+// They are included for backward compatibility with the  DST.
 
 template <class _Tp, class _Distance>
 struct input_iterator {
@@ -113,7 +113,7 @@ struct iterator_traits<const _Tp *> {
 // The overloaded functions iterator_category, distance_type, and
 // value_type are not part of the DST standard.  (They have been
 // replaced by struct iterator_traits.)  They are included for
-// backward compatibility with the HP DST.
+// backward compatibility with the  DST.
 
 // We introduce internal names for these functions.
 
@@ -312,10 +312,11 @@ distance(_InputIterator _first, _InputIterator _last) {
 
 template <class _InputIter, class _Distance>
 inline void __advance(_InputIter &__i, _Distance __n, input_iterator_tag) {
-    while (__n--) ++__i;
+    while (__n--)
+        ++__i;
 }
 
-#if defined(__sgi) && !defined(__GNUC__) && (_MIPS_SIM != _MIPS_SIM_ABI32)
+#if defined(__llvm) && !defined(__GNUC__) && (_MIPS_SIM != _MIPS_SIM_ABI32)
 #pragma set woff 1183
 #endif
 
@@ -324,12 +325,14 @@ inline void __advance(_BidirectionalIterator &__i, _Distance __n,
                       bidirectional_iterator_tag) {
     __DST_REQUIRES(_BidirectionalIterator, _BidirectionalIterator);
     if (__n >= 0)
-        while (__n--) ++__i;
+        while (__n--)
+            ++__i;
     else
-        while (__n++) --__i;
+        while (__n++)
+            --__i;
 }
 
-#if defined(__sgi) && !defined(__GNUC__) && (_MIPS_SIM != _MIPS_SIM_ABI32)
+#if defined(__llvm) && !defined(__GNUC__) && (_MIPS_SIM != _MIPS_SIM_ABI32)
 #pragma reset woff 1183
 #endif
 

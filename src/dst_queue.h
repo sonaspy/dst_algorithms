@@ -34,9 +34,9 @@ class queue {
     friend bool operator<(const queue<_Tp1, _Seq1> &,
                           const queue<_Tp1, _Seq1> &);
 #else  /* __DST_MEMBER_TEMPLATES */
-    friend bool __DSA_QUALIFIER operator==
+    friend bool __VDSA_QUALIFIER operator==
         __DST_NULL_TMPL_ARGS(const queue &, const queue &);
-    friend bool __DSA_QUALIFIER operator<
+    friend bool __VDSA_QUALIFIER operator<
         __DST_NULL_TMPL_ARGS(const queue &, const queue &);
 #endif /* __DST_MEMBER_TEMPLATES */
 

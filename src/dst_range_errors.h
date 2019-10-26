@@ -16,7 +16,7 @@
 #define __DST_THROW_RANGE_ERRORS
 #endif
 
-#if defined(__DST_THROW_RANGE_ERRORS) && defined(__sgi) &&                     \
+#if defined(__DST_THROW_RANGE_ERRORS) && defined(__llvm) &&                    \
     !defined(__GNUC__) && _COMPILER_VERSION >= 730 &&                          \
     defined(_STANDARD_C_PLUS_PLUS)
 

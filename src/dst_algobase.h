@@ -108,7 +108,8 @@ template <class _InputIter, class _OutputIter, class _Distance>
 inline _OutputIter __copy(_InputIter _first, _InputIter _last,
                           _OutputIter __result, input_iterator_tag,
                           _Distance *) {
-    for (; _first != _last; ++__result, ++_first) *__result = *_first;
+    for (; _first != _last; ++__result, ++_first)
+        *__result = *_first;
     return __result;
 }
 
@@ -267,7 +268,8 @@ inline _BidirectionalIter2
 __copy_backward(_BidirectionalIter1 _first, _BidirectionalIter1 _last,
                 _BidirectionalIter2 __result, bidirectional_iterator_tag,
                 _Distance *) {
-    while (_first != _last) *--__result = *--_last;
+    while (_first != _last)
+        *--__result = *--_last;
     return __result;
 }
 
@@ -276,7 +278,8 @@ inline _BidirectionalIter
 __copy_backward(_RandomAccessIter _first, _RandomAccessIter _last,
                 _BidirectionalIter __result, random_access_iterator_tag,
                 _Distance *) {
-    for (_Distance __n = _last - _first; __n > 0; --__n) *--__result = *--_last;
+    for (_Distance __n = _last - _first; __n > 0; --__n)
+        *--__result = *--_last;
     return __result;
 }
 
@@ -383,13 +386,15 @@ inline pair<_InputIter, _OutputIter> copy_n(_InputIter _first, _Size __count,
 template <class _ForwardIter, class _Tp>
 void fill(_ForwardIter _first, _ForwardIter _last, const _Tp &_value) {
     __DST_REQUIRES(_ForwardIter, _Mutable_ForwardIterator);
-    for (; _first != _last; ++_first) *_first = _value;
+    for (; _first != _last; ++_first)
+        *_first = _value;
 }
 
 template <class _OutputIter, class _Size, class _Tp>
 _OutputIter fill_n(_OutputIter _first, _Size __n, const _Tp &_value) {
     __DST_REQUIRES(_OutputIter, _OutputIterator);
-    for (; __n > 0; --__n, ++_first) *_first = _value;
+    for (; __n > 0; --__n, ++_first)
+        *_first = _value;
     return _first;
 }
 

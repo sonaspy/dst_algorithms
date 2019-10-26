@@ -38,7 +38,7 @@
 
 __DST_BEGIN_NAMESPACE
 
-#if defined(__sgi) && !defined(__GNUC__) && (_MIPS_SIM != _MIPS_SIM_ABI32)
+#if defined(__llvm) && !defined(__GNUC__) && (_MIPS_SIM != _MIPS_SIM_ABI32)
 #pragma set woff 1174
 #pragma set woff 1375
 #endif
@@ -48,7 +48,8 @@ __DST_BEGIN_NAMESPACE
 static inline size_t __deque_buf_size(size_t __size) {
     return __size < 512 ? size_t(512 / __size) : size_t(1);
 }
-template <class _Tp, class _Ref, class _Ptr> struct __deque_iterator {
+template <class _Tp, class _Ref, class _Ptr>
+struct __deque_iterator {
     typedef __deque_iterator<_Tp, _Tp &, _Tp *> iterator;
     typedef __deque_iterator<_Tp, const _Tp &, const _Tp *> const_iterator;
     inline static size_t _S_buffer_size() {
@@ -203,7 +204,8 @@ inline ptrdiff_t *distance_type(const __deque_iterator<_Tp, _Ref, _Ptr> &) {
 #ifdef __DST_USE_DSA_ALLOCATORS
 
 // Base class for ordinary allocators.
-template <class _Tp, class _Alloc, bool __is_static> class __deque_alloc_base {
+template <class _Tp, class _Alloc, bool __is_static>
+class __deque_alloc_base {
   public:
     typedef typename _Alloc_traits<_Tp, _Alloc>::allocator_type allocator_type;
     allocator_type get_allocator() const { return _M_node_allocator; }
@@ -235,7 +237,8 @@ template <class _Tp, class _Alloc, bool __is_static> class __deque_alloc_base {
 };
 
 // Specialization for instanceless allocators.
-template <class _Tp, class _Alloc> class __deque_alloc_base<_Tp, _Alloc, true> {
+template <class _Tp, class _Alloc>
+class __deque_alloc_base<_Tp, _Alloc, true> {
   public:
     typedef typename _Alloc_traits<_Tp, _Alloc>::allocator_type allocator_type;
     allocator_type get_allocator() const { return allocator_type(); }
@@ -296,7 +299,8 @@ class __deque_base
 
 #else /* __DST_USE_DSA_ALLOCATORS */
 
-template <class _Tp, class _Alloc> class __deque_base {
+template <class _Tp, class _Alloc>
+class __deque_base {
   public:
     typedef __deque_iterator<_Tp, _Tp &, _Tp *> iterator;
     typedef __deque_iterator<_Tp, const _Tp &, const _Tp *> const_iterator;
@@ -345,7 +349,8 @@ template <class _Tp, class _Alloc> class __deque_base {
 
 // Non-inline member functions from __deque_base.
 
-template <class _Tp, class _Alloc> __deque_base<_Tp, _Alloc>::~__deque_base() {
+template <class _Tp, class _Alloc>
+__deque_base<_Tp, _Alloc>::~__deque_base() {
     if (_M_map) {
         _M_destroy_nodes(_M_start.__map_node, _M_finish.__map_node + 1);
         _M_deallocate_map(_M_map, _M_map_size);
@@ -386,7 +391,8 @@ void __deque_base<_Tp, _Alloc>::_M_create_nodes(_Tp **__nstart,
 template <class _Tp, class _Alloc>
 void __deque_base<_Tp, _Alloc>::_M_destroy_nodes(_Tp **__nstart,
                                                  _Tp **__nfinish) {
-    for (_Tp **__n = __nstart; __n < __nfinish; ++__n) _M_deallocate_node(*__n);
+    for (_Tp **__n = __nstart; __n < __nfinish; ++__n)
+        _M_deallocate_node(*__n);
 }
 
 template <class _Tp, class _Alloc = __DST_DEFAULT_ALLOCATOR(_Tp)>
@@ -975,7 +981,8 @@ deque<_Tp, _Alloc>::erase(iterator __first, iterator __last) {
     }
 }
 
-template <class _Tp, class _Alloc> void deque<_Tp, _Alloc>::clear() {
+template <class _Tp, class _Alloc>
+void deque<_Tp, _Alloc>::clear() {
     for (__map_pointer __node = _M_start.__map_node + 1;
          __node < _M_finish.__map_node; ++__node) {
         destroy(*__node, *__node + _S_buffer_size());
@@ -1016,7 +1023,8 @@ void deque<_Tp, _Alloc>::_M_range_initialize(_InputIterator __first,
                                              input_iterator_tag) {
     _M_initialize_map(0);
     __DST_TRY {
-        for (; __first != __last; ++__first) push_back(*__first);
+        for (; __first != __last; ++__first)
+            push_back(*__first);
     }
     __DST_UNWIND(clear());
 }
@@ -1061,7 +1069,8 @@ void deque<_Tp, _Alloc>::_M_push_back_aux(const value_type &__t) {
 }
 
 // Called only if _M_finish._M_cur == _M_finish._M_last - 1.
-template <class _Tp, class _Alloc> void deque<_Tp, _Alloc>::_M_push_back_aux() {
+template <class _Tp, class _Alloc>
+void deque<_Tp, _Alloc>::_M_push_back_aux() {
     _M_reserve_map_at_back();
     *(_M_finish.__map_node + 1) = _M_allocate_node();
     __DST_TRY {
@@ -1100,7 +1109,8 @@ void deque<_Tp, _Alloc>::_M_push_front_aux() {
 }
 
 // Called only if _M_finish._M_cur == _M_finish._M_first.
-template <class _Tp, class _Alloc> void deque<_Tp, _Alloc>::_M_pop_back_aux() {
+template <class _Tp, class _Alloc>
+void deque<_Tp, _Alloc>::_M_pop_back_aux() {
     _M_deallocate_node(_M_finish._M_first);
     _M_finish._M_set_node(_M_finish.__map_node - 1);
     _M_finish._M_cur = _M_finish._M_last - 1;
@@ -1111,7 +1121,8 @@ template <class _Tp, class _Alloc> void deque<_Tp, _Alloc>::_M_pop_back_aux() {
 // if the deque has at least one element (a precondition for this member
 // function), and if _M_start._M_cur == _M_start._M_last, then the deque
 // must have at least two nodes.
-template <class _Tp, class _Alloc> void deque<_Tp, _Alloc>::_M_pop_front_aux() {
+template <class _Tp, class _Alloc>
+void deque<_Tp, _Alloc>::_M_pop_front_aux() {
     destroy(_M_start._M_cur);
     _M_deallocate_node(_M_start._M_first);
     _M_start._M_set_node(_M_start.__map_node + 1);
@@ -1548,7 +1559,7 @@ inline void swap(deque<_Tp, _Alloc> &__x, deque<_Tp, _Alloc> &__y) {
 
 #endif /* __DST_FUNCTION_TMPL_PARTIAL_ORDER */
 
-#if defined(__sgi) && !defined(__GNUC__) && (_MIPS_SIM != _MIPS_SIM_ABI32)
+#if defined(__llvm) && !defined(__GNUC__) && (_MIPS_SIM != _MIPS_SIM_ABI32)
 #pragma reset woff 1174
 #pragma reset woff 1375
 #endif

@@ -5,7 +5,7 @@
 
 __DST_BEGIN_NAMESPACE
 
-#if defined(__sgi) && !defined(__GNUC__) && (_MIPS_SIM != _MIPS_SIM_ABI32)
+#if defined(__llvm) && !defined(__GNUC__) && (_MIPS_SIM != _MIPS_SIM_ABI32)
 #pragma set woff 1174
 #pragma set woff 1375
 #endif
@@ -560,7 +560,8 @@ template <class _InputIter>
 void list<_Tp, _Alloc>::_M_insert_dispatch(iterator __position,
                                            _InputIter __first,
                                            _InputIter __last, __false_type) {
-    for (; __first != __last; ++__first) insert(__position, *__first);
+    for (; __first != __last; ++__first)
+        insert(__position, *__first);
 }
 
 #else /* __DST_MEMBER_TEMPLATES */
@@ -568,13 +569,15 @@ void list<_Tp, _Alloc>::_M_insert_dispatch(iterator __position,
 template <class _Tp, class _Alloc>
 void list<_Tp, _Alloc>::insert(iterator __position, const _Tp *__first,
                                const _Tp *__last) {
-    for (; __first != __last; ++__first) insert(__position, *__first);
+    for (; __first != __last; ++__first)
+        insert(__position, *__first);
 }
 
 template <class _Tp, class _Alloc>
 void list<_Tp, _Alloc>::insert(iterator __position, const_iterator __first,
                                const_iterator __last) {
-    for (; __first != __last; ++__first) insert(__position, *__first);
+    for (; __first != __last; ++__first)
+        insert(__position, *__first);
 }
 
 #endif /* __DST_MEMBER_TEMPLATES */
@@ -582,13 +585,15 @@ void list<_Tp, _Alloc>::insert(iterator __position, const_iterator __first,
 template <class _Tp, class _Alloc>
 void list<_Tp, _Alloc>::_M_fill_insert(iterator __position, size_type __n,
                                        const _Tp &__x) {
-    for (; __n > 0; --__n) insert(__position, __x);
+    for (; __n > 0; --__n)
+        insert(__position, __x);
 }
 
 template <class _Tp, class _Alloc>
 typename list<_Tp, _Alloc>::iterator list<_Tp, _Alloc>::erase(iterator __first,
                                                               iterator __last) {
-    while (__first != __last) erase(__first++);
+    while (__first != __last)
+        erase(__first++);
     return __last;
 }
 
@@ -624,7 +629,8 @@ list<_Tp, _Alloc> &list<_Tp, _Alloc>::operator=(const list<_Tp, _Alloc> &__x) {
 template <class _Tp, class _Alloc>
 void list<_Tp, _Alloc>::_M_fill_assign(size_type __n, const _Tp &__val) {
     iterator __i = begin();
-    for (; __i != end() && __n > 0; ++__i, --__n) *__i = __val;
+    for (; __i != end() && __n > 0; ++__i, --__n)
+        *__i = __val;
     if (__n > 0)
         insert(end(), __n, __val);
     else
@@ -813,7 +819,7 @@ void list<_Tp, _Alloc>::sort(_StrictWeakOrdering __comp) {
 
 #endif /* __DST_MEMBER_TEMPLATES */
 
-#if defined(__sgi) && !defined(__GNUC__) && (_MIPS_SIM != _MIPS_SIM_ABI32)
+#if defined(__llvm) && !defined(__GNUC__) && (_MIPS_SIM != _MIPS_SIM_ABI32)
 #pragma reset woff 1174
 #pragma reset woff 1375
 #endif

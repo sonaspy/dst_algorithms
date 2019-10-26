@@ -682,7 +682,7 @@ __DST_END_NAMESPACE
 
 __DST_BEGIN_NAMESPACE
 
-#if defined(__sgi) && !defined(__GNUC__) && (_MIPS_SIM != _MIPS_SIM_ABI32)
+#if defined(__llvm) && !defined(__GNUC__) && (_MIPS_SIM != _MIPS_SIM_ABI32)
 #pragma set woff 1209
 #endif
 
@@ -729,7 +729,8 @@ inline const _Tp &__median(const _Tp &__a, const _Tp &__b, const _Tp &__c,
 template <class _InputIter, class _Function>
 _Function for_each(_InputIter __first, _InputIter __last, _Function __f) {
     __DST_REQUIRES(_InputIter, _InputIterator);
-    for (; __first != __last; ++__first) __f(*__first);
+    for (; __first != __last; ++__first)
+        __f(*__first);
     return __f;
 }
 
@@ -738,14 +739,16 @@ _Function for_each(_InputIter __first, _InputIter __last, _Function __f) {
 template <class _InputIter, class _Tp>
 inline _InputIter find(_InputIter __first, _InputIter __last, const _Tp &__val,
                        input_iterator_tag) {
-    while (__first != __last && !(*__first == __val)) ++__first;
+    while (__first != __last && !(*__first == __val))
+        ++__first;
     return __first;
 }
 
 template <class _InputIter, class _Predicate>
 inline _InputIter find_if(_InputIter __first, _InputIter __last,
                           _Predicate __pred, input_iterator_tag) {
-    while (__first != __last && !__pred(*__first)) ++__first;
+    while (__first != __last && !__pred(*__first))
+        ++__first;
     return __first;
 }
 
@@ -898,7 +901,7 @@ _ForwardIter adjacent_find(_ForwardIter __first, _ForwardIter __last,
 // type is void and one (present only if we have partial specialization)
 // whose return type is iterator_traits<_InputIter>::difference_type.  The
 // DST standard only has the latter version, but the former, which was present
-// in the HP DST, is retained for backward compatibility.
+// in the  DST, is retained for backward compatibility.
 
 template <class _InputIter, class _Tp, class _Size>
 void count(_InputIter __first, _InputIter __last, const _Tp &__value,
@@ -1238,13 +1241,15 @@ void generate(_ForwardIter __first, _ForwardIter __last, _Generator __gen) {
     __DST_REQUIRES(_ForwardIter, _ForwardIterator);
     __DST_GENERATOR_CHECK(_Generator,
                           typename iterator_traits<_ForwardIter>::value_type);
-    for (; __first != __last; ++__first) *__first = __gen();
+    for (; __first != __last; ++__first)
+        *__first = __gen();
 }
 
 template <class _OutputIter, class _Size, class _Generator>
 _OutputIter generate_n(_OutputIter __first, _Size __n, _Generator __gen) {
     __DST_REQUIRES(_OutputIter, _OutputIterator);
-    for (; __n > 0; --__n, ++__first) *__first = __gen();
+    for (; __n > 0; --__n, ++__first)
+        *__first = __gen();
     return __first;
 }
 
@@ -1437,7 +1442,8 @@ void __reverse(_BidirectionalIter __first, _BidirectionalIter __last,
 template <class _RandomAccessIter>
 void __reverse(_RandomAccessIter __first, _RandomAccessIter __last,
                random_access_iterator_tag) {
-    while (__first < __last) iter_swap(__first++, --__last);
+    while (__first < __last)
+        iter_swap(__first++, --__last);
 }
 
 template <class _BidirectionalIter>
@@ -1881,9 +1887,11 @@ template <class _RandomAccessIter, class _Tp>
 _RandomAccessIter __unguarded_partition(_RandomAccessIter __first,
                                         _RandomAccessIter __last, _Tp __pivot) {
     while (true) {
-        while (*__first < __pivot) ++__first;
+        while (*__first < __pivot)
+            ++__first;
         --__last;
-        while (__pivot < *__last) --__last;
+        while (__pivot < *__last)
+            --__last;
         if (!(__first < __last))
             return __first;
         iter_swap(__first, __last);
@@ -1896,9 +1904,11 @@ _RandomAccessIter __unguarded_partition(_RandomAccessIter __first,
                                         _RandomAccessIter __last, _Tp __pivot,
                                         _Compare __comp) {
     while (true) {
-        while (__comp(*__first, __pivot)) ++__first;
+        while (__comp(*__first, __pivot))
+            ++__first;
         --__last;
-        while (__comp(__pivot, *__last)) --__last;
+        while (__comp(__pivot, *__last))
+            --__last;
         if (!(__first < __last))
             return __first;
         iter_swap(__first, __last);
@@ -2026,7 +2036,8 @@ void __final_insertion_sort(_RandomAccessIter __first, _RandomAccessIter __last,
 template <class _Size>
 inline _Size __lg(_Size __n) {
     _Size __k;
-    for (__k = 0; __n != 1; __n >>= 1) ++__k;
+    for (__k = 0; __n != 1; __n >>= 1)
+        ++__k;
     return __k;
 }
 
@@ -3782,7 +3793,7 @@ bool is_sorted(_ForwardIter __first, _ForwardIter __last,
     return true;
 }
 
-#if defined(__sgi) && !defined(__GNUC__) && (_MIPS_SIM != _MIPS_SIM_ABI32)
+#if defined(__llvm) && !defined(__GNUC__) && (_MIPS_SIM != _MIPS_SIM_ABI32)
 #pragma reset woff 1209
 #endif
 

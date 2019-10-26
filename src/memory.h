@@ -12,12 +12,10 @@
 
 __DST_BEGIN_NAMESPACE
 
-#if defined(___DST_USE_AUTO_PTR_CONVERSIONS) && \
-    defined(__DST_MEMBER_TEMPLATES)
+#if defined(___DST_USE_AUTO_PTR_CONVERSIONS) && defined(__DST_MEMBER_TEMPLATES)
 
 template <class _Tp1>
-struct auto_ptr_ref
-{
+struct auto_ptr_ref {
     _Tp1 *__ptr_;
     auto_ptr_ref(_Tp1 *_p) : __ptr_(_p) {}
 };
@@ -25,12 +23,11 @@ struct auto_ptr_ref
 #endif
 
 template <class _Tp>
-class auto_ptr
-{
-private:
+class auto_ptr {
+  private:
     _Tp *__ptr_;
 
-public:
+  public:
     typedef _Tp element_type;
 
     explicit auto_ptr(_Tp *_p = 0) __DST_NOTHROW : __ptr_(_p) {}
@@ -38,16 +35,11 @@ public:
 
 #ifdef __DST_MEMBER_TEMPLATES
     template <class _Tp1>
-    auto_ptr(auto_ptr<_Tp1> &__a) __DST_NOTHROW
-        : __ptr_(__a.release())
-    {
-    }
+    auto_ptr(auto_ptr<_Tp1> &__a) __DST_NOTHROW : __ptr_(__a.release()) {}
 #endif /* __DST_MEMBER_TEMPLATES */
 
-    auto_ptr &operator=(auto_ptr &__a) __DST_NOTHROW
-    {
-        if (&__a != this)
-        {
+    auto_ptr &operator=(auto_ptr &__a) __DST_NOTHROW {
+        if (&__a != this) {
             delete __ptr_;
             __ptr_ = __a.release();
         }
@@ -56,10 +48,8 @@ public:
 
 #ifdef __DST_MEMBER_TEMPLATES
     template <class _Tp1>
-    auto_ptr &operator=(auto_ptr<_Tp1> &__a) __DST_NOTHROW
-    {
-        if (__a.get() != this->get())
-        {
+    auto_ptr &operator=(auto_ptr<_Tp1> &__a) __DST_NOTHROW {
+        if (__a.get() != this->get()) {
             delete __ptr_;
             __ptr_ = __a.release();
         }
@@ -73,28 +63,16 @@ public:
     // this is prohibited.
     ~auto_ptr() { delete __ptr_; }
 
-    _Tp &operator*() const __DST_NOTHROW
-    {
-        return *__ptr_;
-    }
-    _Tp *operator->() const __DST_NOTHROW
-    {
-        return __ptr_;
-    }
-    _Tp *get() const __DST_NOTHROW
-    {
-        return __ptr_;
-    }
-    _Tp *release() __DST_NOTHROW
-    {
+    _Tp &operator*() const __DST_NOTHROW { return *__ptr_; }
+    _Tp *operator->() const __DST_NOTHROW { return __ptr_; }
+    _Tp *get() const __DST_NOTHROW { return __ptr_; }
+    _Tp *release() __DST_NOTHROW {
         _Tp *__tmp = __ptr_;
         __ptr_ = 0;
         return __tmp;
     }
-    void reset(_Tp *_p = 0) __DST_NOTHROW
-    {
-        if (_p != __ptr_)
-        {
+    void reset(_Tp *_p = 0) __DST_NOTHROW {
+        if (_p != __ptr_) {
             delete __ptr_;
             __ptr_ = _p;
         }
@@ -105,17 +83,13 @@ public:
     // in fact, most present-day compilers do not support the language
     // features that these conversions rely on.
 
-#if defined(___DST_USE_AUTO_PTR_CONVERSIONS) && \
-    defined(__DST_MEMBER_TEMPLATES)
+#if defined(___DST_USE_AUTO_PTR_CONVERSIONS) && defined(__DST_MEMBER_TEMPLATES)
 
-public:
-    auto_ptr(auto_ptr_ref<_Tp> __ref) __DST_NOTHROW
-        : __ptr_(__ref.__ptr_) {}
+  public:
+    auto_ptr(auto_ptr_ref<_Tp> __ref) __DST_NOTHROW : __ptr_(__ref.__ptr_) {}
 
-    auto_ptr &operator=(auto_ptr_ref<_Tp> __ref) __DST_NOTHROW
-    {
-        if (__ref.__ptr_ != this->get())
-        {
+    auto_ptr &operator=(auto_ptr_ref<_Tp> __ref) __DST_NOTHROW {
+        if (__ref.__ptr_ != this->get()) {
             delete __ptr_;
             __ptr_ = __ref.__ptr_;
         }
@@ -123,13 +97,11 @@ public:
     }
 
     template <class _Tp1>
-    operator auto_ptr_ref<_Tp1>() __DST_NOTHROW
-    {
+    operator auto_ptr_ref<_Tp1>() __DST_NOTHROW {
         return auto_ptr_ref<_Tp1>(this->release());
     }
     template <class _Tp1>
-    operator auto_ptr<_Tp1>() __DST_NOTHROW
-    {
+    operator auto_ptr<_Tp1>() __DST_NOTHROW {
         return auto_ptr<_Tp1>(this->release());
     }
 
@@ -139,5 +111,3 @@ public:
 __DST_END_NAMESPACE
 
 #endif /* ___DST_MEMORY */
-
-

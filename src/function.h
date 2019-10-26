@@ -15,10 +15,10 @@
 #ifdef __DST_USE_NAMESPACE_FOR_RELOPS
 
 // Names from dst_relops.h
-using __DSA_RELOPS::operator!=;
-using __DSA_RELOPS::operator>;
-using __DSA_RELOPS::operator<=;
-using __DSA_RELOPS::operator>=;
+using __VDSA_RELOPS::operator!=;
+using __VDSA_RELOPS::operator>;
+using __VDSA_RELOPS::operator<=;
+using __VDSA_RELOPS::operator>=;
 
 #endif /* __DST_USE_NAMESPACE_FOR_RELOPS */
 

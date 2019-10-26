@@ -290,7 +290,7 @@ class hashtable {
     friend bool operator==(const hashtable<_Vl, _Ky, _HF, _Ex, _Eq, _Al> &,
                            const hashtable<_Vl, _Ky, _HF, _Ex, _Eq, _Al> &);
 #else  /* __DST_MEMBER_TEMPLATES */
-    friend bool __DSA_QUALIFIER operator==
+    friend bool __VDSA_QUALIFIER operator==
         __DST_NULL_TMPL_ARGS(const hashtable &, const hashtable &);
 #endif /* __DST_MEMBER_TEMPLATES */
 
@@ -336,13 +336,15 @@ class hashtable {
     template <class _InputIterator>
     void insert_unique(_InputIterator __f, _InputIterator __l,
                        input_iterator_tag) {
-        for (; __f != __l; ++__f) insert_unique(*__f);
+        for (; __f != __l; ++__f)
+            insert_unique(*__f);
     }
 
     template <class _InputIterator>
     void insert_equal(_InputIterator __f, _InputIterator __l,
                       input_iterator_tag) {
-        for (; __f != __l; ++__f) insert_equal(*__f);
+        for (; __f != __l; ++__f)
+            insert_equal(*__f);
     }
 
     template <class _ForwardIterator>
@@ -351,7 +353,8 @@ class hashtable {
         size_type __n = 0;
         distance(__f, __l, __n);
         resize(_M_num_elements + __n);
-        for (; __n > 0; --__n, ++__f) insert_unique_noresize(*__f);
+        for (; __n > 0; --__n, ++__f)
+            insert_unique_noresize(*__f);
     }
 
     template <class _ForwardIterator>
@@ -360,34 +363,39 @@ class hashtable {
         size_type __n = 0;
         distance(__f, __l, __n);
         resize(_M_num_elements + __n);
-        for (; __n > 0; --__n, ++__f) insert_equal_noresize(*__f);
+        for (; __n > 0; --__n, ++__f)
+            insert_equal_noresize(*__f);
     }
 
 #else  /* __DST_MEMBER_TEMPLATES */
     void insert_unique(const value_type *__f, const value_type *__l) {
         size_type __n = __l - __f;
         resize(_M_num_elements + __n);
-        for (; __n > 0; --__n, ++__f) insert_unique_noresize(*__f);
+        for (; __n > 0; --__n, ++__f)
+            insert_unique_noresize(*__f);
     }
 
     void insert_equal(const value_type *__f, const value_type *__l) {
         size_type __n = __l - __f;
         resize(_M_num_elements + __n);
-        for (; __n > 0; --__n, ++__f) insert_equal_noresize(*__f);
+        for (; __n > 0; --__n, ++__f)
+            insert_equal_noresize(*__f);
     }
 
     void insert_unique(const_iterator __f, const_iterator __l) {
         size_type __n = 0;
         distance(__f, __l, __n);
         resize(_M_num_elements + __n);
-        for (; __n > 0; --__n, ++__f) insert_unique_noresize(*__f);
+        for (; __n > 0; --__n, ++__f)
+            insert_unique_noresize(*__f);
     }
 
     void insert_equal(const_iterator __f, const_iterator __l) {
         size_type __n = 0;
         distance(__f, __l, __n);
         resize(_M_num_elements + __n);
-        for (; __n > 0; --__n, ++__f) insert_equal_noresize(*__f);
+        for (; __n > 0; --__n, ++__f)
+            insert_equal_noresize(*__f);
     }
 #endif /*__DST_MEMBER_TEMPLATES */
 
@@ -545,9 +553,10 @@ value_type(const _Hashtable_iterator<_Val, _Key, _HF, _ExK, _EqK, _All> &) {
 }
 
 template <class _Val, class _Key, class _HF, class _ExK, class _EqK, class _All>
-inline hashtable<_Val, _Key, _HF, _ExK, _EqK, _All>::difference_type *
+inline typename hashtable<_Val, _Key, _HF, _ExK, _EqK, _All>::difference_type *
 distance_type(const _Hashtable_iterator<_Val, _Key, _HF, _ExK, _EqK, _All> &) {
-    return (hashtable<_Val, _Key, _HF, _ExK, _EqK, _All>::difference_type *)0;
+    return (typename hashtable<_Val, _Key, _HF, _ExK, _EqK,
+                               _All>::difference_type *)0;
 }
 
 template <class _Val, class _Key, class _HF, class _ExK, class _EqK, class _All>
@@ -563,10 +572,11 @@ inline _Val *value_type(
 }
 
 template <class _Val, class _Key, class _HF, class _ExK, class _EqK, class _All>
-inline hashtable<_Val, _Key, _HF, _ExK, _EqK, _All>::difference_type *
+inline typename hashtable<_Val, _Key, _HF, _ExK, _EqK, _All>::difference_type *
 distance_type(
     const _Hashtable_const_iterator<_Val, _Key, _HF, _ExK, _EqK, _All> &) {
-    return (hashtable<_Val, _Key, _HF, _ExK, _EqK, _All>::difference_type *)0;
+    return (typename hashtable<_Val, _Key, _HF, _ExK, _EqK,
+                               _All>::difference_type *)0;
 }
 
 #endif /* __DST_CLASS_PARTIAL_SPECIALIZATION */

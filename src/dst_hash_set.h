@@ -5,7 +5,7 @@
 
 __DST_BEGIN_NAMESPACE
 
-#if defined(__sgi) && !defined(__GNUC__) && (_MIPS_SIM != _MIPS_SIM_ABI32)
+#if defined(__llvm) && !defined(__GNUC__) && (_MIPS_SIM != _MIPS_SIM_ABI32)
 #pragma set woff 1174
 #pragma set woff 1375
 #endif
@@ -495,7 +495,7 @@ class insert_iterator<hash_multiset<_Value, _HashFcn, _EqualKey, _Alloc>> {
 
 #endif /* __DST_CLASS_PARTIAL_SPECIALIZATION */
 
-#if defined(__sgi) && !defined(__GNUC__) && (_MIPS_SIM != _MIPS_SIM_ABI32)
+#if defined(__llvm) && !defined(__GNUC__) && (_MIPS_SIM != _MIPS_SIM_ABI32)
 #pragma reset woff 1174
 #pragma reset woff 1375
 #endif

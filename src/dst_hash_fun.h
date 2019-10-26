@@ -11,7 +11,8 @@ struct hash {};
 inline size_t __dst_hash_string(const char *__s) {
     unsigned long __h = 0;
 
-    for (; *__s; ++__s) __h = 5 * __h + *__s;
+    for (; *__s; ++__s)
+        __h = 5 * __h + *__s;
 
     return size_t(__h);
 }

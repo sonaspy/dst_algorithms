@@ -6,7 +6,8 @@ __DST_BEGIN_NAMESPACE
 template <class _InputIterator, class _Tp>
 _Tp accumulate(_InputIterator __first, _InputIterator __last, _Tp __init) {
     __DST_REQUIRES(_InputIterator, _InputIterator);
-    for (; __first != __last; ++__first) __init = __init + *__first;
+    for (; __first != __last; ++__first)
+        __init = __init + *__first;
     return __init;
 }
 
@@ -14,7 +15,8 @@ template <class _InputIterator, class _Tp, class _BinaryOperation>
 _Tp accumulate(_InputIterator __first, _InputIterator __last, _Tp __init,
                _BinaryOperation __binary_op) {
     __DST_REQUIRES(_InputIterator, _InputIterator);
-    for (; __first != __last; ++__first) __init = __binary_op(__init, *__first);
+    for (; __first != __last; ++__first)
+        __init = __binary_op(__init, *__first);
     return __init;
 }
 
@@ -192,7 +194,8 @@ template <class _ForwardIter, class _Tp>
 void iota(_ForwardIter __first, _ForwardIter __last, _Tp __value) {
     __DST_REQUIRES(_ForwardIter, _Mutable_ForwardIterator);
     __DST_CONVERTIBLE(_Tp, typename iterator_traits<_ForwardIter>::value_type);
-    while (__first != __last) *__first++ = __value++;
+    while (__first != __last)
+        *__first++ = __value++;
 }
 
 __DST_END_NAMESPACE

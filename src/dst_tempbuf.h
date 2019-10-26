@@ -30,7 +30,7 @@ inline pair<_Tp *, ptrdiff_t> get_temporary_buffer(ptrdiff_t __len) {
 #endif /* __DST_EXPLICIT_FUNCTION_TMPL_ARGS */
 
 // This overload is not required by the standard; it is an extension.
-// It is supported for backward compatibility with the HP DST, and
+// It is supported for backward compatibility with the  DST, and
 // because not all compilers support the language feature (explicit
 // function template arguments) that is required for the standard
 // version of get_temporary_buffer.
@@ -79,7 +79,7 @@ class _Temporary_buffer {
 
     _Temporary_buffer(_ForwardIterator _first, _ForwardIterator _last) {
         // Workaround for a __type_traits bug in the pre-7.3 compiler.
-#if defined(__sgi) && !defined(__GNUC__) && _COMPILER_VERSION < 730
+#if defined(__llvm) && !defined(__GNUC__) && _COMPILER_VERSION < 730
         typedef typename __type_traits<_Tp>::is_POD_type _Trivial;
 #else
         typedef typename __type_traits<_Tp>::has_trivial_default_constructor

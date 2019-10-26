@@ -8,7 +8,7 @@
     If you choose the default maxkey, it probably won't work as you expected.
 */
 
-#include <math.h>
+#include <cmath>
 
 __DST_BEGIN_NAMESPACE
 
@@ -119,7 +119,8 @@ class skiplist {
             _M_next_node = _M_next_node->_M_nexts[0];
             delete tmp;
         }
-        for (int i = 0; i <= _max_level; i++) _M_start->_M_nexts[i] = _M_finish;
+        for (int i = 0; i <= _max_level; i++)
+            _M_start->_M_nexts[i] = _M_finish;
         _size = 0;
         _level = 0;
     }
@@ -156,7 +157,8 @@ class skiplist {
             _M_last_checked[i]->_M_nexts[i] = __the_node->_M_nexts[i];
 
         // update _level
-        while (_level > 0 && _M_start->_M_nexts[_level] == _M_finish) _level--;
+        while (_level > 0 && _M_start->_M_nexts[_level] == _M_finish)
+            _level--;
 
         delete __the_node;
         _size--;
@@ -221,7 +223,8 @@ class skiplist {
     size_t __decide_level() // generate a level number by 0.5 probability
     {
         size_t __lev = 0;
-        while (rand() & 1) ++__lev;
+        while (rand() & 1)
+            ++__lev;
         return (__lev <= _max_level) ? __lev : _max_level;
     }
 

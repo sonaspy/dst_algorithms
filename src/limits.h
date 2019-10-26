@@ -14,8 +14,7 @@
 
 __DST_BEGIN_NAMESPACE
 
-enum float_round_style
-{
+enum float_round_style {
     round_indeterminate = -1,
     round_toward_zero = 0,
     round_to_nearest = 1,
@@ -23,8 +22,7 @@ enum float_round_style
     round_toward_neg_infinity = 3
 };
 
-enum float_denorm_style
-{
+enum float_denorm_style {
     denorm_indeterminate = -1,
     denorm_absent = 0,
     denorm_present = 1
@@ -44,22 +42,18 @@ enum float_denorm_style
 // take their addresses.  We choose the former workaround.
 
 #ifdef __DST_STATIC_CONST_INIT_BUG
-#define __DST_DECLARE_LIMITS_MEMBER(__mem_type, __mem_name, __mem_value) \
-    enum                                                                 \
-    {                                                                    \
-        __mem_name = __mem_value                                         \
-    }
+#define __DST_DECLARE_LIMITS_MEMBER(__mem_type, __mem_name, __mem_value)       \
+    enum { __mem_name = __mem_value }
 #else /* __DST_STATIC_CONST_INIT_BUG */
-#define __DST_DECLARE_LIMITS_MEMBER(__mem_type, __mem_name, __mem_value) \
+#define __DST_DECLARE_LIMITS_MEMBER(__mem_type, __mem_name, __mem_value)       \
     static const __mem_type __mem_name = __mem_value
 #endif /* __DST_STATIC_CONST_INIT_BUG */
 
 // Base class for all specializations of numeric_limits.
 
 template <class __number>
-class _Numeric_limits_base
-{
-public:
+class _Numeric_limits_base {
+  public:
     __DST_DECLARE_LIMITS_MEMBER(bool, is_specialized, false);
 
     static __number min() __DST_NOTHROW { return __number(); }
@@ -85,9 +79,7 @@ public:
     __DST_DECLARE_LIMITS_MEMBER(bool, has_infinity, false);
     __DST_DECLARE_LIMITS_MEMBER(bool, has_quiet_NaN, false);
     __DST_DECLARE_LIMITS_MEMBER(bool, has_signaling_NaN, false);
-    __DST_DECLARE_LIMITS_MEMBER(float_denorm_style,
-                                has_denorm,
-                                denorm_absent);
+    __DST_DECLARE_LIMITS_MEMBER(float_denorm_style, has_denorm, denorm_absent);
     __DST_DECLARE_LIMITS_MEMBER(bool, has_denorm_loss, false);
 
     static __number infinity() __DST_NOTHROW { return __number(); }
@@ -101,16 +93,15 @@ public:
 
     __DST_DECLARE_LIMITS_MEMBER(bool, traps, false);
     __DST_DECLARE_LIMITS_MEMBER(bool, tinyness_before, false);
-    __DST_DECLARE_LIMITS_MEMBER(float_round_style,
-                                round_style,
+    __DST_DECLARE_LIMITS_MEMBER(float_round_style, round_style,
                                 round_toward_zero);
 };
 
 #ifdef __DST_STATIC_CONST_INIT_BUG
 #define __DST_DEFINE_NUMERIC_BASE_MEMBER(__type, __mem)
 #else /* __DST_STATIC_CONST_INIT_BUG */
-#define __DST_DEFINE_NUMERIC_BASE_MEMBER(__type, __mem) \
-    template <class __number>                           \
+#define __DST_DEFINE_NUMERIC_BASE_MEMBER(__type, __mem)                        \
+    template <class __number>                                                  \
     const __type _Numeric_limits_base<__number>::__mem
 #endif /* __DST_STATIC_CONST_INIT_BUG */
 
@@ -139,21 +130,20 @@ __DST_DEFINE_NUMERIC_BASE_MEMBER(float_round_style, round_style);
 
 // Base class for integers.
 
-template <class _Int,
-          _Int __imin, _Int __imax,
-          int __idigits = -1, bool __ismod = true>
-class _Integer_limits : public _Numeric_limits_base<_Int>
-{
-public:
+template <class _Int, _Int __imin, _Int __imax, int __idigits = -1,
+          bool __ismod = true>
+class _Integer_limits : public _Numeric_limits_base<_Int> {
+  public:
     __DST_DECLARE_LIMITS_MEMBER(bool, is_specialized, true);
 
     static _Int min() __DST_NOTHROW { return __imin; }
     static _Int max() __DST_NOTHROW { return __imax; }
 
-    __DST_DECLARE_LIMITS_MEMBER(int,
-                                digits,
-                                (__idigits < 0) ? (int)(sizeof(_Int) * CHAR_BIT) - (__imin == 0 ? 0 : 1)
-                                                : __idigits);
+    __DST_DECLARE_LIMITS_MEMBER(int, digits,
+                                (__idigits < 0)
+                                    ? (int)(sizeof(_Int) * CHAR_BIT) -
+                                          (__imin == 0 ? 0 : 1)
+                                    : __idigits);
     __DST_DECLARE_LIMITS_MEMBER(int, digits10, (digits * 301) / 1000);
     // log 2 = 0.301029995664...
 
@@ -169,8 +159,8 @@ public:
 #ifdef __DST_STATIC_CONST_INIT_BUG
 #define __DST_DEFINE_INTEGER_LIMITS_MEMBER(__type, __mem)
 #else /* __DST_STATIC_CONST_INIT_BUG */
-#define __DST_DEFINE_INTEGER_LIMITS_MEMBER(__type, __mem)                     \
-    template <class _Int, _Int __imin, _Int __imax, int __idig, bool __ismod> \
+#define __DST_DEFINE_INTEGER_LIMITS_MEMBER(__type, __mem)                      \
+    template <class _Int, _Int __imin, _Int __imax, int __idig, bool __ismod>  \
     const __type _Integer_limits<_Int, __imin, __imax, __idig, __ismod>::__mem
 #endif /* __DST_STATIC_CONST_INIT_BUG */
 
@@ -185,15 +175,11 @@ __DST_DEFINE_INTEGER_LIMITS_MEMBER(bool, is_bounded);
 __DST_DEFINE_INTEGER_LIMITS_MEMBER(bool, is_modulo);
 
 // Base class for floating-point numbers.
-template <class __number,
-          int __Digits, int __Digits10,
-          int __MinExp, int __MaxExp,
-          int __MinExp10, int __MaxExp10,
-          bool __IsIEC559,
+template <class __number, int __Digits, int __Digits10, int __MinExp,
+          int __MaxExp, int __MinExp10, int __MaxExp10, bool __IsIEC559,
           float_round_style __RoundStyle>
-class _Floating_limits : public _Numeric_limits_base<__number>
-{
-public:
+class _Floating_limits : public _Numeric_limits_base<__number> {
+  public:
     __DST_DECLARE_LIMITS_MEMBER(bool, is_specialized, true);
 
     __DST_DECLARE_LIMITS_MEMBER(int, digits, __Digits);
@@ -211,8 +197,7 @@ public:
     __DST_DECLARE_LIMITS_MEMBER(bool, has_infinity, true);
     __DST_DECLARE_LIMITS_MEMBER(bool, has_quiet_NaN, true);
     __DST_DECLARE_LIMITS_MEMBER(bool, has_signaling_NaN, true);
-    __DST_DECLARE_LIMITS_MEMBER(float_denorm_style,
-                                has_denorm,
+    __DST_DECLARE_LIMITS_MEMBER(float_denorm_style, has_denorm,
                                 denorm_indeterminate);
     __DST_DECLARE_LIMITS_MEMBER(bool, has_denorm_loss, false);
 
@@ -227,13 +212,12 @@ public:
 #ifdef __DST_STATIC_CONST_INIT_BUG
 #define __DST_DEFINE_FLOAT_LIMITS_MEMBER(__type, __mem)
 #else /* __DST_STATIC_CONST_INIT_BUG */
-#define __DST_DEFINE_FLOAT_LIMITS_MEMBER(__type, __mem)           \
-    template <class __Num, int __Dig, int __Dig10,                \
-              int __MnX, int __MxX, int __MnX10, int __MxX10,     \
-              bool __IsIEEE, float_round_style __Sty>             \
-    const __type _Floating_limits<__Num, __Dig, __Dig10,          \
-                                  __MnX, __MxX, __MnX10, __MxX10, \
-                                  __IsIEEE, __Sty>::__mem
+#define __DST_DEFINE_FLOAT_LIMITS_MEMBER(__type, __mem)                        \
+    template <class __Num, int __Dig, int __Dig10, int __MnX, int __MxX,       \
+              int __MnX10, int __MxX10, bool __IsIEEE,                         \
+              float_round_style __Sty>                                         \
+    const __type _Floating_limits<__Num, __Dig, __Dig10, __MnX, __MxX,         \
+                                  __MnX10, __MxX10, __IsIEEE, __Sty>::__mem
 #endif /* __DST_STATIC_CONST_INIT_BUG */
 
 __DST_DEFINE_FLOAT_LIMITS_MEMBER(bool, is_specialized);
@@ -266,9 +250,7 @@ __DST_DEFINE_FLOAT_LIMITS_MEMBER(float_round_style, round_style);
 // The unspecialized class.
 
 template <class _Tp>
-class numeric_limits : public _Numeric_limits_base<_Tp>
-{
-};
+class numeric_limits : public _Numeric_limits_base<_Tp> {};
 
 // Specializations for all built-in integral types.
 
@@ -276,75 +258,52 @@ class numeric_limits : public _Numeric_limits_base<_Tp>
 
 __DST_TEMPLATE_NULL
 class numeric_limits<bool>
-    : public _Integer_limits<bool, false, true, 1, false>
-{
-};
+    : public _Integer_limits<bool, false, true, 1, false> {};
 
 #endif /* __DST_NO_BOOL */
 
 __DST_TEMPLATE_NULL
-class numeric_limits<char>
-    : public _Integer_limits<char, CHAR_MIN, CHAR_MAX>
-{
+class numeric_limits<char> : public _Integer_limits<char, CHAR_MIN, CHAR_MAX> {
 };
 
 __DST_TEMPLATE_NULL
 class numeric_limits<signed char>
-    : public _Integer_limits<signed char, SCHAR_MIN, SCHAR_MAX>
-{
-};
+    : public _Integer_limits<signed char, SCHAR_MIN, SCHAR_MAX> {};
 
 __DST_TEMPLATE_NULL
 class numeric_limits<unsigned char>
-    : public _Integer_limits<unsigned char, 0, UCHAR_MAX>
-{
-};
+    : public _Integer_limits<unsigned char, 0, UCHAR_MAX> {};
 
 #ifdef __DST_HAS_WCHAR_T
 
 __DST_TEMPLATE_NULL
 class numeric_limits<wchar_t>
-    : public _Integer_limits<wchar_t, INT_MIN, INT_MAX>
-{
-};
+    : public _Integer_limits<wchar_t, INT_MIN, INT_MAX> {};
 
 #endif
 
 __DST_TEMPLATE_NULL
 class numeric_limits<short>
-    : public _Integer_limits<short, SHRT_MIN, SHRT_MAX>
-{
-};
+    : public _Integer_limits<short, SHRT_MIN, SHRT_MAX> {};
 
 __DST_TEMPLATE_NULL
 class numeric_limits<unsigned short>
-    : public _Integer_limits<unsigned short, 0, USHRT_MAX>
-{
-};
+    : public _Integer_limits<unsigned short, 0, USHRT_MAX> {};
 
 __DST_TEMPLATE_NULL
-class numeric_limits<int>
-    : public _Integer_limits<int, INT_MIN, INT_MAX>
-{
-};
+class numeric_limits<int> : public _Integer_limits<int, INT_MIN, INT_MAX> {};
 
 __DST_TEMPLATE_NULL
 class numeric_limits<unsigned int>
-    : public _Integer_limits<unsigned int, 0, UINT_MAX>
-{
-};
+    : public _Integer_limits<unsigned int, 0, UINT_MAX> {};
 
 __DST_TEMPLATE_NULL
-class numeric_limits<long>
-    : public _Integer_limits<long, LONG_MIN, LONG_MAX>
-{
+class numeric_limits<long> : public _Integer_limits<long, LONG_MIN, LONG_MAX> {
 };
 
 __DST_TEMPLATE_NULL
 class numeric_limits<unsigned long>
-    : public _Integer_limits<unsigned long, 0, ULONG_MAX>
-{
-};
+    : public _Integer_limits<unsigned long, 0, ULONG_MAX> {};
 
 #ifdef __DST_LONG_LONG
 
@@ -361,15 +320,11 @@ class numeric_limits<unsigned long>
 
 __DST_TEMPLATE_NULL
 class numeric_limits<long long>
-    : public _Integer_limits<long long, LONGLONG_MIN, LONGLONG_MAX>
-{
-};
+    : public _Integer_limits<long long, LONGLONG_MIN, LONGLONG_MAX> {};
 
 __DST_TEMPLATE_NULL
 class numeric_limits<unsigned long long>
-    : public _Integer_limits<unsigned long long, 0, ULONGLONG_MAX>
-{
-};
+    : public _Integer_limits<unsigned long long, 0, ULONGLONG_MAX> {};
 
 #endif /* __DST_LONG_LONG */
 
@@ -384,9 +339,8 @@ __DST_TEMPLATE_NULL class numeric_limits<float>
                               FLT_MIN_10_EXP, // Minimum base 10 exponent
                               FLT_MAX_10_EXP, // Maximum base 10 exponent
                               true,           // conforms to iec559
-                              round_to_nearest>
-{
-public:
+                              round_to_nearest> {
+  public:
     static float min() __DST_NOTHROW { return FLT_MIN; }
     static float denorm_min() __DST_NOTHROW { return FLT_MIN; }
     static float max() __DST_NOTHROW { return FLT_MAX; }
@@ -406,9 +360,8 @@ __DST_TEMPLATE_NULL class numeric_limits<double>
                               DBL_MIN_10_EXP, // Minimum base 10 exponent
                               DBL_MAX_10_EXP, // Maximum base 10 exponent
                               true,           // conforms to iec559
-                              round_to_nearest>
-{
-public:
+                              round_to_nearest> {
+  public:
     static double min() __DST_NOTHROW { return DBL_MIN; }
     static double denorm_min() __DST_NOTHROW { return DBL_MIN; }
     static double max() __DST_NOTHROW { return DBL_MAX; }
@@ -428,9 +381,8 @@ __DST_TEMPLATE_NULL class numeric_limits<long double>
                               LDBL_MIN_10_EXP, // Minimum base 10 exponent
                               LDBL_MAX_10_EXP, // Maximum base 10 exponent
                               false,           // Doesn't conform to iec559
-                              round_to_nearest>
-{
-public:
+                              round_to_nearest> {
+  public:
     static long double min() __DST_NOTHROW { return LDBL_MIN; }
     static long double denorm_min() __DST_NOTHROW { return LDBL_MIN; }
     static long double max() __DST_NOTHROW { return LDBL_MAX; }
@@ -447,103 +399,82 @@ public:
 #if defined(_MIPSEB)
 // Big-endian MIPS.  float is 32 bits, double 64, long double 128.
 
-#define _Define_float(__f, __h, __l)                        \
-    inline float numeric_limits<float>::__f() __DST_NOTHROW \
-    {                                                       \
-        static const unsigned short __x[2] = {__h, __l};    \
-        return *reinterpret_cast<const float *>(__x);       \
+#define _Define_float(__f, __h, __l)                                           \
+    inline float numeric_limits<float>::__f() __DST_NOTHROW {                  \
+        static const unsigned short __x[2] = {__h, __l};                       \
+        return *reinterpret_cast<const float *>(__x);                          \
     }
-#define _Define_double(__f, __h, __l)                         \
-    inline double numeric_limits<double>::__f() __DST_NOTHROW \
-    {                                                         \
-        static const unsigned short __x[4] = {__h, __l};      \
-        return *reinterpret_cast<const double *>(__x);        \
+#define _Define_double(__f, __h, __l)                                          \
+    inline double numeric_limits<double>::__f() __DST_NOTHROW {                \
+        static const unsigned short __x[4] = {__h, __l};                       \
+        return *reinterpret_cast<const double *>(__x);                         \
     }
-#define _Define_ldouble(__f, __h, __l)                                  \
-    inline long double numeric_limits<long double>::__f() __DST_NOTHROW \
-    {                                                                   \
-        static const unsigned short __x[8] = {__h, __l};                \
-        return *reinterpret_cast<const long double *>(__x);             \
+#define _Define_ldouble(__f, __h, __l)                                         \
+    inline long double numeric_limits<long double>::__f() __DST_NOTHROW {      \
+        static const unsigned short __x[8] = {__h, __l};                       \
+        return *reinterpret_cast<const long double *>(__x);                    \
     }
 
-_Define_float(infinity, 0x7f80, 0)
-    _Define_float(quiet_NaN, 0x7f81, 0)
-        _Define_float(signaling_NaN, 0x7fc1, 0)
+_Define_float(infinity, 0x7f80, 0) _Define_float(quiet_NaN, 0x7f81, 0)
+    _Define_float(signaling_NaN, 0x7fc1, 0)
 
-            _Define_double(infinity, 0x7ff0, 0)
-                _Define_double(quiet_NaN, 0x7ff1, 0)
-                    _Define_double(signaling_NaN, 0x7ff9, 0)
+        _Define_double(infinity, 0x7ff0, 0) _Define_double(quiet_NaN, 0x7ff1, 0)
+            _Define_double(signaling_NaN, 0x7ff9, 0)
 
-                        _Define_ldouble(infinity, 0x7ff0, 0)
-                            _Define_ldouble(quiet_NaN, 0x7ff1, 0)
-                                _Define_ldouble(signaling_NaN, 0x7ff9, 0)
+                _Define_ldouble(infinity, 0x7ff0, 0)
+                    _Define_ldouble(quiet_NaN, 0x7ff1, 0)
+                        _Define_ldouble(signaling_NaN, 0x7ff9, 0)
 
 #elif defined(__i386) || defined(_M_IX86)
 // Little-endian ia32.  float is 32 bits, double 64, long double 80.
 
-#define _Define_float(__f, __h, __l)                        \
-    inline float numeric_limits<float>::__f() __DST_NOTHROW \
-    {                                                       \
-        static const unsigned short __x[2] = {__l, __h};    \
-        return *reinterpret_cast<const float *>(__x);       \
+#define _Define_float(__f, __h, __l)                                           \
+    inline float numeric_limits<float>::__f() __DST_NOTHROW {                  \
+        static const unsigned short __x[2] = {__l, __h};                       \
+        return *reinterpret_cast<const float *>(__x);                          \
     }
-#define _Define_double(__f, __h, __l)                          \
-    inline double numeric_limits<double>::__f() __DST_NOTHROW  \
-    {                                                          \
-        static const unsigned short __x[4] = {0, 0, __l, __h}; \
-        return *reinterpret_cast<const double *>(__x);         \
+#define _Define_double(__f, __h, __l)                                          \
+    inline double numeric_limits<double>::__f() __DST_NOTHROW {                \
+        static const unsigned short __x[4] = {0, 0, __l, __h};                 \
+        return *reinterpret_cast<const double *>(__x);                         \
     }
-#define _Define_ldouble(__f, __h, __l)                                  \
-    inline long double numeric_limits<long double>::__f() __DST_NOTHROW \
-    {                                                                   \
-        static const unsigned short __x[5] = {0, 0, 0, __l, __h};       \
-        return *reinterpret_cast<const long double *>(__x);             \
+#define _Define_ldouble(__f, __h, __l)                                         \
+    inline long double numeric_limits<long double>::__f() __DST_NOTHROW {      \
+        static const unsigned short __x[5] = {0, 0, 0, __l, __h};              \
+        return *reinterpret_cast<const long double *>(__x);                    \
     }
 
-_Define_float(infinity, 0x7f80, 0)
-    _Define_float(quiet_NaN, 0x7fa0, 0)
-        _Define_float(signaling_NaN, 0x7fc0, 0)
+_Define_float(infinity, 0x7f80, 0) _Define_float(quiet_NaN, 0x7fa0, 0)
+    _Define_float(signaling_NaN, 0x7fc0, 0)
 
-            _Define_double(infinity, 0x7ff0, 0)
-                _Define_double(quiet_NaN, 0x7ff4, 0)
-                    _Define_double(signaling_NaN, 0x7ff8, 0)
+        _Define_double(infinity, 0x7ff0, 0) _Define_double(quiet_NaN, 0x7ff4, 0)
+            _Define_double(signaling_NaN, 0x7ff8, 0)
 
-                        _Define_ldouble(infinity, 0x7fff, 0x8000)
-                            _Define_ldouble(quiet_NaN, 0x7fff, 0xa000)
-                                _Define_ldouble(signaling_NaN, 0x7fff, 0xc000)
+                _Define_ldouble(infinity, 0x7fff, 0x8000)
+                    _Define_ldouble(quiet_NaN, 0x7fff, 0xa000)
+                        _Define_ldouble(signaling_NaN, 0x7fff, 0xc000)
 
 #else
 
-/* This is an architecture we don't know how to handle.  Return some 
+/* This is an architecture we don't know how to handle.  Return some
    obviously wrong values. */
 
-#define _Define_float(__f)                                  \
-    inline float numeric_limits<float>::__f() __DST_NOTHROW \
-    {                                                       \
-        return 0;                                           \
-    }
-#define _Define_double(__f)                                   \
-    inline double numeric_limits<double>::__f() __DST_NOTHROW \
-    {                                                         \
-        return 0;                                             \
-    }
-#define _Define_ldouble(__f)                                            \
-    inline long double numeric_limits<long double>::__f() __DST_NOTHROW \
-    {                                                                   \
-        return 0;                                                       \
+#define _Define_float(__f)                                                     \
+    inline float numeric_limits<float>::__f() __DST_NOTHROW { return 0; }
+#define _Define_double(__f)                                                    \
+    inline double numeric_limits<double>::__f() __DST_NOTHROW { return 0; }
+#define _Define_ldouble(__f)                                                   \
+    inline long double numeric_limits<long double>::__f() __DST_NOTHROW {      \
+        return 0;                                                              \
     }
 
-_Define_float(infinity)
-    _Define_float(quiet_NaN)
-        _Define_float(signaling_NaN)
+_Define_float(infinity) _Define_float(quiet_NaN) _Define_float(signaling_NaN)
 
-            _Define_double(infinity)
-                _Define_double(quiet_NaN)
-                    _Define_double(signaling_NaN)
+    _Define_double(infinity) _Define_double(quiet_NaN)
+        _Define_double(signaling_NaN)
 
-                        _Define_ldouble(infinity)
-                            _Define_ldouble(quiet_NaN)
-                                _Define_ldouble(signaling_NaN)
+            _Define_ldouble(infinity) _Define_ldouble(quiet_NaN)
+                _Define_ldouble(signaling_NaN)
 
 #endif
 
@@ -551,6 +482,6 @@ _Define_float(infinity)
 #undef _Define_double
 #undef _Define_ldouble
 
-                                    __DST_END_NAMESPACE
+                            __DST_END_NAMESPACE
 
 #endif /* ___CPP_LIMITS */

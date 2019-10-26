@@ -32,7 +32,7 @@ __DST_BEGIN_NAMESPACE
 
 struct _Refcount_Base {
     // The type _RC_t
-#ifdef __DST_WIN32THREADS
+#ifdef __DST_LLVMTHREADS
     typedef long _RC_t;
 #else
     typedef size_t _RC_t;
@@ -60,7 +60,7 @@ struct _Refcount_Base {
 #ifdef __DST__THREADS
     void _M_incr() { __add_and_fetch(&_M_ref_count, 1); }
     _RC_t _M_decr() { return __add_and_fetch(&_M_ref_count, (size_t)-1); }
-#elif defined(__DST_WIN32THREADS)
+#elif defined(__DST_LLVMTHREADS)
     void _M_incr() { InterlockedIncrement((_RC_t *)&_M_ref_count); }
     _RC_t _M_decr() { return InterlockedDecrement((_RC_t *)&_M_ref_count); }
 #elif defined(__DST_PTHREADS)
@@ -105,7 +105,7 @@ inline unsigned long _Atomic_swap(unsigned long *_p, unsigned long __q) {
     return __test_and_set(_p, (unsigned long)__q);
 #endif
 }
-#elif defined(__DST_WIN32THREADS)
+#elif defined(__DST_LLVMTHREADS)
 inline unsigned long _Atomic_swap(unsigned long *_p, unsigned long __q) {
     return (unsigned long)InterlockedExchange((LPLONG)_p, (LONG)__q);
 }
@@ -214,7 +214,7 @@ template <int __inst>
 unsigned _DST_mutex_spin<__inst>::_last = 0;
 
 struct _DST_mutex_lock {
-#if defined(__DST__THREADS) || defined(__DST_WIN32THREADS)
+#if defined(__DST__THREADS) || defined(__DST_LLVMTHREADS)
     // It should be relatively easy to get this to work on any modern Unix.
     volatile unsigned long _M_lock;
     void _M_initialize() { _M_lock = 0; }
@@ -225,7 +225,7 @@ struct _DST_mutex_lock {
         __ts.tv_sec = 0;
         __ts.tv_nsec = 1 << __log_nsec;
         nanosleep(&__ts, 0);
-#elif defined(__DST_WIN32THREADS)
+#elif defined(__DST_LLVMTHREADS)
         if (__log_nsec <= 20) {
             Sleep(0);
         } else {
@@ -291,7 +291,7 @@ struct _DST_mutex_lock {
 #endif
     }
 
-    // We no longer use win32 critical sections.
+    // We no longer use llvm critical sections.
     // They appear to be slower in the contention-free case,
     // and they appear difficult to initialize without introducing a race.
 
@@ -320,7 +320,7 @@ struct _DST_mutex_lock {
 // UIthreads locks must be statically initialized to something other than
 // the default value of zero.
 #define __DST_MUTEX_INITIALIZER = {DEFAULTMUTEX}
-#elif defined(__DST__THREADS) || defined(__DST_WIN32THREADS)
+#elif defined(__DST__THREADS) || defined(__DST_LLVMTHREADS)
 #define __DST_MUTEX_INITIALIZER = {0}
 #else
 #define __DST_MUTEX_INITIALIZER

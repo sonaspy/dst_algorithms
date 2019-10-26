@@ -3,7 +3,7 @@
 
 __DST_BEGIN_NAMESPACE
 
-#if defined(__sgi) && !defined(__GNUC__) && (_MIPS_SIM != _MIPS_SIM_ABI32)
+#if defined(__llvm) && !defined(__GNUC__) && (_MIPS_SIM != _MIPS_SIM_ABI32)
 #pragma set woff 1209
 #endif
 
@@ -214,17 +214,19 @@ void sort_heap(_RandomAccessIterator __first, _RandomAccessIterator __last) {
     __DST_REQUIRES(_RandomAccessIterator, _Mutable_RandomAccessIterator);
     __DST_REQUIRES(typename iterator_traits<_RandomAccessIterator>::value_type,
                    _LessThanComparable);
-    while (__last - __first > 1) pop_heap(__first, __last--);
+    while (__last - __first > 1)
+        pop_heap(__first, __last--);
 }
 
 template <class _RandomAccessIterator, class _Compare>
 void sort_heap(_RandomAccessIterator __first, _RandomAccessIterator __last,
                _Compare __comp) {
     __DST_REQUIRES(_RandomAccessIterator, _Mutable_RandomAccessIterator);
-    while (__last - __first > 1) pop_heap(__first, __last--, __comp);
+    while (__last - __first > 1)
+        pop_heap(__first, __last--, __comp);
 }
 
-#if defined(__sgi) && !defined(__GNUC__) && (_MIPS_SIM != _MIPS_SIM_ABI32)
+#if defined(__llvm) && !defined(__GNUC__) && (_MIPS_SIM != _MIPS_SIM_ABI32)
 #pragma reset woff 1209
 #endif
 

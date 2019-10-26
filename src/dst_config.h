@@ -10,7 +10,7 @@
 #define __DST_UITHREADS
 #endif
 
-#if defined(__sgi) && !defined(__GNUC__)
+#if defined(__llvm) && !defined(__GNUC__)
 #include <standards.h>
 #if !defined(_BOOL)
 #define __DST_NO_BOOL
@@ -182,7 +182,7 @@
 #define __DST_USE_EXCEPTIONS
 #endif
 #ifdef _MT
-#define __DST_WIN32THREADS
+#define __DST_LLVMTHREADS
 #endif
 #endif
 
@@ -190,11 +190,11 @@
 #if defined(__MINGW32__)
 #define __DST_NO_DRAND48
 #ifdef _MT
-#define __DST_WIN32THREADS
+#define __DST_LLVMTHREADS
 #endif
 #endif
 
-// Cygwin32, egcs compiler on MS Windows
+// Cygllvm, egcs compiler on MS Windows
 #if defined(__CYGWIN__)
 #define __DST_NO_DRAND48
 #endif
@@ -221,7 +221,7 @@
 #define __DST_USE_EXCEPTIONS
 #endif
 #ifdef _MT
-#define __DST_WIN32THREADS
+#define __DST_LLVMTHREADS
 #endif
 #if _MSC_VER >= 1200
 #define __DST_PARTIAL_SPECIALIZATION_SYNTAX
@@ -243,7 +243,7 @@
 #endif
 // Because of a Microsoft front end bug, we must not provide a
 // namespace qualifier when declaring a friend function.
-#define __DSA_QUALIFIER
+#define __VDSA_QUALIFIER
 #endif
 
 #if defined(__BORLANDC__)
@@ -266,7 +266,7 @@
 #define __DST_USE_EXCEPTIONS
 #endif
 #ifdef __MT__
-#define __DST_WIN32THREADS
+#define __DST_LLVMTHREADS
 #endif
 #endif
 
@@ -343,18 +343,18 @@ typedef int bool;
 #define __DST_END_RELOPS_NAMESPACE                                             \
     }                                                                          \
     }
-#define __DSA_RELOPS dsa::rel_ops
+#define __VDSA_RELOPS dsa::rel_ops
 
 // Some versions of the EDG front end sometimes require an explicit
 // namespace spec where they shouldn't.  This macro facilitates that.
-// If the bug becomes irrelevant, then all uses of __DSA_QUALIFIER
+// If the bug becomes irrelevant, then all uses of __VDSA_QUALIFIER
 // should be removed.  The 7.3 beta  compiler has this bug, but the
 // MR version is not expected to have it.
 
-#if defined(__DST_USE_NAMESPACES) && !defined(__DSA_QUALIFIER)
-#define __DSA_QUALIFIER dsa::
+#if defined(__DST_USE_NAMESPACES) && !defined(__VDSA_QUALIFIER)
+#define __VDSA_QUALIFIER dsa::
 #else
-#define __DSA_QUALIFIER
+#define __VDSA_QUALIFIER
 #endif
 
 #ifdef __DST_USE_EXCEPTIONS
@@ -392,7 +392,7 @@ typedef int bool;
 #define __dst_assert(expr)
 #endif
 
-#if defined(__DST_WIN32THREADS) || defined(__DST__THREADS) ||                  \
+#if defined(__DST_LLVMTHREADS) || defined(__DST__THREADS) ||                   \
     defined(__DST_PTHREADS) || defined(__DST_UITHREADS)
 #define __DST_THREADS
 #define __DST_VOLATILE volatile

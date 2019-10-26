@@ -7,7 +7,7 @@
 __DST_BEGIN_NAMESPACE
 
 // construct and destroy.  These functions are not part of the DST standard,
-// and are provided for backward compatibility with the HP DST.  We also
+// and are provided for backward compatibility with the  DST.  We also
 // provide internal names _Construct and _Destroy that can be used within
 // the library, so that standard-conforming pieces don't have to rely on
 // non-standard extensions.
@@ -32,7 +32,8 @@ inline void _Destroy(_Tp *_pointer) {
 template <class _ForwardIterator>
 void __destroy_aux(_ForwardIterator _first, _ForwardIterator _last,
                    __false_type) {
-    for (; _first != _last; ++_first) destroy(&*_first);
+    for (; _first != _last; ++_first)
+        destroy(&*_first);
 }
 
 template <class _ForwardIterator>
@@ -60,7 +61,7 @@ inline void _Destroy(wchar_t *, wchar_t *) {}
 #endif /* __DST_HAS_WCHAR_T */
 
 // --------------------------------------------------
-// Old names from the HP DST.
+// Old names from the  DST.
 
 template <class _T1, class _T2>
 inline void construct(_T1 *_p, const _T2 &_value) {

@@ -363,7 +363,7 @@ operator+(typename reverse_iterator<_Iterator>::difference_type __n,
 #else /* __DST_CLASS_PARTIAL_SPECIALIZATION */
 
 // This is the old version of reverse_iterator, as found in the original
-//  HP DST.  It does not use partial specialization.
+//   DST.  It does not use partial specialization.
 
 #ifndef __DST_LIMITED_DEFAULT_TEMPLATES
 template <class _RandomAccessIterator, class _Tp, class _Reference = _Tp &,
@@ -788,7 +788,7 @@ class istream_iterator {
     friend bool operator==(const istream_iterator<_T1, _D1> &,
                            const istream_iterator<_T1, _D1> &);
 #else  /* __DST_TEMPLATE_FRIENDS */
-    friend bool __DSA_QUALIFIER operator==
+    friend bool __VDSA_QUALIFIER operator==
         __DST_NULL_TMPL_ARGS(const istream_iterator &,
                              const istream_iterator &);
 #endif /* __DST_TEMPLATE_FRIENDS */

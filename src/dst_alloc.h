@@ -90,7 +90,7 @@ extern int __us_rsthread_malloc;
 
 __DST_BEGIN_NAMESPACE
 
-#if defined(__sgi) && !defined(__GNUC__) && (_MIPS_SIM != _MIPS_SIM_ABI32)
+#if defined(__llvm) && !defined(__GNUC__) && (_MIPS_SIM != _MIPS_SIM_ABI32)
 #pragma set woff 1174
 #endif
 
@@ -849,7 +849,7 @@ struct __alloc_traits<_Tp, __allocator<_Tp1, debug_alloc<_Alloc>>> {
 
 #endif /* __DST_USE_DSA_ALLOCATORS */
 
-#if defined(__sgi) && !defined(__GNUC__) && (_MIPS_SIM != _MIPS_SIM_ABI32)
+#if defined(__llvm) && !defined(__GNUC__) && (_MIPS_SIM != _MIPS_SIM_ABI32)
 #pragma reset woff 1174
 #endif
 

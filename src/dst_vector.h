@@ -7,7 +7,7 @@
 
 __DST_BEGIN_NAMESPACE
 
-#if defined(__sgi) && !defined(__GNUC__) && (_MIPS_SIM != _MIPS_SIM_ABI32)
+#if defined(__llvm) && !defined(__GNUC__) && (_MIPS_SIM != _MIPS_SIM_ABI32)
 #pragma set woff 1174
 #pragma set woff 1375
 #endif
@@ -436,7 +436,8 @@ class vector : public __vector_base<_Tp, _Alloc> {
     template <class _InputIterator>
     void _M_range_initialize(_InputIterator __first, _InputIterator __last,
                              input_iterator_tag) {
-        for (; __first != __last; ++__first) push_back(*__first);
+        for (; __first != __last; ++__first)
+            push_back(*__first);
     }
 
     // This function is only called by the constructor.
@@ -806,7 +807,7 @@ void vector<_Tp, _Alloc>::insert(iterator __position, const_iterator __first,
 
 #endif /* __DST_MEMBER_TEMPLATES */
 
-#if defined(__sgi) && !defined(__GNUC__) && (_MIPS_SIM != _MIPS_SIM_ABI32)
+#if defined(__llvm) && !defined(__GNUC__) && (_MIPS_SIM != _MIPS_SIM_ABI32)
 #pragma reset woff 1174
 #pragma reset woff 1375
 #endif
