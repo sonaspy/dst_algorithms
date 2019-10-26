@@ -7,8 +7,8 @@
 #include "vector.h"
 
 #ifdef __DST_USE_NAMESPACES
-using __STD::hash;
-using __STD::hashtable;
+using __VDSA::hash;
+using __VDSA::hashtable;
 #endif /* __DST_USE_NAMESPACES */
 
 #endif /* ___DST_HASHTABLE_H */

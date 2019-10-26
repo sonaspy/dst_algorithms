@@ -105,7 +105,7 @@ inline ptrdiff_t *distance_type(const _slist_iterator_base &) { return 0; }
 // compatibility and because we want to avoid wasting storage on an
 // allocator instance if it isn't necessary.
 
-#ifdef __DST_USE_STD_ALLOCATORS
+#ifdef __DST_USE_DSA_ALLOCATORS
 
 // Base for general standard-conforming allocators.
 template <class _Tp, class _Allocator, bool _IsStatic>
@@ -173,7 +173,7 @@ class _slist_base
     void clear();
 };
 
-#else /* __DST_USE_STD_ALLOCATORS */
+#else /* __DST_USE_DSA_ALLOCATORS */
 
 template <class _Tp, class _Alloc>
 class _slist_base {
@@ -202,7 +202,7 @@ class _slist_base {
     _slist_node<_Tp> *_M_node;
 };
 
-#endif /* __DST_USE_STD_ALLOCATORS */
+#endif /* __DST_USE_DSA_ALLOCATORS */
 
 template <class _Tp, class _Alloc>
 void _slist_base<_Tp, _Alloc>::clear() {
