@@ -97,9 +97,8 @@
 #define _UITHREADS /* if      UnixWare < 7.0.1 */
 #define __DST_UITHREADS
 //   use the following defines instead of the UI threads defines when
-//   you want to use POSIX threads
-//#         define _PTHREADS      /* only if UnixWare >=7.0.1 */
-//#         define __DST_PTHREADS
+#define _PTHREADS /* only if UnixWare >=7.0.1 */
+#define __DST_PTHREADS
 #endif
 #endif
 

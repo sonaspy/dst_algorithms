@@ -42,14 +42,15 @@ struct __skip_list_iterator {
     typedef _Entry *pointer;
     typedef _Entry &reference;
 
-    __node_Ptr _M_this;
+    __node_Ptr _M_node;
 
     __skip_list_iterator() {}
-    __skip_list_iterator(__node_Ptr p) : _M_this(p) {}
+    __skip_list_iterator(__node_Ptr p) : _M_node(p) {}
 
-    reference operator*() { return _M_this->_entry; }
+    reference operator*() { return _M_node->_entry; }
+    pointer operator->() { return &(operator*()); }
     __self &operator++() {
-        _M_this = _M_this->_M_nexts[0];
+        _M_node = _M_node->_M_nexts[0];
         return *this;
     }
     __self operator++(int) {
@@ -57,8 +58,8 @@ struct __skip_list_iterator {
         ++*this;
         return __tmp;
     }
-    bool operator==(__self &__x) const { return _M_this == __x._M_this; }
-    bool operator!=(__self &__x) const { return _M_this != __x._M_this; }
+    bool operator==(__self &__x) const { return _M_node == __x._M_node; }
+    bool operator!=(__self &__x) const { return _M_node != __x._M_node; }
 };
 
 template <class _Key, class _Val = int>

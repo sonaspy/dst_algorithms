@@ -5,6 +5,7 @@
 #include "slist.h"
 #include "deque.h"
 #include "vector.h"
+#include "bvector.h"
 #include "skiplist.h"
 #include "heap.h"
 #include "algo.h"
