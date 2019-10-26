@@ -197,22 +197,32 @@
 /* helper class for finding non-const version of a type. Need to have
    something to assign to etc. when testing constant iterators. */
 
-template <class _Tp> struct _Mutable_trait { typedef _Tp _Type; };
-template <class _Tp> struct _Mutable_trait<const _Tp> { typedef _Tp _Type; };
+template <class _Tp>
+struct _Mutable_trait {
+    typedef _Tp _Type;
+};
+template <class _Tp>
+struct _Mutable_trait<const _Tp> {
+    typedef _Tp _Type;
+};
 
 /* helper function for avoiding compiler warnings about unused variables */
-template <class _Type> void __sink_unused_warning(_Type) {}
+template <class _Type>
+void __sink_unused_warning(_Type) {}
 
-template <class _TypeX, class _TypeY> struct _DST_CONVERT_ERROR {
+template <class _TypeX, class _TypeY>
+struct _DST_CONVERT_ERROR {
     static void __type_X_is_not_convertible_to_type_Y(_TypeX __x, _TypeY) {
         _TypeY __y = __x;
         __sink_unused_warning(__y);
     }
 };
 
-template <class _Type> struct __check_equal {};
+template <class _Type>
+struct __check_equal {};
 
-template <class _TypeX, class _TypeY> struct _DST_SAME_TYPE_ERROR {
+template <class _TypeX, class _TypeY>
+struct _DST_SAME_TYPE_ERROR {
     static void __type_X_not_same_as_type_Y(_TypeX, _TypeY) {
         __check_equal<_TypeX> t1 = __check_equal<_TypeY>();
     }
@@ -220,11 +230,13 @@ template <class _TypeX, class _TypeY> struct _DST_SAME_TYPE_ERROR {
 
 // Some Functon Object Checks
 
-template <class _Func, class _Ret> struct _DST_GENERATOR_ERROR {
+template <class _Func, class _Ret>
+struct _DST_GENERATOR_ERROR {
     static _Ret __generator_requirement_violation(_Func &__f) { return __f(); }
 };
 
-template <class _Func> struct _DST_GENERATOR_ERROR<_Func, void> {
+template <class _Func>
+struct _DST_GENERATOR_ERROR<_Func, void> {
     static void __generator_requirement_violation(_Func &__f) { __f(); }
 };
 
@@ -425,7 +437,8 @@ struct _DST_ERROR {
 /* Associated Type Requirements */
 
 __DST_BEGIN_NAMESPACE
-template <class _Iterator> struct iterator_traits;
+template <class _Iterator>
+struct iterator_traits;
 __DST_END_NAMESPACE
 
 template <class _Iter>
@@ -444,7 +457,8 @@ struct __reference_type_definition_requirement_violation {
     typedef typename __VDSA::iterator_traits<_Iter>::reference reference;
 };
 
-template <class _Iter> struct __pointer_type_definition_requirement_violation {
+template <class _Iter>
+struct __pointer_type_definition_requirement_violation {
     typedef typename __VDSA::iterator_traits<_Iter>::pointer pointer;
 };
 
@@ -456,7 +470,8 @@ struct __iterator_category_type_definition_requirement_violation {
 
 /* Assignable Requirements */
 
-template <class _Type> struct _Assignable_concept_specification {
+template <class _Type>
+struct _Assignable_concept_specification {
     static void _Assignable_requirement_violation(_Type __a) {
         _DST_ERROR::__assignment_operator_requirement_violation(__a);
         _DST_ERROR::__copy_constructor_requirement_violation(__a);
@@ -468,7 +483,8 @@ template <class _Type> struct _Assignable_concept_specification {
 
 /* DefaultConstructible Requirements */
 
-template <class _Type> struct _DefaultConstructible_concept_specification {
+template <class _Type>
+struct _DefaultConstructible_concept_specification {
     static void _DefaultConstructible_requirement_violation(_Type __a) {
         _DST_ERROR::__default_constructor_requirement_violation(__a);
     }
@@ -476,14 +492,16 @@ template <class _Type> struct _DefaultConstructible_concept_specification {
 
 /* EqualityComparable Requirements */
 
-template <class _Type> struct _EqualityComparable_concept_specification {
+template <class _Type>
+struct _EqualityComparable_concept_specification {
     static void _EqualityComparable_requirement_violation(_Type __a) {
         _DST_ERROR::__equality_comparable_requirement_violation(__a, __a);
     }
 };
 
 /* LessThanComparable Requirements */
-template <class _Type> struct _LessThanComparable_concept_specification {
+template <class _Type>
+struct _LessThanComparable_concept_specification {
     static void _LessThanComparable_requirement_violation(_Type __a) {
         _DST_ERROR::__less_than_comparable_requirement_violation(__a, __a);
     }
@@ -524,7 +542,8 @@ struct _Mutable_TrivialIterator_concept_specification {
 
 /* InputIterator Requirements */
 
-template <class _InputIterator> struct _InputIterator_concept_specification {
+template <class _InputIterator>
+struct _InputIterator_concept_specification {
     static void _InputIterator_requirement_violation(_InputIterator __i) {
         // Refinement of TrivialIterator
         _TrivialIterator_concept_specification<
@@ -544,7 +563,8 @@ template <class _InputIterator> struct _InputIterator_concept_specification {
 
 /* OutputIterator Requirements */
 
-template <class _OutputIterator> struct _OutputIterator_concept_specification {
+template <class _OutputIterator>
+struct _OutputIterator_concept_specification {
     static void _OutputIterator_requirement_violation(_OutputIterator __i) {
         // Refinement of Assignable
         _Assignable_concept_specification<
@@ -689,7 +709,8 @@ __DST_TYPEDEF_REQUIREMENT(const_reference);
 __DST_TYPEDEF_REQUIREMENT(pointer);
 __DST_TYPEDEF_REQUIREMENT(const_pointer);
 
-template <class _Alloc> struct _Allocator_concept_specification {
+template <class _Alloc>
+struct _Allocator_concept_specification {
     static void _Allocator_requirement_violation(_Alloc __a) {
         // Refinement of DefaultConstructible
         _DefaultConstructible_concept_specification<

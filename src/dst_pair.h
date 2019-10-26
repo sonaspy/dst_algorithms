@@ -8,7 +8,8 @@
 
 __DST_BEGIN_NAMESPACE
 
-template <class _T1, class _T2> struct pair {
+template <class _T1, class _T2>
+struct pair {
     typedef _T1 first_type;
     typedef _T2 second_type;
 

@@ -88,7 +88,8 @@ struct __vector_base
 
 #else /* __DST_USE_DSA_ALLOCATORS */
 
-template <class _Tp, class _Alloc> class __vector_base {
+template <class _Tp, class _Alloc>
+class __vector_base {
   public:
     typedef _Alloc allocator_type;
     allocator_type get_allocator() const { return allocator_type(); }

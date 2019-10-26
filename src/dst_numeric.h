@@ -168,7 +168,8 @@ _Tp __power(_Tp __x, _Integer __n, _MonoidOperation __opr) {
     }
 }
 
-template <class _Tp, class _Integer> inline _Tp __power(_Tp __x, _Integer __n) {
+template <class _Tp, class _Integer>
+inline _Tp __power(_Tp __x, _Integer __n) {
     return __power(__x, __n, multiplies<_Tp>());
 }
 
@@ -180,7 +181,8 @@ inline _Tp power(_Tp __x, _Integer __n, _MonoidOperation __opr) {
     return __power(__x, __n, __opr);
 }
 
-template <class _Tp, class _Integer> inline _Tp power(_Tp __x, _Integer __n) {
+template <class _Tp, class _Integer>
+inline _Tp power(_Tp __x, _Integer __n) {
     return __power(__x, __n);
 }
 

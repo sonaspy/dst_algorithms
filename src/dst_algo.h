@@ -1602,7 +1602,8 @@ _OutputIter rotate_copy(_ForwardIter __first, _ForwardIter __middle,
 // whether we're using rand (part of the standard C library) or lrand48
 // (not standard, but a much better choice whenever it's available).
 
-template <class _Distance> inline _Distance __random_number(_Distance __n) {
+template <class _Distance>
+inline _Distance __random_number(_Distance __n) {
 #ifdef __DST_NO_DRAND48
     return rand() % __n;
 #else
@@ -2022,7 +2023,8 @@ void __final_insertion_sort(_RandomAccessIter __first, _RandomAccessIter __last,
         __insertion_sort(__first, __last, __comp);
 }
 
-template <class _Size> inline _Size __lg(_Size __n) {
+template <class _Size>
+inline _Size __lg(_Size __n) {
     _Size __k;
     for (__k = 0; __n != 1; __n >>= 1) ++__k;
     return __k;

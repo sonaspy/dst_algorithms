@@ -105,7 +105,8 @@ extern void (*__malloc_alloc_oom_handler)();
 #endif
 #endif
 
-template <int __inst> class __malloc_alloc_template {
+template <int __inst>
+class __malloc_alloc_template {
 
   private:
     // malloc_alloc out-of-memory handling
@@ -179,7 +180,8 @@ void *__malloc_alloc_template<__inst>::_S_oom_realloc(void *_p, size_t _n) {
 
 typedef __malloc_alloc_template<0> malloc_alloc;
 
-template <class _Tp, class _Alloc> class simple_alloc {
+template <class _Tp, class _Alloc>
+class simple_alloc {
 
   public:
     static _Tp *allocate(size_t _n) {
@@ -198,7 +200,8 @@ template <class _Tp, class _Alloc> class simple_alloc {
 // NDEBUG, but it's far better to just use the underlying allocator
 // instead when no checking is desired.
 // There is some evidence that this can confuse Purify.
-template <class _Alloc> class debug_alloc {
+template <class _Alloc>
+class debug_alloc {
   private:
     enum {
         _S_extra = 8
@@ -268,7 +271,8 @@ enum { _MAX_BYTES = 128 };
 enum { _NFREELISTS = 16 }; // _MAX_BYTES/_ALIGN
 #endif
 
-template <bool threads, int inst> class __default_alloc_template {
+template <bool threads, int inst>
+class __default_alloc_template {
 
   private:
     // Really we should use static const int x = N
@@ -558,7 +562,8 @@ typename __default_alloc_template<__threads, __inst>::_Obj *__DST_VOLATILE
 
 #ifdef __DST_USE_DSA_ALLOCATORS
 
-template <class _Tp> class allocator {
+template <class _Tp>
+class allocator {
     typedef alloc _Alloc; // The underlying allocator.
   public:
     typedef size_t size_type;
@@ -569,11 +574,15 @@ template <class _Tp> class allocator {
     typedef const _Tp &const_reference;
     typedef _Tp value_type;
 
-    template <class _Tp1> struct rebind { typedef allocator<_Tp1> other; };
+    template <class _Tp1>
+    struct rebind {
+        typedef allocator<_Tp1> other;
+    };
 
     allocator() __DST_NOTHROW {}
     allocator(const allocator &) __DST_NOTHROW {}
-    template <class _Tp1> allocator(const allocator<_Tp1> &) __DST_NOTHROW {}
+    template <class _Tp1>
+    allocator(const allocator<_Tp1> &) __DST_NOTHROW {}
     ~allocator() __DST_NOTHROW {}
 
     pointer address(reference __x) const { return &__x; }
@@ -599,7 +608,8 @@ template <class _Tp> class allocator {
     void destroy(pointer _p) { _p->~_Tp(); }
 };
 
-template <> class allocator<void> {
+template <>
+class allocator<void> {
   public:
     typedef size_t size_type;
     typedef ptrdiff_t difference_type;
@@ -607,7 +617,10 @@ template <> class allocator<void> {
     typedef const void *const_pointer;
     typedef void value_type;
 
-    template <class _Tp1> struct rebind { typedef allocator<_Tp1> other; };
+    template <class _Tp1>
+    struct rebind {
+        typedef allocator<_Tp1> other;
+    };
 };
 
 template <class _T1, class _T2>
@@ -627,7 +640,8 @@ inline bool operator!=(const allocator<_T1> &, const allocator<_T2> &) {
 // member functions are static member functions.  Note, also, that
 // __allocator<_Tp, alloc> is essentially the same thing as allocator<_Tp>.
 
-template <class _Tp, class _Alloc> struct __allocator {
+template <class _Tp, class _Alloc>
+struct __allocator {
     _Alloc __underlying_alloc;
 
     typedef size_t size_type;
@@ -638,7 +652,8 @@ template <class _Tp, class _Alloc> struct __allocator {
     typedef const _Tp &const_reference;
     typedef _Tp value_type;
 
-    template <class _Tp1> struct rebind {
+    template <class _Tp1>
+    struct rebind {
         typedef __allocator<_Tp1, _Alloc> other;
     };
 
@@ -673,14 +688,16 @@ template <class _Tp, class _Alloc> struct __allocator {
     void destroy(pointer _p) { _p->~_Tp(); }
 };
 
-template <class _Alloc> class __allocator<void, _Alloc> {
+template <class _Alloc>
+class __allocator<void, _Alloc> {
     typedef size_t size_type;
     typedef ptrdiff_t difference_type;
     typedef void *pointer;
     typedef const void *const_pointer;
     typedef void value_type;
 
-    template <class _Tp1> struct rebind {
+    template <class _Tp1>
+    struct rebind {
         typedef __allocator<_Tp1, _Alloc> other;
     };
 };
@@ -759,7 +776,8 @@ inline bool operator!=(const debug_alloc<_Alloc> &,
 
 // The fully general version.
 
-template <class _Tp, class _Allocator> struct __alloc_traits {
+template <class _Tp, class _Allocator>
+struct __alloc_traits {
     static const bool _S_instanceless = false;
     typedef
         typename _Allocator::__DST_TEMPLATE rebind<_Tp>::other allocator_type;
@@ -770,7 +788,8 @@ const bool __alloc_traits<_Tp, _Allocator>::_S_instanceless;
 
 // The version for the default allocator.
 
-template <class _Tp, class _Tp1> struct __alloc_traits<_Tp, allocator<_Tp1>> {
+template <class _Tp, class _Tp1>
+struct __alloc_traits<_Tp, allocator<_Tp1>> {
     static const bool _S_instanceless = true;
     typedef simple_alloc<_Tp, alloc> _Alloc_type;
     typedef allocator<_Tp> allocator_type;

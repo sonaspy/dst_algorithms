@@ -8,7 +8,8 @@
 #include "iostream.h"
 #include "algobase.h"
 
-template <class T> inline T *allocate(ptrdiff_t size, T *) {
+template <class T>
+inline T *allocate(ptrdiff_t size, T *) {
     std::set_new_handler(0);
     T *tmp = (T *)(::operator new((size_t)(size * sizeof(T))));
     if (tmp == 0) {
@@ -18,11 +19,13 @@ template <class T> inline T *allocate(ptrdiff_t size, T *) {
     return tmp;
 }
 
-template <class T> inline void deallocate(T *buffer) {
+template <class T>
+inline void deallocate(T *buffer) {
     ::operator delete(buffer);
 }
 
-template <class T> class allocator {
+template <class T>
+class allocator {
   public:
     typedef T value_type;
     typedef T *pointer;
@@ -45,7 +48,8 @@ template <class T> class allocator {
     }
 };
 
-template <> class allocator<void> {
+template <>
+class allocator<void> {
   public:
     typedef void *pointer;
 };

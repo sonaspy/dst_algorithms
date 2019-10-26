@@ -9,49 +9,62 @@
 
 __DST_BEGIN_NAMESPACE
 
-template <class _Arg, class _Result> struct unary_function {
+template <class _Arg, class _Result>
+struct unary_function {
     typedef _Arg argument_type;
     typedef _Result result_type;
 };
 
-template <class _Arg1, class _Arg2, class _Result> struct binary_function {
+template <class _Arg1, class _Arg2, class _Result>
+struct binary_function {
     typedef _Arg1 first_argument_type;
     typedef _Arg2 second_argument_type;
     typedef _Result result_type;
 };
 
-template <class _Tp> struct plus : public binary_function<_Tp, _Tp, _Tp> {
+template <class _Tp>
+struct plus : public binary_function<_Tp, _Tp, _Tp> {
     _Tp operator()(const _Tp &__x, const _Tp &__y) const { return __x + __y; }
 };
 
-template <class _Tp> struct minus : public binary_function<_Tp, _Tp, _Tp> {
+template <class _Tp>
+struct minus : public binary_function<_Tp, _Tp, _Tp> {
     _Tp operator()(const _Tp &__x, const _Tp &__y) const { return __x - __y; }
 };
 
-template <class _Tp> struct multiplies : public binary_function<_Tp, _Tp, _Tp> {
+template <class _Tp>
+struct multiplies : public binary_function<_Tp, _Tp, _Tp> {
     _Tp operator()(const _Tp &__x, const _Tp &__y) const { return __x * __y; }
 };
 
-template <class _Tp> struct divides : public binary_function<_Tp, _Tp, _Tp> {
+template <class _Tp>
+struct divides : public binary_function<_Tp, _Tp, _Tp> {
     _Tp operator()(const _Tp &__x, const _Tp &__y) const { return __x / __y; }
 };
 
 // identity_element (not part of the DST standard).
 
-template <class _Tp> inline _Tp identity_element(plus<_Tp>) { return _Tp(0); }
-template <class _Tp> inline _Tp identity_element(multiplies<_Tp>) {
+template <class _Tp>
+inline _Tp identity_element(plus<_Tp>) {
+    return _Tp(0);
+}
+template <class _Tp>
+inline _Tp identity_element(multiplies<_Tp>) {
     return _Tp(1);
 }
 
-template <class _Tp> struct modulus : public binary_function<_Tp, _Tp, _Tp> {
+template <class _Tp>
+struct modulus : public binary_function<_Tp, _Tp, _Tp> {
     _Tp operator()(const _Tp &__x, const _Tp &__y) const { return __x % __y; }
 };
 
-template <class _Tp> struct negate : public unary_function<_Tp, _Tp> {
+template <class _Tp>
+struct negate : public unary_function<_Tp, _Tp> {
     _Tp operator()(const _Tp &__x) const { return -__x; }
 };
 
-template <class _Tp> struct equal_to : public binary_function<_Tp, _Tp, bool> {
+template <class _Tp>
+struct equal_to : public binary_function<_Tp, _Tp, bool> {
     bool operator()(const _Tp &__x, const _Tp &__y) const { return __x == __y; }
 };
 
@@ -60,11 +73,13 @@ struct not_equal_to : public binary_function<_Tp, _Tp, bool> {
     bool operator()(const _Tp &__x, const _Tp &__y) const { return __x != __y; }
 };
 
-template <class _Tp> struct greater : public binary_function<_Tp, _Tp, bool> {
+template <class _Tp>
+struct greater : public binary_function<_Tp, _Tp, bool> {
     bool operator()(const _Tp &__x, const _Tp &__y) const { return __x > __y; }
 };
 
-template <class _Tp> struct less : public binary_function<_Tp, _Tp, bool> {
+template <class _Tp>
+struct less : public binary_function<_Tp, _Tp, bool> {
     bool operator()(const _Tp &__x, const _Tp &__y) const { return __x < __y; }
 };
 
@@ -88,7 +103,8 @@ struct logical_or : public binary_function<_Tp, _Tp, bool> {
     bool operator()(const _Tp &__x, const _Tp &__y) const { return __x || __y; }
 };
 
-template <class _Tp> struct logical_not : public unary_function<_Tp, bool> {
+template <class _Tp>
+struct logical_not : public unary_function<_Tp, bool> {
     bool operator()(const _Tp &__x) const { return !__x; }
 };
 
@@ -266,11 +282,13 @@ ptr_fun(_Result (*__x)(_Arg1, _Arg2)) {
 }
 
 // identity is an extensions: it is not part of the standard.
-template <class _Tp> struct _Identity : public unary_function<_Tp, _Tp> {
+template <class _Tp>
+struct _Identity : public unary_function<_Tp, _Tp> {
     const _Tp &operator()(const _Tp &__x) const { return __x; }
 };
 
-template <class _Tp> struct identity : public _Identity<_Tp> {};
+template <class _Tp>
+struct identity : public _Identity<_Tp> {};
 
 // select1st and select2nd are extensions: they are not part of the standard.
 template <class _Pair>
@@ -287,8 +305,10 @@ struct _Select2nd : public unary_function<_Pair, typename _Pair::second_type> {
     }
 };
 
-template <class _Pair> struct select1st : public _Select1st<_Pair> {};
-template <class _Pair> struct select2nd : public _Select2nd<_Pair> {};
+template <class _Pair>
+struct select1st : public _Select1st<_Pair> {};
+template <class _Pair>
+struct select2nd : public _Select2nd<_Pair> {};
 
 // project1st and project2nd are extensions: they are not part of the standard
 template <class _Arg1, class _Arg2>
@@ -311,7 +331,8 @@ struct project2nd : public _Project2nd<_Arg1, _Arg2> {};
 // extensions: they are not part of the standard.  (The same, of course,
 // is true of the helper functions constant0, constant1, and constant2.)
 
-template <class _Result> struct _Constant_void_fun {
+template <class _Result>
+struct _Constant_void_fun {
     typedef _Result result_type;
     result_type _M_val;
 
@@ -319,7 +340,8 @@ template <class _Result> struct _Constant_void_fun {
     const result_type &operator()() const { return _M_val; }
 };
 
-template <class _Result, class _Argument> struct _Constant_unary_fun {
+template <class _Result, class _Argument>
+struct _Constant_unary_fun {
     typedef _Argument argument_type;
     typedef _Result result_type;
     result_type _M_val;
@@ -328,7 +350,8 @@ template <class _Result, class _Argument> struct _Constant_unary_fun {
     const result_type &operator()(const _Argument &) const { return _M_val; }
 };
 
-template <class _Result, class _Arg1, class _Arg2> struct _Constant_binary_fun {
+template <class _Result, class _Arg1, class _Arg2>
+struct _Constant_binary_fun {
     typedef _Arg1 first_argument_type;
     typedef _Arg2 second_argument_type;
     typedef _Result result_type;

@@ -16,7 +16,8 @@
 
 __DST_BEGIN_NAMESPACE
 
-template <class _Val> struct _Hashtable_node {
+template <class _Val>
+struct _Hashtable_node {
     _Hashtable_node *_M_next;
     _Val _M_val;
 };

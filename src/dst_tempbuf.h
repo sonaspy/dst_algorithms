@@ -39,9 +39,13 @@ inline pair<_Tp *, ptrdiff_t> get_temporary_buffer(ptrdiff_t __len, _Tp *) {
     return __get_temporary_buffer(__len, (_Tp *)0);
 }
 
-template <class _Tp> void return_temporary_buffer(_Tp *_p) { free(_p); }
+template <class _Tp>
+void return_temporary_buffer(_Tp *_p) {
+    free(_p);
+}
 
-template <class _ForwardIterator, class _Tp> class _Temporary_buffer {
+template <class _ForwardIterator, class _Tp>
+class _Temporary_buffer {
   private:
     ptrdiff_t _M_original_len;
     ptrdiff_t _M_len;

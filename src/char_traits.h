@@ -13,7 +13,8 @@ __DST_BEGIN_NAMESPACE
 
 // Class __char_traits_base.
 
-template <class _CharT, class _IntT> class __char_traits_base {
+template <class _CharT, class _IntT>
+class __char_traits_base {
   public:
     typedef _CharT char_type;
     typedef _IntT int_type;

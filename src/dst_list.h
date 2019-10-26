@@ -15,7 +15,8 @@ struct __list_pointer {
     __list_pointer *_M_prev;
 };
 
-template <class _Tp> struct __list_node : public __list_pointer {
+template <class _Tp>
+struct __list_node : public __list_pointer {
     _Tp _M_data;
 };
 
@@ -108,7 +109,8 @@ inline ptrdiff_t *distance_type(const __list_iterator_base &) { return 0; }
 #ifdef __DST_USE_DSA_ALLOCATORS
 
 // Base for general standard-conforming allocators.
-template <class _Tp, class _Allocator, bool _IsStatic> class __list_alloc_base {
+template <class _Tp, class _Allocator, bool _IsStatic>
+class __list_alloc_base {
   public:
     typedef
         typename _Alloc_traits<_Tp, _Allocator>::allocator_type allocator_type;
@@ -174,7 +176,8 @@ class __list_base
 
 #else /* __DST_USE_DSA_ALLOCATORS */
 
-template <class _Tp, class _Alloc> class __list_base {
+template <class _Tp, class _Alloc>
+class __list_base {
   public:
     typedef _Alloc allocator_type;
     allocator_type get_allocator() const { return allocator_type(); }
@@ -200,12 +203,13 @@ template <class _Tp, class _Alloc> class __list_base {
 
 #endif /* __DST_USE_DSA_ALLOCATORS */
 
-template <class _Tp, class _Alloc> void __list_base<_Tp, _Alloc>::clear() {
+template <class _Tp, class _Alloc>
+void __list_base<_Tp, _Alloc>::clear() {
     __list_node<_Tp> *__cur = (__list_node<_Tp> *)_M_node->_M_next;
     while (__cur != _M_node) {
         __list_node<_Tp> *__tmp = __cur;
         __cur = (__list_node<_Tp> *)__cur->_M_next;
-        __destroy(&__tmp->_M_data);
+        _Destroy(&__tmp->_M_data);
         _M_put_node(__tmp);
     }
     _M_node->_M_next = _M_node;
@@ -261,14 +265,14 @@ class list : protected __list_base<_Tp, _Alloc> {
   protected:
     __node_Ptr _M_create_node(const _Tp &__x) {
         __node_Ptr __p = _M_get_node();
-        __DST_TRY { __construct(&__p->_M_data, __x); }
+        __DST_TRY { _Construct(&__p->_M_data, __x); }
         __DST_UNWIND(_M_put_node(__p));
         return __p;
     }
 
     __node_Ptr _M_create_node() {
         __node_Ptr __p = _M_get_node();
-        __DST_TRY { __construct(&__p->_M_data); }
+        __DST_TRY { _Construct(&__p->_M_data); }
         __DST_UNWIND(_M_put_node(__p));
         return __p;
     }
@@ -356,7 +360,7 @@ class list : protected __list_base<_Tp, _Alloc> {
         __node_Ptr __n = (__node_Ptr)__position._M_node;
         __prev_node->_M_next = __next_node;
         __next_node->_M_prev = __prev_node;
-        __destroy(&__n->_M_data);
+        _Destroy(&__n->_M_data);
         _M_put_node(__n);
         return iterator((__node_Ptr)__next_node);
     }
@@ -482,11 +486,14 @@ class list : protected __list_base<_Tp, _Alloc> {
     void sort();
 
 #ifdef __DST_MEMBER_TEMPLATES
-    template <class _Predicate> void remove_if(_Predicate);
-    template <class _BinaryPredicate> void unique(_BinaryPredicate);
+    template <class _Predicate>
+    void remove_if(_Predicate);
+    template <class _BinaryPredicate>
+    void unique(_BinaryPredicate);
     template <class _StrictWeakOrdering>
     void merge(list &, _StrictWeakOrdering);
-    template <class _StrictWeakOrdering> void sort(_StrictWeakOrdering);
+    template <class _StrictWeakOrdering>
+    void sort(_StrictWeakOrdering);
 #endif /* __DST_MEMBER_TEMPLATES */
 };
 
@@ -655,7 +662,8 @@ void list<_Tp, _Alloc>::remove(const _Tp &__value) {
     }
 }
 
-template <class _Tp, class _Alloc> void list<_Tp, _Alloc>::unique() {
+template <class _Tp, class _Alloc>
+void list<_Tp, _Alloc>::unique() {
     iterator __first = begin();
     iterator __last = end();
     if (__first == __last)
@@ -695,11 +703,13 @@ inline void __List_base_reverse(__list_pointer *__p) {
     } while (__tmp != __p);
 }
 
-template <class _Tp, class _Alloc> inline void list<_Tp, _Alloc>::reverse() {
+template <class _Tp, class _Alloc>
+inline void list<_Tp, _Alloc>::reverse() {
     __List_base_reverse(this->_M_node);
 }
 
-template <class _Tp, class _Alloc> void list<_Tp, _Alloc>::sort() {
+template <class _Tp, class _Alloc>
+void list<_Tp, _Alloc>::sort() {
     // Do nothing if the list has length 0 or 1.
     if (_M_node->_M_next != _M_node && _M_node->_M_next->_M_next != _M_node) {
         list<_Tp, _Alloc> __carry;

@@ -121,7 +121,8 @@ struct _ERROR_IN_DST_SEQ {
 
 /* Sequence Containers */
 
-template <class _Sequence> struct _Sequence_concept_specification {
+template <class _Sequence>
+struct _Sequence_concept_specification {
     static void _Sequence_requirement_violation(_Sequence __s) {
         // Refinement of ForwardContainer
         _ForwardContainer_concept_specification<

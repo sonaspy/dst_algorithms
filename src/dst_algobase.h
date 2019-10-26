@@ -55,7 +55,8 @@ inline void iter_swap(_ForwardIter1 __a, _ForwardIter2 __b) {
     __iter_swap(__a, __b, __VALUE_TYPE(__a));
 }
 
-template <class _Tp> inline void swap(_Tp &__a, _Tp &__b) {
+template <class _Tp>
+inline void swap(_Tp &__a, _Tp &__b) {
     __DST_REQUIRES(_Tp, _Assignable);
     _Tp __tmp = __a;
     __a = __b;
@@ -70,12 +71,14 @@ template <class _Tp> inline void swap(_Tp &__a, _Tp &__b) {
 #undef min
 #undef max
 
-template <class _Tp> inline const _Tp &min(const _Tp &__a, const _Tp &__b) {
+template <class _Tp>
+inline const _Tp &min(const _Tp &__a, const _Tp &__b) {
     __DST_REQUIRES(_Tp, _LessThanComparable);
     return __b < __a ? __b : __a;
 }
 
-template <class _Tp> inline const _Tp &max(const _Tp &__a, const _Tp &__b) {
+template <class _Tp>
+inline const _Tp &max(const _Tp &__a, const _Tp &__b) {
     __DST_REQUIRES(_Tp, _LessThanComparable);
     return __a < __b ? __b : __a;
 }
@@ -189,13 +192,15 @@ struct __copy_dispatch {
     }
 };
 
-template <class _Tp> struct __copy_dispatch<_Tp *, _Tp *, __true_type> {
+template <class _Tp>
+struct __copy_dispatch<_Tp *, _Tp *, __true_type> {
     static _Tp *copy(const _Tp *_first, const _Tp *_last, _Tp *__result) {
         return __copy_trivial(_first, _last, __result);
     }
 };
 
-template <class _Tp> struct __copy_dispatch<const _Tp *, _Tp *, __true_type> {
+template <class _Tp>
+struct __copy_dispatch<const _Tp *, _Tp *, __true_type> {
     static _Tp *copy(const _Tp *_first, const _Tp *_last, _Tp *__result) {
         return __copy_trivial(_first, _last, __result);
     }

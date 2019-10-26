@@ -12,7 +12,8 @@
 
 __DST_BEGIN_NAMESPACE
 
-template <class _Key, class _Val> struct __skiplist_node {
+template <class _Key, class _Val>
+struct __skiplist_node {
     typedef pair<_Key, _Val> _Entry;
     typedef __skiplist_node<_Key, _Val> *__node_Ptr;
 
@@ -27,7 +28,8 @@ template <class _Key, class _Val> struct __skiplist_node {
     ~__skiplist_node() { delete[] _M_nexts; }
 };
 
-template <class _Key, class _Val> struct __skip_list_iterator {
+template <class _Key, class _Val>
+struct __skip_list_iterator {
     typedef __skiplist_node<_Key, _Val> __node;
     typedef __node *__node_Ptr;
     typedef pair<_Key, _Val> _Entry;
@@ -47,7 +49,7 @@ template <class _Key, class _Val> struct __skip_list_iterator {
 
     reference operator*() { return _M_this->_entry; }
     __self &operator++() {
-        _M_this = _M_this->_M_nexts[0];
+        _M_this = _M_this->(*_M_nexts);
         return *this;
     }
     __self operator++(int) {
@@ -59,7 +61,8 @@ template <class _Key, class _Val> struct __skip_list_iterator {
     bool operator!=(__self &__x) const { return _M_this != __x._M_this; }
 };
 
-template <class _Key, class _Val = int> class skiplist {
+template <class _Key, class _Val = int>
+class skiplist {
   protected:
     typedef __skiplist_node<_Key, _Val> __node;
     typedef __node *__node_Ptr;
@@ -84,37 +87,36 @@ template <class _Key, class _Val = int> class skiplist {
     skiplist(_Key __max_key = _Key(), size_t __max_size = 10000000) {
         // Constructor for skip lists with keys smaller than __max_key
         _max_level = (size_t)ceil(logf((double)__max_size) / logf(1 / 0.5)) - 1;
-        _level = 0; // initial number of _level
-        _size = 0;
+        _level = _size = 0;
         __null_key = __max_key;
 
         _Entry __null_entry;
         __null_entry.first = __null_key;
         _M_start = new __node(__null_entry, _max_level + 1);
         _M_finish = new __node(__null_entry);
-        __last_checked_ptrs = new __node_Ptr[_max_level + 1];
+        _M_last_checked = new __node_Ptr[_max_level + 1];
 
         // header points to tail at all _level as lists are empty
         fill(_M_start->_M_nexts, _M_start->_M_nexts + _max_level + 1,
              _M_finish);
     }
     ~skiplist() {
-        __node_Ptr _M_next_node;
         // delete all nodes by following level 0 chain
         while (_M_start != _M_finish) {
-            _M_next_node = _M_start->_M_nexts[0];
+            _M_next_node = _M_start->(*_M_nexts);
             delete _M_start;
             _M_start = _M_next_node;
         }
         delete _M_finish;
-        delete[] __last_checked_ptrs;
+        delete[] _M_last_checked;
     }
 
     void clear() {
-        __node_Ptr _M_next_node = _M_start->_M_nexts[0], tmp;
+        _M_next_node = _M_start->(*_M_nexts);
+        __node_Ptr tmp;
         while (_M_next_node != _M_finish) {
             tmp = _M_next_node;
-            _M_next_node = _M_next_node->_M_nexts[0];
+            _M_next_node = _M_next_node->(*_M_nexts);
             delete tmp;
         }
         for (int i = 0; i <= _max_level; i++) _M_start->_M_nexts[i] = _M_finish;
@@ -126,13 +128,13 @@ template <class _Key, class _Val = int> class skiplist {
         if (the_key >= __null_key)
             return nullptr; // no matching pair possible
 
-        __pre_node = _M_start;
+        _M_previous = _M_start;
         for (int i = _level; i >= 0; i--) // go down _level
-            while (__pre_node->_M_nexts[i]->_entry.first < the_key)
-                __pre_node = __pre_node->_M_nexts[i];
+            while (_M_previous->_M_nexts[i]->_entry.first < the_key)
+                _M_previous = _M_previous->_M_nexts[i];
 
-        if (__pre_node->_M_nexts[0]->_entry.first == the_key)
-            return &__pre_node->_M_nexts[0]->_entry;
+        if (_M_previous->(*_M_nexts)->_entry.first == the_key)
+            return &_M_previous->(*_M_nexts)->_entry;
 
         return nullptr; // no matching pair
     }
@@ -150,9 +152,8 @@ template <class _Key, class _Val = int> class skiplist {
 
         // delete node from skip list
         for (int i = 0;
-             i <= _level && __last_checked_ptrs[i]->_M_nexts[i] == __the_node;
-             i++)
-            __last_checked_ptrs[i]->_M_nexts[i] = __the_node->_M_nexts[i];
+             i <= _level && _M_last_checked[i]->_M_nexts[i] == __the_node; i++)
+            _M_last_checked[i]->_M_nexts[i] = __the_node->_M_nexts[i];
 
         // update _level
         while (_level > 0 && _M_start->_M_nexts[_level] == _M_finish) _level--;
@@ -178,14 +179,14 @@ template <class _Key, class _Val = int> class skiplist {
         // fix __the_level to be <= _level + 1
         if (__the_level > _level) {
             __the_level = ++_level;
-            __last_checked_ptrs[__the_level] = _M_start;
+            _M_last_checked[__the_level] = _M_start;
         }
 
         __node_Ptr new_node = new __node(__entry, __the_level + 1);
         ++_size;
         for (int i = 0; i <= __the_level; i++) { // insert into level i chain
-            new_node->_M_nexts[i] = __last_checked_ptrs[i]->_M_nexts[i];
-            __last_checked_ptrs[i]->_M_nexts[i] = new_node;
+            new_node->_M_nexts[i] = _M_last_checked[i]->_M_nexts[i];
+            _M_last_checked[i]->_M_nexts[i] = new_node;
         }
     }
     inline void insert(_Key k, _Val v) {
@@ -207,13 +208,13 @@ template <class _Key, class _Val = int> class skiplist {
 
     void print() {
         std::cout << "(begin h:" << _M_start->_height << ")->";
-        for (__node_Ptr _walk = _M_start->_M_nexts[0]; _walk != _M_finish;
-             _walk = _walk->_M_nexts[0])
+        for (__node_Ptr _walk = _M_start->(*_M_nexts); _walk != _M_finish;
+             _walk = _walk->(*_M_nexts))
             std::cout << "(" << _walk->_entry.first << " h:" << _walk->_height
                       << ")->";
         std::cout << "(end)" << endl;
     }
-    iterator begin() { return iterator(_M_start->_M_nexts[0]); }
+    iterator begin() { return iterator(_M_start->(*_M_nexts)); }
     iterator end() { return iterator(_M_finish); }
 
   protected:
@@ -225,14 +226,14 @@ template <class _Key, class _Val = int> class skiplist {
     }
 
     __node_Ptr __search(_Key &the_key) {
-        __pre_node = _M_start;
+        _M_previous = _M_start;
         for (int i = _level; i >= 0; i--) {
-            while (__pre_node->_M_nexts[i]->_entry.first < the_key)
-                __pre_node = __pre_node->_M_nexts[i];
-            __last_checked_ptrs[i] =
-                __pre_node; // __last_checked_ptrs level i node seen
+            while (_M_previous->_M_nexts[i]->_entry.first < the_key)
+                _M_previous = _M_previous->_M_nexts[i];
+            _M_last_checked[i] =
+                _M_previous; // _M_last_checked level i node seen
         }
-        return __pre_node->_M_nexts[0];
+        return _M_previous->(*_M_nexts);
     }
 
     size_t _level;     // max current nonempty chain
@@ -241,10 +242,11 @@ template <class _Key, class _Val = int> class skiplist {
 
     _Key __null_key; // a max key
 
-    __node_Ptr _M_start;   // dummy header node pointer
-    __node_Ptr _M_finish;  // dummy tail node pointer
-    __node_Ptr __pre_node; // every time operate, remember the pre node.
-    __node_Ptr *__last_checked_ptrs; // [i] = node seen on level i
+    __node_Ptr _M_start;         // dummy header node pointer
+    __node_Ptr _M_finish;        // dummy tail node pointer
+    __node_Ptr _M_previous;      // every time operate, remember the pre node.
+    __node_Ptr _M_next_node;     //  every time operate, remember the next node.
+    __node_Ptr *_M_last_checked; // [i] = node seen on level i
 };
 
 __DST_END_NAMESPACE

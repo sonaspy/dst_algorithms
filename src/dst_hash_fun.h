@@ -5,7 +5,8 @@
 
 __DST_BEGIN_NAMESPACE
 
-template <class _Key> struct hash {};
+template <class _Key>
+struct hash {};
 
 inline size_t __dst_hash_string(const char *__s) {
     unsigned long __h = 0;

@@ -95,7 +95,8 @@ __DST_TYPEDEF_REQUIREMENT(const_iterator);
 
 /* Containers */
 
-template <class _Container> struct _Container_concept_specification {
+template <class _Container>
+struct _Container_concept_specification {
     static void _Container_requirement_violation(_Container __c) {
         // Refinement of Assignable
         _Assignable_concept_specification<

@@ -111,7 +111,8 @@ inline unsigned long _Atomic_swap(unsigned long *_p, unsigned long __q) {
 }
 #elif defined(__DST_PTHREADS)
 // We use a template here only to get a unique initialized instance.
-template <int __dummy> struct _Swap_lock_struct {
+template <int __dummy>
+struct _Swap_lock_struct {
     static pthread_mutex_t _S_swap_lock;
 };
 
@@ -131,7 +132,8 @@ inline unsigned long _Atomic_swap(unsigned long *_p, unsigned long __q) {
 }
 #elif defined(__DST_UITHREADS)
 // We use a template here only to get a unique initialized instance.
-template <int __dummy> struct _Swap_lock_struct {
+template <int __dummy>
+struct _Swap_lock_struct {
     static mutex_t _S_swap_lock;
 };
 
@@ -151,7 +153,8 @@ inline unsigned long _Atomic_swap(unsigned long *_p, unsigned long __q) {
 #elif defined(__DST_SOLARIS_THREADS)
 // any better solutions ?
 // We use a template here only to get a unique initialized instance.
-template <int __dummy> struct _Swap_lock_struct {
+template <int __dummy>
+struct _Swap_lock_struct {
     static mutex_t _S_swap_lock;
 };
 
@@ -195,7 +198,8 @@ static inline unsigned long _Atomic_swap(unsigned long *_p, unsigned long __q) {
 
 // Helper struct.  This is a workaround for various compilers that don't
 // handle static variables in inline functions properly.
-template <int __inst> struct _DST_mutex_spin {
+template <int __inst>
+struct _DST_mutex_spin {
     enum { __low_max = 30, __high_max = 1000 };
     // Low if we suspect uniprocessor, high for multiprocessor.
 
@@ -206,7 +210,8 @@ template <int __inst> struct _DST_mutex_spin {
 template <int __inst>
 unsigned _DST_mutex_spin<__inst>::__max = _DST_mutex_spin<__inst>::__low_max;
 
-template <int __inst> unsigned _DST_mutex_spin<__inst>::_last = 0;
+template <int __inst>
+unsigned _DST_mutex_spin<__inst>::_last = 0;
 
 struct _DST_mutex_lock {
 #if defined(__DST__THREADS) || defined(__DST_WIN32THREADS)

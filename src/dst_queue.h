@@ -16,7 +16,8 @@ inline bool operator==(const queue<_Tp, _Seq> &, const queue<_Tp, _Seq> &);
 template <class _Tp, class _Seq>
 inline bool operator<(const queue<_Tp, _Seq> &, const queue<_Tp, _Seq> &);
 
-template <class _Tp, class _Sequence> class queue {
+template <class _Tp, class _Sequence>
+class queue {
     // requirements:
 
     __DST_CLASS_REQUIRES(_Tp, _Assignable);

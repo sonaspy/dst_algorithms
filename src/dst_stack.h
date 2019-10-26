@@ -17,7 +17,8 @@ bool operator==(const stack<_Tp, _Seq> &__x, const stack<_Tp, _Seq> &__y);
 template <class _Tp, class _Seq>
 bool operator<(const stack<_Tp, _Seq> &__x, const stack<_Tp, _Seq> &__y);
 
-template <class _Tp, class _Sequence> class stack {
+template <class _Tp, class _Sequence>
+class stack {
 
     // requirements:
 

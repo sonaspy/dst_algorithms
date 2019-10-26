@@ -8,7 +8,8 @@
 
 __DST_BEGIN_NAMESPACE
 
-template <class _ForwardIterator, class _Tp> class raw_storage_iterator {
+template <class _ForwardIterator, class _Tp>
+class raw_storage_iterator {
   protected:
     _ForwardIterator _M_iter;
 

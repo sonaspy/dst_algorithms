@@ -15,7 +15,8 @@ struct _slist_node_base {
     _slist_node_base *_M_prev;
 };
 
-template <class _Tp> struct _slist_node : public _slist_node_base {
+template <class _Tp>
+struct _slist_node : public _slist_node_base {
     _Tp _M_data;
 };
 
@@ -107,7 +108,8 @@ inline ptrdiff_t *distance_type(const _slist_iterator_base &) { return 0; }
 #ifdef __DST_USE_STD_ALLOCATORS
 
 // Base for general standard-conforming allocators.
-template <class _Tp, class _Allocator, bool _IsStatic> class _slist_alloc_base {
+template <class _Tp, class _Allocator, bool _IsStatic>
+class _slist_alloc_base {
   public:
     typedef
         typename _Alloc_traits<_Tp, _Allocator>::allocator_type allocator_type;
@@ -173,7 +175,8 @@ class _slist_base
 
 #else /* __DST_USE_STD_ALLOCATORS */
 
-template <class _Tp, class _Alloc> class _slist_base {
+template <class _Tp, class _Alloc>
+class _slist_base {
   public:
     typedef _Alloc allocator_type;
     allocator_type get_allocator() const { return allocator_type(); }
@@ -201,12 +204,13 @@ template <class _Tp, class _Alloc> class _slist_base {
 
 #endif /* __DST_USE_STD_ALLOCATORS */
 
-template <class _Tp, class _Alloc> void _slist_base<_Tp, _Alloc>::clear() {
+template <class _Tp, class _Alloc>
+void _slist_base<_Tp, _Alloc>::clear() {
     _slist_node<_Tp> *__cur = (_slist_node<_Tp> *)_M_node->_M_next;
     while (__cur != _M_node) {
         _slist_node<_Tp> *__tmp = __cur;
         __cur = (_slist_node<_Tp> *)__cur->_M_next;
-        __destroy(&__tmp->_M_data);
+        _Destroy(&__tmp->_M_data);
         _M_put_node(__tmp);
     }
     _M_node->_M_next = _M_node;
@@ -261,14 +265,14 @@ class slist : protected _slist_base<_Tp, _Alloc> {
   protected:
     __node *_M_create_node(const _Tp &__x) {
         __node *__p = _M_get_node();
-        __DST_TRY { __construct(&__p->_M_data, __x); }
+        __DST_TRY { _Construct(&__p->_M_data, __x); }
         __DST_UNWIND(_M_put_node(__p));
         return __p;
     }
 
     __node *_M_create_node() {
         __node *__p = _M_get_node();
-        __DST_TRY { __construct(&__p->_M_data); }
+        __DST_TRY { _Construct(&__p->_M_data); }
         __DST_UNWIND(_M_put_node(__p));
         return __p;
     }
@@ -357,7 +361,7 @@ class slist : protected _slist_base<_Tp, _Alloc> {
         __node *__n = (__node *)__position._M_node;
         __prev_node->_M_next = __next_node;
         __next_node->_M_prev = __prev_node;
-        __destroy(&__n->_M_data);
+        _Destroy(&__n->_M_data);
         _M_put_node(__n);
         return iterator((__node *)__next_node);
     }
@@ -483,11 +487,14 @@ class slist : protected _slist_base<_Tp, _Alloc> {
     void sort();
 
 #ifdef __DST_MEMBER_TEMPLATES
-    template <class _Predicate> void remove_if(_Predicate);
-    template <class _BinaryPredicate> void unique(_BinaryPredicate);
+    template <class _Predicate>
+    void remove_if(_Predicate);
+    template <class _BinaryPredicate>
+    void unique(_BinaryPredicate);
     template <class _StrictWeakOrdering>
     void merge(slist &, _StrictWeakOrdering);
-    template <class _StrictWeakOrdering> void sort(_StrictWeakOrdering);
+    template <class _StrictWeakOrdering>
+    void sort(_StrictWeakOrdering);
 #endif /* __DST_MEMBER_TEMPLATES */
 };
 
@@ -657,7 +664,8 @@ void slist<_Tp, _Alloc>::remove(const _Tp &__value) {
     }
 }
 
-template <class _Tp, class _Alloc> void slist<_Tp, _Alloc>::unique() {
+template <class _Tp, class _Alloc>
+void slist<_Tp, _Alloc>::unique() {
     iterator __first = begin();
     iterator __last = end();
     if (__first == __last)
@@ -697,11 +705,13 @@ inline void __slist_base_reverse(_slist_node_base *__p) {
     } while (__tmp != __p);
 }
 
-template <class _Tp, class _Alloc> inline void slist<_Tp, _Alloc>::reverse() {
+template <class _Tp, class _Alloc>
+inline void slist<_Tp, _Alloc>::reverse() {
     __slist_base_reverse(this->_M_node);
 }
 
-template <class _Tp, class _Alloc> void slist<_Tp, _Alloc>::sort() {
+template <class _Tp, class _Alloc>
+void slist<_Tp, _Alloc>::sort() {
     // Do nothing if the slist has length 0 or 1.
     if (_M_node->_M_next != _M_node && _M_node->_M_next->_M_next != _M_node) {
         slist<_Tp, _Alloc> __carry;
