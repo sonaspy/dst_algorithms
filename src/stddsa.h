@@ -10,5 +10,11 @@
 #include "algo.h"
 #include "stack.h"
 #include "tree.h"
+#include "map.h"
+#include "hash_map.h"
+#include "multimap.h"
+#include "set.h"
+#include "hash_set.h"
+#include "multiset.h"
 
 #endif
