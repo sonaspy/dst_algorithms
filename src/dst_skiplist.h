@@ -49,7 +49,7 @@ struct __skip_list_iterator {
 
     reference operator*() { return _M_this->_entry; }
     __self &operator++() {
-        _M_this = _M_this->(*_M_nexts);
+        _M_this = _M_this->_M_nexts[0];
         return *this;
     }
     __self operator++(int) {
@@ -103,7 +103,7 @@ class skiplist {
     ~skiplist() {
         // delete all nodes by following level 0 chain
         while (_M_start != _M_finish) {
-            _M_next_node = _M_start->(*_M_nexts);
+            _M_next_node = _M_start->_M_nexts[0];
             delete _M_start;
             _M_start = _M_next_node;
         }
@@ -112,11 +112,11 @@ class skiplist {
     }
 
     void clear() {
-        _M_next_node = _M_start->(*_M_nexts);
+        _M_next_node = _M_start->_M_nexts[0];
         __node_Ptr tmp;
         while (_M_next_node != _M_finish) {
             tmp = _M_next_node;
-            _M_next_node = _M_next_node->(*_M_nexts);
+            _M_next_node = _M_next_node->_M_nexts[0];
             delete tmp;
         }
         for (int i = 0; i <= _max_level; i++) _M_start->_M_nexts[i] = _M_finish;
@@ -133,8 +133,8 @@ class skiplist {
             while (_M_previous->_M_nexts[i]->_entry.first < the_key)
                 _M_previous = _M_previous->_M_nexts[i];
 
-        if (_M_previous->(*_M_nexts)->_entry.first == the_key)
-            return &_M_previous->(*_M_nexts)->_entry;
+        if (_M_previous->_M_nexts[0]->_entry.first == the_key)
+            return &_M_previous->_M_nexts[0]->_entry;
 
         return nullptr; // no matching pair
     }
@@ -208,13 +208,13 @@ class skiplist {
 
     void print() {
         std::cout << "(begin h:" << _M_start->_height << ")->";
-        for (__node_Ptr _walk = _M_start->(*_M_nexts); _walk != _M_finish;
-             _walk = _walk->(*_M_nexts))
+        for (__node_Ptr _walk = _M_start->_M_nexts[0]; _walk != _M_finish;
+             _walk = _walk->_M_nexts[0])
             std::cout << "(" << _walk->_entry.first << " h:" << _walk->_height
                       << ")->";
         std::cout << "(end)" << endl;
     }
-    iterator begin() { return iterator(_M_start->(*_M_nexts)); }
+    iterator begin() { return iterator(_M_start->_M_nexts[0]); }
     iterator end() { return iterator(_M_finish); }
 
   protected:
@@ -233,7 +233,7 @@ class skiplist {
             _M_last_checked[i] =
                 _M_previous; // _M_last_checked level i node seen
         }
-        return _M_previous->(*_M_nexts);
+        return _M_previous->_M_nexts[0];
     }
 
     size_t _level;     // max current nonempty chain
