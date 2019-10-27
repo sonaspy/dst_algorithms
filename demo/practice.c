@@ -8,18 +8,13 @@
 #include <stdlib.h>
 #include <time.h>
 
-int fun()
-{
+int fun() {
     printf("%d", 1);
     return 1;
 }
 typedef int (*PF)();
-void fun2(PF pf)
-{
-    (*pf)();
-}
-int gcd(int a, int b)
-{
+void fun2(PF pf) { (*pf)(); }
+int gcd(int a, int b) {
     if (a <= 0 || b <= 0)
         return -1;
     if (a == b)
@@ -29,16 +24,13 @@ int gcd(int a, int b)
     else
         return gcd(b - a, a);
 }
-int _gcd(int a, int b)
-{
+int _gcd(int a, int b) {
     if (a % b == 0)
         return b;
     return _gcd(b, a % b);
-
 }
 
-int main(int argc, char const *argv[])
-{
+int main(int argc, char const *argv[]) {
     /* code */
 
     return 0;

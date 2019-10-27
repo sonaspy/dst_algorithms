@@ -8,7 +8,7 @@
 
 ../lib/bplustree.h
 
-/Users/sonAspy/github_rep/dst_algorithms/btree/bplustree-io/tests/bplustree_demo.c
+/Users/sonAspy/github_rep/dst_algorithms/src/btree/bplustree-io/tests/bplustree_demo.c
 stdio.h
 -
 stdlib.h
@@ -16,5 +16,5 @@ stdlib.h
 string.h
 -
 bplustree.h
-/Users/sonAspy/github_rep/dst_algorithms/btree/bplustree-io/tests/bplustree.h
+/Users/sonAspy/github_rep/dst_algorithms/src/btree/bplustree-io/tests/bplustree.h
 

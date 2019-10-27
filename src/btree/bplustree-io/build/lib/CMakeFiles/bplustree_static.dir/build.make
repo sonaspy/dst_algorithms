@@ -43,10 +43,10 @@ RM = /usr/local/Cellar/cmake/3.15.4/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/sonAspy/github_rep/dst_algorithms/btree/bplustree-io
+CMAKE_SOURCE_DIR = /Users/sonAspy/github_rep/dst_algorithms/src/btree/bplustree-io
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/sonAspy/github_rep/dst_algorithms/btree/bplustree-io/build
+CMAKE_BINARY_DIR = /Users/sonAspy/github_rep/dst_algorithms/src/btree/bplustree-io/build
 
 # Include any dependencies generated for this target.
 include lib/CMakeFiles/bplustree_static.dir/depend.make
@@ -59,16 +59,16 @@ include lib/CMakeFiles/bplustree_static.dir/flags.make
 
 lib/CMakeFiles/bplustree_static.dir/bplustree.c.o: lib/CMakeFiles/bplustree_static.dir/flags.make
 lib/CMakeFiles/bplustree_static.dir/bplustree.c.o: ../lib/bplustree.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/sonAspy/github_rep/dst_algorithms/btree/bplustree-io/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object lib/CMakeFiles/bplustree_static.dir/bplustree.c.o"
-	cd /Users/sonAspy/github_rep/dst_algorithms/btree/bplustree-io/build/lib && /Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/bplustree_static.dir/bplustree.c.o   -c /Users/sonAspy/github_rep/dst_algorithms/btree/bplustree-io/lib/bplustree.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/sonAspy/github_rep/dst_algorithms/src/btree/bplustree-io/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object lib/CMakeFiles/bplustree_static.dir/bplustree.c.o"
+	cd /Users/sonAspy/github_rep/dst_algorithms/src/btree/bplustree-io/build/lib && /Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/bplustree_static.dir/bplustree.c.o   -c /Users/sonAspy/github_rep/dst_algorithms/src/btree/bplustree-io/lib/bplustree.c
 
 lib/CMakeFiles/bplustree_static.dir/bplustree.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/bplustree_static.dir/bplustree.c.i"
-	cd /Users/sonAspy/github_rep/dst_algorithms/btree/bplustree-io/build/lib && /Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/sonAspy/github_rep/dst_algorithms/btree/bplustree-io/lib/bplustree.c > CMakeFiles/bplustree_static.dir/bplustree.c.i
+	cd /Users/sonAspy/github_rep/dst_algorithms/src/btree/bplustree-io/build/lib && /Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /Users/sonAspy/github_rep/dst_algorithms/src/btree/bplustree-io/lib/bplustree.c > CMakeFiles/bplustree_static.dir/bplustree.c.i
 
 lib/CMakeFiles/bplustree_static.dir/bplustree.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/bplustree_static.dir/bplustree.c.s"
-	cd /Users/sonAspy/github_rep/dst_algorithms/btree/bplustree-io/build/lib && /Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/sonAspy/github_rep/dst_algorithms/btree/bplustree-io/lib/bplustree.c -o CMakeFiles/bplustree_static.dir/bplustree.c.s
+	cd /Users/sonAspy/github_rep/dst_algorithms/src/btree/bplustree-io/build/lib && /Library/Developer/CommandLineTools/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /Users/sonAspy/github_rep/dst_algorithms/src/btree/bplustree-io/lib/bplustree.c -o CMakeFiles/bplustree_static.dir/bplustree.c.s
 
 # Object files for target bplustree_static
 bplustree_static_OBJECTS = \
@@ -80,9 +80,9 @@ bplustree_static_EXTERNAL_OBJECTS =
 lib/libbplustree.a: lib/CMakeFiles/bplustree_static.dir/bplustree.c.o
 lib/libbplustree.a: lib/CMakeFiles/bplustree_static.dir/build.make
 lib/libbplustree.a: lib/CMakeFiles/bplustree_static.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/sonAspy/github_rep/dst_algorithms/btree/bplustree-io/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking C static library libbplustree.a"
-	cd /Users/sonAspy/github_rep/dst_algorithms/btree/bplustree-io/build/lib && $(CMAKE_COMMAND) -P CMakeFiles/bplustree_static.dir/cmake_clean_target.cmake
-	cd /Users/sonAspy/github_rep/dst_algorithms/btree/bplustree-io/build/lib && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/bplustree_static.dir/link.txt --verbose=$(VERBOSE)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/sonAspy/github_rep/dst_algorithms/src/btree/bplustree-io/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking C static library libbplustree.a"
+	cd /Users/sonAspy/github_rep/dst_algorithms/src/btree/bplustree-io/build/lib && $(CMAKE_COMMAND) -P CMakeFiles/bplustree_static.dir/cmake_clean_target.cmake
+	cd /Users/sonAspy/github_rep/dst_algorithms/src/btree/bplustree-io/build/lib && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/bplustree_static.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
 lib/CMakeFiles/bplustree_static.dir/build: lib/libbplustree.a
@@ -90,10 +90,10 @@ lib/CMakeFiles/bplustree_static.dir/build: lib/libbplustree.a
 .PHONY : lib/CMakeFiles/bplustree_static.dir/build
 
 lib/CMakeFiles/bplustree_static.dir/clean:
-	cd /Users/sonAspy/github_rep/dst_algorithms/btree/bplustree-io/build/lib && $(CMAKE_COMMAND) -P CMakeFiles/bplustree_static.dir/cmake_clean.cmake
+	cd /Users/sonAspy/github_rep/dst_algorithms/src/btree/bplustree-io/build/lib && $(CMAKE_COMMAND) -P CMakeFiles/bplustree_static.dir/cmake_clean.cmake
 .PHONY : lib/CMakeFiles/bplustree_static.dir/clean
 
 lib/CMakeFiles/bplustree_static.dir/depend:
-	cd /Users/sonAspy/github_rep/dst_algorithms/btree/bplustree-io/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/sonAspy/github_rep/dst_algorithms/btree/bplustree-io /Users/sonAspy/github_rep/dst_algorithms/btree/bplustree-io/lib /Users/sonAspy/github_rep/dst_algorithms/btree/bplustree-io/build /Users/sonAspy/github_rep/dst_algorithms/btree/bplustree-io/build/lib /Users/sonAspy/github_rep/dst_algorithms/btree/bplustree-io/build/lib/CMakeFiles/bplustree_static.dir/DependInfo.cmake --color=$(COLOR)
+	cd /Users/sonAspy/github_rep/dst_algorithms/src/btree/bplustree-io/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/sonAspy/github_rep/dst_algorithms/src/btree/bplustree-io /Users/sonAspy/github_rep/dst_algorithms/src/btree/bplustree-io/lib /Users/sonAspy/github_rep/dst_algorithms/src/btree/bplustree-io/build /Users/sonAspy/github_rep/dst_algorithms/src/btree/bplustree-io/build/lib /Users/sonAspy/github_rep/dst_algorithms/src/btree/bplustree-io/build/lib/CMakeFiles/bplustree_static.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : lib/CMakeFiles/bplustree_static.dir/depend
 

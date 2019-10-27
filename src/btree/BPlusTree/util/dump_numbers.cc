@@ -3,8 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
     int start = 0;
     int end = 90000000;
 
@@ -22,12 +21,12 @@ int main(int argc, char *argv[])
     for (int i = start; i <= end; i++) {
         if (i % 1000 == 0)
             printf("%d\n", i);
-        char key[16] = { 0 };
+        char key[16] = {0};
         sprintf(key, "%d", i);
         database.insert(key, i);
     }
     printf("%d\n", end);
     printf("done\n");
-    
+
     return 0;
 }

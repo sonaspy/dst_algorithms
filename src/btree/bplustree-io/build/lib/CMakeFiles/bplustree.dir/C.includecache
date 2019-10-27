@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/Users/sonAspy/github_rep/dst_algorithms/btree/bplustree-io/lib/bplustree.c
+/Users/sonAspy/github_rep/dst_algorithms/src/btree/bplustree-io/lib/bplustree.c
 stdio.h
 -
 stdlib.h
@@ -26,7 +26,7 @@ sys/types.h
 sys/stat.h
 -
 bplustree.h
-/Users/sonAspy/github_rep/dst_algorithms/btree/bplustree-io/lib/bplustree.h
+/Users/sonAspy/github_rep/dst_algorithms/src/btree/bplustree-io/lib/bplustree.h
 
-/Users/sonAspy/github_rep/dst_algorithms/btree/bplustree-io/lib/bplustree.h
+/Users/sonAspy/github_rep/dst_algorithms/src/btree/bplustree-io/lib/bplustree.h
 

@@ -3,8 +3,7 @@ using namespace bpt;
 
 #include <string.h>
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
     if (argc < 3) {
         fprintf(stderr, "Usage: %s database command\n", argv[0]);
         return 1;
@@ -28,8 +27,8 @@ int main(int argc, char *argv[])
             value_t values[512];
             bool next = true;
             while (next) {
-                int ret = database.search_range(
-                        &start, argv[4], values, 512, &next);
+                int ret =
+                    database.search_range(&start, argv[4], values, 512, &next);
                 if (ret < 0)
                     break;
                 for (int i = 0; i < ret; i++)
@@ -56,7 +55,6 @@ int main(int argc, char *argv[])
         fprintf(stderr, "Invalid command: %s\n", argv[2]);
         return 1;
     }
-    
+
     return 0;
 }
-

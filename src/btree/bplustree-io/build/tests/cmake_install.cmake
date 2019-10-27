@@ -1,4 +1,4 @@
-# Install script for directory: /Users/sonAspy/github_rep/dst_algorithms/btree/bplustree-io/tests
+# Install script for directory: /Users/sonAspy/github_rep/dst_algorithms/src/btree/bplustree-io/tests
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

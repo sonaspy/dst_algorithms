@@ -2,7 +2,7 @@
 // coding - utf_8
 
 #define SIZE 500000
-#include "/Library/Developer/CommandLineTools/usr/include/c++/v1/map"
+#include <bits/stdc++.h>
 
 #define test() freopen("in", "r", stdin)
 using namespace std;
@@ -15,8 +15,8 @@ int main(int argc, char const *argv[]) {
 
     startTime = clock();
     short i;
-    map<int, int> mp;
-    mp.insert({1, 1});
+
+    cout << logf(2.7183);
     endTime = clock();
 
     // cout << "The elapsed time is: " << (double)(endTime - startTime) / 1000

@@ -6,5 +6,5 @@ C_FLAGS = -O2 -Wall -Werror -Wextra
 
 C_DEFINES = 
 
-C_INCLUDES = -I/Users/sonAspy/github_rep/dst_algorithms/btree/bplustree-io/lib 
+C_INCLUDES = -I/Users/sonAspy/github_rep/dst_algorithms/src/btree/bplustree-io/lib 
 

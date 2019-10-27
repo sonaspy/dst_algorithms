@@ -48,10 +48,10 @@ RM = /usr/local/Cellar/cmake/3.15.4/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/sonAspy/github_rep/dst_algorithms/btree/bplustree-io
+CMAKE_SOURCE_DIR = /Users/sonAspy/github_rep/dst_algorithms/src/btree/bplustree-io
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/sonAspy/github_rep/dst_algorithms/btree/bplustree-io/build
+CMAKE_BINARY_DIR = /Users/sonAspy/github_rep/dst_algorithms/src/btree/bplustree-io/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -126,14 +126,14 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	cd /Users/sonAspy/github_rep/dst_algorithms/btree/bplustree-io/build && $(CMAKE_COMMAND) -E cmake_progress_start /Users/sonAspy/github_rep/dst_algorithms/btree/bplustree-io/build/CMakeFiles /Users/sonAspy/github_rep/dst_algorithms/btree/bplustree-io/build/tests/CMakeFiles/progress.marks
-	cd /Users/sonAspy/github_rep/dst_algorithms/btree/bplustree-io/build && $(MAKE) -f CMakeFiles/Makefile2 tests/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/sonAspy/github_rep/dst_algorithms/btree/bplustree-io/build/CMakeFiles 0
+	cd /Users/sonAspy/github_rep/dst_algorithms/src/btree/bplustree-io/build && $(CMAKE_COMMAND) -E cmake_progress_start /Users/sonAspy/github_rep/dst_algorithms/src/btree/bplustree-io/build/CMakeFiles /Users/sonAspy/github_rep/dst_algorithms/src/btree/bplustree-io/build/tests/CMakeFiles/progress.marks
+	cd /Users/sonAspy/github_rep/dst_algorithms/src/btree/bplustree-io/build && $(MAKE) -f CMakeFiles/Makefile2 tests/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/sonAspy/github_rep/dst_algorithms/src/btree/bplustree-io/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /Users/sonAspy/github_rep/dst_algorithms/btree/bplustree-io/build && $(MAKE) -f CMakeFiles/Makefile2 tests/clean
+	cd /Users/sonAspy/github_rep/dst_algorithms/src/btree/bplustree-io/build && $(MAKE) -f CMakeFiles/Makefile2 tests/clean
 .PHONY : clean
 
 # The main clean target
@@ -143,22 +143,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /Users/sonAspy/github_rep/dst_algorithms/btree/bplustree-io/build && $(MAKE) -f CMakeFiles/Makefile2 tests/preinstall
+	cd /Users/sonAspy/github_rep/dst_algorithms/src/btree/bplustree-io/build && $(MAKE) -f CMakeFiles/Makefile2 tests/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /Users/sonAspy/github_rep/dst_algorithms/btree/bplustree-io/build && $(MAKE) -f CMakeFiles/Makefile2 tests/preinstall
+	cd /Users/sonAspy/github_rep/dst_algorithms/src/btree/bplustree-io/build && $(MAKE) -f CMakeFiles/Makefile2 tests/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /Users/sonAspy/github_rep/dst_algorithms/btree/bplustree-io/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /Users/sonAspy/github_rep/dst_algorithms/src/btree/bplustree-io/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 tests/CMakeFiles/bplustree_demo.dir/rule:
-	cd /Users/sonAspy/github_rep/dst_algorithms/btree/bplustree-io/build && $(MAKE) -f CMakeFiles/Makefile2 tests/CMakeFiles/bplustree_demo.dir/rule
+	cd /Users/sonAspy/github_rep/dst_algorithms/src/btree/bplustree-io/build && $(MAKE) -f CMakeFiles/Makefile2 tests/CMakeFiles/bplustree_demo.dir/rule
 .PHONY : tests/CMakeFiles/bplustree_demo.dir/rule
 
 # Convenience name for target.
@@ -168,7 +168,7 @@ bplustree_demo: tests/CMakeFiles/bplustree_demo.dir/rule
 
 # fast build rule for target.
 bplustree_demo/fast:
-	cd /Users/sonAspy/github_rep/dst_algorithms/btree/bplustree-io/build && $(MAKE) -f tests/CMakeFiles/bplustree_demo.dir/build.make tests/CMakeFiles/bplustree_demo.dir/build
+	cd /Users/sonAspy/github_rep/dst_algorithms/src/btree/bplustree-io/build && $(MAKE) -f tests/CMakeFiles/bplustree_demo.dir/build.make tests/CMakeFiles/bplustree_demo.dir/build
 .PHONY : bplustree_demo/fast
 
 bplustree_demo.o: bplustree_demo.c.o
@@ -177,7 +177,7 @@ bplustree_demo.o: bplustree_demo.c.o
 
 # target to build an object file
 bplustree_demo.c.o:
-	cd /Users/sonAspy/github_rep/dst_algorithms/btree/bplustree-io/build && $(MAKE) -f tests/CMakeFiles/bplustree_demo.dir/build.make tests/CMakeFiles/bplustree_demo.dir/bplustree_demo.c.o
+	cd /Users/sonAspy/github_rep/dst_algorithms/src/btree/bplustree-io/build && $(MAKE) -f tests/CMakeFiles/bplustree_demo.dir/build.make tests/CMakeFiles/bplustree_demo.dir/bplustree_demo.c.o
 .PHONY : bplustree_demo.c.o
 
 bplustree_demo.i: bplustree_demo.c.i
@@ -186,7 +186,7 @@ bplustree_demo.i: bplustree_demo.c.i
 
 # target to preprocess a source file
 bplustree_demo.c.i:
-	cd /Users/sonAspy/github_rep/dst_algorithms/btree/bplustree-io/build && $(MAKE) -f tests/CMakeFiles/bplustree_demo.dir/build.make tests/CMakeFiles/bplustree_demo.dir/bplustree_demo.c.i
+	cd /Users/sonAspy/github_rep/dst_algorithms/src/btree/bplustree-io/build && $(MAKE) -f tests/CMakeFiles/bplustree_demo.dir/build.make tests/CMakeFiles/bplustree_demo.dir/bplustree_demo.c.i
 .PHONY : bplustree_demo.c.i
 
 bplustree_demo.s: bplustree_demo.c.s
@@ -195,7 +195,7 @@ bplustree_demo.s: bplustree_demo.c.s
 
 # target to generate assembly for a file
 bplustree_demo.c.s:
-	cd /Users/sonAspy/github_rep/dst_algorithms/btree/bplustree-io/build && $(MAKE) -f tests/CMakeFiles/bplustree_demo.dir/build.make tests/CMakeFiles/bplustree_demo.dir/bplustree_demo.c.s
+	cd /Users/sonAspy/github_rep/dst_algorithms/src/btree/bplustree-io/build && $(MAKE) -f tests/CMakeFiles/bplustree_demo.dir/build.make tests/CMakeFiles/bplustree_demo.dir/bplustree_demo.c.s
 .PHONY : bplustree_demo.c.s
 
 # Help Target
@@ -225,6 +225,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /Users/sonAspy/github_rep/dst_algorithms/btree/bplustree-io/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /Users/sonAspy/github_rep/dst_algorithms/src/btree/bplustree-io/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 
