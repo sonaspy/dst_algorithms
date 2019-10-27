@@ -60,7 +60,7 @@ class bptree {
     /* abstract operations */
     int search(const key_type &key, value_type *value) const;
     int search_range(key_type *left, const key_type &right, value_type *values,
-                     size_t max, bool *next = NULL) const;
+                     size_t max, bool *next = nullptr) const;
     int remove(const key_type &key);
     int insert(const key_type &key, value_type value);
     int update(const key_type &key, value_type value);

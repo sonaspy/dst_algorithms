@@ -42,7 +42,7 @@ inline __record_t *find(__leaf_node_t &node, const key_type &key) {
     return lower_bound(begin(node), end(node), key);
 }
 
-bptree::bptree(const char *p, bool force_empty) : _file_ptr(NULL), fp_level(0) {
+bptree::bptree(const char *p, bool force_empty) : _file_ptr(nullptr), fp_level(0) {
     bzero(path, sizeof(path));
     strcpy(path, p);
 
@@ -78,7 +78,7 @@ int bptree::search(const key_type &key, value_type *value) const {
 
 int bptree::search_range(key_type *left, const key_type &right,
                          value_type *values, size_t max, bool *next) const {
-    if (left == NULL || __key_compare(*left, right) > 0)
+    if (left == nullptr || __key_compare(*left, right) > 0)
         return -1;
 
     off_t off_left = __search_leaf(*left);
@@ -116,7 +116,7 @@ int bptree::search_range(key_type *left, const key_type &right,
     }
 
     // mark for next iteration
-    if (next != NULL) {
+    if (next != nullptr) {
         if (i == max && b != e) {
             *next = true;
             *left = b->key;

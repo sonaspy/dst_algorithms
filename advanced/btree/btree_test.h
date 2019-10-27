@@ -92,7 +92,7 @@ struct KeyOfValue<K, K> {
 
 // Counts the number of occurances of "c" in a buffer.
 inline ptrdiff_t strcount(const char* buf_begin, const char* buf_end, char c) {
-  if (buf_begin == NULL)
+  if (buf_begin == nullptr)
     return 0;
   if (buf_end <= buf_begin)
     return 0;
@@ -848,7 +848,7 @@ class TestAllocator : public Alloc {
   typedef typename Alloc::pointer pointer;
   typedef typename Alloc::size_type size_type;
 
-  TestAllocator() : bytes_used_(NULL) { }
+  TestAllocator() : bytes_used_(nullptr) { }
   TestAllocator(int64_t *bytes_used) : bytes_used_(bytes_used) { }
 
   // Constructor used for rebinding
@@ -859,14 +859,14 @@ class TestAllocator : public Alloc {
   }
 
   pointer allocate(size_type n, std::allocator<void>::const_pointer hint = 0) {
-    EXPECT_TRUE(bytes_used_ != NULL);
+    EXPECT_TRUE(bytes_used_ != nullptr);
     *bytes_used_ += n * sizeof(T);
     return Alloc::allocate(n, hint);
   }
 
   void deallocate(pointer p, size_type n) {
     Alloc::deallocate(p, n);
-    EXPECT_TRUE(bytes_used_ != NULL);
+    EXPECT_TRUE(bytes_used_ != nullptr);
     *bytes_used_ -= n * sizeof(T);
   }
 

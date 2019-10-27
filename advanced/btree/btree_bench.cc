@@ -77,7 +77,7 @@ BenchmarkRun *current_benchmark;
 
 int64_t get_micros () {
   timeval tv;
-  gettimeofday(&tv, NULL);
+  gettimeofday(&tv, nullptr);
   return tv.tv_sec * 1000000 + tv.tv_usec;
 }
 
@@ -131,7 +131,7 @@ void BenchmarkRun::Reset() {
 }
 
 void BenchmarkRun::Run() {
-  assert(current_benchmark == NULL);
+  assert(current_benchmark == nullptr);
   current_benchmark = this;
   int iters = FLAGS_benchmark_min_iters;
   for (;;) {
@@ -154,7 +154,7 @@ void BenchmarkRun::Run() {
 	  benchmark_name, 
 	  accum_micros * 1000 / iters, 
 	  iters);
-  current_benchmark = NULL;
+  current_benchmark = nullptr;
 }
 
 // Used to avoid compiler optimizations for these benchmarks.
