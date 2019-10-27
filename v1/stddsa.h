@@ -9,5 +9,6 @@
 
 #include "algorithms.h"
 #include "sort.h"
+#include "trees.h"
 
 #endif

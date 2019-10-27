@@ -87,7 +87,7 @@ class skiplist {
 
     skiplist(_Key __max_key = _Key(), size_t __max_size = 10000000) {
         // Constructor for skip lists with keys smaller than __max_key
-        _max_level = (size_t)ceil(logf((double)__max_size) / logf(1 / 0.5)) - 1;
+        _max_level = (size_t)ceil(log2(__max_size)) - 1;
         _level = _size = 0;
         __null_key = __max_key;
 
@@ -131,7 +131,7 @@ class skiplist {
             return nullptr; // no matching pair possible
 
         _M_previous = _M_start;
-        for (int i = _level; i >= 0; i--) // go down _level
+        for (int i = _level; i > -1; i--) // go down _level
             while (_M_previous->_M_nexts[i]->_entry.first < the_key)
                 _M_previous = _M_previous->_M_nexts[i];
 
@@ -178,16 +178,16 @@ class skiplist {
             return;
         }
 
-        size_t __the_level = __decide_level();
-        // fix __the_level to be <= _level + 1
-        if (__the_level > _level) {
-            __the_level = ++_level;
-            _M_last_checked[__the_level] = _M_start;
+        size_t _new_level = __decide_level();
+        // fix _new_level to be <= _level + 1
+        if (_new_level > _level) {
+            _new_level = ++_level;
+            _M_last_checked[_new_level] = _M_start;
         }
 
-        __node_Ptr new_node = new __node(__entry, __the_level + 1);
+        __node_Ptr new_node = new __node(__entry, _new_level + 1);
         ++_size;
-        for (int i = 0; i <= __the_level; i++) { // insert into level i chain
+        for (int i = 0; i <= _new_level; i++) { // insert into level i chain
             new_node->_M_nexts[i] = _M_last_checked[i]->_M_nexts[i];
             _M_last_checked[i]->_M_nexts[i] = new_node;
         }
@@ -226,12 +226,12 @@ class skiplist {
         size_t __lev = 0;
         while (rand() & 1)
             ++__lev;
-        return (__lev <= _max_level) ? __lev : _max_level;
+        return (__lev < _max_level) ? __lev : _max_level;
     }
 
     __node_Ptr __search(_Key &the_key) {
         _M_previous = _M_start;
-        for (int i = _level; i >= 0; i--) {
+        for (int i = _level; i > -1; i--) {
             while (_M_previous->_M_nexts[i]->_entry.first < the_key)
                 _M_previous = _M_previous->_M_nexts[i];
             _M_last_checked[i] =
