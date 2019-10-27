@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    bpt::bplus_tree database(argv[1], true);
+    bpt::bptree database(argv[1], true);
     for (int i = start; i <= end; i++) {
         if (i % 1000 == 0)
             printf("%d\n", i);

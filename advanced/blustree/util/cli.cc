@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    bpt::bplus_tree database(argv[1]);
+    bpt::bptree database(argv[1]);
     if (!strcmp(argv[2], "search")) {
         if (argc < 4) {
             fprintf(stderr, "Need key.\n");
@@ -18,14 +18,14 @@ int main(int argc, char *argv[])
         }
 
         if (argc == 4) {
-            value_t value;
+            value_type value;
             if (database.search(argv[3], &value) != 0)
                 printf("Key %s not found\n", argv[3]);
             else
                 printf("%d\n", value);
         } else {
-            bpt::key_t start(argv[3]);
-            value_t values[512];
+            bpt::key_type start(argv[3]);
+            value_type values[512];
             bool next = true;
             while (next) {
                 int ret = database.search_range(

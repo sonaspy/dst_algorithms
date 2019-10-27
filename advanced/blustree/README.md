@@ -30,7 +30,7 @@ Files
 -----
 
 `bpt.h` and `bpt.cc` is the implementation of B+ tree. `predefined.h` 
-defines the tree order, key/value type, key compare function and other
+defines the tree _order, key/value type, key compare function and other
 tree settings, modify it to satify your need. Just include these tree files 
 in your project to use the B+ tree.
 
@@ -44,7 +44,7 @@ test out the B+ tree.
 `cli.cc` is a command tool to manipulate an exisiting database.
 
 By default, the key type is 16 byte string and value type is int. the
-`keycmp` function is written to easily compare number strings.
+`__key_compare` function is written to easily compare number strings.
 
 Examples
 --------

@@ -14,8 +14,11 @@ def BFS(g, s, discovered):
         v = e.opposite(u)
         if v not in discovered:      # v is an unvisited vertex
           discovered[v] = e          # e is the tree edge that discovered v
-          next_level.append(v)       # v will be further considered in next pass
+          # v will be further considered in next pass
+          next_level.append(v)
     level = next_level               # relabel 'next' level to become current
+
+
 def BFS_complete(g):
   """Perform BFS for entire graph and return forest as a dictionary.
   Result maps each vertex v to the edge that was used to discover it.
