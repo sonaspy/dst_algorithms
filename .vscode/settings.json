@@ -92,7 +92,8 @@
         "iomanip": "cpp",
         "typeindex": "cpp",
         "slist": "cpp",
-        "rb_tree": "cpp"
+        "rb_tree": "cpp",
+        "btree": "cpp"
     },
     "python.pythonPath": "/usr/local/opt/python/bin/python3.7",
     "indentRainbow.includedLanguages": [
