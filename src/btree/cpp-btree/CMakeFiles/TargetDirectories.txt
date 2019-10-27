@@ -1,6 +1,0 @@
-/Users/sonAspy/github_rep/dst_algorithms/btree/cpp-btree/CMakeFiles/rebuild_cache.dir
-/Users/sonAspy/github_rep/dst_algorithms/btree/cpp-btree/CMakeFiles/test.dir
-/Users/sonAspy/github_rep/dst_algorithms/btree/cpp-btree/CMakeFiles/edit_cache.dir
-/Users/sonAspy/github_rep/dst_algorithms/btree/cpp-btree/CMakeFiles/btree_test.dir
-/Users/sonAspy/github_rep/dst_algorithms/btree/cpp-btree/CMakeFiles/btree_bench.dir
-/Users/sonAspy/github_rep/dst_algorithms/btree/cpp-btree/CMakeFiles/safe_btree_test.dir
