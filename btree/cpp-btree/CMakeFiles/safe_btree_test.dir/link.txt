@@ -1,0 +1,1 @@
+/Library/Developer/CommandLineTools/usr/bin/c++  -g -O2 -Wl,-search_paths_first -Wl,-headerpad_max_install_names -L/usr/local/opt/mysql-client/lib CMakeFiles/safe_btree_test.dir/safe_btree_test.cc.o CMakeFiles/safe_btree_test.dir/btree_test_flags.cc.o  -o safe_btree_test  -L/path/for/gtest-x.y -Wl,-rpath,/path/for/gtest-x.y -lgtest_main -lgtest -lgflags 

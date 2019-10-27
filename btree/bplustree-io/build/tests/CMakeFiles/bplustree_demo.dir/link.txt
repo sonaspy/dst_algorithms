@@ -1,0 +1,1 @@
+/Library/Developer/CommandLineTools/usr/bin/cc -O2 -Wall -Werror -Wextra -Wl,-search_paths_first -Wl,-headerpad_max_install_names -L/usr/local/opt/mysql-client/lib CMakeFiles/bplustree_demo.dir/bplustree_demo.c.o  -o ../bin/bplustree_demo ../lib/libbplustree.1.0.dylib 
