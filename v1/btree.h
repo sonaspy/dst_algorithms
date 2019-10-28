@@ -6,7 +6,7 @@ __DST_BEGIN_NAMESPACE
 
 template <class _Tp>
 struct __bnode {
-    int sizeOfkey;
+    size_t sizeOfkey;
     bool isleaf;
     _Tp *keys;
     __bnode **children;
@@ -14,7 +14,7 @@ struct __bnode {
         sizeOfkey = 0;
         isleaf = true;
     }
-    __bnode(int KMAX) {
+    __bnode(size_t KMAX) {
         sizeOfkey = 0;
         isleaf = true;
         keys = new _Tp[KMAX];
@@ -56,17 +56,17 @@ class btree {
     bool insert(_Tp &val);
     bool erase(_Tp &val);
 
-    void printPart(__node_Ptr node, int num);
+    void printPart(__node_Ptr node, size_t num);
     void printAll();
 
   protected:
     void __insert_general(__node_Ptr node, _Tp &val);
-    void __split_children(__node_Ptr parentNode, int index);
+    void __split_children(__node_Ptr parentNode, off_t _offset);
 
     void __erase_general(__node_Ptr node, _Tp &val);
-    void __mergechildren(__node_Ptr node, int i);
-    void shift2rc(__node_Ptr x, int i, __node_Ptr y, __node_Ptr z);
-    void shift2lc(__node_Ptr x, int i, __node_Ptr y, __node_Ptr z);
+    void __mergechildren(__node_Ptr node, off_t i);
+    void shift2rc(__node_Ptr x, off_t i, __node_Ptr y, __node_Ptr z);
+    void shift2lc(__node_Ptr x, off_t i, __node_Ptr y, __node_Ptr z);
     __node_Ptr _root;
     size_t _half_order;
     size_t max_size_k;
@@ -88,7 +88,7 @@ btree<_Tp>::btree(size_t half_order) {
 template <class _Tp>
 typename btree<_Tp>::__node_Ptr btree<_Tp>::search(__node_Ptr node, _Tp &val) {
     while (node) {
-        int i;
+        off_t i;
         for (i = 0; i < node->sizeOfkey && val > node->keys[i]; ++i)
             ;
         if (i < node->sizeOfkey && val == node->keys[i])
@@ -101,9 +101,9 @@ typename btree<_Tp>::__node_Ptr btree<_Tp>::search(__node_Ptr node, _Tp &val) {
 }
 
 template <class _Tp>
-void btree<_Tp>::__split_children(__node_Ptr parentNode, int index) {
+void btree<_Tp>::__split_children(__node_Ptr parentNode, off_t _offset) {
     __node_Ptr _right_c = new __bnode<_Tp>(max_size_k);
-    __node_Ptr node2split = parentNode->children[index];
+    __node_Ptr node2split = parentNode->children[_offset];
 
     _right_c->isleaf = node2split->isleaf;
     _right_c->sizeOfkey = min_size_k;
@@ -117,17 +117,17 @@ void btree<_Tp>::__split_children(__node_Ptr parentNode, int index) {
 
     node2split->sizeOfkey = min_size_k;
 
-    copy_backward(parentNode->children + index + 1,
+    copy_backward(parentNode->children + _offset + 1,
                   parentNode->children + parentNode->sizeOfkey + 1,
                   parentNode->children + parentNode->sizeOfkey + 2);
 
-    parentNode->children[index + 1] = _right_c;
+    parentNode->children[_offset + 1] = _right_c;
 
-    copy_backward(parentNode->keys + index,
+    copy_backward(parentNode->keys + _offset,
                   parentNode->keys + parentNode->sizeOfkey,
                   parentNode->keys + parentNode->sizeOfkey + 1);
 
-    parentNode->keys[index] = node2split->keys[min_size_k];
+    parentNode->keys[_offset] = node2split->keys[min_size_k];
 
     parentNode->sizeOfkey++;
 }
@@ -170,23 +170,18 @@ void btree<_Tp>::__insert_general(__node_Ptr node, _Tp &val) {
 }
 
 template <class _Tp>
-void btree<_Tp>::printPart(__node_Ptr node, int num) {
+void btree<_Tp>::printPart(__node_Ptr node, off_t num) {
     if (node != nullptr) {
-
-        for (int i = 0; i < node->sizeOfkey; i++) {
-
-            if (!node->isleaf) {
+        for (off_t i = 0; i < node->sizeOfkey; i++) {
+            if (!node->isleaf)
                 printPart(node->children[i], num + 5);
-            }
 
-            for (int j = 0; j < num; j++) {
+            for (off_t j = 0; j < num; j++)
                 std::cout << "-";
-            }
             std::cout << node->keys[i] << endl;
         }
-        if (!node->isleaf) {
+        if (!node->isleaf)
             printPart(node->children[node->sizeOfkey], num + 5);
-        }
     }
 }
 
@@ -220,13 +215,13 @@ bool btree<_Tp>::erase(_Tp &val) {
 
 template <class _Tp>
 void btree<_Tp>::__erase_general(__node_Ptr node, _Tp &val) {
-    int i = 0;
+    off_t i = 0;
     if (node->isleaf) {
         while (i < node->sizeOfkey && val > node->keys[i]) {
             i++;
         }
         if (node->keys[i] == val) {
-            for (int j = i; j < node->sizeOfkey - 1; j++) {
+            for (off_t j = i; j < node->sizeOfkey - 1; j++) {
                 node->keys[j] = node->keys[j + 1];
             }
             node->sizeOfkey--;
@@ -277,19 +272,19 @@ void btree<_Tp>::__erase_general(__node_Ptr node, _Tp &val) {
 }
 
 template <class _Tp>
-void btree<_Tp>::__mergechildren(__node_Ptr node, int i) {
+void btree<_Tp>::__mergechildren(__node_Ptr node, off_t i) {
     __node_Ptr lc = node->children[i];
     __node_Ptr rc = node->children[i + 1];
     lc->sizeOfkey = max_size_k;
     lc->keys[min_size_k] = node->keys[i];
-    for (int j = min_size_k + 1; j < max_size_k; j++)
+    for (off_t j = min_size_k + 1; j < max_size_k; j++)
         lc->keys[j] = rc->keys[j - (min_size_k + 1)];
 
     if (!lc->isleaf) {
-        for (int j = min_size_c; j < max_size_c; j++)
+        for (off_t j = min_size_c; j < max_size_c; j++)
             lc->children[j] = rc->children[j - min_size_c];
     }
-    for (int j = i + 1; j < node->sizeOfkey; j++) {
+    for (off_t j = i + 1; j < node->sizeOfkey; j++) {
         node->keys[j - 1] = node->keys[j];
         node->children[j] = node->children[j + 1];
     }
@@ -297,7 +292,7 @@ void btree<_Tp>::__mergechildren(__node_Ptr node, int i) {
 }
 
 template <class _Tp>
-void btree<_Tp>::shift2rc(__node_Ptr x, int i, __node_Ptr y, __node_Ptr z) {
+void btree<_Tp>::shift2rc(__node_Ptr x, off_t i, __node_Ptr y, __node_Ptr z) {
     z->sizeOfkey++;
     int j = z->sizeOfkey - 1;
     while (j > 0) {
@@ -308,7 +303,7 @@ void btree<_Tp>::shift2rc(__node_Ptr x, int i, __node_Ptr y, __node_Ptr z) {
     x->keys[i] = y->keys[y->sizeOfkey - 1];
     if (!z->isleaf) {
         j = z->sizeOfkey - 1;
-        while (j >= 0) {
+        while (j > -1) {
             z->children[j + 1] = z->children[j];
             j--;
         }
@@ -318,12 +313,12 @@ void btree<_Tp>::shift2rc(__node_Ptr x, int i, __node_Ptr y, __node_Ptr z) {
 }
 
 template <class _Tp>
-void btree<_Tp>::shift2lc(__node_Ptr x, int i, __node_Ptr y, __node_Ptr z) {
+void btree<_Tp>::shift2lc(__node_Ptr x, off_t i, __node_Ptr y, __node_Ptr z) {
     y->sizeOfkey++;
     y->keys[y->sizeOfkey - 1] = x->keys[i];
     x->keys[i] = z->keys[0];
     z->sizeOfkey--;
-    int j = 0;
+    off_t j = 0;
     while (j < z->sizeOfkey) {
         z->keys[j] = z->keys[j + 1];
         j++;
