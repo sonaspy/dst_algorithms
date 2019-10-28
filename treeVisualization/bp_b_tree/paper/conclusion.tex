@@ -1,0 +1,69 @@
+\section{Future Work}
+
+Future changes we would like to make to our project would include a
+hefty redesign for some of the tree structure algorithms, specifically
+the deletion methods.  Our current deletion algorithms do a complete
+restructuring of the tree when we encounter an underflow because of
+deletion.  This method is convenient for reducing lines of code, but
+can become very costly for large trees.  As such in the future we hope
+to be able to implement the more common method for handling deletion
+that results in underflow, which is to then cascade upward, merge with
+or borrowing from sibling nodes.  In the general case this method
+would prove to have better performance, having a deletion time of
+O(log n) as opposed to our current method which has a deletion time
+of O(n log n).  Part of the reason we didn't not do the standard
+method of deletion initially was because of some of the limitation of
+Javascript.  Javascript lacks easy to use pointers, which made things
+a bit harder when trying to keep track for each node/block, what it's
+children and parent were.  As such we could not find a reasonable
+method of linking sibling nodes which would be necessary for efficient
+implementation of standard method of handling underflow by borrowing
+or merging with siblings.  We'd also like to better organize the
+modularization of our insertion methods, while they work, and run in
+time O(log n) the code itself is a bit disorganized making it hard to
+read through if you were trying to go through it manually to verify
+correctness.
+
+Visually, it would also be a nice addition if we could provide step by
+step animation of how values, or a search is moving through the tree
+to provide a better means of understanding exactly what is occurring
+during various search, insertion, or deletion queries.  A simple
+textual output could suffice if it explicitly stated things like:
+\\ \\
+"Key 3 removed from node X"
+\\*
+"Node X borrowed values a,b from node Y to cover underflow"
+\\*
+...
+\\*
+"Key 6 inserted into Node X"
+\\*
+"Node X split into Nodes Y, with values a,b, and Z, with values c,d"
+\\*
+etc.
+\\ \\
+This at least would allow the user to follow along with the action step
+by step, even if they could not see if visually animated.
+
+
+\section{Conclusion}
+
+Our project successfully met the goals we set out to accomplish when
+we began this project. The user can successfully insert, delete, and
+search for values in the B or B+ Tree. At each action, the user
+receives a visualization of the new tree state.  The user can freely
+switch between either tree representation without clearing the data
+form the tree, allowing for an excellent means of observing the
+specific differences in these two types of trees.
+
+In the process of developing this project, we came across more great
+ideas for features we could develop. These are detailed above, in the
+\textit{Future Work} section.  This project still holds a lot of
+promise to go above and beyond its current state, and we hope to make
+it even better then we can currently picture it.  This project taught
+us both a lot about trees and indexing structure, and not just how
+they work in an abstract sense, but how to make them work in a
+computing environment as well. We also learned a lot about Javascript
+and its many quirks.  We shall carry the lessons we have leanred from
+this project with us for years to come, and it has made us both better
+programmers for having worked on it.

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<link rel="stylesheet" type="text/css" href="style.css" />
+
+<script src="jquery-1.7.2.min.js"></script>
+<script src="kinetic-v3.9.1.min.js"></script>
+<script src="graph.js"></script>
+<script src="trees.js"></script>
+<script src="main.js"></script>
+
+
+<h1>B and B+ Tree Interactive Demo</h1>
+<div id="content">
+  <div id="board"></div>
+  <br/>
+  <div id="buttons">
+    <input type="text" id="order" size="3" maxlength="3"/>
+    <button type="button" onclick="setOrder();">Set Order</button>
+    <img id="insertLoader" class="imgLoader" src="images/loading.gif" />
+
+    <select id="treeSelector">
+      <option id="btree">B Tree</option>
+      <option id="bptree">B+ Tree</option>
+    </select>
+
+    <img id="insertLoader" class="imgLoader" src="images/loading.gif" />
+    <input type="text" name="insert-data" size="3" maxlength="3"/>
+    <button type="button" onclick="insertData();">Insert</button>
+
+    <img id="deleteLoader" class="imgLoader" src="images/loading.gif" />
+    <input type="text" name="delete-data" size="3" maxlength="3"/>
+    <button type="button" onclick="deleteData();">Delete</button>
+
+    <img id="searchLoader" class="imgLoader" src="images/loading.gif" />
+    <input type="text" name="search-data" size="3" maxlength="3"/>
+    <button type="button" onclick="searchData();">Search</button>
+    
+    <button type="button" onclick="insertRandom();">Insert 5 Random</button>
+    
+  </div>
+</div>
+
+
