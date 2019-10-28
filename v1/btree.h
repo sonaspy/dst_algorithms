@@ -6,10 +6,11 @@ __DST_BEGIN_NAMESPACE
 
 template <class _Tp>
 struct __bnode {
+    typedef __bnode *__bnode_ptr;
     size_t sizeOfkey;
     bool isleaf;
     _Tp *keys;
-    __bnode **children;
+    __bnode_ptr *children;
     __bnode() {
         sizeOfkey = 0;
         isleaf = true;
@@ -60,13 +61,17 @@ class btree {
     void printAll();
 
   protected:
+    // insert function
     void __insert_general(__node_Ptr node, _Tp &val);
     void __split_children(__node_Ptr parentNode, off_t _offset);
 
+    // erase function
     void __erase_general(__node_Ptr node, _Tp &val);
     void __mergechildren(__node_Ptr node, off_t i);
     void shift2rc(__node_Ptr x, off_t i, __node_Ptr y, __node_Ptr z);
     void shift2lc(__node_Ptr x, off_t i, __node_Ptr y, __node_Ptr z);
+
+    // Common members
     __node_Ptr _root;
     size_t _half_order;
     size_t max_size_k;
@@ -170,7 +175,7 @@ void btree<_Tp>::__insert_general(__node_Ptr node, _Tp &val) {
 }
 
 template <class _Tp>
-void btree<_Tp>::printPart(__node_Ptr node, off_t num) {
+void btree<_Tp>::printPart(__node_Ptr node, size_t num) {
     if (node != nullptr) {
         for (off_t i = 0; i < node->sizeOfkey; i++) {
             if (!node->isleaf)
