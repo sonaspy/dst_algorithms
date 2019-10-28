@@ -138,5 +138,6 @@ __DST_END_NAMESPACE
 #include "avltree.h"
 #include "spltree.h"
 #include "rbtree.h"
+#include "btree.h"
 
 #endif
