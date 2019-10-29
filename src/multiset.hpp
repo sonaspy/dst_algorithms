@@ -2,11 +2,11 @@
 #define ___DST_MULTISET_H
 
 #ifndef ___DST_INTERNAL_TREE_H
-#include "dst_tree.h"
+#include "dst_tree.hpp"
 #endif
-#include "algobase.h"
-#include "alloc.h"
-#include "dst_multiset.h"
+#include "algobase.hpp"
+#include "alloc.hpp"
+#include "dst_multiset.hpp"
 
 #ifdef __DST_USE_NAMESPACES
 using __VDSA::multiset;

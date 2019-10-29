@@ -2,15 +2,15 @@
 #define ___DST_TEMPBUF_H
 
 #ifndef ___DST_PAIR_H
-#include "pair.h"
+#include "pair.hpp"
 #endif
 #include <limits.h> /* XXX should use <climits> */
 #include <stddef.h> /* XXX should use <cstddef> */
 #include <stdlib.h> /* XXX should use <cstdlib> */
-#include "type_traits.h"
-#include "dst_construct.h"
-#include "dst_uninitialized.h"
-#include "dst_tempbuf.h"
+#include "type_traits.hpp"
+#include "dst_construct.hpp"
+#include "dst_uninitialized.hpp"
+#include "dst_tempbuf.hpp"
 
 #ifdef __DST_USE_NAMESPACES
 

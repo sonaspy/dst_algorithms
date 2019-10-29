@@ -1,7 +1,7 @@
 #ifndef ___DST_INTERNAL_QUEUE_H
 #define ___DST_INTERNAL_QUEUE_H
 
-#include "sequence_concepts.h"
+#include "sequence_concepts.hpp"
 
 __DST_BEGIN_NAMESPACE
 

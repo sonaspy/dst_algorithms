@@ -5,8 +5,8 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include <limits.h>
-#include "iostream.h"
-#include "algobase.h"
+#include "iostream.hpp"
+#include "algobase.hpp"
 
 template <class T>
 inline T *allocate(ptrdiff_t size, T *) {

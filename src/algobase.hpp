@@ -4,19 +4,19 @@
 #define ___DST_ALGOBASE_H
 
 #ifndef ___DST_PAIR_H
-#include "pair.h"
+#include "pair.hpp"
 #endif
 
 #ifndef ___DST_ITERATOR_H
-#include "iterator.h"
+#include "iterator.hpp"
 #endif
 
 #ifndef ___DST_INTERNAL_ALGOBASE_H
-#include "dst_algobase.h"
+#include "dst_algobase.hpp"
 #endif
 
 #ifndef ___DST_INTERNAL_UNINITIALIZED_H
-#include "dst_uninitialized.h"
+#include "dst_uninitialized.hpp"
 #endif
 
 #ifdef __DST_USE_NAMESPACES

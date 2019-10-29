@@ -1,12 +1,12 @@
 #ifndef ___DST_BVECTOR_H
 #define ___DST_BVECTOR_H
 
-#include "dst_range_errors.h"
-#include "vector.h"
-#include "algobase.h"
-#include "alloc.h"
+#include "dst_range_errors.hpp"
+#include "vector.hpp"
+#include "algobase.hpp"
+#include "alloc.hpp"
 
-#include "dst_bvector.h"
+#include "dst_bvector.hpp"
 
 #ifdef __DST_USE_NAMESPACES
 

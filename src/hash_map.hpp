@@ -3,11 +3,11 @@
 #define ___DST_HASH_MAP_H
 
 #ifndef ___DST_INTERNAL_HASHTABLE_H
-#include "dst_hashtable.h"
+#include "dst_hashtable.hpp"
 #endif
 
-#include "algobase.h"
-#include "dst_hash_map.h"
+#include "algobase.hpp"
+#include "dst_hash_map.hpp"
 
 #ifdef __DST_USE_NAMESPACES
 using __VDSA::hash;

@@ -10,7 +10,7 @@
 
 #include <limits.h>
 #include <float.h>
-#include "dst_config.h"
+#include "dst_config.hpp"
 
 __DST_BEGIN_NAMESPACE
 

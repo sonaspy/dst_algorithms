@@ -4,7 +4,7 @@
 #define ___DST_ITERATOR_H
 
 #ifndef ___DST_FUNCTION_H
-#include "function.h"
+#include "function.hpp"
 #endif
 
 #include <stddef.h>
@@ -12,23 +12,23 @@
 #ifdef __DST_USE_NEW_IOSTREAMS
 #include <iosfwd>
 #else /* __DST_USE_NEW_IOSTREAMS */
-#include "iostream.h"
+#include "iostream.hpp"
 #endif /* __DST_USE_NEW_IOSTREAMS */
 
 #ifndef ___DST_INTERNAL_ITERATOR_BASE_H
-#include "dst_iterator_base.h"
+#include "dst_iterator_base.hpp"
 #endif
 #ifndef ___DST_INTERNAL_ITERATOR_H
-#include "dst_iterator.h"
+#include "dst_iterator.hpp"
 #endif
 #ifndef __TYPE_TRAITS_H
-#include "type_traits.h"
+#include "type_traits.hpp"
 #endif
 #ifndef ___DST_INTERNAL_CONSTRUCT_H
-#include "dst_construct.h"
+#include "dst_construct.hpp"
 #endif
 #ifndef ___DST_INTERNAL_RAW_STORAGE_ITERATOR_H
-#include "dst_raw_storage_iter.h"
+#include "dst_raw_storage_iter.hpp"
 #endif
 
 #ifdef __DST_USE_NAMESPACES

@@ -1,10 +1,10 @@
 #ifndef ___DST_DEQUE_H
 #define ___DST_DEQUE_H
 
-#include "dst_range_errors.h"
-#include "algobase.h"
-#include "alloc.h"
-#include "dst_deque.h"
+#include "dst_range_errors.hpp"
+#include "algobase.hpp"
+#include "alloc.hpp"
+#include "dst_deque.hpp"
 
 #ifdef __DST_USE_NAMESPACES
 using __VDSA::deque;

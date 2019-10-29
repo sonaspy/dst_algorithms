@@ -1,14 +1,14 @@
 #ifndef ___DST_ALGO_H
 #define ___DST_ALGO_H
 
-#include "algobase.h"
-#include "tempbuf.h"
-#include "dst_algo.h"
-#include "dst_numeric.h"
+#include "algobase.hpp"
+#include "tempbuf.hpp"
+#include "dst_algo.hpp"
+#include "dst_numeric.hpp"
 
 #ifdef __DST_USE_NAMESPACES
 
-// Names from "dst_algo.h"
+// Names from "dst_algo.hpp"
 using __VDSA::adjacent_find;
 using __VDSA::binary_search;
 using __VDSA::count;
@@ -71,7 +71,7 @@ using __VDSA::pop_heap;
 using __VDSA::push_heap;
 using __VDSA::sort_heap;
 
-// Names from "dst_numeric.h"
+// Names from "dst_numeric.hpp"
 using __VDSA::accumulate;
 using __VDSA::adjacent_difference;
 using __VDSA::inner_product;

@@ -10,7 +10,7 @@
 // The internal file dst_iterator.h contains predefined iterators,
 // such as front_insert_iterator and istream_iterator.
 
-#include "concept_checks.h"
+#include "concept_checks.hpp"
 
 __DST_BEGIN_NAMESPACE
 

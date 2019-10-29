@@ -1,7 +1,7 @@
 #ifndef DST_SEQUENCE_CONCEPTS_H
 #define DST_SEQUENCE_CONCEPTS_H
 
-#include "container_concepts.h"
+#include "container_concepts.hpp"
 
 #ifdef __DST_USE_CONCEPT_CHECKS
 

@@ -1,8 +1,8 @@
 #ifndef ___DST_HEAP_H
 #define ___DST_HEAP_H
 
-#include "dst_config.h"
-#include "dst_heap.h"
+#include "dst_config.hpp"
+#include "dst_heap.hpp"
 
 #ifdef __DST_USE_NAMESPACES
 

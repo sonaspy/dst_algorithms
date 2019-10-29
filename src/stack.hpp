@@ -1,11 +1,11 @@
 #ifndef ___DST_STACK_H
 #define ___DST_STACK_H
 
-#include "vector.h"
-#include "deque.h"
-#include "heap.h"
-#include "dst_stack.h"
-#include "dst_queue.h"
+#include "vector.hpp"
+#include "deque.hpp"
+#include "heap.hpp"
+#include "dst_stack.hpp"
+#include "dst_queue.hpp"
 
 #ifdef __DST_USE_NAMESPACES
 using __VDSA::priority_queue;

@@ -2,7 +2,7 @@
 #ifndef __DST_CONTAINER_CONCEPTS_H
 #define __DST_CONTAINER_CONCEPTS_H
 
-#include "concept_checks.h"
+#include "concept_checks.hpp"
 
 #ifdef __DST_USE_CONCEPT_CHECKS
 

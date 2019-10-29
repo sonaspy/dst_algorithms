@@ -1,7 +1,7 @@
 #ifndef ___DST_INTERNAL_LIST_H
 #define ___DST_INTERNAL_LIST_H
 
-#include "concept_checks.h"
+#include "concept_checks.hpp"
 
 __DST_BEGIN_NAMESPACE
 

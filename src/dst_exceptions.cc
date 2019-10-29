@@ -16,7 +16,7 @@
 // in <exception>, but it suffices to support a bare minimum of DST
 // functionality.
 
-#include "dst_config.h"
+#include "dst_config.hpp"
 
 #ifndef __DST_NO_EXCEPTION_HEADER
 

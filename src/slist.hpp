@@ -1,9 +1,9 @@
 #ifndef ___DST_SLIST_H
 #define ___DST_SLIST_H
 
-#include "algobase.h"
-#include "alloc.h"
-#include "dst_slist.h"
+#include "algobase.hpp"
+#include "alloc.hpp"
+#include "dst_slist.hpp"
 
 #ifdef __DST_USE_NAMESPACES
 using __VDSA::slist;

@@ -329,7 +329,7 @@ class _Bvector_base {
 #define __BVECTOR_BASE _Bvector_base<_Alloc>
 #define __BVECTOR_TMPL_LIST template <class _Alloc>
 __DST_END_NAMESPACE
-#include "dst_vector.h"
+#include "dst_vector.hpp"
 __DST_BEGIN_NAMESPACE
 #else /* __DST_CLASS_PARTIAL_SPECIALIZATION && !__DST_NO_BOOL */
 #undef ___DST_VECBOOL_TEMPLATE

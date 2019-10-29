@@ -3,7 +3,7 @@
 #ifndef ___DST_INTERNAL_VECTOR_H
 #define ___DST_INTERNAL_VECTOR_H
 
-#include "concept_checks.h"
+#include "concept_checks.hpp"
 
 __DST_BEGIN_NAMESPACE
 
