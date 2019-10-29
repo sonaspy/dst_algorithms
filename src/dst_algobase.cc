@@ -2,13 +2,13 @@
 #define ___DST_INTERNAL_ALGOBASE_H
 
 #ifndef __DST_CONFIG_H
-#include "dst_config.hpp"
+#include "config.hpp"
 #endif
 #ifndef ___DST_INTERNAL_RELOPS
-#include "dst_relops.hpp"
+#include "dst_relops.cc"
 #endif
 #ifndef ___DST_INTERNAL_PAIR_H
-#include "dst_pair.hpp"
+#include "dst_pair.cc"
 #endif
 #ifndef __TYPE_TRAITS_H
 #include "type_traits.hpp"
@@ -27,8 +27,8 @@
 #endif /* __DST_USE_NEW_IOSTREAMS */
 
 #ifndef ___DST_INTERNAL_ITERATOR_H
-#include "dst_iterator_base.hpp"
-#include "dst_iterator.hpp"
+#include "dst_iterator_base.cc"
+#include "dst_iterator.cc"
 #endif
 
 // We pick up concept_checks.h from dst_iterator_base.h.

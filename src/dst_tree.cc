@@ -21,10 +21,10 @@ iterators invalidated are those referring to the deleted node.
 
 */
 
-#include "dst_algobase.hpp"
-#include "dst_alloc.hpp"
-#include "dst_construct.hpp"
-#include "dst_function.hpp"
+#include "dst_algobase.cc"
+#include "dst_alloc.cc"
+#include "dst_construct.cc"
+#include "dst_function.cc"
 
 __DST_BEGIN_NAMESPACE
 

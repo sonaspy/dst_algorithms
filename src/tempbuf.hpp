@@ -8,9 +8,9 @@
 #include <stddef.h> /* XXX should use <cstddef> */
 #include <stdlib.h> /* XXX should use <cstdlib> */
 #include "type_traits.hpp"
-#include "dst_construct.hpp"
-#include "dst_uninitialized.hpp"
-#include "dst_tempbuf.hpp"
+#include "dst_construct.cc"
+#include "dst_uninitialized.cc"
+#include "dst_tempbuf.cc"
 
 #ifdef __DST_USE_NAMESPACES
 

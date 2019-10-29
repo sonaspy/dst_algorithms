@@ -2,10 +2,10 @@
 #define ___DST_SKIPLIST_H
 
 
-#include "dst_range_errors.hpp"
+#include "dst_range_errors.cc"
 #include "algobase.hpp"
 #include "pair.hpp"
-#include "dst_skiplist.hpp"
+#include "dst_skiplist.cc"
 
 #ifdef __DST_USE_NAMESPACES
 using __VDSA::skiplist;

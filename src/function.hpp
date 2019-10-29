@@ -2,14 +2,14 @@
 #define ___DST_FUNCTION_H
 
 #ifndef __DST_CONFIG_H
-#include "dst_config.hpp"
+#include "config.hpp"
 #endif
 #ifndef ___DST_INTERNAL_RELOPS
-#include "dst_relops.hpp"
+#include "dst_relops.cc"
 #endif
 #include <stddef.h>
 #ifndef ___DST_INTERNAL_FUNCTION_H
-#include "dst_function.hpp"
+#include "dst_function.cc"
 #endif
 
 #ifdef __DST_USE_NAMESPACE_FOR_RELOPS

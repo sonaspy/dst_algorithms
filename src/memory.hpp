@@ -3,12 +3,12 @@
 #ifndef ___DST_MEMORY
 #define ___DST_MEMORY
 
-#include "dst_algobase.hpp"
-#include "dst_alloc.hpp"
-#include "dst_construct.hpp"
-#include "dst_tempbuf.hpp"
-#include "dst_uninitialized.hpp"
-#include "dst_raw_storage_iter.hpp"
+#include "dst_algobase.cc"
+#include "dst_alloc.cc"
+#include "dst_construct.cc"
+#include "dst_tempbuf.cc"
+#include "dst_uninitialized.cc"
+#include "dst_raw_storage_iter.cc"
 
 __DST_BEGIN_NAMESPACE
 

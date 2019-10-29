@@ -48,7 +48,7 @@
 #endif
 
 #ifdef __DST_THREADS
-#include "dst_threads.hpp"
+#include "dst_threads.cc"
 #define __NODE_ALLOCATOR_THREADS true
 #ifdef __DST__THREADS
 // We test whether threads are in use before locking.

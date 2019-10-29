@@ -9,7 +9,7 @@
 // __DST_DONT_THROW_RANGE_ERRORS is a hook so that users can disable
 // this exception throwing.
 
-#include "dst_config.hpp"
+#include "config.hpp"
 
 #if defined(__DST_CAN_THROW_RANGE_ERRORS) && defined(__DST_USE_EXCEPTIONS) &&  \
     !defined(__DST_DONT_THROW_RANGE_ERRORS)

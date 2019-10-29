@@ -1,7 +1,7 @@
 #ifndef ___DST_HASHTABLE_H
 #define ___DST_HASHTABLE_H
 
-#include "dst_hashtable.hpp"
+#include "dst_hashtable.cc"
 #include "algo.hpp"
 #include "alloc.hpp"
 #include "vector.hpp"

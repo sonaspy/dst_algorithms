@@ -12,11 +12,11 @@
 #endif
 
 #ifndef ___DST_INTERNAL_ALGOBASE_H
-#include "dst_algobase.hpp"
+#include "dst_algobase.cc"
 #endif
 
 #ifndef ___DST_INTERNAL_UNINITIALIZED_H
-#include "dst_uninitialized.hpp"
+#include "dst_uninitialized.cc"
 #endif
 
 #ifdef __DST_USE_NAMESPACES

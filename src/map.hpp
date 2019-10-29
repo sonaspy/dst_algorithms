@@ -2,11 +2,11 @@
 #define ___DST_MAP_H
 
 #ifndef ___DST_INTERNAL_TREE_H
-#include "dst_tree.hpp"
+#include "dst_tree.cc"
 #endif
 #include "algobase.hpp"
 #include "alloc.hpp"
-#include "dst_map.hpp"
+#include "dst_map.cc"
 
 #ifdef __DST_USE_NAMESPACES
 using __VDSA::map;

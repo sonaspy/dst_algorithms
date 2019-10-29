@@ -3,8 +3,8 @@
 
 #include "algobase.hpp"
 #include "tempbuf.hpp"
-#include "dst_algo.hpp"
-#include "dst_numeric.hpp"
+#include "dst_algo.cc"
+#include "dst_numeric.cc"
 
 #ifdef __DST_USE_NAMESPACES
 

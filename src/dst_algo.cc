@@ -1,7 +1,7 @@
 #ifndef ___DST_INTERNAL_ALGO_H
 #define ___DST_INTERNAL_ALGO_H
 
-#include "dst_heap.hpp"
+#include "dst_heap.cc"
 
 /*
     // algorithm synopsis

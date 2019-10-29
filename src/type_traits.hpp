@@ -3,7 +3,7 @@
 #define __TYPE_TRAITS_H
 
 #ifndef __DST_CONFIG_H
-#include "dst_config.hpp"
+#include "config.hpp"
 #endif
 
 /*

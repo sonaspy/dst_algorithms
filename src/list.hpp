@@ -3,7 +3,7 @@
 
 #include "algobase.hpp"
 #include "alloc.hpp"
-#include "dst_list.hpp"
+#include "dst_list.cc"
 
 #ifdef __DST_USE_NAMESPACES
 using __VDSA::list;

@@ -4,15 +4,15 @@
 // Hashtable class, used to implement the hashed associative containers
 // hash_set, hash_map, hash_multiset, and hash_multimap.
 
-#include "dst_algobase.hpp"
-#include "dst_alloc.hpp"
-#include "dst_construct.hpp"
-#include "dst_tempbuf.hpp"
-#include "dst_algo.hpp"
-#include "dst_uninitialized.hpp"
-#include "dst_function.hpp"
-#include "dst_vector.hpp"
-#include "dst_hash_fun.hpp"
+#include "dst_algobase.cc"
+#include "dst_alloc.cc"
+#include "dst_construct.cc"
+#include "dst_tempbuf.cc"
+#include "dst_algo.cc"
+#include "dst_uninitialized.cc"
+#include "dst_function.cc"
+#include "dst_vector.cc"
+#include "dst_hash_fun.cc"
 
 __DST_BEGIN_NAMESPACE
 

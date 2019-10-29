@@ -3,7 +3,7 @@
 #define ___DST_TREE_H
 
 #ifndef ___DST_INTERNAL_TREE_H
-#include "dst_tree.hpp"
+#include "dst_tree.cc"
 #endif
 #include "algobase.hpp"
 #include "alloc.hpp"

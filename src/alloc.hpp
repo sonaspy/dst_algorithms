@@ -3,10 +3,10 @@
 #define ___DST_ALLOC_H
 
 #ifndef __DST_CONFIG_H
-#include "dst_config.hpp"
+#include "config.hpp"
 #endif
 #ifndef ___DST_INTERNAL_ALLOC_H
-#include "dst_alloc.hpp"
+#include "dst_alloc.cc"
 #endif
 
 #ifdef __DST_USE_NAMESPACES

@@ -16,19 +16,19 @@
 #endif /* __DST_USE_NEW_IOSTREAMS */
 
 #ifndef ___DST_INTERNAL_ITERATOR_BASE_H
-#include "dst_iterator_base.hpp"
+#include "dst_iterator_base.cc"
 #endif
 #ifndef ___DST_INTERNAL_ITERATOR_H
-#include "dst_iterator.hpp"
+#include "dst_iterator.cc"
 #endif
 #ifndef __TYPE_TRAITS_H
 #include "type_traits.hpp"
 #endif
 #ifndef ___DST_INTERNAL_CONSTRUCT_H
-#include "dst_construct.hpp"
+#include "dst_construct.cc"
 #endif
 #ifndef ___DST_INTERNAL_RAW_STORAGE_ITERATOR_H
-#include "dst_raw_storage_iter.hpp"
+#include "dst_raw_storage_iter.cc"
 #endif
 
 #ifdef __DST_USE_NAMESPACES

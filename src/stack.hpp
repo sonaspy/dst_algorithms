@@ -4,8 +4,8 @@
 #include "vector.hpp"
 #include "deque.hpp"
 #include "heap.hpp"
-#include "dst_stack.hpp"
-#include "dst_queue.hpp"
+#include "dst_stack.cc"
+#include "dst_queue.cc"
 
 #ifdef __DST_USE_NAMESPACES
 using __VDSA::priority_queue;
