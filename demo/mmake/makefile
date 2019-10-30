@@ -1,11 +1,23 @@
-demo : main.o print.o 
-	clang++ -o demo main.o print.o
+objects = main.o kbd.o command.o display.o \
+			insert.o search.o files.o utils.o
 
-main.o : main.cpp print.cc
-	clang++ -c main.cpp
 
-print.o : print.cc
-	clang++ -c print.cc
+edit : $(objects)
+	cc -o edit $(objects)
 
-clean : 
-	rm -f demo main.o print.o
+main.o : defs.h
+kbd.o : defs.h command.h
+command.o : defs.h command.h
+display.o : defs.h buffer.h
+insert.o : defs.h buffer.h
+search.o : defs.h buffer.h
+files.o : defs.h buffer.h command.h
+utils.o : defs.h
+
+OBJS = *.o
+
+.PHONY : clean test
+clean :
+	-rm -f edit $(OBJS)
+
+
