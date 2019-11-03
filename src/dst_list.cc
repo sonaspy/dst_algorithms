@@ -51,13 +51,13 @@ struct __list_iterator : public __list_iterator_base {
     typedef _Ptr pointer;
     typedef _Ref reference;
     typedef __list_node<_Tp> __node;
-    typedef __node *__node_Ptr;
+    typedef __node *__link_type;
 
-    __list_iterator(__node_Ptr __x) : __list_iterator_base(__x) {}
+    __list_iterator(__link_type __x) : __list_iterator_base(__x) {}
     __list_iterator() {}
     __list_iterator(const iterator &__x) : __list_iterator_base(__x._M_node) {}
 
-    reference operator*() const { return ((__node_Ptr)_M_node)->_M_data; }
+    reference operator*() const { return ((__link_type)_M_node)->_M_data; }
 
 #ifndef ___DST_NO_ARROW_OPERATOR
     pointer operator->() const { return &(operator*()); }
@@ -234,7 +234,7 @@ class list : protected __list_base<_Tp, _Alloc> {
     typedef value_type &reference;
     typedef const value_type &const_reference;
     typedef __list_node<_Tp> __node;
-    typedef __node *__node_Ptr;
+    typedef __node *__link_type;
     typedef size_t size_type;
     typedef ptrdiff_t difference_type;
 
@@ -263,15 +263,15 @@ class list : protected __list_base<_Tp, _Alloc> {
     using __base::_M_put_node;
 
   protected:
-    __node_Ptr _M_create_node(const _Tp &__x) {
-        __node_Ptr __p = _M_get_node();
+    __link_type _M_create_node(const _Tp &__x) {
+        __link_type __p = _M_get_node();
         __DST_TRY { _Construct(&__p->_M_data, __x); }
         __DST_UNWIND(_M_put_node(__p));
         return __p;
     }
 
-    __node_Ptr _M_create_node() {
-        __node_Ptr __p = _M_get_node();
+    __link_type _M_create_node() {
+        __link_type __p = _M_get_node();
         __DST_TRY { _Construct(&__p->_M_data); }
         __DST_UNWIND(_M_put_node(__p));
         return __p;
@@ -280,8 +280,8 @@ class list : protected __list_base<_Tp, _Alloc> {
   public:
     explicit list(const allocator_type &__a = allocator_type()) : __base(__a) {}
 
-    iterator begin() { return (__node_Ptr)(_M_node->_M_next); }
-    const_iterator begin() const { return (__node_Ptr)(_M_node->_M_next); }
+    iterator begin() { return (__link_type)(_M_node->_M_next); }
+    const_iterator begin() const { return (__link_type)(_M_node->_M_next); }
 
     iterator end() { return _M_node; }
     const_iterator end() const { return _M_node; }
@@ -312,7 +312,7 @@ class list : protected __list_base<_Tp, _Alloc> {
     void swap(list<_Tp, _Alloc> &__x) { __VDSA::swap(_M_node, __x._M_node); }
 
     iterator insert(iterator __position, const _Tp &__x) {
-        __node_Ptr __tmp = _M_create_node(__x);
+        __link_type __tmp = _M_create_node(__x);
         __tmp->_M_next = __position._M_node;
         __tmp->_M_prev = __position._M_node->_M_prev;
         __position._M_node->_M_prev->_M_next = __tmp;
@@ -357,12 +357,12 @@ class list : protected __list_base<_Tp, _Alloc> {
     iterator erase(iterator __position) {
         __list_pointer *__next_node = __position._M_node->_M_next;
         __list_pointer *__prev_node = __position._M_node->_M_prev;
-        __node_Ptr __n = (__node_Ptr)__position._M_node;
+        __link_type __n = (__link_type)__position._M_node;
         __prev_node->_M_next = __next_node;
         __next_node->_M_prev = __prev_node;
         _Destroy(&__n->_M_data);
         _M_put_node(__n);
-        return iterator((__node_Ptr)__next_node);
+        return iterator((__link_type)__next_node);
     }
     iterator erase(iterator __first, iterator __last);
     void clear() { __base::clear(); }

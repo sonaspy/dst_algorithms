@@ -15,14 +15,14 @@ __DST_BEGIN_NAMESPACE
 template <class _Key, class _Val>
 struct __skiplist_node {
     typedef pair<_Key, _Val> entry;
-    typedef __skiplist_node<_Key, _Val> *__node_Ptr;
+    typedef __skiplist_node<_Key, _Val> *__link_type;
 
     entry _entry;
     int _height;
-    __node_Ptr *_M_nexts; // 1D array of pointers
+    __link_type *_M_nexts; // 1D array of pointers
 
     __skiplist_node(entry &e, int __size = 0) : _entry(e) {
-        _M_nexts = new __node_Ptr[__size];
+        _M_nexts = new __link_type[__size];
         _height = __size;
     }
     ~__skiplist_node() { delete[] _M_nexts; }
@@ -31,7 +31,7 @@ struct __skiplist_node {
 template <class _Key, class _Val>
 struct __skip_list_iterator {
     typedef __skiplist_node<_Key, _Val> __node;
-    typedef __node *__node_Ptr;
+    typedef __node *__link_type;
     typedef pair<_Key, _Val> entry;
     typedef __skip_list_iterator __self;
 
@@ -42,10 +42,10 @@ struct __skip_list_iterator {
     typedef value_type *pointer;
     typedef value_type &reference;
 
-    __node_Ptr _M_node;
+    __link_type _M_node;
 
     __skip_list_iterator() {}
-    __skip_list_iterator(__node_Ptr p) : _M_node(p) {}
+    __skip_list_iterator(__link_type p) : _M_node(p) {}
 
     reference operator*() { return _M_node->_entry; }
     pointer operator->() { return &(operator*()); }
@@ -66,7 +66,7 @@ template <class _Key, class _Val = int>
 class skiplist {
   protected:
     typedef __skiplist_node<_Key, _Val> __node;
-    typedef __node *__node_Ptr;
+    typedef __node *__link_type;
 
   public:
     typedef pair<_Key, _Val> entry;
@@ -126,7 +126,7 @@ class skiplist {
     // generate a level number by 0.5 probability
     size_t __decide_level();
 
-    __node_Ptr __search(_Key &);
+    __link_type __search(_Key &);
 
     size_t _level;     // max current nonempty chain
     size_t _size;      // number of pairs in dictionary
@@ -134,11 +134,11 @@ class skiplist {
 
     _Key __null_key; // a max key
 
-    __node_Ptr _M_start;     // dummy header node pointer
-    __node_Ptr _M_finish;    // dummy tail node pointer
-    __node_Ptr _M_previous;  // every time operate, remember the pre node.
-    __node_Ptr _M_next_node; //  every time operate, remember the next node.
-    __node_Ptr *_M_last_checked_arr; // [i] = node seen on level i
+    __link_type _M_start;     // dummy header node pointer
+    __link_type _M_finish;    // dummy tail node pointer
+    __link_type _M_previous;  // every time operate, remember the pre node.
+    __link_type _M_next_node; //  every time operate, remember the next node.
+    __link_type *_M_last_checked_arr; // [i] = node seen on level i
 };
 
 template <class _Key, class _Val>
@@ -152,7 +152,7 @@ skiplist<_Key, _Val>::skiplist(_Key __max_key, size_t __max_size) {
     __null_entry.first = __null_key;
     _M_start = new __node(__null_entry, _max_level + 1);
     _M_finish = new __node(__null_entry);
-    _M_last_checked_arr = new __node_Ptr[_max_level + 1];
+    _M_last_checked_arr = new __link_type[_max_level + 1];
 
     // header points to tail at all _level as lists are empty
     fill(_M_start->_M_nexts, _M_start->_M_nexts + _max_level + 1, _M_finish);
@@ -161,7 +161,7 @@ skiplist<_Key, _Val>::skiplist(_Key __max_key, size_t __max_size) {
 template <class _Key, class _Val>
 void skiplist<_Key, _Val>::clear() {
     _M_next_node = _M_start->_M_nexts[0];
-    __node_Ptr tmp;
+    __link_type tmp;
     while (_M_next_node != _M_finish) {
         tmp = _M_next_node;
         _M_next_node = _M_next_node->_M_nexts[0];
@@ -208,7 +208,7 @@ void skiplist<_Key, _Val>::erase(_Key &the_key) {
     if (the_key >= __null_key) // too large
         return;
 
-    __node_Ptr __the_node = __search(the_key);
+    __link_type __the_node = __search(the_key);
     if (__the_node->_entry.first != the_key) // not present
         return;
 
@@ -232,7 +232,7 @@ void skiplist<_Key, _Val>::insert(entry __entry) {
         return;
     }
 
-    __node_Ptr __the_node = __search(__entry.first);
+    __link_type __the_node = __search(__entry.first);
     if (__the_node->_entry.first ==
         __entry.first) { // update __the_node->_entry.second
         __the_node->_entry.second = __entry.second;
@@ -246,7 +246,7 @@ void skiplist<_Key, _Val>::insert(entry __entry) {
         _M_last_checked_arr[_new_level] = _M_start;
     }
 
-    __node_Ptr new_node = new __node(__entry, _new_level + 1);
+    __link_type new_node = new __node(__entry, _new_level + 1);
     ++_size;
     for (int i = 0; i <= _new_level; i++) { // insert into level i chain
         new_node->_M_nexts[i] = _M_last_checked_arr[i]->_M_nexts[i];
@@ -263,7 +263,7 @@ size_t skiplist<_Key, _Val>::__decide_level() {
 }
 
 template <class _Key, class _Val>
-typename skiplist<_Key, _Val>::__node_Ptr
+typename skiplist<_Key, _Val>::__link_type
 skiplist<_Key, _Val>::__search(_Key &the_key) {
     _M_previous = _M_start;
     for (int i = _level; i > -1; i--) {
@@ -278,7 +278,7 @@ skiplist<_Key, _Val>::__search(_Key &the_key) {
 template <class _Key, class _Val>
 void skiplist<_Key, _Val>::print() {
     std::cout << "(begin h:" << _M_start->_height << ")->";
-    for (__node_Ptr _walk = _M_start->_M_nexts[0]; _walk != _M_finish;
+    for (__link_type _walk = _M_start->_M_nexts[0]; _walk != _M_finish;
          _walk = _walk->_M_nexts[0])
         std::cout << "(" << _walk->_entry.first << " h:" << _walk->_height
                   << ")->";
