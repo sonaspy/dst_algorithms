@@ -1,12 +1,12 @@
 // author - sonaspy@outlook.com
 // coding - utf_8
-#include "../src/stddsa.hpp"
+#include <bits/stdc++.h>
 #define SIZE 5
-using namespace dsa;
+using namespace std;
 int main(int argc, char const *argv[]) {
     /* code */
     // test();
-    skiplist<int> sk(INT_MAX);
-    sk.insert({1, 1});
+    
+
     return 0;
 }
