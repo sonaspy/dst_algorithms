@@ -1,12 +1,12 @@
 // author - sonaspy@outlook.com
 // coding - utf_8
-#include <bits/stdc++.h>
+#include "../v1/algorithms.h"
 #define SIZE 5
-using namespace std;
+using namespace dsa;
+
 int main(int argc, char const *argv[]) {
     /* code */
     // test();
-    
 
     return 0;
 }

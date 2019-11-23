@@ -1,5 +1,7 @@
 {
     "files.associations": {
+        "*.go": "go",
+        "*.hpp": "cpp",
         "string": "cpp",
         "iostream": "cpp",
         "sstream": "cpp",
@@ -94,7 +96,8 @@
         "slist": "cpp",
         "rb_tree": "cpp",
         "btree": "cpp",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "strstream": "cpp"
     },
     "python.pythonPath": "/usr/local/opt/python/bin/python3.7",
     "indentRainbow.includedLanguages": [
