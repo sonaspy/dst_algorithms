@@ -97,7 +97,15 @@
         "rb_tree": "cpp",
         "btree": "cpp",
         "stdio.h": "c",
-        "strstream": "cpp"
+        "strstream": "cpp",
+        "codecvt": "cpp",
+        "optional": "cpp",
+        "shared_mutex": "cpp",
+        "any": "cpp",
+        "bit": "cpp",
+        "charconv": "cpp",
+        "cuchar": "cpp",
+        "variant": "cpp"
     },
     "python.pythonPath": "/usr/local/opt/python/bin/python3.7",
     "indentRainbow.includedLanguages": [

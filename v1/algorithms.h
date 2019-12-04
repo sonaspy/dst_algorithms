@@ -436,7 +436,7 @@ __lcs(_RandomAccessIterator _first, _RandomAccessIterator _last,
 }
 
 template <typename _RandomAccessIterator>
-_RandomAccessIterator __min_in_rotateArray(_RandomAccessIterator _first,
+_RandomAccessIterator min_in_L_rotateArray(_RandomAccessIterator _first,
                                            _RandomAccessIterator _last) {
     --_last;
     _RandomAccessIterator _mid = _first;

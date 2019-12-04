@@ -470,7 +470,7 @@ protected:
         {
             int maxt = 0;
             for (int pre : this->prev[walk])
-                maxt = max(this->matrix[pre][walk]->w1 + v_early[pre], maxt);
+                maxt = max(v_early[pre] + this->matrix[pre][walk]->w1, maxt);
             v_early[walk] = maxt;
         }
         for (int walk : __intop_order)
