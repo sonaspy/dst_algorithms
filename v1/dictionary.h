@@ -4,9 +4,8 @@
 using namespace std;
 
 template <class K, class E>
-class dictionary
-{
-public:
+class dictionary {
+   public:
     virtual ~dictionary() {}
     virtual bool empty() = 0;
     // return true iff dictionary is empty

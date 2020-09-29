@@ -4,14 +4,14 @@
 #ifndef __NEW_TREE__
 #define __NEW_TREE__
 
-#include <vector>
-#include <unordered_map>
-#include <unordered_set>
-#include <iostream>
-#include <string>
 #include <deque>
+#include <iostream>
 #include <queue>
 #include <stack>
+#include <string>
+#include <unordered_map>
+#include <unordered_set>
+#include <vector>
 using namespace std;
 
 __DST_BEGIN_NAMESPACE
@@ -57,12 +57,23 @@ struct binode {
     int height, depth, ltag, rtag, freq, downblk;
     RBColor color;
     binode()
-        : lc(nullptr), rc(nullptr), parent(nullptr), height(0), freq(0),
-          color(BLK), downblk(0) {}
+        : lc(nullptr),
+          rc(nullptr),
+          parent(nullptr),
+          height(0),
+          freq(0),
+          color(BLK),
+          downblk(0) {}
     binode(const _Tp &x, binode_ptr<_Tp> p = nullptr,
            binode_ptr<_Tp> l = nullptr, binode_ptr<_Tp> r = nullptr,
            RBColor cl = BLK)
-        : val(x), lc(l), rc(r), parent(p), height(0), freq(0), color(cl),
+        : val(x),
+          lc(l),
+          rc(r),
+          parent(p),
+          height(0),
+          freq(0),
+          color(cl),
           downblk(0) {}
     bool inline is_l() { return parent && parent->lc == this; }
     bool inline is_r() { return parent && parent->rc == this; }
@@ -73,14 +84,12 @@ struct binode {
     bool inline is_leaf() { return !rc && !lc; }
     inline binode_ptr<_Tp> leftest() {
         binode_ptr<_Tp> opnv = this;
-        while (opnv->lc)
-            opnv = opnv->lc;
+        while (opnv->lc) opnv = opnv->lc;
         return opnv;
     }
     inline binode_ptr<_Tp> rightest() {
         binode_ptr<_Tp> opnv = this;
-        while (opnv->rc)
-            opnv = opnv->rc;
+        while (opnv->rc) opnv = opnv->rc;
         return opnv;
     }
     inline binode_ptr<_Tp> successor() {
@@ -104,10 +113,8 @@ struct binode {
         while (q.size()) {
             tp1 = q.front(), q.pop_front();
             cnt++;
-            if (tp1->lc)
-                q.push_back(tp1->lc);
-            if (tp1->rc)
-                q.push_back(tp1->rc);
+            if (tp1->lc) q.push_back(tp1->lc);
+            if (tp1->rc) q.push_back(tp1->rc);
         }
         return cnt;
     }
@@ -119,7 +126,7 @@ struct binode {
 
 template <typename _Tp>
 class trees {
-  public:
+   public:
     virtual ~trees() {}
     virtual bool insert(const _Tp &val) = 0;
     virtual bool erase(const _Tp &val) = 0;
@@ -132,12 +139,12 @@ class trees {
 
 __DST_END_NAMESPACE
 
-#include "bintree.h"
-#include "huffman.h"
-#include "bstree.h"
 #include "avltree.h"
-#include "spltree.h"
-#include "rbtree.h"
+#include "bintree.h"
+#include "bstree.h"
 #include "btree.h"
+#include "huffman.h"
+#include "rbtree.h"
+#include "spltree.h"
 
 #endif

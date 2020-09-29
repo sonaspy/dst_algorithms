@@ -9,8 +9,7 @@ namespace dsa {
 int str_cmp(const char *str1, const char *str2) {
     // not! while(*str1++==*str2++)
     while (*str1 == *str2) {
-        if (*str1 == '\0')
-            break;
+        if (*str1 == '\0') break;
         str1++, str2++;
     }
     return *str1 - *str2;
@@ -23,10 +22,8 @@ int __str_match(string &s, string &p) {
     for (auto i = s.begin(); i < s.end() - p.size() + 1; i++) {
         auto j = p.begin();
         for (auto walk = i; j < p.end(); walk++, j++)
-            if (*j != *walk)
-                break;
-        if (j == p.end())
-            return i - s.begin();
+            if (*j != *walk) break;
+        if (j == p.end()) return i - s.begin();
     }
     return s.size();
 }
@@ -42,8 +39,7 @@ string big_num_addition(string &s1, string &s2) {
         carry = tmp / 10;
         res = to_string(int64_t(tmp % 10)) + res;
     }
-    if (carry)
-        res = to_string(int64_t(carry)) + res;
+    if (carry) res = to_string(int64_t(carry)) + res;
     return res;
 }
 
@@ -71,10 +67,9 @@ int __kmp_str_match(string &s, string &p) {
 
 bool str_match(string &s, string &p) {
     int _size = s.size() * p.size();
-    if (_size < 1e7)
-        return __str_match(s, p) != s.size();
+    if (_size < 1e7) return __str_match(s, p) != s.size();
     return __kmp_str_match(s, p) != s.size();
 }
 
-} // namespace dsa
+}  // namespace dsa
 #endif

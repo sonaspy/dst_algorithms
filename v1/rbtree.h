@@ -8,7 +8,7 @@ __DST_BEGIN_NAMESPACE
 
 template <typename _Tp>
 class rbtree : public bstree<_Tp> {
-  protected:
+   protected:
 #define is_blk(opnv) ((!(opnv) || (opnv)->color == BLK))
 #define is_red(opnv) (!is_blk(opnv))
 #define __setblk(opnv) (((opnv) ? (opnv->color = BLK) : 0))
@@ -33,8 +33,7 @@ class rbtree : public bstree<_Tp> {
     inline void __rotate_l(binode_ptr<_Tp> x) {
         binode_ptr<_Tp> y = x->rc;
         x->rc = y->lc;
-        if (y->lc)
-            y->lc->parent = x;
+        if (y->lc) y->lc->parent = x;
         y->parent = x->parent;
         x->isroot() ? _root = y : fromParent2(x) = y;
         y->lc = x;
@@ -45,8 +44,7 @@ class rbtree : public bstree<_Tp> {
     inline void __rotate_r(binode_ptr<_Tp> x) {
         binode_ptr<_Tp> y = x->lc;
         x->lc = y->rc;
-        if (y->rc)
-            y->rc->parent = x;
+        if (y->rc) y->rc->parent = x;
         y->parent = x->parent;
         x->isroot() ? _root = y : fromParent2(x) = y;
         y->rc = x;
@@ -140,8 +138,7 @@ class rbtree : public bstree<_Tp> {
         p->color = BLK;
     }
     void __isrbtree(binode_ptr<_Tp> opnv) {
-        if (!opnv)
-            return;
+        if (!opnv) return;
         __isrbtree(opnv->lc);
         __isrbtree(opnv->rc);
         if (opnv->color == RED &&
@@ -154,12 +151,11 @@ class rbtree : public bstree<_Tp> {
                 opnv->color == BLK ? __downblk(opnv->lc) : __downblk(opnv->lc);
     }
 
-  public:
+   public:
     rbtree() { _isRBtree = 1; }
     bool insert(const _Tp &x) {
         binode_ptr<_Tp> &w = search(x);
-        if (w)
-            return false;
+        if (w) return false;
         w = __newbinode(x, _last, nullptr, nullptr, RED);
         __double_red_solution(w);
         return true;
@@ -167,8 +163,7 @@ class rbtree : public bstree<_Tp> {
     bool erase(const _Tp &val) {
         int thesize = _size - 1;
         binode_ptr<_Tp> &w = bstree<_Tp>::search(val);
-        if (!w)
-            return 0;
+        if (!w) return 0;
         binode_ptr<_Tp> p = w, pp = p->parent, _nil = nullptr;
         RBColor _del_color = p->color;
         int pp_child_tag = (!pp || pp->lc == p) ? 1 : 2;
@@ -182,8 +177,7 @@ class rbtree : public bstree<_Tp> {
             p->val = curr->val;
             if (curr == prev) {
                 p->lc = curr->lc;
-                if (curr->lc)
-                    curr->lc->parent = p;
+                if (curr->lc) curr->lc->parent = p;
                 pp = p, p = p->lc;
                 pp_child_tag = 1;
                 __release(curr);
@@ -191,8 +185,7 @@ class rbtree : public bstree<_Tp> {
                 pp = prev;
                 pp_child_tag = 2;
                 p = prev->rc = curr->lc;
-                if (curr->lc)
-                    curr->lc->parent = prev;
+                if (curr->lc) curr->lc->parent = prev;
                 __release(curr);
             }
         } else if (p->lc) {
@@ -229,8 +222,7 @@ class rbtree : public bstree<_Tp> {
         return _isRBtree && _root->color == BLK;
     }
     void build(vector<_Tp> &a) {
-        for (auto &x : a)
-            insert(x);
+        for (auto &x : a) insert(x);
         __update_status();
     }
 };

@@ -4,43 +4,38 @@
 #ifndef __HUFFMAN__
 #define __HUFFMAN__
 
-namespace dsa
-{
+namespace dsa {
 
-struct hfmkvnode
-{
+struct hfmkvnode {
     binode<char> *node;
     string pattern;
     hfmkvnode(binode<char> *&v, string &p) : node(v), pattern(p) {}
-    bool operator<(const hfmkvnode &b) const { return node->freq > b.node->freq; }
+    bool operator<(const hfmkvnode &b) const {
+        return node->freq > b.node->freq;
+    }
 };
 
 typedef unordered_map<char, int> FREQ_table;
 typedef unordered_map<char, string> PFCtable;
 typedef vector<hfmkvnode> PFCvec;
 
-class huffman : public bintree<char>
-{
-protected:
-    struct _cmp
-    {
-        bool operator()(const binode<char> *a, const binode<char> *b) const { return a->freq > b->freq; }
+class huffman : public bintree<char> {
+   protected:
+    struct _cmp {
+        bool operator()(const binode<char> *a, const binode<char> *b) const {
+            return a->freq > b->freq;
+        }
     };
     int _wpl, _mode;
     string _pattern;
     priority_queue<binode<char> *, vector<binode<char> *>, _cmp> _pq;
 #define leftChar ((_mode == 1 ? '1' : '0'))
 #define rightChar ((_mode == 1 ? '0' : '1'))
-    void __trav(binode<char> *v, PFCvec &pv)
-    {
-        if (!v)
-            return;
-        if (v->is_l())
-            _pattern.push_back(leftChar);
-        if (v->is_r())
-            _pattern.push_back(rightChar);
-        if (v->is_leaf())
-        {
+    void __trav(binode<char> *v, PFCvec &pv) {
+        if (!v) return;
+        if (v->is_l()) _pattern.push_back(leftChar);
+        if (v->is_r()) _pattern.push_back(rightChar);
+        if (v->is_leaf()) {
             pv.push_back(hfmkvnode(v, _pattern));
             pfmp[v->val] = _pattern;
         }
@@ -49,22 +44,19 @@ protected:
         _pattern.pop_back();
     }
 
-public:
+   public:
     PFCtable pfmp;
-    huffman(FREQ_table &mp)
-    {
+    huffman(FREQ_table &mp) {
         _wpl = 0;
         _mode = 0;
         this->_ishuffman = 1;
         binode<char> *v, *w, *root;
-        for (auto &kv : mp)
-        {
+        for (auto &kv : mp) {
             v = this->__newbinode(kv.first);
             v->freq = kv.second;
             _pq.push(v);
         }
-        while (_pq.size() > 1)
-        {
+        while (_pq.size() > 1) {
             v = _pq.top(), _pq.pop();
             w = _pq.top(), _pq.pop();
             root = this->__newbinode(0xff, nullptr, v, w);
@@ -76,21 +68,16 @@ public:
         this->__update_root(root);
         this->__update_status();
     }
-    void generate(PFCvec &pv, int mode)
-    {
+    void generate(PFCvec &pv, int mode) {
         this->_mode = mode;
         __trav(this->_root, pv);
     }
-    inline void clear()
-    {
+    inline void clear() {
         bintree<char>::clear();
         _wpl = 0;
     }
-    int wpl()
-    {
-        return _wpl;
-    }
+    int wpl() { return _wpl; }
     ~huffman() { this->clear(); }
 };
-} // namespace dsa
+}  // namespace dsa
 #endif
