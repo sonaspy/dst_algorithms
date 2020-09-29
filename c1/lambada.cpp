@@ -4,10 +4,13 @@
 #include <bits/stdc++.h>
 
 enum class Permission { Yes, No };
+
 enum class AnswerClassEnum : int { Yes, No, Maybe };
 
-int main(int argc, char const* argv[]) {
+int main(int argc, char const *argv[])
+{
     int localvar = 100;
+
     int localvar2 = 200;
 
     std::function<int(int)> lambdaFn = [localvar, localvar2](int value) -> int {
@@ -29,5 +32,5 @@ int main(int argc, char const* argv[]) {
     int retValue2 = fxsquare2(5, 3);
 
     double d = 1.2;
-    const int& b = d;
+    const int &b = d;
 }
