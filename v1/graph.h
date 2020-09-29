@@ -3,13 +3,13 @@
 
 #ifndef __NEW_GRAPH__
 #define __NEW_GRAPH__
+#include <set>
+
 #include "algorithms.h"
 #include "union.h"
-#include <set>
 using namespace std;
 
-namespace dsa
-{
+namespace dsa {
 #define MAXVSIZE 1111
 #define INF_VAL 1 << 30
 
@@ -17,30 +17,24 @@ struct edge {
     int w1, w2, w3, v1, v2, mark;
     edge(int w1) : w1(w1), w2(INF_VAL), w3(INF_VAL), v1(-1), v2(-1), mark(0) {}
     edge(int v1, int v2)
-        : w1(INF_VAL), w2(INF_VAL), w3(INF_VAL), v1(v1), v2(v2), mark(0)
-    {
-    }
+        : w1(INF_VAL), w2(INF_VAL), w3(INF_VAL), v1(v1), v2(v2), mark(0) {}
     edge(int w1, int v1, int v2)
-        : w1(w1), w2(INF_VAL), w3(INF_VAL), v1(v1), v2(v2), mark(0)
-    {
-    }
+        : w1(w1), w2(INF_VAL), w3(INF_VAL), v1(v1), v2(v2), mark(0) {}
 };
 struct __cmp1 {
-    bool operator()(const edge *e1, const edge *e2) const
-    {
+    bool operator()(const edge *e1, const edge *e2) const {
         return e1->w1 > e2->w1;
     }
 };
 
-class spanningTree
-{
-  private:
+class spanningTree {
+   private:
     unordered_set<int> vset;
     unordered_set<edge *> eset;
     int _sum;
     __Union st;
 
-  public:
+   public:
     spanningTree() { _sum = 0; }
     inline void addsum(int v) { _sum += v; }
     inline void pushv(int v) { vset.insert(v); }
@@ -52,39 +46,34 @@ class spanningTree
     bool overlap(int v1, int v2) { return st.connected(v1, v2); }
     bool exist(int v) { return vset.count(v); }
     inline bool empty() { return vset.empty(); }
-    bool connected()
-    {
+    bool connected() {
         st.resize(vset.size());
         return st.connected();
     }
     inline void clear() { _sum = 0, st.clear(), vset.clear(), eset.clear(); }
 };
 
-class udGraph
-{
-  protected:
+class udGraph {
+   protected:
     int nv, connected_cnt, stp_unique;
     unordered_set<edge *> __memoryOEdge;
-    unordered_map<int, set<int>> posv, pre, prev, post;
-    vector<vector<edge *>> matrix;
+    unordered_map<int, set<int> > posv, pre, prev, post;
+    vector<vector<edge *> > matrix;
     vector<int> indeg, outdeg, vis, cost1, cost2, tmppath;
-    vector<vector<int>> _key_path, _res_path;
+    vector<vector<int> > _key_path, _res_path;
 
-    unordered_map<int, vector<edge *>> mpOfedge;
+    unordered_map<int, vector<edge *> > mpOfedge;
     spanningTree stp;
 
-    void __restore_buf()
-    {
+    void __restore_buf() {
         fill(vis.begin(), vis.end(), 0);
         fill(cost1.begin(), cost1.end(), 0);
         fill(cost2.begin(), cost1.end(), 0);
         tmppath.clear();
     }
 
-    void __prim()
-    {
-        if (connected_cnt > 1)
-            return;
+    void __prim() {
+        if (connected_cnt > 1) return;
         stp.clear();
         int i, j, v, length[nv], min_, v1;
         vector<int> parent(nv, 0);
@@ -97,15 +86,13 @@ class udGraph
         while (1) {
             v = -1, min_ = INF_VAL;
             for (i = 0; i < nv; i++) {
-                if (!stp.exist(i) && length[i] < min_)
-                    v = i, min_ = length[i];
+                if (!stp.exist(i) && length[i] < min_) v = i, min_ = length[i];
             }
             v1 = parent[v];
             stp.pushe(matrix[v1][v]);
             stp.pushv(v);
             stp.addsum(min_);
-            if (stp.vsize() == nv)
-                break;
+            if (stp.vsize() == nv) break;
             for (j = 0; j < nv; j++)
                 if (!stp.exist(j) && matrix[v][j] &&
                     matrix[v][j]->w1 < length[j]) {
@@ -115,29 +102,24 @@ class udGraph
         }
     }
 
-    void __kruskal()
-    {
-        if (connected_cnt > 1)
-            return;
+    void __kruskal() {
+        if (connected_cnt > 1) return;
         stp.clear();
         edge *e;
         int v1, v2;
         priority_queue<edge *, vector<edge *>, __cmp1> e_pq;
-        for (auto &peq : __memoryOEdge)
-            e_pq.push(peq);
+        for (auto &peq : __memoryOEdge) e_pq.push(peq);
         while (e_pq.size() && stp.esize() < nv - 1) {
             e = e_pq.top(), e_pq.pop();
             v1 = e->v1, v2 = e->v2;
-            if (stp.overlap(v1, v2))
-                continue;
+            if (stp.overlap(v1, v2)) continue;
             stp.unite(v1, v2), stp.pushv(v1), stp.pushv(v2);
             stp.addsum(e->w1);
             stp.pushe(e);
         }
     }
 
-    void __dfs(int v_id)
-    {
+    void __dfs(int v_id) {
         for (auto w : posv[v_id])
             if (!vis[w]) {
                 vis[w] = 1;
@@ -145,8 +127,7 @@ class udGraph
             }
     }
 
-    void __bfs(int src)
-    {
+    void __bfs(int src) {
         __restore_buf();
         int layer = 0, v;
         queue<int> q, nexq;
@@ -167,32 +148,27 @@ class udGraph
         __restore_buf();
     }
 
-    void __getPathByPre(int walk, int &src)
-    {
+    void __getPathByPre(int walk, int &src) {
         tmppath.push_back(walk);
         if (walk == src) {
             _res_path.push_back(tmppath);
             return;
         }
-        for (auto j : pre[walk])
-            __getPathByPre(j, src);
+        for (auto j : pre[walk]) __getPathByPre(j, src);
         tmppath.pop_back();
     }
 
-  public:
-    udGraph()
-    {
-        matrix =
-            vector<vector<edge *>>(MAXVSIZE, vector<edge *>(MAXVSIZE, nullptr));
+   public:
+    udGraph() {
+        matrix = vector<vector<edge *> >(MAXVSIZE,
+                                         vector<edge *>(MAXVSIZE, nullptr));
         vis = indeg = outdeg = vector<int>(MAXVSIZE, 0);
         nv = connected_cnt = 0;
         stp_unique = -1;
     }
 
-    inline int connected_component()
-    {
-        if (connected_cnt)
-            return connected_cnt;
+    inline int connected_component() {
+        if (connected_cnt) return connected_cnt;
         int cnt = 0;
         fill(vis.begin(), vis.end(), 0);
         for (int i = 0; i < nv; i++) {
@@ -206,24 +182,20 @@ class udGraph
         return cnt;
     }
 
-    inline bool hasPath(int v1, int v2)
-    {
+    inline bool hasPath(int v1, int v2) {
         fill(vis.begin(), vis.end(), 0);
         vis[v1] = 1;
         __dfs(v1);
         return vis[v2];
     }
 
-    inline bool connected()
-    {
-        if (connected_cnt)
-            return connected_cnt == 1;
+    inline bool connected() {
+        if (connected_cnt) return connected_cnt == 1;
         connected_component();
         return connected_cnt == 1;
     }
 
-    void init(vector<vector<int>> &g)
-    {
+    void init(vector<vector<int> > &g) {
         int n = g.size();
         this->nv = n;
         for (int i = 0; i < n; i++) {
@@ -237,14 +209,12 @@ class udGraph
         }
         for (auto &i : mpOfedge) {
             if (i.second.size() > 1)
-                for (auto &j : i.second)
-                    j->mark = 1;
+                for (auto &j : i.second) j->mark = 1;
         }
         connected();
     }
 
-    inline void clear()
-    {
+    inline void clear() {
         this->cost1.clear(), this->cost2.clear();
         this->connected_cnt = 0;
         this->indeg.clear();
@@ -259,15 +229,13 @@ class udGraph
         this->stp.clear();
         this->tmppath.clear();
         this->vis.clear();
-        for (auto node : __memoryOEdge)
-            delete node;
+        for (auto node : __memoryOEdge) delete node;
         this->__memoryOEdge.clear();
     }
 
     inline int stpsum() { return stp.sum(); }
 
-    void dijkstra(int src, int dst, vector<int> &cost)
-    {
+    void dijkstra(int src, int dst, vector<int> &cost) {
         vector<int> cost2, cost3, pathsum;
         pathsum[src] = 1;
         int v, min_, w;
@@ -278,23 +246,21 @@ class udGraph
         while (1) {
             min_ = INF_VAL, v = -1;
             for (int i = 0; i < nv; i++) {
-                if (!vset.count(i) && cost[i] < min_)
-                    min_ = cost[i], v = i;
+                if (!vset.count(i) && cost[i] < min_) min_ = cost[i], v = i;
             }
-            if (v == -1)
-                break;
+            if (v == -1) break;
             vset.insert(v);
             for (w = 0; w < nv; w++) {
-                if (!vset.count(w) && matrix[v][w]) // one type weight
+                if (!vset.count(w) && matrix[v][w])  // one type weight
                 {
-                    if (matrix[v][w]->w1 + cost[v] < cost[w]) // 1.
+                    if (matrix[v][w]->w1 + cost[v] < cost[w])  // 1.
                     {
                         cost[w] = matrix[v][w]->w1 + cost[v];
                         // cost2[w] = matrix[v][w]->w2 +
                         // cost2[v];
                         pre[w].clear(), pre[w].insert(v);
                         pathsum[w] = pathsum[v];
-                    } else if (matrix[v][w]->w1 + cost[v] == cost[w]) // 2.
+                    } else if (matrix[v][w]->w1 + cost[v] == cost[w])  // 2.
                     {
                         pre[w].insert(v);
                         pathsum[w] += pathsum[v];
@@ -324,8 +290,7 @@ class udGraph
 
     bool stpUnique() { return stp_unique; }
 
-    bool Floyd(vector<vector<int>> &mp, vector<vector<int>> &path)
-    {
+    bool Floyd(vector<vector<int> > &mp, vector<vector<int> > &path) {
         int i, j, k;
         fill(path.begin(), path.end(), vector<int>(path.size(), -1));
         for (i = 0; i < nv; i++) {
@@ -340,8 +305,7 @@ class udGraph
                     if (mp[i][k] != INF_VAL && mp[k][j] != INF_VAL &&
                         mp[i][j] > mp[i][k] + mp[k][j])
                         mp[i][j] = mp[i][k] + mp[k][j], path[i][j] = k;
-                    if (i == j && mp[i][j] < 0)
-                        return false;
+                    if (i == j && mp[i][j] < 0) return false;
                 }
             }
         }
@@ -350,10 +314,9 @@ class udGraph
 
     inline void makestp(int f) { f ? __kruskal() : __prim(); }
 
-    void rand_acyclic_init(int n_)
-    {
+    void rand_acyclic_init(int n_) {
         srand(time(NULL));
-        vector<vector<int>> g(n_, vector<int>(n_, INF_VAL));
+        vector<vector<int> > g(n_, vector<int>(n_, INF_VAL));
         for (int i = 0; i < n_; i++) {
             for (int j = i + 1; j < n_; j++)
                 g[i][j] = g[j][i] = rand() % 4 ? INF_VAL : rand() % 100 + 1;
@@ -368,30 +331,26 @@ class udGraph
     ~udGraph() { this->clear(); }
 };
 
-class dGraph : public udGraph
-{
-  protected:
+class dGraph : public udGraph {
+   protected:
     vector<int> __top_order, __intop_order, v_early, v_late, rescost;
-    unordered_map<edge *, pair<int, int>>
-        aoe; // aoe pair(early, late), flexible time = second - first.
-             // keyaction is which has zero flexible time;
+    unordered_map<edge *, pair<int, int> >
+        aoe;  // aoe pair(early, late), flexible time = second - first.
+              // keyaction is which has zero flexible time;
     int _total_cost;
     unordered_set<int> _src, _dst;
     bool _acyclic;
 
-    void __dfs(int v_id, vector<int> &o)
-    {
+    void __dfs(int v_id, vector<int> &o) {
         for (auto w : posv[v_id]) {
-            if (vis[w])
-                continue;
+            if (vis[w]) continue;
             vis[w] = 1;
             __dfs(w, o);
         }
         o.push_back(v_id);
     }
 
-    void __dfs_nonrecur(int src)
-    {
+    void __dfs_nonrecur(int src) {
         stack<int> sk;
         sk.push(src);
         int v;
@@ -401,8 +360,7 @@ class dGraph : public udGraph
             v = sk.top(), sk.pop();
             // function(v);
             for (auto w : posv[v]) {
-                if (vis[w])
-                    continue;
+                if (vis[w]) continue;
                 vis[w] = 1;
                 sk.push(w);
             }
@@ -410,8 +368,7 @@ class dGraph : public udGraph
         __restore_buf();
     }
 
-    void __getPathByPost(int walk, int &dst)
-    {
+    void __getPathByPost(int walk, int &dst) {
         if (walk == dst) {
             rescost.push_back(_total_cost);
             _key_path.push_back(tmppath);
@@ -426,8 +383,7 @@ class dGraph : public udGraph
         }
     }
 
-    void __top_sort()
-    {
+    void __top_sort() {
         int v;
         queue<int> q;
         vector<int> indegtmp(indeg.begin(), indeg.begin() + nv);
@@ -450,10 +406,8 @@ class dGraph : public udGraph
         __restore_buf();
     }
 
-    void __key_action()
-    {
-        if (aoe.size())
-            return;
+    void __key_action() {
+        if (aoe.size()) return;
         if (!_acyclic) {
             cout << "the Graph is Cyclic !\n";
             return;
@@ -478,19 +432,15 @@ class dGraph : public udGraph
 
             if (aoe[e].first == aoe[e].second) {
                 this->post[e->v1].insert(e->v2);
-                if (_src.count(e->v1))
-                    ksrc.insert(e->v1);
-                if (_dst.count(e->v2))
-                    kdst.insert(e->v2);
+                if (_src.count(e->v1)) ksrc.insert(e->v1);
+                if (_dst.count(e->v2)) kdst.insert(e->v2);
             }
         }
         cout << "src: \n";
-        for (auto i : ksrc)
-            cout << i << " ";
+        for (auto i : ksrc) cout << i << " ";
         cout << endl;
         cout << "dst: \n";
-        for (auto i : kdst)
-            cout << i << " ";
+        for (auto i : kdst) cout << i << " ";
         cout << endl;
         for (auto s : ksrc) {
             for (auto d : kdst) {
@@ -501,8 +451,7 @@ class dGraph : public udGraph
         }
     }
 
-    void __dfs_cycle(int v1, int v2)
-    {
+    void __dfs_cycle(int v1, int v2) {
         vis[v1] = 1;
         tmppath.push_back(v1);
         if (v1 == v2 && tmppath.size() > 1) {
@@ -512,23 +461,20 @@ class dGraph : public udGraph
             return;
         }
         for (auto w : posv[v1]) {
-            if (!vis[w] || w == v2)
-                __dfs_cycle(w, v2);
+            if (!vis[w] || w == v2) __dfs_cycle(w, v2);
         }
         vis[v1] = 0;
         tmppath.pop_back();
     }
 
-  public:
-    dGraph()
-    {
-        matrix =
-            vector<vector<edge *>>(MAXVSIZE, vector<edge *>(MAXVSIZE, nullptr));
+   public:
+    dGraph() {
+        matrix = vector<vector<edge *> >(MAXVSIZE,
+                                         vector<edge *>(MAXVSIZE, nullptr));
         vis = indeg = outdeg = vector<int>(MAXVSIZE, 0);
     }
 
-    inline void clear()
-    {
+    inline void clear() {
         udGraph::clear();
         __top_order.clear(), __intop_order.clear(), v_early.clear(),
             v_late.clear(), rescost.clear();
@@ -539,8 +485,7 @@ class dGraph : public udGraph
 
     inline bool acyclic() { return _acyclic; }
 
-    void in_toporder(vector<int> &ord)
-    {
+    void in_toporder(vector<int> &ord) {
         for (int i = 0; i < nv; i++) {
             if (!indeg[i] && !vis[i]) {
                 vis[i] = 1;
@@ -550,45 +495,36 @@ class dGraph : public udGraph
         __restore_buf();
     }
 
-    void toporder(vector<int> &ord)
-    {
-        if (!_acyclic)
-            return;
+    void toporder(vector<int> &ord) {
+        if (!_acyclic) return;
         ord = __top_order;
         __restore_buf();
     }
 
-    bool istoporder(vector<int> &ord)
-    {
-        if (ord.size() != nv)
-            return 0;
+    bool istoporder(vector<int> &ord) {
+        if (ord.size() != nv) return 0;
         vector<int> In = indeg;
         for (auto V : ord) {
-            if (In[V])
-                return false;
-            for (auto w : posv[V])
-                In[w]--;
+            if (In[V]) return false;
+            for (auto w : posv[V]) In[w]--;
         }
         __restore_buf();
         return true;
     }
 
-    void getCycle(int v0)
-    {
+    void getCycle(int v0) {
         printf("Cycles Go Through Vertex No.%d:\n", v0);
         __dfs_cycle(v0, v0);
         cout << "end" << endl;
         __restore_buf();
     }
 
-    void topsort()
-    {
+    void topsort() {
         __top_sort();
         __restore_buf();
     }
 
-    inline void get_keyaction()
-    {
+    inline void get_keyaction() {
         __key_action();
         if (!rescost.size()) {
             printf("No Key Path Exists\n");
@@ -601,9 +537,8 @@ class dGraph : public udGraph
         }
     }
 
-    void rand_acyclic_init(int n_, int sparse_level, int weight_range)
-    {
-        vector<vector<int>> g(n_, vector<int>(n_, INF_VAL));
+    void rand_acyclic_init(int n_, int sparse_level, int weight_range) {
+        vector<vector<int> > g(n_, vector<int>(n_, INF_VAL));
         for (int i = 0; i < n_; i++) {
             for (int j = i + 1; j < n_; j++)
                 g[i][j] =
@@ -613,9 +548,8 @@ class dGraph : public udGraph
         __restore_buf();
     }
 
-    void rand_init(int n_, int sparse_level, int weight_range)
-    {
-        vector<vector<int>> g(n_, vector<int>(n_, INF_VAL));
+    void rand_init(int n_, int sparse_level, int weight_range) {
+        vector<vector<int> > g(n_, vector<int>(n_, INF_VAL));
         for (int i = 0; i < n_; i++) {
             for (int j = i + 1; j < n_; j++) {
                 if (rand() % sparse_level) {
@@ -630,8 +564,7 @@ class dGraph : public udGraph
         __restore_buf();
     }
 
-    void init(vector<vector<int>> &g)
-    {
+    void init(vector<vector<int> > &g) {
         int n = g.size();
         this->nv = n;
         for (int i = 0; i < n; i++) {
@@ -644,10 +577,8 @@ class dGraph : public udGraph
                 }
         }
         for (int i = 0; i < nv; i++) {
-            if (indeg[i] == 0)
-                _src.insert(i);
-            if (outdeg[i] == 0)
-                _dst.insert(i);
+            if (indeg[i] == 0) _src.insert(i);
+            if (outdeg[i] == 0) _dst.insert(i);
         }
         connected();
         __top_sort();
@@ -656,6 +587,6 @@ class dGraph : public udGraph
     ~dGraph() { this->clear(); }
 };
 
-}; // namespace dsa
+};  // namespace dsa
 
 #endif

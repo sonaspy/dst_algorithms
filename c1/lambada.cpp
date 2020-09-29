@@ -7,8 +7,7 @@ enum class Permission { Yes, No };
 
 enum class AnswerClassEnum : int { Yes, No, Maybe };
 
-int main(int argc, char const *argv[])
-{
+int main(int argc, char const *argv[]) {
     int localvar = 100;
 
     int localvar2 = 200;

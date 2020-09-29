@@ -43,11 +43,11 @@ struct __bnode {
 
 template <class _Tp>
 class btree {
-  protected:
+   protected:
     typedef __bnode<_Tp> __base_node;
     typedef __base_node *__link_type;
 
-  public:
+   public:
     btree();
     btree(size_t h_order);
     __link_type search(__link_type node, _Tp &val);
@@ -58,7 +58,7 @@ class btree {
     void printPart(__link_type node, size_t num);
     void printAll();
 
-  protected:
+   protected:
     // insert function
     void __insert_general(__link_type node, _Tp &val);
     void __split_children(__link_type parentNode, off_t _offset);
@@ -89,15 +89,14 @@ btree<_Tp>::btree(size_t half_order) {
 }
 
 template <class _Tp>
-typename btree<_Tp>::__link_type btree<_Tp>::search(__link_type node, _Tp &val) {
+typename btree<_Tp>::__link_type btree<_Tp>::search(__link_type node,
+                                                    _Tp &val) {
     off_t i;
     for (; node != nullptr; node = node->children[i]) {
         for (i = 0; i < node->sizeOfkey && val > node->keys[i]; ++i)
             ;
-        if (i < node->sizeOfkey && val == node->keys[i])
-            return node;
-        if (node->isleaf)
-            return nullptr;
+        if (i < node->sizeOfkey && val == node->keys[i]) return node;
+        if (node->isleaf) return nullptr;
     }
     return nullptr;
 }
@@ -136,10 +135,8 @@ void btree<_Tp>::__split_children(__link_type parentNode, off_t _offset) {
 
 template <class _Tp>
 bool btree<_Tp>::insert(_Tp &val) {
-    if (search(_root, val))
-        return false;
-    if (_root == nullptr)
-        _root = new __bnode<_Tp>(max_size_k);
+    if (search(_root, val)) return false;
+    if (_root == nullptr) _root = new __bnode<_Tp>(max_size_k);
     if (_root->sizeOfkey == max_size_k) {
         __link_type s = new __bnode<_Tp>(max_size_k);
         s->isleaf = false;
@@ -160,8 +157,7 @@ void btree<_Tp>::__insert_general(__link_type node, _Tp &val) {
         i++;
         if (node->children[i]->sizeOfkey == max_size_k) {
             __split_children(node, i);
-            if (val > node->keys[i])
-                ++i;
+            if (val > node->keys[i]) ++i;
         }
     }
     for (i = node->sizeOfkey - 1; - 1 < i && val < node->keys[i]; --i)
@@ -174,15 +170,12 @@ template <class _Tp>
 void btree<_Tp>::printPart(__link_type node, size_t num) {
     if (node != nullptr) {
         for (off_t i = 0; i < node->sizeOfkey; i++) {
-            if (!node->isleaf)
-                printPart(node->children[i], num + 5);
+            if (!node->isleaf) printPart(node->children[i], num + 5);
 
-            for (off_t j = 0; j < num; j++)
-                std::cout << "-";
+            for (off_t j = 0; j < num; j++) std::cout << "-";
             std::cout << node->keys[i] << endl;
         }
-        if (!node->isleaf)
-            printPart(node->children[node->sizeOfkey], num + 5);
+        if (!node->isleaf) printPart(node->children[node->sizeOfkey], num + 5);
     }
 }
 
@@ -193,8 +186,7 @@ void btree<_Tp>::printAll() {
 
 template <class _Tp>
 bool btree<_Tp>::erase(_Tp &val) {
-    if (!search(_root, val))
-        return false;
+    if (!search(_root, val)) return false;
     if (_root->sizeOfkey == 1) {
         if (_root->isleaf) {
             delete _root;
@@ -233,8 +225,7 @@ void btree<_Tp>::__erase_general(__link_type node, _Tp &val) {
             ;
         __link_type lc = node->children[i];
 
-        if (i < node->sizeOfkey)
-            rc = node->children[i + 1];
+        if (i < node->sizeOfkey) rc = node->children[i + 1];
 
         if (node->keys[i] == val) {
             if (lc->sizeOfkey > min_size_k) {
@@ -250,8 +241,7 @@ void btree<_Tp>::__erase_general(__link_type node, _Tp &val) {
                 __erase_general(lc, val);
             }
         } else {
-            if (i > 0)
-                p = node->children[i - 1];
+            if (i > 0) p = node->children[i - 1];
             if (lc->sizeOfkey == min_size_k) {
                 if (i > 0 && p->sizeOfkey > min_size_k) {
                     shift2rc(node, i - 1, p, lc);
@@ -290,11 +280,11 @@ void btree<_Tp>::__mergechildren(__link_type node, off_t i) {
 }
 
 template <class _Tp>
-void btree<_Tp>::shift2rc(__link_type x, off_t i, __link_type y, __link_type z) {
+void btree<_Tp>::shift2rc(__link_type x, off_t i, __link_type y,
+                          __link_type z) {
     z->sizeOfkey++;
     int j;
-    for (j = z->sizeOfkey - 1; j > 0; --j)
-        z->keys[j] = z->keys[j - 1];
+    for (j = z->sizeOfkey - 1; j > 0; --j) z->keys[j] = z->keys[j - 1];
 
     z->keys[0] = x->keys[i];
     x->keys[i] = y->keys[y->sizeOfkey - 1];
@@ -307,20 +297,19 @@ void btree<_Tp>::shift2rc(__link_type x, off_t i, __link_type y, __link_type z) 
 }
 
 template <class _Tp>
-void btree<_Tp>::shift2lc(__link_type x, off_t i, __link_type y, __link_type z) {
+void btree<_Tp>::shift2lc(__link_type x, off_t i, __link_type y,
+                          __link_type z) {
     y->sizeOfkey++;
     y->keys[y->sizeOfkey - 1] = x->keys[i];
     x->keys[i] = z->keys[0];
     z->sizeOfkey--;
 
     off_t j;
-    for (j = 0; j < z->sizeOfkey; ++j)
-        z->keys[j] = z->keys[j + 1];
+    for (j = 0; j < z->sizeOfkey; ++j) z->keys[j] = z->keys[j + 1];
 
     if (!z->isleaf) {
         y->children[y->sizeOfkey] = z->children[0];
-        for (j = 0; j <= z->sizeOfkey; ++j)
-            z->children[j] = z->children[j + 1];
+        for (j = 0; j <= z->sizeOfkey; ++j) z->children[j] = z->children[j + 1];
     }
 }
 
