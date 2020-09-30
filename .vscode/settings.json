@@ -9,6 +9,10 @@
         "vector": "cpp",
         "slist": "cpp",
         "iostream": "cpp",
-        "scoped_allocator": "cpp"
+        "scoped_allocator": "cpp",
+        "chrono": "cpp",
+        "ostream": "cpp",
+        "iosfwd": "cpp",
+        "numbers": "cpp"
     }
 }

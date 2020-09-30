@@ -10,8 +10,8 @@
 using namespace std;
 
 namespace dsa {
-#define MAXVSIZE 1111
-#define INF_VAL 1 << 30
+const int MAXVSIZE 1111
+const int INF_VAL 1 << 30
 
 struct edge {
     int w1, w2, w3, v1, v2, mark;
