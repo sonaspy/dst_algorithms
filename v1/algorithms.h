@@ -32,17 +32,17 @@ bitset<1> __checksum(bitset<_Digit> b, bool _even) {
     return _even ? res : ~res;
 }
 
-template <class _RandomAccessIterator>
-void __reverse(_RandomAccessIterator _first, _RandomAccessIterator _last) {
+template <class _BidirectionalIterator>
+void __reverse(_BidirectionalIterator _first, _BidirectionalIterator _last) {
     if (_first < _last)
         for (; _first < --_last; ++_first) iter_swap(_first, _last);
 }
 
-template <class _RandomAccessIterator>
-void print_vector(_RandomAccessIterator _first, _RandomAccessIterator _last) {
+template <class _ForwardIterator>
+void print_vector(_ForwardIterator _first, _ForwardIterator _last) {
     if (_first < _last) {
-        std::cout << *(_first);
-        for (auto i = _first + 1; i < _last; i++) std::cout << " -> " << *i;
+        std::cout << *(_first++);
+        for (auto i = _first; i < _last; i++) std::cout << " -> " << *i;
     }
     std::cout << endl;
 }
@@ -135,8 +135,8 @@ inline int __gcd(int a, int b) {
     return a;
 }
 
-template <class _RandomAccessIterator>
-bool isPalindrome(_RandomAccessIterator _first, _RandomAccessIterator _last) {
+template <class _BidirectionalIterator>
+bool isPalindrome(_BidirectionalIterator _first, _BidirectionalIterator _last) {
     if (_first < _last)
         for (; _first < --_last; ++_first)
             if (*_first != *_last) return false;

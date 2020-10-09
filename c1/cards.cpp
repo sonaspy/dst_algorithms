@@ -87,7 +87,7 @@ int main(int argc, char const *argv[]) {
     vector<card> deck(52);
     srand(time(NULL));
     init_deck(deck);
-    int how_many = 500000;
+    int how_many = 200000;
     int flush_count = 0;
     int str_count = 0;
     int strflush_count = 0;
@@ -113,6 +113,7 @@ int main(int argc, char const *argv[]) {
     cout << "Straights " << str_count << " out of " << how_many << endl;
     cout << "Straights Flushes " << strflush_count << " out of " << how_many
          << endl;
+
 
     return 0;
 }
