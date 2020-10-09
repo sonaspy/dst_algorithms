@@ -26,8 +26,6 @@ std::ostream& operator<<(std::ostream& out, const Days& d) {
     return out;
 }
 
-int main(int argc, char const* argv[]) {
-    Days d = SUN, e;
-    e = ++d;
-    std::cout << d << " " << e << std::endl;
-}
+double prob() { return static_cast<double>(rand() / RAND_MAX); }
+
+int main(int argc, char const* argv[]) {}
