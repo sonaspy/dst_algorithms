@@ -5,6 +5,10 @@
 /*
 overloaded member function is compile time selected based on signature
 overriding run time selected
+
+constructors cannot be virtual
+destructors can be virtual
+
 */
 #include <iostream>
 
