@@ -10,7 +10,6 @@
 #include <unordered_set>
 #include <vector>
 using namespace std;
-__DST_BEGIN_NAMESPACE
 
 // template <class _Tp>
 // void swap(_Tp &a, _Tp &b)
@@ -442,7 +441,5 @@ inline pair<_RandomAccessIterator, _RandomAccessIterator> lcs(
         _first, _last,
         less<typename iterator_traits<_RandomAccessIterator>::value_type>());
 }
-
-__DST_END_NAMESPACE
 
 #endif

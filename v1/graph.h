@@ -3,6 +3,7 @@
 
 #ifndef __NEW_GRAPH__
 #define __NEW_GRAPH__
+#include <queue>
 #include <set>
 
 #include "algorithms.h"
@@ -10,8 +11,8 @@
 using namespace std;
 
 namespace dsa {
-const int MAXVSIZE 1111
-const int INF_VAL 1 << 30
+const int MAXVSIZE = 1111;
+const int INF_VAL = 1 << 30;
 
 struct edge {
     int w1, w2, w3, v1, v2, mark;

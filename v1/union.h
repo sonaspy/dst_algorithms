@@ -4,8 +4,6 @@
 #include <vector>
 using namespace std;
 
-__DST_BEGIN_NAMESPACE
-
 class __Union {
    protected:
     inline int __getRoot(int id) {
@@ -42,7 +40,5 @@ class __Union {
         return __getRoot(v1) == __getRoot(v2);
     }
 };
-
-__DST_END_NAMESPACE
 
 #endif
