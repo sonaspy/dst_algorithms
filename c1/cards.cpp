@@ -80,20 +80,21 @@ bool is_straight(vector<card> &hand) {
                (pips_v[0] == 1 && pips_v[1] == 10 && pips_v[2] == 11 &&
                 pips_v[3] == 12 && pips_v[4] == 13);
 }
+int inline myrandom(int i) { return rand() % i; }
 
 int main(int argc, char const *argv[]) {
     /* code */
     vector<card> deck(52);
-    srand(time(0));
+    srand(time(NULL));
     init_deck(deck);
-    int how_many = 1000000;
+    int how_many = 500000;
     int flush_count = 0;
     int str_count = 0;
     int strflush_count = 0;
     bool isflush, isstr;
     for (int loop = 0; loop < how_many; ++loop) {
         isflush = isstr = false;
-        random_shuffle(deck.begin(), deck.end());
+        random_shuffle(deck.begin(), deck.end(), myrandom);
         vector<card> hand(5);
         int i = 0;
         for (auto p = deck.begin(); i < 5; ++p) hand[i++] = *p;

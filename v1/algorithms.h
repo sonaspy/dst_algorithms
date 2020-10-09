@@ -137,7 +137,7 @@ inline int __gcd(int a, int b) {
 }
 
 template <class _RandomAccessIterator>
-bool isparlindrome(_RandomAccessIterator _first, _RandomAccessIterator _last) {
+bool isPalindrome(_RandomAccessIterator _first, _RandomAccessIterator _last) {
     if (_first < _last)
         for (; _first < --_last; ++_first)
             if (*_first != *_last) return false;
